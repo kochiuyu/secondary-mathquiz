@@ -4,7 +4,7 @@ import {paperCSS,paginate,renderPaper} from '../src/papers/render.mjs';
 
 // Combine unchanged topic sample specifications for one native print job per
 // language/document kind. This is review material, not a new paper schema.
-const topics=['basic','signed','expressions','equations','angles'];
+const topics=['percentages','basic','signed','expressions','equations','angles'];
 const folder=new URL('../samples/pilot-review/',import.meta.url);
 fs.mkdirSync(folder,{recursive:true});
 const documents=[];
@@ -20,9 +20,9 @@ for(const lang of ['en','zh']){
    page+=count;
   }
   const name=`${lang}_${kind}.html`;
-  fs.writeFileSync(new URL(name,folder),`<!doctype html><html lang="${lang==='zh'?'zh-Hant':'en'}"><meta charset="utf-8"><title>Five-topic pilot review - ${lang} - ${kind}</title><style>${paperCSS}</style>${html}</html>`);
+  fs.writeFileSync(new URL(name,folder),`<!doctype html><html lang="${lang==='zh'?'zh-Hant':'en'}"><meta charset="utf-8"><title>Six-topic pilot review - ${lang} - ${kind}</title><style>${paperCSS}</style>${html}</html>`);
   documents.push({file:name,lang,kind,pages:page-1,sections,pdf_review:'pending'});
  }
 }
-fs.writeFileSync(new URL('generation.json',folder),JSON.stringify({scope:'32 retained curriculum families; six working lines; five topic specifications concatenated using the production renderer; not a mixed-paper specification',documents},null,2)+'\n');
+fs.writeFileSync(new URL('generation.json',folder),JSON.stringify({scope:'40 retained curriculum families; six working lines; six topic specifications concatenated using the production renderer; not a mixed-paper specification',documents},null,2)+'\n');
 console.log(JSON.stringify(documents.map(({file,pages})=>({file,pages}))));

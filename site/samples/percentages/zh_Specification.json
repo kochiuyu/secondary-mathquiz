@@ -1,0 +1,401 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "百分法 — 試行草稿",
+  "seed": "percentage-print-v1",
+  "lang": "zh",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "PC01",
+        "seed": "percentage-print-v1:0",
+        "version": 1,
+        "objective": "JS-5-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "change",
+          "original": 260,
+          "next": "208"
+        },
+        "math": "260 → 208",
+        "prompt": {
+          "en": "A quantity changes from 260 to 208. Find its signed percentage change, using 260 as the original reference quantity. A decrease needs a minus sign. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "一個量由 260 變成 208。以原值 260 為基準，求有正負號的百分變化；減少須用負號。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "solution": {
+          "en": "Change = 208 - 260. Divide by the original 260, then multiply by 100: -20%. Reversing the direction changes the denominator.",
+          "zh": "改變量 = 208 - 260。除以原值 260 再乘 100，得 -20%。反方向的基準量不同。"
+        },
+        "hint": {
+          "en": "Percentage change uses (new - original)/original × 100. New = original × (1 + signed rate/100); reverse a nonzero multiplier by division.",
+          "zh": "百分變化為（新值 − 原值）÷ 原值 × 100。新值 = 原值 ×（1 + 有正負號的百分率/100）；求原值須除以非零倍數。"
+        },
+        "diagram": {
+          "type": "percentage-model",
+          "kind": "base",
+          "label": {
+            "en": "The original quantity is the 100% reference.",
+            "zh": "原值就是 100% 的基準量。"
+          }
+        },
+        "answer": "-20",
+        "contract": {
+          "type": "number",
+          "answer": "-20",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC01:{\"kind\":\"change\",\"original\":260,\"next\":\"208\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC02",
+        "seed": "percentage-print-v1:1",
+        "version": 1,
+        "objective": "JS-5-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "new",
+          "original": 140,
+          "rate": 5
+        },
+        "math": "140 × (1 + (5)/100)",
+        "prompt": {
+          "en": "The original value is 140. It changes by 5%. Find the new value. Negative change means depreciation; positive change means growth. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "原值為 140，百分變化為 5%。求新值。負變化表示減少或折舊，正變化表示增長。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "solution": {
+          "en": "The multiplier is (100 + 5)/100 = 21/20. New value = 140 × 21/20 = 147.",
+          "zh": "倍數為 (100 + 5)/100 = 21/20。新值 = 140 × 21/20 = 147。"
+        },
+        "hint": {
+          "en": "Percentage change uses (new - original)/original × 100. New = original × (1 + signed rate/100); reverse a nonzero multiplier by division.",
+          "zh": "百分變化為（新值 − 原值）÷ 原值 × 100。新值 = 原值 ×（1 + 有正負號的百分率/100）；求原值須除以非零倍數。"
+        },
+        "diagram": {
+          "type": "percentage-model",
+          "kind": "base",
+          "label": {
+            "en": "The original quantity is the 100% reference.",
+            "zh": "原值就是 100% 的基準量。"
+          }
+        },
+        "answer": "147",
+        "contract": {
+          "type": "number",
+          "answer": "147",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC02:{\"kind\":\"new\",\"original\":140,\"rate\":5}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC03",
+        "seed": "percentage-print-v1:2",
+        "version": 1,
+        "objective": "JS-5-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "original",
+          "next": "144",
+          "rate": -80
+        },
+        "math": "? × (1 + (-80)/100) = 144",
+        "prompt": {
+          "en": "After a change of -80%, the new value is 144. Find the original value. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "百分變化為 -80% 後，新值是 144。求原值。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "solution": {
+          "en": "The nonzero multiplier is 1/5. Original = 144 ÷ (1/5) = 720. Multiplying back gives 144. A 100% decrease cannot uniquely determine an original value.",
+          "zh": "非零倍數為 1/5。原值 = 144 ÷ (1/5) = 720；乘回去得到 144。減少 100% 後不能唯一確定原值。"
+        },
+        "hint": {
+          "en": "Percentage change uses (new - original)/original × 100. New = original × (1 + signed rate/100); reverse a nonzero multiplier by division.",
+          "zh": "百分變化為（新值 − 原值）÷ 原值 × 100。新值 = 原值 ×（1 + 有正負號的百分率/100）；求原值須除以非零倍數。"
+        },
+        "diagram": {
+          "type": "percentage-model",
+          "kind": "base",
+          "label": {
+            "en": "The original quantity is the 100% reference.",
+            "zh": "原值就是 100% 的基準量。"
+          }
+        },
+        "answer": "720",
+        "contract": {
+          "type": "number",
+          "answer": "720",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC03:{\"kind\":\"original\",\"next\":\"144\",\"rate\":-80}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC04",
+        "seed": "percentage-print-v1:3",
+        "version": 1,
+        "objective": "JS-5-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "retail",
+          "cost": 800,
+          "markup": 40,
+          "discount": 30,
+          "mode": "selling"
+        },
+        "math": "800 → 1120 → ?",
+        "prompt": {
+          "en": "An item costs HK$800. Its marked price is 40% above cost. A 30% discount is then taken off the marked price. Find the selling price in HK$. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "貨品成本為 HK$800，標價比成本高 40%，再按標價減價 30%。求售價（港元）。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "hint": {
+          "en": "Markup uses cost; discount uses marked price; profit/loss percentage uses cost again. These bases differ.",
+          "zh": "加價以成本為基準；折扣以標價為基準；盈虧百分率再以成本為基準。"
+        },
+        "solution": {
+          "en": "Marked price = 1120. Selling price = 1120 × 7/10 = 784. The selling price is HK$784. The discount is not taken off cost.",
+          "zh": "標價 = 1120。售價 = 1120 × 7/10 = 784。售價為 HK$784。折扣並非按成本計算。"
+        },
+        "answer": "784",
+        "contract": {
+          "type": "number",
+          "answer": "784",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC04:{\"kind\":\"retail\",\"cost\":800,\"markup\":40,\"discount\":30,\"mode\":\"selling\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC05",
+        "seed": "percentage-print-v1:4",
+        "version": 1,
+        "objective": "JS-5-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "successive",
+          "original": 700,
+          "r1": 50,
+          "r2": 10,
+          "mode": "overall"
+        },
+        "math": "700 → (50%) → (10%) → ?",
+        "prompt": {
+          "en": "A quantity starts at 700. It changes by 50%, then by 10% of the value after the first change. Find the overall signed percentage change relative to the initial value. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "一個量起初為 700，先改變 50%，再以第一次改變後的值為基準改變 10%。相對最初的值，求整體有正負號的百分變化。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "hint": {
+          "en": "Multiply the two multipliers. Adding signed rates misses the changed second base.",
+          "zh": "把兩個倍數相乘；直接相加百分率會忽略第二次的基準量已改變。"
+        },
+        "solution": {
+          "en": "Final = 700 × 3/2 × 11/10 = 1155. Overall change = (1155/700 - 1) × 100 = 65%.",
+          "zh": "最終值 = 700 × 3/2 × 11/10 = 1155。整體變化 = (1155/700 − 1) × 100 = 65%。"
+        },
+        "diagram": {
+          "type": "percentage-model",
+          "kind": "timeline",
+          "r1": 50,
+          "r2": 10
+        },
+        "answer": "65",
+        "contract": {
+          "type": "number",
+          "answer": "65",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC05:{\"kind\":\"successive\",\"original\":700,\"r1\":50,\"r2\":10,\"mode\":\"overall\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC06",
+        "seed": "percentage-print-v1:5",
+        "version": 1,
+        "objective": "JS-5-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "interest",
+          "principal": 1000,
+          "rate": 10,
+          "years": 3,
+          "mode": "simple",
+          "target": "amount"
+        },
+        "math": "P = 1000; r = 10%; t = 3",
+        "prompt": {
+          "en": "In a hypothetical account, HK$1000 earns 10% per year for 3 years, with simple interest on the original principal only. No deposits, withdrawals or fees occur. Find the final amount (principal plus interest) in HK$. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "假設本金 HK$1000，年利率 10%，存期 3 年，按原本金計單利息，沒有存款、提款或費用。求本利和（港元）。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "hint": {
+          "en": "Simple interest keeps the same principal base each year; annual compound interest uses the previous balance. Distinguish interest from amount.",
+          "zh": "單利息每年以原本金為基準；年複利息以上一年的結餘為基準。分清利息與本利和。"
+        },
+        "solution": {
+          "en": "Interest = 1000 × 10/100 × 3. Amount = 1300; interest = 300. Requested value = 1300.",
+          "zh": "利息 = 1000 × 10/100 × 3。本利和 = 1300；利息 = 300。所求值為 1300。"
+        },
+        "answer": "1300",
+        "contract": {
+          "type": "number",
+          "answer": "1300",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC06:{\"kind\":\"interest\",\"principal\":1000,\"rate\":10,\"years\":3,\"mode\":\"simple\",\"target\":\"amount\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC07",
+        "seed": "percentage-print-v1:6",
+        "version": 1,
+        "objective": "JS-5-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "components",
+          "a": 700,
+          "b": 800,
+          "ra": -20,
+          "rb": 25
+        },
+        "math": "A: 700 (-20%); B: 800 (25%)",
+        "prompt": {
+          "en": "A total consists only of component A (700 units) and B (800 units). A changes by -20% of its own original amount; B changes by 25% of its own original amount. Find the signed percentage change of the total relative to 1500. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "總量只由 A（700 單位）及 B（800 單位）組成。A 按本身原值改變 -20%，B 按本身原值改變 25%。以總原值 1500 為基準，求總量有正負號的百分變化。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "hint": {
+          "en": "Calculate each changed component, add, then compare with the original total. An unweighted average works only for equal original components.",
+          "zh": "先分別計新成分，再相加，最後與總原值比較；只有原成分相等時才能直接平均百分率。"
+        },
+        "solution": {
+          "en": "New A = 560; new B = 1000. New total = 1560. Overall change = (1560 - 1500)/1500 × 100 = 4%.",
+          "zh": "新 A = 560；新 B = 1000。新總量 = 1560。總百分變化 = (1560 − 1500)/1500 × 100 = 4%。"
+        },
+        "answer": "4",
+        "contract": {
+          "type": "number",
+          "answer": "4",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC07:{\"kind\":\"components\",\"a\":700,\"b\":800,\"ra\":-20,\"rb\":25}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "PC08",
+        "seed": "percentage-print-v1:7",
+        "version": 1,
+        "objective": "JS-5-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "tax",
+          "schedule": "fictional-classroom-2026-11-22",
+          "income": 100000,
+          "allowance": 100000,
+          "band": 50000,
+          "r1": 2,
+          "r2": 6
+        },
+        "math": "100000 − 100000",
+        "prompt": {
+          "en": "Use this fictional classroom salaries-tax schedule, dated 22 November 2026 (not current Hong Kong law): annual income HK$100000; allowance HK$100000. Taxable income is max(0, income - allowance). Charge 2% on the first HK$50000 of taxable income and 6% on the remainder. There are no other rules or deductions. Find the tax in HK$. Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.",
+          "zh": "只用以下虛構課堂薪俸稅表（日期：2026 年 11 月 22 日，並非現行香港法例）：年收入 HK$100000，免稅額 HK$100000。應課稅收入 = max(0, 收入 − 免稅額)。首 HK$50000 應課稅收入按 2% 計算，其餘按 6% 計算，沒有其他規則或扣除。求稅款（港元）。 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。"
+        },
+        "hint": {
+          "en": "Subtract the allowance, stopping at zero. Split taxable income into the stated bands; the higher rate applies only to the remainder.",
+          "zh": "先扣免稅額，最低為零；再按稅階分開計算，高稅率只適用於餘額。"
+        },
+        "solution": {
+          "en": "Taxable income = 0. First band = 0; remainder = 0. Tax = 0 × 2/100 + 0 × 6/100 = HK$0.",
+          "zh": "應課稅收入 = 0；首階收入 = 0，餘額 = 0。稅款 = 0 × 2/100 + 0 × 6/100 = HK$0。"
+        },
+        "answer": "0",
+        "contract": {
+          "type": "number",
+          "answer": "0",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.",
+          "zh": "對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。"
+        },
+        "exposureKey": "PC08:{\"kind\":\"tax\",\"schedule\":\"fictional-classroom-2026-11-22\",\"income\":100000,\"allowance\":100000,\"band\":50000,\"r1\":2,\"r2\":6}"
+      },
+      "marks": 3,
+      "lines": 6
+    }
+  ]
+}

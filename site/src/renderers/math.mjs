@@ -1,3 +1,4 @@
+import {percentageDiagram} from './percentage-diagrams.mjs';
 import {basicDiagram} from './basic-diagrams.mjs';
 import {angleDiagram} from './angles.mjs';
 import {signedNumberLine} from './number-line.mjs';
@@ -19,6 +20,7 @@ export function math(text){
 export function diagram(q,lang='en'){
  if(!q.diagram)return '';
  const d=q.diagram;
+ if(d.type==='percentage-model')return percentageDiagram(d,lang);
  if(d.type==='basic-model')return basicDiagram(q,lang);
  if(d.type==='angle-geometry')return angleDiagram(q,lang);
  if(['equation-check','equation-steps','equation-balance','fee-table'].includes(d.type))return equationDiagram(q,lang);

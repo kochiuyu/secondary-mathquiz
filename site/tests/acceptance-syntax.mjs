@@ -1,0 +1,1600 @@
+// src/math/exact.mjs
+// Exact, bounded arithmetic. Learner input is parsed as data, never executed.
+const abs = n => n < 0n ? -n : n;
+function gcd(a,b) { a=abs(a); b=abs(b); while(b) [a,b]=[b,a%b]; return a || 1n; }
+class InputError extends Error { constructor(message,code='invalid') { super(message); this.code=code; } }
+class Q {
+  constructor(n,d=1n) {
+    n=BigInt(n); d=BigInt(d);
+    if(!d) throw new InputError('Division by zero.');
+    if(d<0n) {n=-n;d=-d;} const g=gcd(n,d);this.n=n/g;this.d=d/g;
+    if(abs(this.n)>10n**60n || this.d>10n**60n) throw new InputError('The expression is too large.','unsupported');
+  }
+  add(b){return new Q(this.n*b.d+b.n*this.d,this.d*b.d);}
+  neg(){return new Q(-this.n,this.d);}
+  mul(b){return new Q(this.n*b.n,this.d*b.d);}
+  div(b){return new Q(this.n*b.d,this.d*b.n);}
+  eq(b){return this.n===b.n&&this.d===b.d;}
+  toString(){return this.d===1n?String(this.n):`${this.n}/${this.d}`;}
+}
+const zero=()=>new Q(0), one=()=>new Q(1);
+const poly=q=>[q,zero(),zero()];
+function add(a,b){return a.map((v,i)=>v.add(b[i]));}
+function neg(a){return a.map(v=>v.neg());}
+function mul(a,b){
+  const c=Array.from({length:5},zero);
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)c[i+j]=c[i+j].add(a[i].mul(b[j]));
+  if(c[3].n||c[4].n)throw new InputError('Only polynomials up to degree 2 are supported.','unsupported');
+  return c.slice(0,3);
+}
+function normalize(s){return String(s).normalize('NFKC').replace(/[−–﹣]/g,'-').replace(/[×·]/g,'*').replace(/÷/g,'/').trim();}
+function parse(text){
+  const s=normalize(text);
+  if(!s)throw new InputError('Enter an answer.','empty');
+  if(s.length>160)throw new InputError('Use at most 160 characters.','unsupported');
+  const tokens=s.match(/(?:\d+(?:\.\d*)?|\.\d+)|x|[+*/()^\-]|\S/g)||[];
+  if(tokens.length>80)throw new InputError('The expression is too complex.','unsupported');
+  for(const t of tokens)if(!/^(?:\d+(?:\.\d*)?|\.\d+|x|[+*/()^\-])$/.test(t))throw new InputError('Use numbers, x, +, −, ×, /, brackets or powers 0–2.','unsupported');
+  let i=0,depth=0;
+  const peek=()=>tokens[i];
+  const take=()=>tokens[i++];
+  function atom(){
+    if(++depth>12)throw new InputError('Too many nested brackets.','unsupported');
+    const t=take();let a;
+    if(t==='('){a=sum();if(take()!==')')throw new InputError('Close each bracket.');}
+    else if(t==='x')a=[zero(),one(),zero()];
+    else if(t&&/^(\d|\.)/.test(t)){
+      if(t.replace('.','').length>12)throw new InputError('Use numbers with at most 12 digits.','unsupported');
+      const [n,f='']=t.split('.');a=poly(new Q(BigInt((n||'0')+f),10n**BigInt(f.length)));
+    }else throw new InputError('Check the expression near '+(t||'the end')+'.');
+    if(peek()==='^'){take();const k=take();if(!['0','1','2'].includes(k))throw new InputError('Only powers 0, 1 and 2 are supported.','unsupported');if(k==='0'&&(a[1].n||a[2].n))throw new InputError('Variable zero powers need explicit domain handling.','unsupported');if(k==='0'&&!a[0].n&&!a[1].n&&!a[2].n)throw new InputError('Zero to the zero power is undefined.');a=k==='0'?poly(one()):k==='2'?mul(a,a):a;}
+    depth--;return a;
+  }
+  function unary(){if(peek()==='+'){take();return unary();}if(peek()==='-'){take();if(++depth>12)throw new InputError('Too many signs.','unsupported');const v=neg(unary());depth--;return v;}return atom();}
+  function product(){
+    let a=unary();
+    while(peek()==='*'||peek()==='/'||peek()==='x'||peek()==='('){
+      const op=(peek()==='x'||peek()==='(')?'*':take();const b=unary();
+      if(op==='/'){
+        if(b[1].n||b[2].n)throw new InputError('Variable denominators require a different answer checker.','unsupported');
+        a=a.map(v=>v.div(b[0]));
+      }else a=mul(a,b);
+    }
+    return a;
+  }
+  function sum(){let a=product();while(peek()==='+'||peek()==='-'){const op=take(),b=product();a=add(a,op==='-'?neg(b):b);}return a;}
+  const result=sum();if(i!==tokens.length)throw new InputError('Check the expression near '+peek()+'.');return result;
+}
+function scalar(s){if(normalize(s).includes('x'))throw new InputError('Enter a numerical value, not a variable expression.','unsupported');const p=parse(s);if(p[1].n||p[2].n)throw new InputError('Enter a number, fraction or exact decimal.','unsupported');return p[0];}
+function equivalent(a,b){const x=parse(a),y=parse(b);return x.every((q,i)=>q.eq(y[i]));}
+function mark(contract,input){
+  try{
+    if(contract.type==='choice')return {status:input?input===contract.answer?'correct':'incorrect':'empty'};
+    if(contract.type==='manual')return {status:String(input).trim()?'manual':'empty'};
+    let text=normalize(input);
+    if(contract.type==='number'){
+      text=text.replace(/^x\s*=\s*/,'');if(contract.unit==='degree')text=text.replace(/°$/,'');
+      if(!scalar(text).eq(scalar(contract.answer)))return {status:'incorrect'};
+      if(contract.form==='number-literal'&&!/^(?:[+-]?(?:\d+(?:\.\d*)?|\.\d+)|[+-]?\d+\s*\/\s*[+-]?\d+)$/.test(text.trim()))return {status:'wrong-form'};
+      return {status:'correct'};
+    }
+    if(contract.type==='expression'){
+      if(!equivalent(text,contract.answer))return {status:'incorrect'};
+      if(contract.form==='expanded'&&/[()]/.test(text))return {status:'wrong-form'};
+      return {status:'correct'};
+    }
+    if(contract.type==='set'){
+      const parts=text.replace(/^\{|\}$/g,'').split(/[,;]/).map(v=>v.trim());
+      if(parts.some(v=>!v))throw new InputError('List every solution, separated by commas.');
+      if(parts.length>8)throw new InputError('Too many solutions.','unsupported');
+      const values=parts.map(v=>scalar(v).toString());const expected=contract.answers.map(v=>scalar(v).toString());
+      return {status:values.length===expected.length&&new Set(values).size===values.length&&expected.every(v=>values.includes(v))?'correct':'incorrect'};
+    }
+    return {status:'unsupported',message:'This answer contract is not supported.'};
+  }catch(e){if(e instanceof InputError)return {status:e.code,message:e.message};throw e;}
+}
+
+// src/math/fixtures.mjs
+// Disposable development fixtures. These are not published curriculum fixtureFamilies.
+const FIXTURE_VERSION=2;
+const fixtureFamilies=[
+ {id:'signed',title:{en:'Signed numbers',zh:'有向數'},objective:'JS-2-2',topic:'js-2',contract:'number'},
+ {id:'expression',title:{en:'Expand an expression',zh:'展開代數式'},objective:'JS-11-2',topic:'js-11',contract:'expression'},
+ {id:'equation',title:{en:'Solve a linear equation',zh:'解一元一次方程'},objective:'JS-8-1',topic:'js-8',contract:'number'},
+ {id:'angle',title:{en:'Angles on a line',zh:'直線上的角'},objective:'JS-19-1',topic:'js-19',contract:'number'},
+ {id:'choice',title:{en:'Compare signed values',zh:'比較有向數'},objective:'JS-2-1',topic:'js-2',contract:'choice'},
+ {id:'fraction',title:{en:'Exact fractions',zh:'分數的準確值'},objective:'JS-1-6',topic:'js-1',contract:'number'}
+];
+function hash(s){let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;}
+function random(seed){let a=hash(seed);return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function generateFixture(id,seed,version=FIXTURE_VERSION){
+ if(![1,FIXTURE_VERSION].includes(version))throw new Error('This question version is unavailable. Keep the original prototype to reopen it.');
+ if(typeof seed!=='string'||seed.length>80)throw new Error('Invalid seed.');
+ const family=fixtureFamilies.find(f=>f.id===id);if(!family)throw new Error('Unknown question family.');
+ const r=random(id+':'+seed),int=(a,b)=>Math.floor(r()*(b-a+1))+a;
+ const q={id,seed,version,objective:family.objective,marks:2,lines:3};
+ const B=(en,zh)=>({en,zh});
+ if(id==='signed'){
+  const a=int(-12,8),b=int(-9,9);Object.assign(q,{math:`${a} + (${b})`,answer:String(a+b),contract:{type:'number',answer:String(a+b)},
+   prompt:B('Calculate.','計算。'),hint:B('Start at the first number; adding a negative number moves left.','從第一個數開始；加負數即向左移。'),solution:B(`${a} + (${b}) = ${a+b}.`,`${a} + (${b}) = ${a+b}。`),diagram:{type:'line',a,b}});
+ }else if(id==='expression'){
+  const a=int(2,7),b=int(1,7),c=int(1,5);const ans=`${a}x+${a*b+c}`;
+  Object.assign(q,{math:`${a}(x + ${b}) + ${c}`,answer:ans,contract:{type:'expression',answer:ans,form:'expanded'},prompt:B('Expand the brackets and simplify.','展開括號並化簡。'),hint:B('Multiply every term inside the bracket by the number outside.','以括號外的數乘括號內的每一項。'),solution:B(`${a}(x + ${b}) + ${c} = ${a}x + ${a*b} + ${c} = ${ans}.`,`${a}(x + ${b}) + ${c} = ${a}x + ${a*b} + ${c} = ${ans}。`)});
+ }else if(id==='equation'){
+  const a=int(2,8),x=int(-6,9),b=int(-9,9),c=a*x+b;
+  Object.assign(q,{math:`${a}x ${b<0?'−':'+'} ${Math.abs(b)} = ${c}`,answer:String(x),contract:{type:'number',answer:String(x)},prompt:B('Find x.','求 x。'),hint:B('Undo the constant term on both sides, then divide by the coefficient.','在等號兩邊消去常數項，再除以 x 的係數。'),solution:B(`${a}x = ${c-b}; x = ${x}. Check: ${a} × (${x}) + (${b}) = ${c}.`,`${a}x = ${c-b}；x = ${x}。驗算：${a} × (${x}) + (${b}) = ${c}。`),diagram:{type:'balance',a,b,c}});
+ }else if(id==='angle'){
+  const a=int(3,15)*10,x=180-a;
+  Object.assign(q,{math:`${a}° + x = 180°`,answer:String(x),contract:{type:'number',answer:String(x),unit:'degree'},prompt:B('Find x. Then explain the angle relationship.','求 x，並解釋所用的角的關係。'),hint:B('Adjacent angles on a straight line add to 180°.','直線上的鄰角之和為 180°。'),solution:B(`x = 180° − ${a}° = ${x}°. Adjacent angles on a straight line sum to 180°.`, `x = 180° − ${a}° = ${x}°。直線上的鄰角之和為 180°。`),diagram:{type:'angle',a},manualReason:true});
+ }else if(id==='choice'){
+  const a=-int(2,18),b=a+int(1,5),options=[{id:'a',label:String(a)},{id:'b',label:String(b)}];if(r()>.5)options.reverse();
+  Object.assign(q,{math:`${a}, ${b}`,answer:'b',contract:{type:'choice',answer:'b'},options,prompt:B('Choose the greater number.','選出較大的數。'),hint:B('On a number line, the greater number is further to the right.','在數線上，較大的數在較右的位置。'),solution:B(`${b} > ${a}.`,`${b} > ${a}。`)});
+ }else if(id==='fraction'){
+  const a=int(1,7),b=int(2,9),c=int(1,5);const answer=`${a+b*c}/${b}`;
+  Object.assign(q,{math:`${a}/${b} + ${c}`,answer,contract:{type:'number',answer},prompt:B('Give an exact answer as a number or fraction.','以數或分數寫出準確答案。'),hint:B('Write the integer with the same denominator as the fraction.','把整數改寫為同分母的分數。'),solution:B(`${a}/${b} + ${c} = (${a} + ${b*c})/${b} = ${answer}.`,`${a}/${b} + ${c} = (${a} + ${b*c})/${b} = ${answer}。`)});
+ }
+ if(version>=2&&q.contract.type==='number')q.contract.form='number-literal';
+ return q;
+}
+function makeFixtureItems(ids,seed,count=6){
+ if(!Array.isArray(ids)||!ids.length||count<1||count>12||!Number.isInteger(count))throw new Error('Choose 1–12 questions and at least one set.');
+ return Array.from({length:count},(_,i)=>generateFixture(ids[i%ids.length],`${seed}:${i}`));
+}
+
+
+// src/math/signed.mjs
+
+const curriculumFamilies=[
+ {id:'SN01',title:{en:'Signed quantities and zero',zh:'有向數與零'},objective:'JS-2-1',topic:'js-2',contract:'number'},
+ {id:'SN02',title:{en:'Compare directed numbers',zh:'比較有向數'},objective:'JS-2-1',topic:'js-2',contract:'choice'},
+ {id:'SN03',title:{en:'Movement, addition and subtraction',zh:'移動、加法與減法'},objective:'JS-2-2',topic:'js-2',contract:'number'},
+ {id:'SN04',title:{en:'Multiplication and division signs',zh:'乘除的符號規律'},objective:'JS-2-2',topic:'js-2',contract:'number'},
+ {id:'SN05',title:{en:'Mixed operations with rational values',zh:'有理數的混合運算'},objective:'JS-2-2',topic:'js-2',contract:'number'},
+ {id:'SN06',title:{en:'Find the directed change',zh:'求有向變化'},objective:'JS-2-3',topic:'js-2',contract:'number'}
+].map(f=>({...f,version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020; independent review pending'}));
+const sb=(en,zh)=>({en,zh});
+function signedRandom(seed){let h=2166136261;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h+=0x6d2b79f5;let v=h;v=Math.imul(v^v>>>15,v|1);v^=v+Math.imul(v^v>>>7,v|61);return((v^v>>>14)>>>0)/4294967296;};}
+function generateCurriculum(id,seed,version=1){
+ if(version!==1)throw Error('This curriculum question version is unavailable.');
+ if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');
+ const family=curriculumFamilies.find(f=>f.id===id);if(!family)throw Error('Unknown curriculum family.');
+ const rnd=signedRandom(id+':'+seed),int=(a,b)=>Math.floor(rnd()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)];
+ const q={id,seed,version,objective:family.objective,marks:id==='SN05'||id==='SN06'?2:1,lines:id==='SN05'||id==='SN06'?4:3,resourceState:'author-draft'};
+ let answer;
+ if(id==='SN01'){
+  const magnitude=int(0,20),direction=magnitude?pick([-1,1]):0;answer=String(magnitude*direction);q.model={kind:'reference',magnitude,direction};
+  q.math=magnitude?`0 °C; ${direction<0?'↓':'↑'} ${magnitude} °C`:'0 °C';
+  q.prompt=magnitude?sb(`The temperature is ${magnitude} °C ${direction<0?'below':'above'} 0 °C. Write its directed number in °C.`,`氣溫比 0 °C ${direction<0?'低':'高'} ${magnitude} °C。以有向數表示氣溫（單位：°C）。`):sb('The temperature is exactly 0 °C. Write its directed number in °C.','氣溫剛好是 0 °C。以有向數表示氣溫（單位：°C）。');
+  q.hint=sb('Zero is the reference. Below is negative; above is positive. Zero itself is neither.','以零為基準，低於零用負數，高於零用正數；零本身既不是正數，也不是負數。');
+  q.solution=sb(`${magnitude===0?'At the reference, the value is zero.':direction<0?'Below zero means a negative value.':'Above zero means a positive value.'} The temperature is ${answer} °C.`,`${magnitude===0?'剛好在基準上，數值為零。':direction<0?'低於零，所以用負數表示。':'高於零，所以用正數表示。'}氣溫是 ${answer} °C。`);
+  q.answerUnit=sb('°C','°C');q.diagram={type:'signed-line',values:['0'],minimum:-22,maximum:22,tick:5,description:sb('Reference zero on an equally spaced scale; use the temperature description to find the value.','等距數線上標示基準零；請按氣溫描述找出數值。')};
+ }else if(id==='SN02'){
+  const denominator=pick([1,2,4]),gap=int(1,8),n=int(-12*denominator,12*denominator-gap),left=new Q(n,denominator).toString(),right=new Q(n+gap,denominator).toString();
+  const swap=rnd()<.5,a=swap?right:left,b=swap?left:right;answer=swap?'left':'right';q.model={kind:'comparison',a,b};q.math=`${a}, ${b}`;
+  q.options=[{id:'left',label:a},{id:'right',label:b}];if(rnd()<.5)q.options.reverse();
+  q.prompt=sb('Choose the greater number.','選出較大的數。');q.hint=sb('On a number line, the number further right is greater. Compare values, not just their unsigned digits.','在數線上，越右的數越大；不要只比較不帶正負號的數字。');
+  q.solution=sb(`${right} > ${left}. The greater value lies further right on a number line.`,`${right} > ${left}。較大的數在數線上位於較右方。`);
+  q.diagram={type:'signed-line',values:[a,b],description:sb('Both numbers are plotted on the same equally spaced number line.','兩個數標示在同一條等距數線上。')};
+ }else if(id==='SN03'){
+  const a=int(-12,12),b=int(-12,12),operation=pick(['add','subtract']),delta=operation==='add'?b:-b;answer=String(a+delta);q.model={kind:'movement',a,b,operation};q.math=`${a} ${operation==='add'?'+':'−'} (${b})`;
+  q.prompt=sb('Calculate the final value.','計算最終數值。');q.hint=sb('Adding moves by the signed operand. Subtracting adds its opposite; subtracting a negative moves right.','加法按有向數移動；減去一個數即加上其相反數，減去負數會向右移。');
+  q.solution=sb(`${q.math} = ${a} + (${delta}) = ${answer}. ${delta===0?'No movement.':`Move ${Math.abs(delta)} units ${delta>0?'right':'left'} from ${a}.`}`,`${q.math} = ${a} + (${delta}) = ${answer}。${delta===0?'位置不變。':`由 ${a} 向${delta>0?'右':'左'}移 ${Math.abs(delta)} 個單位。`}`);
+  q.diagram={type:'signed-line',values:[String(a)],bounds:[a,a+delta],movement:{start:a,delta},description:sb(`Start at ${a}; ${operation==='add'?'add':'subtract'} ${b}. Tick spacing is uniform; the endpoint value is unlabelled.`,`由 ${a} 出發，${operation==='add'?'加上':'減去'} ${b}；刻度等距，終點數值未標示。`)};
+ }else if(id==='SN04'){
+  const operation=pick(['multiply','divide']);let a,b;
+  if(operation==='divide'){b=pick([-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9]);const quotient=int(-9,9);a=b*quotient;answer=String(quotient);}else{a=int(-9,9);b=int(-9,9);answer=String(a*b);}
+  q.model={kind:'product',a,b,operation};q.math=`(${a}) ${operation==='divide'?'÷':'×'} (${b})`;q.prompt=sb('Calculate. Use an inverse or sign pattern to check.','計算，並用逆運算或符號規律檢驗。');
+  q.hint=sb('For nonzero values, equal signs give a positive product/quotient and different signs give a negative one. A zero factor/dividend gives zero; never divide by zero.','非零數相乘或相除，同號得正、異號得負。因數或被除數為零時，結果為零；不能除以零。');
+  q.solution=operation==='divide'?sb(`${q.math} = ${answer}. Check: (${b}) × (${answer}) = ${a}.`,`${q.math} = ${answer}。檢驗：（${b}）×（${answer}）= ${a}。`):sb(`${q.math} = ${answer}. ${a===0||b===0?'A factor is zero.':a*b>0?'The nonzero factors have the same sign.':'The nonzero factors have different signs.'}`,`${q.math} = ${answer}。${a===0||b===0?'其中一個因數為零。':a*b>0?'兩個非零因數同號。':'兩個非零因數異號。'}`);
+ }else if(id==='SN05'){
+  const a=int(-9,9),b=int(-9,9),c=int(-9,9),d=pick([-4,-3,-2,2,3,4]);answer=new Q(a+b*c,d).toString();q.model={kind:'mixed',a,b,c,d};q.math=`[${a} + (${b}) × (${c})] ÷ (${d})`;
+  q.prompt=sb('Calculate. Give an exact final value.','計算，寫出準確的最終數值。');q.hint=sb('Multiply inside the brackets first, then add, then divide the whole bracket result.','先計算括號內的乘法，再相加，最後把整個括號的結果相除。');
+  q.solution=sb(`(${b}) × (${c}) = ${b*c}; ${a} + (${b*c}) = ${a+b*c}; (${a+b*c}) ÷ (${d}) = ${answer}.`,`（${b}）×（${c}）= ${b*c}；${a} +（${b*c}）= ${a+b*c}；（${a+b*c}）÷（${d}）= ${answer}。`);
+ }else{
+  const initial=int(-15,15);let final=int(-15,14);if(final>=initial)final++;const delta=final-initial;answer=String(delta);q.model={kind:'change',initial,final};q.math=`${initial} °C → ${final} °C`;
+  q.prompt=sb(`The temperature changes from ${initial} °C to ${final} °C. Find the directed change in °C.`,`氣溫由 ${initial} °C 變為 ${final} °C。求氣溫的有向變化（單位：°C）。`);
+  q.hint=sb('Change = final − initial. Check that initial + change = final.','變化 = 最後數值 − 最初數值；可用「最初數值 + 變化 = 最後數值」檢驗。');
+  q.solution=sb(`Change = ${final} − (${initial}) = ${answer} °C: a ${delta>0?'rise':'fall'} of ${Math.abs(delta)} °C. Check: ${initial} + (${delta}) = ${final}.`,`變化 = ${final} −（${initial}）= ${answer} °C，即${delta>0?'上升':'下降'} ${Math.abs(delta)} °C。檢驗：${initial} +（${delta}）= ${final}。`);
+  q.answerUnit=sb('°C change','°C（變化）');q.manualReason=true;q.reasonRubric=sb('State final minus initial and interpret the sign as rise/fall. The automatic result check does not verify your explanation.','說明「最後減最初」，並按正負號解釋上升或下降。自動核對數值並不會核實解釋。');
+  q.diagram={type:'signed-line',values:[String(initial),String(final)],description:sb(`Initial temperature ${initial} °C; final temperature ${final} °C. Find their directed difference.`,`最初氣溫 ${initial} °C，最後氣溫 ${final} °C；求兩者的有向差。`)};
+ }
+ q.answer=answer;q.contract={type:id==='SN02'?'choice':'number',answer,...(id==='SN02'?{}:{form:'number-literal'})};
+ // Semantic inputs, rather than answer or wording, define retained exposure.
+ q.exposureKey=id+':'+JSON.stringify(q.model);
+ validateSigned(q);return q;
+}
+function validateSigned(q){
+ const m=q.model;if(!m||!curriculumFamilies.some(f=>f.id===q.id))throw Error('Invalid signed-number model.');
+ let expected;
+ if(q.id==='SN01'){if(m.magnitude<0||m.magnitude>20||![0,-1,1].includes(m.direction)||(m.magnitude===0)!==(m.direction===0))throw Error('Invalid reference.');expected=String(m.magnitude*m.direction);}
+ if(q.id==='SN02'){const a=scalar(m.a),b=scalar(m.b);if(a.eq(b))throw Error('Comparison values must differ.');expected=a.n*b.d>b.n*a.d?'left':'right';if(new Set(q.options.map(o=>o.id)).size!==2||new Set(q.options.map(o=>scalar(o.label).toString())).size!==2)throw Error('Duplicate choices.');}
+ if(q.id==='SN03')expected=String(m.a+(m.operation==='add'?m.b:-m.b));
+ if(q.id==='SN04'){if(m.operation==='divide'&&m.b===0)throw Error('Zero divisor.');expected=m.operation==='divide'?new Q(m.a,m.b).toString():String(m.a*m.b);}
+ if(q.id==='SN05'){if(m.d===0)throw Error('Zero divisor.');expected=new Q(m.a+m.b*m.c,m.d).toString();}
+ if(q.id==='SN06')expected=String(m.final-m.initial);
+ if(q.answer!==expected||q.contract.answer!==expected)throw Error('Signed-number answer mismatch.');return q;
+}
+
+// src/math/signed-feedback.mjs
+
+function signedFeedback(q,input){
+ if(!q.id.startsWith('SN'))return null;
+ if(q.id==='SN02')return {en:'Compare the two positions on the same number line. Further right means greater, including for negative values.',zh:'在同一條數線上比較位置；越右的數越大，負數也一樣。'};
+ let value;try{value=scalar(input);}catch{return null;}const m=q.model;
+ if(q.id==='SN01'&&value.eq(new Q(-Number(q.answer)))&&Number(q.answer)!==0)return {en:'That value uses the opposite side of the reference. Check whether the temperature is above or below 0 °C.',zh:'這個數值位於基準的另一側。請檢查氣溫是高於還是低於 0 °C。'};
+ if(q.id==='SN03'&&m.operation==='subtract'&&m.b<0&&value.eq(new Q(m.a+m.b)))return {en:'This result adds the negative operand. The question subtracts it: add its opposite instead.',zh:'這個結果是加上該負數，但題目要求減去它；請改為加上它的相反數。'};
+ if(q.id==='SN04'&&Number(q.answer)!==0&&value.eq(new Q(-Number(q.answer))))return {en:'Check the sign using an inverse multiplication or the sign pattern before changing the magnitude.',zh:'先用逆向乘法或符號規律檢查正負號，再檢查數值大小。'};
+ if(q.id==='SN05'&&value.eq(new Q((m.a+m.b)*m.c,m.d))&&!value.eq(scalar(q.answer)))return {en:'This matches adding before multiplying. Inside the brackets, complete the multiplication first.',zh:'這與先相加再相乘的結果相同；括號內應先算乘法。'};
+ if(q.id==='SN06'&&value.eq(new Q(m.final))&&!value.eq(scalar(q.answer)))return {en:'That is the final temperature. The question asks for the change: final minus initial.',zh:'這是最後氣溫；題目要求的是變化，即最後數值減最初數值。'};
+ return null;
+}
+
+// src/math/expressions.mjs
+
+const eb=(en,zh)=>({en,zh});
+const expressionFamilies=[
+ {id:'EX01',title:eb('Words to an expression','由文字寫出代數式'),objective:'JS-7-1',contract:'expression'},
+ {id:'EX02',title:eb('Read an expression in words','以文字理解代數式'),objective:'JS-7-2',contract:'choice'},
+ {id:'EX03',title:eb('Write a formula with two quantities','用兩個量寫公式'),objective:'JS-7-1',contract:'manual'},
+ {id:'EX04',title:eb('Propose and explain a sequence pattern','提出並解釋數列規律'),objective:'JS-7-3',contract:'manual'},
+ {id:'EX05',title:eb('Evaluate a supplied general term','由已知通項求指定項'),objective:'JS-7-3',contract:'number'},
+ {id:'EX06',title:eb('Follow an input–output rule','依輸入輸出規則計算'),objective:'JS-7-4',contract:'number'}
+].map(f=>({...f,topic:'js-7',version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020; independent review pending'}));
+function expressionRandom(seed){let state=2166136261;for(const c of seed)state=Math.imul(state^c.charCodeAt(0),16777619);return()=>{state+=0x6d2b79f5;let t=state;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+function sequenceValue(rule,n){if(!Number.isInteger(n)||n<1||n>20)throw Error('Unsupported sequence index.');const rules={odd:()=>2*n-1,even:()=>2*n,square:()=>n*n,triangular:()=>n*(n+1)/2};if(!rules[rule])throw Error('Unknown sequence rule.');return rules[rule]();}
+function sequenceFormula(rule){return {odd:'2n − 1',even:'2n',square:'n²',triangular:'n(n + 1)/2'}[rule];}
+function generateExpression(id,seed,version=1){
+ if(version!==1)throw Error('This expression-family version is unavailable.');
+ if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');
+ const family=expressionFamilies.find(f=>f.id===id);if(!family)throw Error('Unknown expression family.');
+ const random=expressionRandom(id+':'+seed),int=(a,b)=>Math.floor(random()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)];
+ const q={id,seed,version,objective:family.objective,marks:family.contract==='manual'?3:1,lines:family.contract==='manual'?5:3,resourceState:'author-draft'};
+ if(id==='EX01'){
+  const a=int(2,9),b=int(1,12),mode=pick(['scale-sum','less-than','subtract-from']);q.model={kind:'words',a,b,mode};q.math='x';
+  const templates={
+   'scale-sum':{answer:`${a}*(x+${b})`,prompt:eb(`Write an expression for ${a} times the sum of x and ${b}.`,`以代數式表示「x 與 ${b} 的和的 ${a} 倍」。`),solution:eb(`First form x + ${b}, then multiply the whole sum by ${a}: ${a}(x + ${b}). Equivalent expressions are accepted; expansion is not required.`,`先寫 x + ${b}，再把整個和乘以 ${a}，得 ${a}(x + ${b})。可用等價代數式，不必展開。`)},
+   'less-than':{answer:`${a}*x-${b}`,prompt:eb(`Write an expression for ${b} less than ${a} times x.`,`以代數式表示「x 的 ${a} 倍減去 ${b}」。`),solution:eb(`${a} times x is ${a}x. Subtract ${b} from it: ${a}x − ${b}.`, `x 的 ${a} 倍是 ${a}x，再減去 ${b}，得 ${a}x − ${b}。`)},
+   'subtract-from':{answer:`${b}-${a}*x`,prompt:eb(`Subtract ${a} times x from ${b}. Write an expression.`,`以代數式表示「${b} 減去 x 的 ${a} 倍」。`),solution:eb(`The starting quantity is ${b}; subtract ${a}x from it: ${b} − ${a}x.`,`起初的量是 ${b}，從它減去 ${a}x，得 ${b} − ${a}x。`)}}
+  Object.assign(q,templates[mode]);q.contract={type:'expression',answer:q.answer};q.hint=eb('Identify what is being multiplied or subtracted as a whole. Preserve the order and grouping.','先找出整個被乘或被減的量，保留運算次序和分組。');
+ }else if(id==='EX02'){
+  const mode=pick(['grouped','two-variables']),a=int(2,6),b=int(1,9);q.model=mode==='grouped'?{kind:'reading',mode,a,b}:{kind:'reading',mode};q.math=mode==='grouped'?`${a}(x + ${b})`:'bh';q.answer='meaning';
+  q.prompt=eb('Choose the phrase that describes the expression.','選出能表達此代數式的文字片語。');
+  q.options=mode==='grouped'?[
+   {id:'meaning',label:eb(`${a} times the sum of x and ${b}`,`x 與 ${b} 的和的 ${a} 倍`)},
+   {id:'outside-add',label:eb(`The sum of ${a} times x and ${b}`,`x 的 ${a} 倍與 ${b} 的和`)},
+   {id:'inside-subtract',label:eb(`${a} times the difference x minus ${b}`,`x 減去 ${b} 所得差的 ${a} 倍`)}
+  ]:[{id:'meaning',label:eb('The product of b and h','b 與 h 的積')},{id:'sum',label:eb('The sum of b and h','b 與 h 的和')},{id:'quotient',label:eb('b divided by h','b 除以 h')}];
+  for(let i=q.options.length-1;i>0;i--){const j=int(0,i);[q.options[i],q.options[j]]=[q.options[j],q.options[i]];}
+  q.contract={type:'choice',answer:q.answer};q.hint=eb('Read the operation and its grouping. Adjacent variable letters represent multiplication, not a two-digit number.','先讀運算及分組；相鄰的變量字母表示相乘，不是兩位數。');
+  q.solution=mode==='grouped'?eb(`The brackets group x + ${b}; the factor ${a} multiplies this entire sum.`,`括號把 x + ${b} 分為一組；${a} 乘以整個和。`):eb('bh means b × h, the product of b and h.','bh 即 b × h，是 b 與 h 的積。');
+ }else if(id==='EX03'){
+  const shape=pick(['triangle','rectangle']);q.model={kind:'area-formula',shape};q.math='A = ?';q.answer=shape==='triangle'?'b*h/2':'b*h';q.contract={type:'manual'};q.manualReason=true;
+  q.prompt=shape==='triangle'?eb('A triangle has base b and perpendicular height h, both positive lengths. Complete A = __ and explain the factor 1/2.','三角形的底為 b、垂直高度為 h，兩者均為正長度。完成 A = __，並解釋因數 1/2。'):eb('A rectangle has length b and width h, both positive lengths. Complete its area formula A = __ and explain the roles of b and h.','長方形的長為 b、闊為 h，兩者均為正長度。完成面積公式 A = __，並解釋 b、h 的作用。');
+  q.hint=shape==='triangle'?eb('Compare two identical triangles with a parallelogram of base b and height h.','把兩個相同三角形與底為 b、高為 h 的平行四邊形比較。'):eb('Area combines the two perpendicular lengths by multiplication.','面積由兩條互相垂直的長度相乘而得。');
+  q.solution=shape==='triangle'?eb('A = bh/2. Two congruent copies form a parallelogram of area bh, so each triangle has half that area. Equivalent formulas such as hb/2 or 0.5bh are valid.','A = bh/2。兩個全等三角形可拼成面積為 bh 的平行四邊形，因此一個三角形佔其一半。hb/2、0.5bh 等等價公式亦可。'):eb('A = bh. Multiply length b by width h; the area has square units. hb is an equivalent formula.','A = bh，把長 b 乘以闊 h；面積使用平方單位。hb 是等價公式。');
+  q.reasonRubric=eb('Manual review of the whole response: variables have the stated meanings; the formula models area; the explanation justifies multiplication and, for a triangle, halving. Accept equivalent valid formulas.','整份作答需人工評閱：變量意思正確、公式能表示面積，並能解釋相乘及三角形面積的一半因數。接受合理的等價公式。');
+  q.diagram={type:'area-formula',shape};
+ }else if(id==='EX04'){
+  const rule=pick(['odd','even','square','triangular']),start=int(1,4),terms=Array.from({length:4},(_,i)=>sequenceValue(rule,start+i));q.model={kind:'open-sequence',rule,start,terms};q.math=terms.join(', ')+', ?';q.answer=String(sequenceValue(rule,start+4));q.contract={type:'manual'};q.manualReason=true;q.nonUnique=true;
+  const names={odd:eb('consecutive odd numbers','連續奇數'),even:eb('consecutive even numbers','連續偶數'),square:eb('consecutive square numbers','連續正方形數'),triangular:eb('consecutive triangular numbers','連續三角形數')};
+  q.prompt=eb('Suggest one possible next term. Explain a rule that fits all four given terms. Is that continuation forced by the four terms alone?','提出一個可能的下一項，並解釋符合所有四個已知項的規律。只憑這四項，延伸結果是否唯一？');
+  q.hint=eb('Look for a familiar number pattern or consecutive differences, but explain your chosen rule. A finite prefix does not force one continuation.','可觀察熟悉的數列或相鄰項的差，但要解釋所選規律。有限的已知項不能唯一確定延伸。');
+  q.solution=eb(`One possible next term is ${q.answer}, continuing ${names[rule].en}. A different clearly explained rule fitting every given term may give a different continuation. The prefix alone does not force a unique next term.`,`一個可能的下一項是 ${q.answer}，按${names[rule].zh}延伸。若另一個清楚的規律符合所有已知項，也可以有不同的下一項；只憑有限項不能確定唯一延伸。`);
+  q.reasonRubric=eb('Manual review: the rule must fit all four given terms and the proposed next term. Acknowledge non-uniqueness. A different consistent rule is not wrong merely because it differs from the model. No algebraic recurrence is required.','人工評閱：規律須符合所有四個已知項及所提下一項，並指出延伸並非唯一。其他一致的規律不會只因不同於參考例子而算錯；不要求代數遞推式。');q.diagram={type:'sequence-cards',terms};
+ }else if(id==='EX05'){
+  const rule=pick(['odd','even','square','triangular']),n=int(1,12);q.model={kind:'general-term',rule,n};q.answer=String(sequenceValue(rule,n));q.math=`aₙ = ${sequenceFormula(rule)}; n = ${n}`;q.contract={type:'number',answer:q.answer,form:'number-literal'};
+  q.prompt=eb(`The general term is supplied. Find a${n}, the term at position ${n}.`,`已給定數列通項。求第 ${n} 項 a${n}。`);q.hint=eb('Replace every n in the supplied rule by the requested position. The index and the term value are different roles.','把規則中的每個 n 都換成指定項的位置；項的位置和項的值作用不同。');
+  q.solution=eb(`Use n = ${n} in ${sequenceFormula(rule)} to obtain ${q.answer}. The explicit general term determines this value; it is not a guess from a prefix.`,`把 n = ${n} 代入 ${sequenceFormula(rule)}，得 ${q.answer}。這個值由已知通項決定，不是僅憑前幾項猜測。`);q.diagram={type:'term-table',n};
+ }else{
+  const rule=pick(['affine','square-plus']),a=int(2,6),b=int(-4,4),input=int(-5,5);q.model=rule==='affine'?{kind:'machine',rule,a,b,input}:{kind:'machine',rule,b,input};q.answer=String((rule==='affine'?a*input:input*input)+b);q.contract={type:'number',answer:q.answer,form:'number-literal'};
+  const processing=rule==='affine'?eb(`multiply by ${a}, then ${b<0?'subtract':'add'} ${Math.abs(b)}`,`先乘以 ${a}，再${b<0?'減去':'加上'} ${Math.abs(b)}`):eb(`square the whole input, then ${b<0?'subtract':'add'} ${Math.abs(b)}`,`先把整個輸入值平方，再${b<0?'減去':'加上'} ${Math.abs(b)}`);
+  q.math=`${rule==='affine'?a+'x':'x²'} ${b<0?'−':'+'} ${Math.abs(b)}; x = (${input})`;q.prompt=eb(`A machine follows this rule: ${processing.en}. Find the output for input ${input}.`,`機器按規則處理：${processing.zh}。輸入 ${input} 時，求輸出。`);
+  q.hint=eb('Follow the stated processing order. Put a negative input in brackets before squaring.','按指定次序處理；負的輸入值在平方前須放入括號。');
+  q.solution=eb(`For input ${input}, the first operation gives ${rule==='affine'?a*input:input*input}; applying the remaining ${b<0?'subtraction':'addition'} gives ${q.answer}. The same input under the same rule gives the same output.`,`輸入 ${input}，第一步得 ${rule==='affine'?a*input:input*input}；再${b<0?'減去':'加上'} ${Math.abs(b)}，得 ${q.answer}。相同輸入按同一規則會得到相同輸出。`);
+  q.diagram={type:'input-output',input,processing};
+ }
+ q.exposureKey=id+':'+JSON.stringify(q.model);return q;
+}
+
+// src/math/equations.mjs
+
+const equationFamilies=[
+ {id:'EQ01',title:{en:'Test a proposed solution',zh:'檢驗所提的解'},objective:'JS-8-1',contract:'choice'},
+ {id:'EQ02',title:{en:'Undo an operation chain',zh:'逆轉運算鏈'},objective:'JS-8-1',contract:'number'},
+ {id:'EQ03',title:{en:'Repair an invalid bracket step',zh:'修正錯誤的括號步驟'},objective:'JS-8-1',contract:'choice'},
+ {id:'EQ04',title:{en:'Unknowns on both sides',zh:'兩邊均有未知數'},objective:'JS-8-1',contract:'number'},
+ {id:'EQ05',title:{en:'Form a contextual equation',zh:'從情境建立方程'},objective:'JS-8-2',contract:'choice'},
+ {id:'EQ06',title:{en:'Solve and interpret a model',zh:'解模型並解釋結果'},objective:'JS-8-3',contract:'number'}
+].map(f=>({...f,topic:'js-8',version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020; independent review pending'}));
+const qb=(en,zh)=>({en,zh});
+function equationRandom(seed){let h=2166136261;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h+=0x6d2b79f5;let v=h;v=Math.imul(v^v>>>15,v|1);v^=v+Math.imul(v^v>>>7,v|61);return((v^v>>>14)>>>0)/4294967296;};}
+const affineText=(a,b)=>`(${a})x ${b<0?'−':'+'} ${Math.abs(b)}`;
+function generateEquation(id,seed,version=1){
+ if(version!==1)throw Error('This equation question version is unavailable.');
+ if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');
+ const family=equationFamilies.find(f=>f.id===id);if(!family)throw Error('Unknown equation family.');
+ const rnd=equationRandom(id+':'+seed),int=(a,b)=>Math.floor(rnd()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)],nonzero=()=>pick([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]);
+ const q={id,seed,version,objective:family.objective,marks:[2,2,3,2,2,3][Number(id.slice(2))-1],lines:5,resourceState:'author-draft'};
+ const shuffle=options=>{for(let i=options.length-1;i>0;i--){const j=int(0,i);[options[i],options[j]]=[options[j],options[i]];}return options;};
+ if(id==='EQ01'||id==='EQ02'){
+  const a=nonzero(),b=int(-12,12),root=new Q(int(-20,20),pick([1,2,3,4])),c=new Q(a).mul(root).add(new Q(b)).toString();
+  q.math=`${affineText(a,b)} = ${c}`;
+  if(id==='EQ01'){
+   const candidate=(rnd()<.5?root:root.add(new Q(pick([-2,-1,1,2]),2))).toString(),left=new Q(a).mul(scalar(candidate)).add(new Q(b));
+   q.model={kind:'candidate',a,b,c,candidate};q.answer=left.eq(scalar(c))?'yes':'no';q.options=shuffle([{id:'yes',label:qb('Yes, it is a solution','是，它是方程的解')},{id:'no',label:qb('No, it is not a solution','不是，它不是方程的解')}]);
+   q.prompt=qb(`Does x = ${candidate} solve this original equation? Compare both sides and explain.`,`x = ${candidate} 是否為這個原方程的解？比較兩邊並解釋。`);
+   q.hint=qb('Substitute the proposed value into the original left side, then compare with the original right side.','把所提的數值代入原方程左邊，再與原方程右邊比較。');
+   q.solution=qb(`At x = ${candidate}, the left side is (${a})×(${candidate})+(${b}) = ${left}; the right side is ${c}. They ${q.answer==='yes'?'are equal, so this is':'are not equal, so this is not'} a solution.`,`當 x = ${candidate}，左邊為 (${a})×(${candidate})+(${b}) = ${left}；右邊為 ${c}。兩邊${q.answer==='yes'?'相等，所以這是':'不相等，所以這不是'}方程的解。`);
+   q.manualReason=true;q.reasonRubric=qb('Manually review substitution into the original equation and an explicit comparison of both side values. A correct selection alone does not verify this explanation.','人工評閱：須代入原方程，並明確比較兩邊的值。選項正確不代表解釋已獲核實。');
+   q.diagram={type:'equation-check',candidate,left:`(${a})×(${candidate})+(${b})`,right:c};
+  }else{
+   q.model={kind:'affine',a,b,c};q.answer=root.toString();q.prompt=qb('Solve the equation. Enter the value of x.','解方程，輸入 x 的值。');
+   const remainder=scalar(c).add(new Q(-b)).toString();
+   q.hint=qb('Subtract the constant from both sides, then divide both sides by the nonzero coefficient.','兩邊同減常數項，再同除以非零的系數。');
+   q.solution=qb(`Subtract ${b} from both sides: (${a})x = ${remainder}. Divide both sides by ${a}: x = ${root}. Check in the original: (${a})×(${root})+(${b}) = ${c}.`,`兩邊同減 ${b}，得 (${a})x = ${remainder}；再同除以 ${a}，得 x = ${root}。代回原式檢驗：(${a})×(${root})+(${b}) = ${c}。`);
+   q.diagram={type:'equation-steps',lines:[qb(`Original: ${q.math}`,`原式：${q.math}`),qb(`Apply the same subtraction (−${b}) to both sides.`,`兩邊進行相同的減法（減 ${b}）。`),qb(`Then divide both sides by ${a}.`,`再把兩邊同除以 ${a}。`)]};
+  }
+ }else if(id==='EQ03'){
+  const a=int(2,6),b=int(1,6),c=pick([-12,-10,-8,-6,-4,-2,2,4,6,8,10,12]);q.model={kind:'repair',a,b,c};q.math=`${a}(x − ${b}) = ${c}`;q.answer='distributed';
+  const correct=`${a}x − ${a*b} = ${c}`,wrong=`${a}x − ${b} = ${c}`;
+  q.options=shuffle([{id:'distributed',label:correct},{id:'unchanged',label:wrong},{id:'wrong-sign',label:`${a}x + ${a*b} = ${c}`}]);
+  q.prompt=qb(`A learner replaces the original equation by ${wrong}. Choose a correct replacement for that line and explain the error.`,`某同學把原方程改寫為 ${wrong}。選出可正確取代該行的式子，並解釋錯誤。`);
+  q.hint=qb('The factor outside the brackets multiplies every term inside, including the signed constant.','括號外的因數須乘以括號內每一項，包括帶正負號的常數項。');
+  q.solution=qb(`Use ${correct}. The factor ${a} multiplies both x and −${b}; the proposed line multiplied only x. The original equation has exactly one solution, x = ${new Q(c,a).add(new Q(b))}.`,`應為 ${correct}。因數 ${a} 須同時乘以 x 和 −${b}；所提的步驟只乘了 x。原方程只有一個解，x = ${new Q(c,a).add(new Q(b))}。`);
+  q.manualReason=true;q.reasonRubric=qb('Manually review an explanation that the factor multiplies every term, including the negative constant. The selected line is checked separately.','人工評閱解釋：因數須乘以每一項，包括負的常數項。所選式子與解釋分開核對。');
+  q.diagram={type:'equation-steps',lines:[qb(`Original: ${q.math}`,`原式：${q.math}`),qb(`Proposed line (not valid): ${wrong}`,`所提步驟（不成立）：${wrong}`)]};
+ }else if(id==='EQ04'){
+  const a=nonzero(),d=pick([-5,-4,-3,-2,-1,0,1,2,3,4,5].filter(x=>x!==a)),b=int(-6,6),c=int(-12,12),root=new Q(int(-18,18),pick([1,2,3,4])),e=new Q(a-d).mul(root).add(new Q(a*b+c)).toString();
+  q.model={kind:'both-sides',a,b,c,d,e};q.math=`${a}(x + (${b})) + (${c}) = (${d})x + (${e})`;q.answer=root.toString();
+  q.prompt=qb('Solve the equation. Keep both original sides available for checking.','解方程，並保留原方程兩邊以供檢驗。');
+  q.hint=qb('Expand the bracket, subtract the same variable term on both sides, then isolate x. The collected coefficient is nonzero.','先展開括號，再把兩邊同減相同的未知數項，然後求 x。合併後的系數不為零。');
+  const constant=a*b+c,right=scalar(e).add(new Q(-constant)),check=new Q(d).mul(root).add(scalar(e));
+  q.solution=qb(`Expand to (${a})x+(${constant}) = (${d})x+(${e}). Subtract (${d})x and ${constant} from both sides: (${a-d})x = ${right}. Thus x = ${root}. In the original equation both sides equal ${check}.`,`展開得 (${a})x+(${constant}) = (${d})x+(${e})。兩邊同減 (${d})x 和 ${constant}，得 (${a-d})x = ${right}，所以 x = ${root}。代回原方程，兩邊均等於 ${check}。`);
+  q.diagram={type:'equation-balance',left:`${a}(x+(${b}))+(${c})`,right:`(${d})x+(${e})`};
+ }else{
+  const fixed=int(2,15),rate=id==='EQ06'?2*int(1,5):int(2,8),root=id==='EQ06'?new Q(int(1,24),2):new Q(int(2,12)),total=new Q(rate).mul(root).add(new Q(fixed)).toString();
+  q.model={kind:id==='EQ05'?'model-choice':'rental',fixed,rate,total};q.math=id==='EQ05'?'x = ?':'x = ?';q.diagram={type:'fee-table',fixed,rate,total,unit:id==='EQ06'?'hour':'game'};
+  if(id==='EQ05'){
+   q.answer='fixed-plus-rate';q.options=shuffle([{id:'fixed-plus-rate',label:`${rate}x + ${fixed} = ${total}`},{id:'fixed-repeated',label:`(${rate} + ${fixed})x = ${total}`},{id:'swapped',label:`${fixed}x + ${rate} = ${total}`}]);
+   // Equal fixed/rate would make the swapped option identical. Use a distinct missing-fixed option instead.
+   if(fixed===rate)q.options.find(o=>o.id==='swapped').label=`${rate}x = ${total}`;
+   q.prompt=qb(`Entry costs $${fixed} once and each game costs $${rate}. The total is $${total}. Let x be the number of games. Choose an equation and explain the two costs.`,`入場費一次 $${fixed}，每局遊戲 $${rate}，總費用 $${total}。設遊戲局數為 x。選出方程，並解釋兩種費用。`);
+   q.hint=qb('The fixed fee is paid once. The per-game charge is paid x times.','固定費用只付一次；每局費用須付 x 次。');
+   q.solution=qb(`The repeated cost is ${rate}x and the one-time cost is ${fixed}, so ${rate}x+${fixed}=${total}. The fixed fee is not repeated.`,`重複費用為 ${rate}x，加上一次的固定費用 ${fixed}，得 ${rate}x+${fixed}=${total}。固定費用不會按局數重複。`);
+   q.reasonRubric=qb('Manually review the definition of x, the rate multiplied by x, the fixed fee paid once, and the total on the other side.','人工評閱：說清 x 的定義、每局費用乘以 x、固定費用只付一次，以及另一邊的總費用。');
+  }else{
+   q.answer=root.toString();q.answerUnit=qb('hours','小時');q.prompt=qb(`A rental costs $${fixed} once plus $${rate} per hour. Half-hours are allowed and charged proportionally. The total is $${total}. Let x be the rental time in hours. Find x; write your equation and explain why the time is allowed.`,`租用費為一次 $${fixed}，另加每小時 $${rate}。可按半小時租用，費用按比例計算。總費用 $${total}。設租用時間為 x 小時。求 x，寫出方程並解釋時間是否符合規定。`);
+   q.hint=qb('Remove the one-time charge before dividing by the hourly rate. Check the half-hour condition and original total.','先扣去一次費用，再除以每小時費用；檢查半小時的規定和原來總費用。');
+   const remainder=scalar(total).add(new Q(-fixed));
+   q.solution=qb(`Let x be hours: ${fixed}+${rate}x=${total}. Then ${rate}x=${remainder}, so x=${root} hours. This is a positive multiple of half an hour. Check: ${fixed}+${rate}×(${root})=${total}.`,`設時間為 x 小時：${fixed}+${rate}x=${total}，得 ${rate}x=${remainder}，所以 x=${root} 小時。這是半小時的正整數倍，符合規定。檢驗：${fixed}+${rate}×(${root})=${total}。`);
+   q.reasonRubric=qb('Manually review a defined unknown in hours, an equivalent fixed-plus-rate equation, substitution into the total, and the positive half-hour interpretation. Automatic final-value correctness does not verify these parts.','人工評閱：以小時定義未知數、等價的固定費用加按時費用方程、代回總費用，以及正的半小時倍數之解釋。最終數值自動核對正確，不代表這些部分已獲核實。');
+  }
+  q.manualReason=true;
+ }
+ q.contract=q.options?{type:'choice',answer:q.answer}:{type:'number',answer:q.answer,form:'number-literal'};
+ q.exposureKey=id+':'+JSON.stringify(q.model);return q;
+}
+
+// src/math/angle-geometry.mjs
+const geometrySector=(phi,index)=>({start:[phi,90,phi+180,270][index],end:[90,phi+180,270,phi+360][index]});
+const geometrySectorSize=(phi,index)=>index%2===0?90-phi:90+phi;
+function geometryTriangle(B,C){
+ const cot=d=>1/Math.tan(d*Math.PI/180),height=200/(cot(B)+cot(C));
+ return {A:[-100+height*cot(B),-65+height],B:[-100,-65],C:[100,-65],D:[170,-65]};
+}
+function geometryTransform(point,rotation=0,reflected=false){const t=rotation*Math.PI/180,x=point[0]*(reflected?-1:1),y=point[1];return [x*Math.cos(t)-y*Math.sin(t),x*Math.sin(t)+y*Math.cos(t)];}
+function geometryScene(model){
+ const segments=[],arcs=[],labels=[],parallel=[],markers=[];
+ const ray=(center,angle,length=95)=>[center[0]+length*Math.cos(angle*Math.PI/180),center[1]+length*Math.sin(angle*Math.PI/180)];
+ const line=(center,angle,length=100,dashed=false)=>segments.push({from:ray(center,angle+180,length),to:ray(center,angle,length),dashed});
+ const arc=(center,start,end,label,radius=30)=>arcs.push({center,start,end,label,radius});
+ const label=(point,text)=>labels.push({point,text});
+ if(model.kind==='local-angles'){
+  const O=[0,0],{mode,a,b=0}=model;
+  let directions;
+  if(mode==='vertical'){directions=[0,a,180,180+a];arc(O,0,a,`${a}°`);arc(O,180,180+a,'x');}
+  else if(mode==='point'){directions=[0,a,a+b];arc(O,0,a,`${a}°`);arc(O,a,a+b,`${b}°`);arc(O,a+b,360,'x',38);}
+  else{const total=mode==='complementary'?90:180;directions=[0,a,total];arc(O,0,a,`${a}°`);arc(O,a,total,'x');if(total===90)markers.push([[16,0],[16,16],[0,16]]);}
+  for(const angle of directions)segments.push({from:O,to:ray(O,angle,105)});label([-10,-14],'O');
+ }else if(['angle-pair','parallel-property','parallel-test'].includes(model.kind)){
+  const A=[0,65],B=[0,-65];line(A,model.phiA,100);line(B,model.phiB,100);line([0,0],90,155);
+  label([-15,73],'A');label([-15,-57],'B');label(ray(A,model.phiA,114),'l');label(ray(B,model.phiB,114),'m');label([12,151],'t');
+  const p=geometrySector(model.phiA,model.p),q=geometrySector(model.vertical?model.phiA:model.phiB,model.q);
+  arc(A,p.start,p.end,'P',27);arc(model.vertical?A:B,q.start,q.end,'Q',39);
+  if(model.parallelGiven){parallel.push({point:ray(A,model.phiA,65),angle:model.phiA},{point:ray(B,model.phiB,65),angle:model.phiB});}
+ }else{
+  const {A,B,C,D}=geometryTriangle(model.B,model.C),aStart=180+model.B,aEnd=360-model.C;
+  segments.push({from:A,to:B},{from:B,to:C},{from:C,to:A});label([A[0],A[1]+19],'A');label([B[0]-14,B[1]-14],'B');label([C[0]+13,C[1]-15],'C');
+  const proof=model.kind==='triangle-proof';arc(A,aStart,aEnd,proof?'α':`${model.A}°`,28);arc(B,0,model.B,proof?'β':`${model.B}°`,30);
+  if(proof||model.target==='exterior'){segments.push({from:C,to:D});label([D[0]+9,D[1]-10],'D');arc(C,0,180-model.C,proof?'E':'x',35);if(proof)arc(C,180-model.C,180,'γ',23);}
+  else arc(C,180-model.C,180,'x',30);
+  if(proof){line(A,0,135,true);label([A[0]-143,A[1]],'u');label([A[0]+143,A[1]],'v');arc(A,180,aStart,'p',40);arc(A,aEnd,360,'q',40);parallel.push({point:[A[0]+90,A[1]],angle:0},{point:[35,B[1]],angle:0});}
+ }
+ return {segments,arcs,labels,parallel,markers};
+}
+
+// src/math/angles.mjs
+
+const angleFamilies=[
+ {id:'GE01',title:{en:'Use local angle relationships',zh:'使用基本角關係'},objective:'JS-19-1',contract:'number'},
+ {id:'GE02',title:{en:'Name an angle pair',zh:'辨認角對'},objective:'JS-19-2',contract:'choice'},
+ {id:'GE03',title:{en:'Use given parallel lines',zh:'運用已知平行線'},objective:'JS-19-4',contract:'number'},
+ {id:'GE04',title:{en:'Test a parallel-line claim',zh:'檢驗平行線的結論'},objective:'JS-19-3',contract:'choice'},
+ {id:'GE05',title:{en:'Triangle interior and exterior angles',zh:'三角形內角與外角'},objective:'JS-19-5',contract:'number'},
+ {id:'GE06',title:{en:'Explain the triangle angle rules',zh:'解釋三角形角定理'},objective:'JS-19-5',contract:'manual'}
+].map(f=>({...f,topic:'js-19',version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020; independent review pending'}));
+const gb=(en,zh)=>({en,zh});
+const anglePairNames={corresponding:gb('corresponding angles','同位角'),alternate:gb('alternate interior angles','內錯角'),same:gb('same-side interior angles','同旁內角')};
+function angleRandom(seed){let h=2166136261;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h+=0x6d2b79f5;let v=h;v=Math.imul(v^v>>>15,v|1);v^=v+Math.imul(v^v>>>7,v|61);return((v^v>>>14)>>>0)/4294967296;};}
+function anglePosition(index,intersection,reflected){const inside=intersection==='A'?index>=2:index<2,right=([0,3].includes(index))!==reflected;return gb(`at ${intersection}, ${inside?'inside':'outside'} the two-intersection region and on the ${right?'right':'left'} of directed t`,`在 ${intersection}，位於兩交點之間區域的${inside?'內側':'外側'}，且在有方向的 t 的${right?'右':'左'}方`);}
+function angleExposureKey(id,model){
+ if(id==='GE06')return 'GE06:triangle-angle-proof:v1';
+ if(id==='GE02')return id+':'+JSON.stringify({pair:model.pair,p:model.p,q:model.q});
+ const {rotation,reflected,...semantic}=model;if(model.vertical)delete semantic.phiB;
+ return id+':'+JSON.stringify(semantic);
+}
+function generateAngle(id,seed,version=1){
+ if(version!==1)throw Error('This geometry question version is unavailable.');if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');const family=angleFamilies.find(f=>f.id===id);if(!family)throw Error('Unknown angle family.');
+ const rnd=angleRandom(id+':'+seed),int=(a,b)=>Math.floor(rnd()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)],shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=int(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+ const q={id,seed,version,objective:family.objective,marks:[2,1,2,3,2,4][Number(id.slice(2))-1],lines:id==='GE06'?6:5,resourceState:'author-draft'},rotation=30*int(0,11),reflected=rnd()<.5;
+ if(id==='GE01'){
+  const mode=pick(['straight','point','vertical','complementary','supplementary']),a=mode==='complementary'?int(20,70):mode==='point'?int(45,130):int(30,150),b=mode==='point'?int(45,130):0;const answer=mode==='vertical'?a:mode==='point'?360-a-b:mode==='complementary'?90-a:180-a;
+  q.model={kind:'local-angles',mode,a,b,rotation,reflected};q.answer=String(answer);q.math='x = ?';
+  const relation={straight:gb('Two adjacent angles lie on one straight line.','兩個鄰角在同一直線上。'),point:gb('Three consecutive sectors make one complete turn around O.','O 點周圍三個連續角合起來是一周角。'),vertical:gb('Two straight lines cross at O; the marked sectors are vertically opposite.','兩直線相交於 O，所標示的是對頂角。'),complementary:gb('The marked adjacent sectors fill a right angle.','所標示的鄰角合起來是一個直角。'),supplementary:gb('The two marked adjacent angles are stated to be supplementary.','已知兩個標示的鄰角互為補角。')}[mode];
+  q.prompt=gb(`${relation.en} The known angle${mode==='point'?'s are':' is'} ${a}°${mode==='point'?` and ${b}°`:''}. Find x in degrees and give a reason.`,`${relation.zh}已知角為 ${a}°${mode==='point'?` 和 ${b}°`:''}。求 x（度），並給理由。`);
+  const rule=mode==='vertical'?gb('Vertically opposite angles are equal.','對頂角相等。'):mode==='point'?gb('Angles making a full turn sum to 360°.','一周角合共 360°。'):mode==='complementary'?gb('Complementary angles sum to 90°.','餘角之和為 90°。'):gb('The stated straight/supplementary angle total is 180°.','已知平角或補角的總和為 180°。');
+  q.hint=gb('Identify the given relationship before choosing an equality or a total.','先辨認已知角關係，再選擇相等或角的總和。');q.solution=gb(`${rule.en} Hence x=${answer}°.`,`${rule.zh}所以 x=${answer}°。`);q.manualReason=true;q.reasonRubric=gb('Name the applicable given relation and show the equality/subtraction. Numerical correctness alone does not verify this reason.','須說明適用的已知角關係，並展示相等或減法；數值正確不代表理由已獲核實。');
+ }else if(['GE02','GE03','GE04'].includes(id)){
+  const pair=id==='GE04'?pick(['corresponding','alternate','same','vertical']):id==='GE03'?pick(['corresponding','alternate','same','two-step']):pick(['corresponding','alternate','same']);
+  let p,qIndex;if(pair==='corresponding'){p=id==='GE02'?int(0,3):0;qIndex=p;}else if(pair==='alternate'){p=pick([2,3]);qIndex=p===2?0:1;}else if(pair==='same'){p=pick([2,3]);qIndex=p===2?1:0;}else if(pair==='two-step'){p=0;qIndex=1;}else{p=0;qIndex=2;}
+  let phiA,phiB;
+  if(id==='GE02'){phiA=int(-30,30);phiB=phiA+pick([-12,-8,8,12]);}
+  else if(id==='GE03'){phiA=int(10,70);phiB=phiA;}
+  else{phiA=int(-50,50);phiB=pair==='vertical'?phiA+pick([0,0,-9,9]):rnd()<.5?phiA:phiA+pick([-9,-1,1,9]);}
+  const vertical=pair==='vertical',a=geometrySectorSize(phiA,p),b=geometrySectorSize(vertical?phiA:phiB,qIndex),positionP=anglePosition(p,'A',reflected),positionQ=anglePosition(qIndex,vertical?'A':'B',reflected);
+  q.model={kind:id==='GE02'?'angle-pair':id==='GE03'?'parallel-property':'parallel-test',pair,p,q:qIndex,phiA,phiB,vertical,parallelGiven:id==='GE03',rotation,reflected};
+  const positions=gb(`A transversal t meets l at A and m at B. Direct t from B towards A. P is ${positionP.en}; Q is ${positionQ.en}.`,`截線 t 與 l、m 分別相交於 A、B，t 的方向由 B 指向 A。P ${positionP.zh}；Q ${positionQ.zh}。`);
+  if(id==='GE02'){
+   q.answer=pair;q.options=shuffle(Object.entries(anglePairNames).map(([id,label])=>({id,label})));q.math='P, Q';q.prompt=gb(`${positions.en} Name the pair. Parallelism is not given; the sketch is not a premise about equality.`,`${positions.zh}辨認角對。未有給定平行；不可從草圖外觀推斷角相等。`);q.hint=gb('Use intersection, inside/outside and side of the directed transversal.','按交點、內外位置及截線的哪一方來辨認。');q.solution=gb(`P and Q are ${anglePairNames[pair].en}. This names their positions; without parallelism it does not establish equality or a 180° sum.`,`P、Q 是${anglePairNames[pair].zh}。這只表示位置；未有平行條件，不可因此判定相等或和為 180°。`);
+  }else if(id==='GE03'){
+   q.answer=String(b);q.math=`P = ${a}°; Q = x`;q.prompt=gb(`${positions.en} Given l ∥ m and P=${a}°, find Q=x and give a reason.`,`${positions.zh}已知 l ∥ m，P=${a}°。求 Q=x，並給理由。`);
+   q.hint=gb('Use the stated parallel premise together with the marked pair positions.','須同時使用已知平行條件及所標示的角對位置。');
+   const reason=pair==='two-step'?gb('First use the corresponding angle at B, then its adjacent straight-line angle.','先用 B 的同位角，再用其鄰接平角。'):pair==='same'?gb('Same-side interior angles between parallel lines sum to 180°.','平行線的同旁內角之和為 180°。'):gb(`${anglePairNames[pair].en} between parallel lines are equal.`,`平行線的${anglePairNames[pair].zh}相等。`);
+   q.solution=gb(`${reason.en} Thus Q=${b}°.`,`${reason.zh}所以 Q=${b}°。`);q.manualReason=true;q.reasonRubric=gb('Name l ∥ m, identify the angle pair and any local straight-angle step. Review the written chain separately from the final number.','須指出 l ∥ m、角對，以及適用的鄰接平角步驟；書面推理與最終數值分開評閱。');
+  }else{
+   q.answer=vertical?'insufficient':phiA===phiB?'yes':'no';q.math=`P = ${a}°; Q = ${b}°`;q.options=shuffle([{id:'yes',label:gb('Yes, they must be parallel','是，必定平行')},{id:'no',label:gb('No, the stated angle data rule out parallelism','否，已知角資料排除了平行')},{id:'insufficient',label:gb('The data are insufficient to decide','資料不足，未能判定')}]);
+   q.prompt=gb(`${positions.en} P=${a}° and Q=${b}°. ${vertical?'These are vertically opposite angles at A, with no angle data at B.':`The marked pair is ${anglePairNames[pair].en}.`} Must l and m be parallel? Explain using only these givens; appearance is not a premise.`,`${positions.zh}P=${a}°，Q=${b}°。${vertical?'這是 A 的對頂角，B 並無角度資料。':`所標示的是${anglePairNames[pair].zh}。`}l、m 是否必定平行？只用已知條件解釋，不可以外觀作依據。`);
+   q.hint=gb('A parallel test needs a relationship linking the two different intersections, not just a local equality at one intersection.','判定平行須有連起兩個不同交點的角關係，不能只憑同一交點的局部相等。');
+   const qualifies=pair==='same'?a+b===180:a===b;
+   q.solution=vertical?gb('Insufficient: vertically opposite angles are equal regardless of the direction of m. No relationship with an angle at B is given.','資料不足：不論 m 的方向如何，對頂角本來都相等；未有給定與 B 的角之間的關係。'):gb(`${a}${pair==='same'?`+${b}=${a+b}`:` and ${b}`} ${qualifies?'satisfy':'do not satisfy'} the ${pair==='same'?'180° same-side interior condition':'equal-angle condition for this pair'}. Therefore ${qualifies?'l ∥ m':'l and m cannot be parallel under these givens'}.`,`${pair==='same'?`${a}+${b}=${a+b}`:`${a} 與 ${b}`} ${qualifies?'符合':'不符合'}${pair==='same'?'同旁內角和為 180°':'這類角對相等'}的條件，所以${qualifies?' l ∥ m':'在這些已知條件下 l、m 不平行'}。`);q.manualReason=true;q.reasonRubric=gb('Identify the stated relationship and its parallel test, or explain why local vertical equality gives no information about the second line.','指出已知角關係和相應的平行判定條件，或解釋為何局部對頂角相等不能提供另一條線的資料。');
+  }
+ }else{
+  let A,B,C;do{B=int(20,130);C=int(20,130);A=180-B-C;}while(A<20||A>140);const proof=id==='GE06',target=proof?'proof':pick(['interior','exterior']);
+  q.model={kind:proof?'triangle-proof':'triangle-angles',A,B,C,target,rotation,reflected};q.math=proof?'α + β + γ = ?':`A = ${A}°; B = ${B}°`;
+  if(!proof){q.answer=String(target==='interior'?C:A+B);q.prompt=gb(`In triangle ABC, A=${A}° and B=${B}°. ${target==='interior'?'Find the interior angle C=x.':'BC is extended beyond C to D. Find the exterior angle ACD=x.'} Give a reason.`,`在三角形 ABC，A=${A}°，B=${B}°。${target==='interior'?'求內角 C=x。':'BC 越過 C 延長至 D，求外角 ACD=x。'}並給理由。`);q.hint=gb('Identify whether x is inside the triangle or between AC and the extended ray CD.','先辨認 x 是三角形內角，還是 AC 與延長射線 CD 之間的外角。');q.solution=gb(`${target==='interior'?`A+B+C=180°, so C=180−${A}−${B}=${C}°.`:`ACD=A+B=${A}+${B}=${A+B}°; equivalently ACD+C=180°.`}`,`${target==='interior'?`A+B+C=180°，所以 C=180−${A}−${B}=${C}°。`:`外角 ACD=A+B=${A}+${B}=${A+B}°；亦可用 ACD+C=180°。`}`);q.reasonRubric=gb('Identify the requested sector and use the triangle interior sum or exterior-angle theorem with the two remote interior angles.','指出所求角區域，並使用三角形內角和，或外角等於兩個不相鄰內角之和的定理。');}
+  else{q.answer='p=β; q=γ; p+α+q=180°; E+γ=180°; therefore E=α+β.';q.contract={type:'manual'};q.prompt=gb('In triangle ABC, the constructed line uAv is parallel to BC. The marked angles at A on that line are p and q; the triangle angles are α, β, γ. Use alternate interior and straight angles to prove α+β+γ=180°. Then, with BC extended to D, prove the exterior angle E at C equals α+β.','在三角形 ABC，已作 uAv ∥ BC。A 點直線上的兩個標示角為 p、q；三角形內角為 α、β、γ。請用內錯角及平角證明 α+β+γ=180°，再在 BC 延長至 D 時證明 C 的外角 E=α+β。');q.hint=gb('Match p with β and q with γ using the constructed parallel lines. Do not use the triangle-sum theorem to prove itself.','先利用所作平行線把 p 與 β、q 與 γ 配對；不要用三角形內角和定理來證明它自己。');q.solution=gb('Because uAv ∥ BC, p=β and q=γ by alternate interior angles. Along the straight line at A, p+α+q=180°. Substitute to obtain α+β+γ=180°. Also E+γ=180° along BCD, so E=α+β. This is a deductive proof, not a measurement of this particular drawing.','因 uAv ∥ BC，內錯角相等，故 p=β、q=γ。在 A 的平角上，p+α+q=180°，代入得 α+β+γ=180°。又因 BCD 為直線，E+γ=180°，所以 E=α+β。這是演繹證明，不是量度某幅圖的結果。');q.reasonRubric=gb('Manual review of the entire proof: cite the constructed parallel premise, match both alternate pairs, use the straight angle at A, and derive the exterior claim using E+γ=180°. Do not accept a numerical answer or circular use of triangle-sum as a proof of the general statement.','整份證明需人工評閱：引用所作的平行條件、配對兩組內錯角、使用 A 的平角，再由 E+γ=180° 推出外角結果。單一數值或以內角和定理循環證明本身，不能構成一般命題的證明。');}
+  q.manualReason=true;
+ }
+ if(!q.contract)q.contract=q.options?{type:'choice',answer:q.answer}:{type:'number',answer:q.answer,unit:'degree',form:'number-literal'};
+ q.diagram={type:'angle-geometry',model:q.model};q.exposureKey=angleExposureKey(id,q.model);return q;
+}
+
+// src/math/basic.mjs
+
+const bcText=(en,zh)=>({en,zh});
+const basicFamilies=[
+ ['BC01','Recognise a divisibility test','運用整除性判別方法','JS-1-1','choice'],
+ ['BC02','Read and evaluate a power','理解及計算乘方','JS-1-2','number'],
+ ['BC03','Recognise prime factorisation','辨認質因數分解','JS-1-3','choice'],
+ ['BC04','Find a greatest common divisor','求最大公因數','JS-1-4','number'],
+ ['BC05','Find a least common multiple','求最小公倍數','JS-1-4','number'],
+ ['BC06','Work through nested brackets','處理多重括號','JS-1-5','number'],
+ ['BC07','Calculate with exact fractions','分數的準確運算','JS-1-6','number'],
+ ['BC08','Connect decimals and fractions','小數與分數的混合運算','JS-1-6','number']
+].map(([id,en,zh,objective,contract])=>({id,title:bcText(en,zh),objective,contract,topic:'js-1',version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020, Unit 1; independent review pending'}));
+function basicRandom(seed){let state=2166136261;for(const c of seed)state=Math.imul(state^c.charCodeAt(0),16777619);return()=>{state+=0x6d2b79f5;let t=state;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+function basicGcd(a,b){while(b)[a,b]=[b,a%b];return a;}
+function basicPrimePowers(n){if(!Number.isInteger(n)||n<1||n>100000)throw Error('Positive bounded integer required.');const out=[];for(let p=2;p*p<=n;p++){let e=0;while(n%p===0){e++;n/=p;}if(e)out.push([p,e]);}if(n>1)out.push([n,1]);return out;}
+const bcSup=n=>String(n).split('').map(c=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(c)]).join('');
+const basicFactorText=n=>n===1?'1':basicPrimePowers(n).map(([p,e])=>String(p)+(e>1?bcSup(e):'')).join(' × ');
+function basicDecimal(n,places){const digits=String(n).padStart(places+1,'0');return digits.slice(0,-places)+'.'+digits.slice(-places);}
+function basicExposureKey(id,model){
+ const semantic=['BC04','BC05'].includes(id)?{kind:model.kind,numbers:[...model.numbers].sort((a,b)=>a-b)}:model;
+ return id+':'+JSON.stringify(semantic);
+}
+function generateBasic(id,seed,version=1){
+ if(version!==1)throw Error('This basic-computation question version is unavailable.');if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');
+ const family=basicFamilies.find(f=>f.id===id);if(!family)throw Error('Unknown basic-computation family.');
+ const rnd=basicRandom(id+':'+seed),int=(a,b)=>Math.floor(rnd()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)];
+ const shuffle=items=>{for(let i=items.length-1;i>0;i--){const j=int(0,i);[items[i],items[j]]=[items[j],items[i]];}return items;};
+ const q={id,seed,version,objective:family.objective,marks:id==='BC02'?1:2,lines:5,resourceState:'author-draft'};
+ if(id==='BC01'){
+  const divisor=pick([4,6,8,9]),n=int(1,9999),tail=n%(divisor===8?1000:100),digits=[...String(n)].map(Number),sum=digits.reduce((a,b)=>a+b,0);
+  q.model={kind:'divisibility',n,divisor};q.answer=n%divisor===0?'yes':'no';q.math=String(n);
+  q.options=shuffle([{id:'yes',label:bcText('Yes, divisible','可以整除')},{id:'no',label:bcText('No, not divisible','不能整除')}]);
+  q.prompt=bcText(`Is ${n} divisible by ${divisor}? State the digit test you used. You do not need to prove why the test works.`,`${n} 能否被 ${divisor} 整除？說明所用的判別方法；不須證明該方法為何成立。`);
+  const test=divisor===4?bcText(`The number formed by the last two digits is ${tail}; test whether it is divisible by 4.`,`末兩位數組成的數是 ${tail}；檢查它能否被 4 整除。`):divisor===8?bcText(`The number formed by the last three digits is ${tail}; test whether it is divisible by 8.`,`末三位數組成的數是 ${tail}；檢查它能否被 8 整除。`):divisor===9?bcText(`The digit sum is ${sum}; test whether it is divisible by 9.`,`各位數字之和是 ${sum}；檢查它能否被 9 整除。`):bcText(`The number ${n%2===0?'is':'is not'} even and its digit sum ${sum} ${sum%3===0?'is':'is not'} divisible by 3. Both conditions are needed.`,`這個數${n%2===0?'是':'不是'}偶數，而各位數字之和 ${sum}${sum%3===0?'能':'不能'}被 3 整除；兩個條件必須同時成立。`);
+  q.hint=bcText('For 4 use the last two digits; for 8 use the last three; for 9 use the digit sum; for 6 check both 2 and 3.','4 看末兩位，8 看末三位，9 看各位數字之和；6 須同時通過 2 和 3 的判別。');
+  q.solution=bcText(`${test.en} Therefore ${n} is ${q.answer==='yes'?'':'not '}divisible by ${divisor}.`,`${test.zh}因此 ${n}${q.answer==='yes'?'能':'不能'}被 ${divisor} 整除。`);
+  q.manualReason=true;q.reasonRubric=bcText('Review the stated test and its application to this number. A proof of the general divisibility rule is not required.','評閱所述的判別方法及其在此數的應用；不要求證明一般的整除性規則。');q.diagram={type:'basic-model',kind:'digits',n,divisor};
+ }else if(id==='BC02'){
+  const mode=pick(['value','exponent']),base=int(mode==='value'?1:2,6),exponent=int(1,4),value=base**exponent;
+  q.model=mode==='value'?{kind:'power',mode,base,exponent}:{kind:'power',mode,base,value};q.answer=String(mode==='value'?value:exponent);
+  q.math=mode==='value'?`${base}^${exponent}`:`${base}^? = ${value}`;
+  q.prompt=mode==='value'?bcText('Evaluate the given power. Enter its final numerical value.','計算這個乘方，輸入最終數值。'):bcText(`Write ${value} as a power with base ${base}. Enter the positive integer exponent.`,`把 ${value} 寫成以 ${base} 為底數的乘方，輸入正整數指數。`);
+  q.hint=bcText('The exponent counts equal factors; it does not mean multiply the base by the exponent.','指數表示相同因子的個數，並非把底數乘以指數。');
+  q.solution=bcText(`${base}^${exponent} = ${Array(exponent).fill(base).join(' × ')} = ${value}. The base is ${base}; there are ${exponent} equal factors.`,`${base}${bcSup(exponent)} = ${Array(exponent).fill(base).join(' × ')} = ${value}。底數是 ${base}，相同因子共有 ${exponent} 個。`);
+  q.diagram={type:'basic-model',kind:'power',base,exponent:mode==='value'?exponent:null,value:mode==='exponent'?value:null};
+ }else if(id==='BC03'){
+  const powers=[int(2,3),int(0,2),int(0,1)],n=2**powers[0]*3**powers[1]*5**powers[2];q.model={kind:'prime-factorisation',powers};q.math=String(n);q.answer='prime';
+  const rest=n/4,partial='4'+(rest>1?' × '+basicFactorText(rest):'');
+  q.options=shuffle([{id:'prime',label:basicFactorText(n)},{id:'composite',label:partial},{id:'unit',label:'1 × '+basicFactorText(n)},{id:'wrong-power',label:basicFactorText(n*2)}]);
+  q.prompt=bcText(`Choose the prime factorisation of ${n}. Explain why the factors qualify and the product is correct.`,`選出 ${n} 的質因數分解，並解釋因子為何符合要求及乘積為何正確。`);
+  q.hint=bcText('Every base must be prime. A product containing 1 or a composite factor is not a prime factorisation, even if its value matches.','每個底數都須是質數；即使乘積相同，含有 1 或合成因子的式子也不是質因數分解。');
+  q.solution=bcText(`${n} = ${basicFactorText(n)}. Every base is prime and the product is ${n}. The factor 4 is composite; 1 is neither prime nor composite.`,`${n} = ${basicFactorText(n)}。每個底數都是質數，乘積為 ${n}。4 是合成數；1 既不是質數，也不是合成數。`);
+  q.manualReason=true;q.reasonRubric=bcText('Review that all bases are prime and multiplication reconstructs the original number. Accept prime factors in a different order.','檢查所有底數均為質數，且乘積等於原數；接受不同排列次序的質因數。');q.diagram={type:'basic-model',kind:'split',n,left:2,right:n/2};
+ }else if(id==='BC04'||id==='BC05'){
+  const pool=[1,2,3,4,5,6,8,9,10,12,15,18,20,24,27,30,36,40,45,60,72,90,120],numbers=Array.from({length:pick([2,3])},()=>pick(pool)),isGcd=id==='BC04';
+  const result=isGcd?numbers.reduce(basicGcd):numbers.reduce((a,b)=>a/basicGcd(a,b)*b);q.model={kind:isGcd?'gcd':'lcm',numbers};q.answer=String(result);q.math=numbers.join(', ');
+  q.prompt=bcText(`Find the ${isGcd?'greatest common divisor (GCD, also HCF)':'least common multiple (LCM)'} of all ${numbers.length} numbers. Use prime factorisation and explain your choice of factors.`,`求這 ${numbers.length} 個數的${isGcd?'最大公因數（GCD，亦稱 HCF）':'最小公倍數（LCM）'}。用質因數分解，並解釋因子的選擇。`);
+  q.hint=isGcd?bcText('A common divisor must divide every input: use the smallest exponent of each prime across all inputs, including zero when absent.','公因數須能整除每個數：每個質因數取所有輸入中的最小指數，缺少時指數為 0。'):bcText('A common multiple must contain each input: use the largest exponent needed for each prime across all inputs.','公倍數須包含每個輸入的全部質因數：每個質因數取所有輸入中所需的最大指數。');
+  const factors=numbers.map(n=>`${n} = ${basicFactorText(n)}`).join('; ');
+  q.solution=bcText(`${factors}. ${isGcd?'Use only factors shared by every input, at their smallest exponents':'Use every required prime, at its largest exponent'}. ${isGcd?'GCD':'LCM'} = ${result}${result>1?' = '+basicFactorText(result):''}.`,`${factors}。${isGcd?'只用每個數共有的質因數，各取最小指數':'用所有需要的質因數，各取最大指數'}。${isGcd?'最大公因數':'最小公倍數'} = ${result}${result>1?' = '+basicFactorText(result):''}。`);
+  q.manualReason=true;q.reasonRubric=bcText('Review the factorisation and the exponent choice across every input, including a third input when present. The automatic final-value check does not verify the method.','評閱質因數分解及所有輸入的指數選擇；有第三個數時也須計入。自動核對最終數值不會核實方法。');q.diagram={type:'basic-model',kind:'inputs',numbers,operation:isGcd?'GCD':'LCM'};
+ }else if(id==='BC06'){
+  const mode=pick(['nested-add','nested-product','nested-division']);let m,value,steps;
+  if(mode==='nested-add'){
+   const a=int(4,20),b=int(6,15),c=int(2,b-1),d=int(1,c-1);m={kind:'nested',mode,a,b,c,d};value=a+b-c+d;q.math=`${a} + [${b} - (${c} - ${d})]`;steps=`${c} - ${d} = ${c-d}; ${b} - ${c-d} = ${b-c+d}; ${a} + ${b-c+d} = ${value}`;
+  }else if(mode==='nested-product'){
+   const b=int(2,8),c=int(1,5),d=int(1,5),a=b+c+d+int(1,8),e=int(2,5);m={kind:'nested',mode,a,b,c,d,e};value=(a-b-c-d)*e;q.math=`[(${a} - ${b}) - (${c} + ${d})] × ${e}`;steps=`${a} - ${b} = ${a-b}; ${c} + ${d} = ${c+d}; ${a-b} - ${c+d} = ${a-b-c-d}; ${a-b-c-d} × ${e} = ${value}`;
+  }else{
+   const d=int(2,8),e=int(1,d),c=d+int(1,6),den=c-d+e,valueTarget=int(2,9),sum=den*valueTarget,a=int(1,sum-1),b=sum-a;m={kind:'nested',mode,a,b,c,d,e};value=valueTarget;q.math=`(${a} + ${b}) ÷ [${c} - (${d} - ${e})]`;steps=`${d} - ${e} = ${d-e}; ${c} - ${d-e} = ${den}; ${a} + ${b} = ${sum}; ${sum} ÷ ${den} = ${value}`;
+  }
+  q.model=m;q.answer=String(value);q.prompt=bcText('Calculate the final value. Follow the nested grouping and show the key steps on paper.','計算最終數值，依多重括號的組合次序運算，並在紙上列出關鍵步驟。');q.hint=bcText('Work from the innermost brackets outwards. Multiplication/division share precedence and run left to right, as do addition/subtraction.','由最內層括號開始向外處理；乘除同級由左至右，加減同級也由左至右。');q.solution=bcText(steps+'.',steps+'。');
+ }else if(id==='BC07'){
+  const da=pick([3,4,5,6,8,12,15]),db=pick([3,4,5,6,8,12,15]),dd=pick([3,4,5,6,8,12,15]),a=new Q(int(1,da-1),da),b=new Q(int(1,db-1),db),c=int(2,5),d=new Q(int(1,dd-1),dd),operation=pick(['multiply','divide']);
+  const left=a.add(b),right=new Q(c).add(d.neg()),value=operation==='multiply'?left.mul(right):left.div(right);q.model={kind:'fractions',a:String(a),b:String(b),c,d:String(d),operation};q.answer=String(value);q.math=`(${a} + ${b}) ${operation==='multiply'?'×':'÷'} (${c} - ${d})`;
+  q.prompt=bcText('Calculate exactly. Enter a final number or fraction; equivalent final fractions are accepted.','準確計算，輸入最終數值或分數；接受等值的最終分數。');q.hint=bcText('Use common denominators for addition/subtraction. For division, multiply by the reciprocal of the entire divisor.','加減先通分；除法須乘以整個除數的倒數。');q.solution=bcText(`The brackets give ${left} and ${right}. Then ${left} ${operation==='multiply'?'×':'÷'} (${right}) = ${value}.`,`兩組括號分別得 ${left} 和 ${right}，再算 ${left} ${operation==='multiply'?'×':'÷'} (${right}) = ${value}。`);
+ }else{
+  const mode=pick(['decimal','mixed']);let m,value,steps;
+  if(mode==='decimal'){
+   const a=int(1,90),b=int(1,99),c=int(1,12),d=int(2,6),left=new Q(a,10).add(new Q(b,100));value=left.mul(new Q(c,10)).div(new Q(d));m={kind:'decimals',mode,a,b,c,d};q.math=`(${basicDecimal(a,1)} + ${basicDecimal(b,2)}) × ${basicDecimal(c,1)} ÷ ${d}`;steps=bcText(`The bracket is ${left}. Multiply by ${c}/10 and divide by ${d}: ${value}.`,`括號內為 ${left}，再乘以 ${c}/10，並除以 ${d}，得 ${value}。`);
+  }else{
+   const a=int(20,60),b=int(1,7),c=int(1,12),d=int(1,10);value=new Q(a,10).add(new Q(b,4).mul(new Q(c,10))).add(new Q(-d,10));m={kind:'decimals',mode,a,b,c,d};q.math=`${basicDecimal(a,1)} + ${b}/4 × ${basicDecimal(c,1)} - ${basicDecimal(d,1)}`;steps=bcText(`Multiply ${b}/4 by ${c}/10 first. Then calculate ${a}/10 + ${new Q(b,4).mul(new Q(c,10))} - ${d}/10 = ${value}.`,`先算 ${b}/4 × ${c}/10，再算 ${a}/10 + ${new Q(b,4).mul(new Q(c,10))} - ${d}/10 = ${value}。`);
+  }
+  q.model=m;q.answer=String(value);q.prompt=bcText('Calculate exactly with the stated decimal/fraction values. Enter a final number or fraction, without rounding.','按所給小數／分數準確計算，輸入最終數值或分數，不作四捨五入。');q.hint=bcText('A terminating decimal is an exact fraction with denominator 10, 100, and so on. Convert forms when useful and preserve operation order.','有限小數可準確寫成以 10、100 等為分母的分數；可按需要轉換形式，並保留運算次序。');q.solution=steps;
+ }
+ q.contract=q.options?{type:'choice',answer:q.answer}:{type:'number',answer:q.answer,form:'number-literal'};
+ q.exposureKey=basicExposureKey(id,q.model);return q;
+}
+
+function basicFeedback(q,input){
+ if(!q.id?.startsWith('BC')||q.options)return null;let supplied;try{supplied=scalar(input);}catch{return null;}
+ const m=q.model;
+ if(q.id==='BC02'&&m.mode==='value'&&supplied.eq(new Q(m.base*m.exponent))&&!supplied.eq(scalar(q.answer)))return bcText('You multiplied the base by the exponent. The exponent counts repeated factors of the base.','你把底數乘以指數了；指數表示底數重複相乘的因子個數。');
+ if(['BC04','BC05'].includes(q.id)){
+  const opposite=m.numbers.reduce(q.id==='BC04'?((a,b)=>a/basicGcd(a,b)*b):basicGcd);
+  if(supplied.eq(new Q(opposite))&&!supplied.eq(scalar(q.answer)))return bcText(`That is the ${q.id==='BC04'?'LCM':'GCD'}. Recheck whether the question asks for a divisor of every input or a multiple containing every input.`,`這是${q.id==='BC04'?'最小公倍數':'最大公因數'}；再看題目要求的是能整除所有輸入的因數，還是包含所有輸入的倍數。`);
+ }
+ return null;
+}
+
+// src/math/percentages.mjs
+
+const pcText=(en,zh)=>({en,zh});
+const percentageFamilies=[
+ ['PC01','Find a signed percentage change','求有正負號的百分變化','JS-5-1'],
+ ['PC02','Find the new value','求新值','JS-5-1'],
+ ['PC03','Recover the original value','求原值','JS-5-1'],
+ ['PC04','Discount and profit or loss','折扣與盈虧','JS-5-2'],
+ ['PC05','Combine successive changes','連續增減','JS-5-2'],
+ ['PC06','Compare simple and compound interest','單利息與複利息','JS-5-2'],
+ ['PC07','Combine changes in components','成分增減','JS-5-2'],
+ ['PC08','Apply a supplied tax schedule','運用題設稅階','JS-5-2']
+].map(([id,en,zh,objective])=>({id,title:pcText(en,zh),objective,contract:'number',topic:'js-5',version:1,state:'implemented-author-draft',source:'EDB JS 2017; explanatory notes 2020, Unit 5; independent review pending'}));
+function percentageRandom(seed){let state=2166136261;for(const c of seed)state=Math.imul(state^c.charCodeAt(0),16777619);return()=>{state+=0x6d2b79f5;let t=state;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+const pcMultiplier=r=>new Q(100+r,100);
+const percentageExposureKey=(id,model)=>id+':'+JSON.stringify(model);
+function generatePercentage(id,seed,version=1){
+ if(version!==1)throw Error('This percentage question version is unavailable.');
+ if(typeof seed!=='string'||seed.length>80)throw Error('Invalid seed.');
+ const f=percentageFamilies.find(f=>f.id===id);if(!f)throw Error('Unknown percentage family.');
+ const rnd=percentageRandom(id+':'+seed),int=(a,b)=>Math.floor(rnd()*(b-a+1))+a,pick=a=>a[int(0,a.length-1)];
+ const q={id,seed,version,objective:f.objective,marks:3,lines:6,resourceState:'author-draft',manualReason:true};let value;
+ const exact=pcText(' Enter an exact final number or fraction, without a unit or % sign. Do not round. Explain the reference quantity and method.',' 請輸入準確的最終數值或分數，不加單位或 %，不取近似值；說明基準量及方法。');
+ if(['PC01','PC02','PC03'].includes(id)){
+  const rate=pick(id==='PC03'?[-80,-50,-25,-20,-10,0,5,12,25,50,125]:[-100,-80,-50,-25,-20,-10,0,5,12,25,50,125]),original=int(1,40)*20,next=new Q(original).mul(pcMultiplier(rate));
+  // Retain only the givens in the semantic model. An unknown value is not a given.
+  q.model=id==='PC01'?{kind:'change',original,next:String(next)}:id==='PC02'?{kind:'new',original,rate}:{kind:'original',next:String(next),rate};
+  if(id==='PC01'){
+   value=new Q(rate);q.math=`${original} → ${next}`;
+   q.prompt=pcText(`A quantity changes from ${original} to ${next}. Find its signed percentage change, using ${original} as the original reference quantity. A decrease needs a minus sign.`,`一個量由 ${original} 變成 ${next}。以原值 ${original} 為基準，求有正負號的百分變化；減少須用負號。`);
+   q.solution=pcText(`Change = ${next} - ${original}. Divide by the original ${original}, then multiply by 100: ${rate}%. Reversing the direction changes the denominator.`,`改變量 = ${next} - ${original}。除以原值 ${original} 再乘 100，得 ${rate}%。反方向的基準量不同。`);
+  }else if(id==='PC02'){
+   value=next;q.math=`${original} × (1 + (${rate})/100)`;
+   q.prompt=pcText(`The original value is ${original}. It changes by ${rate}%. Find the new value. Negative change means depreciation; positive change means growth.`,`原值為 ${original}，百分變化為 ${rate}%。求新值。負變化表示減少或折舊，正變化表示增長。`);
+   q.solution=pcText(`The multiplier is (100 + ${rate})/100 = ${pcMultiplier(rate)}. New value = ${original} × ${pcMultiplier(rate)} = ${next}.`,`倍數為 (100 + ${rate})/100 = ${pcMultiplier(rate)}。新值 = ${original} × ${pcMultiplier(rate)} = ${next}。`);
+  }else{
+   value=new Q(original);q.math=`? × (1 + (${rate})/100) = ${next}`;
+   q.prompt=pcText(`After a change of ${rate}%, the new value is ${next}. Find the original value.`,`百分變化為 ${rate}% 後，新值是 ${next}。求原值。`);
+   q.solution=pcText(`The nonzero multiplier is ${pcMultiplier(rate)}. Original = ${next} ÷ (${pcMultiplier(rate)}) = ${original}. Multiplying back gives ${next}. A 100% decrease cannot uniquely determine an original value.`,`非零倍數為 ${pcMultiplier(rate)}。原值 = ${next} ÷ (${pcMultiplier(rate)}) = ${original}；乘回去得到 ${next}。減少 100% 後不能唯一確定原值。`);
+  }
+  q.hint=pcText('Percentage change uses (new - original)/original × 100. New = original × (1 + signed rate/100); reverse a nonzero multiplier by division.','百分變化為（新值 − 原值）÷ 原值 × 100。新值 = 原值 ×（1 + 有正負號的百分率/100）；求原值須除以非零倍數。');
+  q.diagram={type:'percentage-model',kind:'base',label:pcText('The original quantity is the 100% reference.','原值就是 100% 的基準量。')};
+ }else if(id==='PC04'){
+  const cost=int(4,20)*50,markup=pick([10,20,25,40,50]),discount=pick([10,20,25,30]),mode=pick(['selling','profit-rate']),marked=new Q(cost).mul(pcMultiplier(markup)),selling=marked.mul(pcMultiplier(-discount));
+  q.model={kind:'retail',cost,markup,discount,mode};value=mode==='selling'?selling:selling.add(new Q(-cost)).div(new Q(cost)).mul(new Q(100));q.math=`${cost} → ${marked} → ?`;
+  q.prompt=pcText(`An item costs HK$${cost}. Its marked price is ${markup}% above cost. A ${discount}% discount is then taken off the marked price. ${mode==='selling'?'Find the selling price in HK$.':'Find the signed profit/loss percentage based on cost; a loss needs a minus sign.'}`,`貨品成本為 HK$${cost}，標價比成本高 ${markup}%，再按標價減價 ${discount}%。${mode==='selling'?'求售價（港元）。':'以成本為基準，求有正負號的盈利／虧損百分率；虧損須用負號。'}`);
+  q.hint=pcText('Markup uses cost; discount uses marked price; profit/loss percentage uses cost again. These bases differ.','加價以成本為基準；折扣以標價為基準；盈虧百分率再以成本為基準。');
+  q.solution=pcText(`Marked price = ${marked}. Selling price = ${marked} × ${pcMultiplier(-discount)} = ${selling}. ${mode==='profit-rate'?`(selling - cost)/cost × 100 = ${value}%.`:`The selling price is HK$${value}.`} The discount is not taken off cost.`,`標價 = ${marked}。售價 = ${marked} × ${pcMultiplier(-discount)} = ${selling}。${mode==='profit-rate'?`（售價 − 成本）÷ 成本 × 100 = ${value}%。`:`售價為 HK$${value}。`}折扣並非按成本計算。`);
+ }else if(id==='PC05'){
+  const original=int(2,20)*100,r1=pick([-50,-20,-10,10,20,50]),r2=pick([-50,-20,-10,10,20,50]),mode=pick(['new','overall']),next=new Q(original).mul(pcMultiplier(r1)).mul(pcMultiplier(r2));
+  q.model={kind:'successive',original,r1,r2,mode};value=mode==='new'?next:next.div(new Q(original)).add(new Q(-1)).mul(new Q(100));q.math=`${original} → (${r1}%) → (${r2}%) → ?`;
+  q.prompt=pcText(`A quantity starts at ${original}. It changes by ${r1}%, then by ${r2}% of the value after the first change. ${mode==='new'?'Find the final value.':'Find the overall signed percentage change relative to the initial value.'}`,`一個量起初為 ${original}，先改變 ${r1}%，再以第一次改變後的值為基準改變 ${r2}%。${mode==='new'?'求最終值。':'相對最初的值，求整體有正負號的百分變化。'}`);
+  q.hint=pcText('Multiply the two multipliers. Adding signed rates misses the changed second base.','把兩個倍數相乘；直接相加百分率會忽略第二次的基準量已改變。');
+  q.solution=pcText(`Final = ${original} × ${pcMultiplier(r1)} × ${pcMultiplier(r2)} = ${next}. ${mode==='overall'?`Overall change = (${next}/${original} - 1) × 100 = ${value}%.`:`The requested final value is ${value}.`}`,`最終值 = ${original} × ${pcMultiplier(r1)} × ${pcMultiplier(r2)} = ${next}。${mode==='overall'?`整體變化 = (${next}/${original} − 1) × 100 = ${value}%。`:`所求最終值為 ${value}。`}`);
+  q.diagram={type:'percentage-model',kind:'timeline',r1,r2};
+ }else if(id==='PC06'){
+  const principal=int(1,12)*1000,rate=pick([2,4,5,10]),years=int(2,3),mode=pick(['simple','compound']),target=pick(['amount','interest']);let amount=new Q(principal);
+  if(mode==='simple')amount=amount.mul(new Q(100+rate*years,100));else for(let y=0;y<years;y++)amount=amount.mul(pcMultiplier(rate));
+  q.model={kind:'interest',principal,rate,years,mode,target};value=target==='amount'?amount:amount.add(new Q(-principal));q.math=`P = ${principal}; r = ${rate}%; t = ${years}`;
+  q.prompt=pcText(`In a hypothetical account, HK$${principal} earns ${rate}% per year for ${years} years, with ${mode==='simple'?'simple interest on the original principal only':'compound interest added annually'}. No deposits, withdrawals or fees occur. Find the ${target==='amount'?'final amount (principal plus interest)':'interest earned only'} in HK$.`,`假設本金 HK$${principal}，年利率 ${rate}%，存期 ${years} 年，按${mode==='simple'?'原本金計單利息':'每年複利一次'}，沒有存款、提款或費用。求${target==='amount'?'本利和':'利息（不含本金）'}（港元）。`);
+  q.hint=pcText('Simple interest keeps the same principal base each year; annual compound interest uses the previous balance. Distinguish interest from amount.','單利息每年以原本金為基準；年複利息以上一年的結餘為基準。分清利息與本利和。');
+  q.solution=pcText(`${mode==='simple'?`Interest = ${principal} × ${rate}/100 × ${years}.`:`Multiply the balance by ${pcMultiplier(rate)} once per year, ${years} times.`} Amount = ${amount}; interest = ${amount.add(new Q(-principal))}. Requested value = ${value}.`,`${mode==='simple'?`利息 = ${principal} × ${rate}/100 × ${years}。`:`每年結餘乘 ${pcMultiplier(rate)}，共 ${years} 次。`}本利和 = ${amount}；利息 = ${amount.add(new Q(-principal))}。所求值為 ${value}。`);
+ }else if(id==='PC07'){
+  const a=int(1,12)*100,b=int(1,12)*100,ra=pick([-50,-20,0,10,25,50]),rb=pick([-20,0,10,25,50]),next=new Q(a).mul(pcMultiplier(ra)).add(new Q(b).mul(pcMultiplier(rb)));
+  q.model={kind:'components',a,b,ra,rb};value=next.add(new Q(-a-b)).div(new Q(a+b)).mul(new Q(100));q.math=`A: ${a} (${ra}%); B: ${b} (${rb}%)`;
+  q.prompt=pcText(`A total consists only of component A (${a} units) and B (${b} units). A changes by ${ra}% of its own original amount; B changes by ${rb}% of its own original amount. Find the signed percentage change of the total relative to ${a+b}.`,`總量只由 A（${a} 單位）及 B（${b} 單位）組成。A 按本身原值改變 ${ra}%，B 按本身原值改變 ${rb}%。以總原值 ${a+b} 為基準，求總量有正負號的百分變化。`);
+  q.hint=pcText('Calculate each changed component, add, then compare with the original total. An unweighted average works only for equal original components.','先分別計新成分，再相加，最後與總原值比較；只有原成分相等時才能直接平均百分率。');
+  q.solution=pcText(`New A = ${new Q(a).mul(pcMultiplier(ra))}; new B = ${new Q(b).mul(pcMultiplier(rb))}. New total = ${next}. Overall change = (${next} - ${a+b})/${a+b} × 100 = ${value}%.`,`新 A = ${new Q(a).mul(pcMultiplier(ra))}；新 B = ${new Q(b).mul(pcMultiplier(rb))}。新總量 = ${next}。總百分變化 = (${next} − ${a+b})/${a+b} × 100 = ${value}%。`);
+ }else{
+  const allowance=100000,band=50000,income=pick([80000,100000,125000,150000,175000,200000,250000]),r1=2,r2=6,net=Math.max(0,income-allowance),first=Math.min(net,band),rest=Math.max(0,net-band);
+  q.model={kind:'tax',schedule:'fictional-classroom-2026-11-22',income,allowance,band,r1,r2};value=new Q(first*r1+rest*r2,100);q.math=`${income} − ${allowance}`;
+  q.prompt=pcText(`Use this fictional classroom salaries-tax schedule, dated 22 November 2026 (not current Hong Kong law): annual income HK$${income}; allowance HK$${allowance}. Taxable income is max(0, income - allowance). Charge 2% on the first HK$50000 of taxable income and 6% on the remainder. There are no other rules or deductions. Find the tax in HK$.`,`只用以下虛構課堂薪俸稅表（日期：2026 年 11 月 22 日，並非現行香港法例）：年收入 HK$${income}，免稅額 HK$${allowance}。應課稅收入 = max(0, 收入 − 免稅額)。首 HK$50000 應課稅收入按 2% 計算，其餘按 6% 計算，沒有其他規則或扣除。求稅款（港元）。`);
+  q.hint=pcText('Subtract the allowance, stopping at zero. Split taxable income into the stated bands; the higher rate applies only to the remainder.','先扣免稅額，最低為零；再按稅階分開計算，高稅率只適用於餘額。');
+  q.solution=pcText(`Taxable income = ${net}. First band = ${first}; remainder = ${rest}. Tax = ${first} × 2/100 + ${rest} × 6/100 = HK$${value}.`,`應課稅收入 = ${net}；首階收入 = ${first}，餘額 = ${rest}。稅款 = ${first} × 2/100 + ${rest} × 6/100 = HK$${value}。`);
+ }
+ q.prompt=pcText(q.prompt.en+exact.en,q.prompt.zh+exact.zh);q.answer=String(value);q.contract={type:'number',answer:q.answer,form:'number-literal'};
+ q.reasonRubric=pcText('Review the base quantity, signed rate or multiplier, units and interpretation against the worked model. The automatic final value does not verify this explanation.','對照解答，檢視基準量、有正負號的百分率或倍數、單位及解釋。自動核對最終數值並不核實這段理由。');
+ q.exposureKey=percentageExposureKey(id,q.model);return q;
+}
+function percentageFeedback(q,input){
+ if(!q.id?.startsWith('PC'))return null;let v;try{v=scalar(input);}catch{return null;}if(v.eq(scalar(q.answer)))return null;const m=q.model;
+ if(q.id==='PC01'&&scalar(m.next).n!==0n&&v.eq(scalar(m.next).add(new Q(-m.original)).div(scalar(m.next)).mul(new Q(100))))return pcText('You used the new value as denominator. The requested change is based on the original value.','你用了新值作分母；所求百分變化須以原值為基準。');
+ if(q.id==='PC03'&&v.eq(scalar(m.next).mul(pcMultiplier(-m.rate))))return pcText('Undo the multiplier by division. Applying an opposite percentage to the new value uses a different base.','應除以原倍數；向新值套用相反百分率會用了不同基準量。');
+ if(q.id==='PC05'&&v.eq(m.mode==='overall'?new Q(m.r1+m.r2):new Q(m.original).mul(pcMultiplier(m.r1+m.r2))))return pcText('The second change uses the changed value. Multiply the multipliers rather than adding the rates.','第二次以改變後的值為基準；應把倍數相乘，不能直接相加百分率。');
+ if(q.id==='PC07'&&v.eq(new Q(m.ra+m.rb,2)))return pcText('The original components may have different sizes. Weight their changes by their original amounts.','兩個原成分可能大小不同，須按各自原值計算改變量。');
+ return null;
+}
+
+// src/math/registry.mjs
+
+
+
+
+
+
+
+
+const families=[...percentageFamilies,...basicFamilies,...curriculumFamilies,...expressionFamilies,...equationFamilies,...angleFamilies,...fixtureFamilies.map(f=>({...f,development:true}))];
+function generate(id,seed,version){
+ return percentageFamilies.some(f=>f.id===id)?generatePercentage(id,seed,version??1):basicFamilies.some(f=>f.id===id)?generateBasic(id,seed,version??1):angleFamilies.some(f=>f.id===id)?generateAngle(id,seed,version??1):equationFamilies.some(f=>f.id===id)?generateEquation(id,seed,version??1):expressionFamilies.some(f=>f.id===id)?generateExpression(id,seed,version??1):curriculumFamilies.some(f=>f.id===id)?generateCurriculum(id,seed,version??1):generateFixture(id,seed,version??FIXTURE_VERSION);
+}
+function makeItems(ids,seed,count=6){
+ if(!Array.isArray(ids)||!ids.length||ids.some(id=>!families.some(f=>f.id===id))||!Number.isInteger(count)||count<1||count>12)throw Error('Choose 1–12 questions and at least one available set.');
+ return Array.from({length:count},(_,i)=>generate(ids[i%ids.length],`${seed}:${i}`));
+}
+
+// src/lessons/percentages.mjs
+
+const pcPair=(en,zh)=>({en,zh});
+const percentageLessons=[
+ {id:'PC-L1',families:['PC01','PC02','PC03'],title:pcPair('Start with the original','先找原值'),why:pcPair('A shop price rises and then falls by the same percentage. Will you pay the original price? The reference quantity decides.','售價先增加、再減少相同百分率，會回到原價嗎？關鍵在於基準量。'),before:pcPair('Convert percentages to fractions or decimals; calculate exact fractions.','能把百分數化成分數或小數，並作準確運算。'),goals:pcPair(['Identify the original quantity as 100%.','Calculate signed percentage change and a new value.','Recover an original value by dividing by a nonzero multiplier.'],['把原值視為 100%。','計算有正負號的百分變化及新值。','除以非零倍數求原值。']),readiness:pcPair('A quantity changes from 100 to 120. Is the reverse change also 20%?','一個量由 100 變成 120，反過來也是改變 20% 嗎？'),readinessAnswer:pcPair('Forward: 20/100 × 100 = +20%. Reverse: -20/120 × 100 = -50/3%. The size of the difference is the same; the base changes.','正向為 20/100 × 100 = +20%；反向為 −20/120 × 100 = −50/3%。改變量的大小相同，但基準量不同。'),sections:[
+  {title:pcPair('Name the base and the sign','說清基準及正負號'),text:pcPair('Percentage change = (new - original)/original × 100%. The original must be nonzero; this slice uses positive originals. Increases are positive, decreases negative, and no change is 0%. A rise from 80 to 100 is 25%, although the difference is only 20 units. A percentage change and a change in percentage points answer different questions.','百分變化 =（新值 − 原值）÷ 原值 × 100%。原值不能為零；這組題目使用正原值。增加用正數，減少用負數，不變為 0%。80 增至 100 是增加 25%，雖然只多了 20 單位。百分變化與百分點的改變是不同的問題。')},
+  {title:pcPair('Use one multiplier','用一個倍數表示變化'),text:pcPair('A 20% increase leaves 120% of the original: multiply by 1.2. A 20% decrease leaves 80%: multiply by 0.8. Thus 200 becomes 240 or 160. Growth and depreciation use the same relationship. A 100% decrease gives zero; a 125% increase multiplies by 2.25.','增加 20% 後是原值的 120%，乘 1.2；減少 20% 後是原值的 80%，乘 0.8。因此 200 分別變成 240 或 160。增長和折舊都用同一關係。減少 100% 得零；增加 125% 則乘 2.25。')},
+  {title:pcPair('Reverse by dividing','倒過來要用除法'),text:pcPair('After a 20% discount a price is 160. The original satisfies original × 0.8 = 160, so original = 160/0.8 = 200. Adding 20% to 160 gives 192 and does not undo the discount. Recovery questions require a nonzero multiplier: after a 100% decrease, many originals lead to zero. Keep exact fractions when a decimal repeats.','減價 20% 後是 160。原值 × 0.8 = 160，所以原值 = 160/0.8 = 200。向 160 加 20% 得 192，不能還原。求唯一原值須有非零倍數；減少 100% 後，很多原值都會變成零。小數循環時保留準確分數。')}],takeaway:pcPair('Name the original, encode the signed change as a multiplier, then multiply forward or divide backward. Check by substitution.','先找原值，再把有正負號的變化化成倍數；向前用乘法，還原用除法，最後代入檢查。'),next:pcPair('Use the same relationship with cost, marked price and selling price.','下一課把同一關係用於成本、標價及售價。')},
+ {id:'PC-L2',families:['PC04','PC05'],title:pcPair('Track a changing base','追蹤改變中的基準'),why:pcPair('Two promotional percentages can describe different steps. Follow the money through each step before comparing offers.','兩個優惠百分率可能屬於不同步驟；先逐步追蹤金額，再比較優惠。'),before:pcPair('Find new and original values using multipliers.','能用倍數求新值及原值。'),goals:pcPair(['Distinguish cost, marked price and selling price.','Use cost as the profit/loss reference.','Combine successive changes by multiplying factors.'],['分清成本、標價和售價。','以成本為盈虧百分率的基準。','把連續增減的倍數相乘。']),readiness:pcPair('An item costs 200, is marked up by 25%, then discounted by 20%. Is it sold at a profit?','貨品成本 200，先加價 25%，再減價 20%，售出時有盈利嗎？'),readinessAnswer:pcPair('Marked price = 200 × 1.25 = 250; selling price = 250 × 0.8 = 200. There is neither profit nor loss. Subtracting 20 from 25 would give the wrong result.','標價 = 200 × 1.25 = 250；售價 = 250 × 0.8 = 200，沒有盈利或虧損。不能直接用 25 減 20。'),sections:[
+  {title:pcPair('Three names, three roles','三個名稱，各有作用'),text:pcPair('Cost is what the seller pays; marked price is the displayed price; selling price is what the customer actually pays. A discount applies to marked price. In Hong Kong usage, 八折 means paying 80% of marked price: 20% off. 八五折 means paying 85%: 15% off. Read the amount paid and the amount removed separately.','成本是賣方付出的金額，標價是展示的價格，售價是顧客實付的金額。折扣以標價計算。八折表示付標價的 80%，即減價 20%；八五折表示付 85%，即減價 15%。要分清付出多少及減去多少。')},
+  {title:pcPair('Profit and loss return to cost','盈虧回到成本比較'),text:pcPair('Signed profit/loss percentage = (selling - cost)/cost × 100%. A sale at 180 when cost is 200 has a 10% loss, recorded here as -10. Dividing by 180 instead would describe a different ratio. A discount can reduce a markup without necessarily creating a loss.','有正負號的盈虧百分率 =（售價 − 成本）÷ 成本 × 100%。成本 200、售價 180 是虧損 10%，本題用 −10 記錄。除以 180 是另一個比率。打折會減少加價所得，但未必導致虧損。')},
+  {title:pcPair('A second change has a new base','第二次有新基準'),text:pcPair('From 200, a 20% rise gives 240; a subsequent 20% fall gives 192. The combined multiplier is 1.2 × 0.8 = 0.96, so the overall change is -4%. Opposite rates do not generally cancel. For growth or depreciation over several periods, apply each stated multiplier to the previous value.','200 增加 20% 成 240，再減少 20% 成 192。合併倍數為 1.2 × 0.8 = 0.96，整體減少 4%。相反的百分率一般不會抵銷。多期增長或折舊都應把每個題設倍數乘以上一期的值。')}],takeaway:pcPair('Write a labelled chain of values. Multiply successive factors; compare the final result with the initial reference quantity.','寫出有名稱的數值鏈，把各步倍數相乘，再以最初的基準量比較結果。'),next:pcPair('Next, compare repeated interest with changes in separate components.','下一課比較重複計息與不同成分的改變。')},
+ {id:'PC-L3',families:['PC06','PC07'],title:pcPair('Repeat or combine?','重複變化，還是合併成分？'),why:pcPair('A yearly return and two departments growing separately need different models. Decide what changes over time and what is added.','每年計息與兩個部門各自增長，需要不同模型；先分清隨時間變化及相加的量。'),before:pcPair('Multiply percentage factors; add exact quantities.','能相乘百分率倍數及相加準確數量。'),goals:pcPair(['Distinguish principal, interest, rate, term and amount.','Compare simple interest with annual compounding.','Combine component changes using original sizes.'],['分清本金、利息、利率、年期及本利和。','比較單利息及每年複利。','按原成分大小合併變化。']),readiness:pcPair('HK$1000 earns 10% per year for two years. Does every model give the same interest?','HK$1000 按年利率 10% 存兩年，所有計息方法都得相同利息嗎？'),readinessAnswer:pcPair('Simple interest: 100 each year, interest 200, amount 1200. Annual compound interest: balances 1100 then 1210, interest 210.','單利息每年 100，利息共 200，本利和 1200；年複利結餘先是 1100，再是 1210，利息共 210。'),sections:[
+  {title:pcPair('Keep principal and interest separate','分清本金及利息'),text:pcPair('Principal is the initial deposit. The annual rate describes one year and the term states how many years. Amount means principal plus interest. With simple interest, each year uses the original principal: interest = principal × annual rate × years. These hypothetical exercises have no fees or additional payments.','本金是最初存款；年利率描述一年的利息比率，年期表示多少年。本利和是本金加利息。單利息每年以原本金計算：利息 = 本金 × 年利率 × 年數。這些假設題目沒有費用或額外款項。')},
+  {title:pcPair('Compounding changes the balance','複利改變計息基準'),text:pcPair('Annual compounding adds each year’s interest to the balance before the next year. Multiply by the same factor once per year. For 1000 at 10% over two years, 1000 × 1.1 × 1.1 = 1210. Subtract 1000 only if interest alone is requested. An exact fraction is acceptable; do not round intermediate balances.','每年複利先把利息加入結餘，再用於下一年計息；每年乘一次相同倍數。1000 按 10% 存兩年為 1000 × 1.1 × 1.1 = 1210。只求利息時才減去 1000。可用準確分數，不把中途結餘取近似值。')},
+  {title:pcPair('Components are weighted by size','成分須按大小計算'),text:pcPair('A has 100 units and grows 20%; B has 300 and stays unchanged. The total goes from 400 to 420, a 5% rise. Averaging 20% and 0% gives 10%, which ignores the unequal original sizes. Change each component separately, add the new amounts and compare with the original total.','A 有 100 單位並增加 20%；B 有 300 單位且不變。總量由 400 變成 420，增加 5%。直接平均 20% 和 0% 得 10%，忽略了原成分大小不同。應分別計算新成分、相加，再與總原值比較。')}],takeaway:pcPair('Time steps multiply balances. Separate components add amounts. Identify the structure before selecting a formula.','時間上的變化逐次乘倍數；不同成分則把數量相加。先分辨結構，再選計法。'),next:pcPair('Finally, apply percentages to a complete supplied tax schedule.','最後用完整的題設稅表練習百分法。')},
+ {id:'PC-L4',families:['PC08'],title:pcPair('Read a schedule before calculating','先讀規則，再計算'),why:pcPair('A tiered charge applies different rates to different portions. Reading the rule is part of the mathematics.','分階收費對不同部分用不同率；理解規則也是數學的一部分。'),before:pcPair('Subtract allowances, split amounts and find a percentage of each part.','能扣除免稅額、分開金額並計各部分的百分數。'),goals:pcPair(['Use only the supplied fictional tax rules.','Keep taxable income nonnegative.','Apply each rate to its own band and explain the total.'],['只用題目提供的虛構稅制。','應課稅收入最低為零。','按各稅階計算並解釋總額。']),readiness:pcPair('Does entering a higher band mean all income uses the higher rate?','進入較高稅階後，所有收入都按較高率計算嗎？'),readinessAnswer:pcPair('Not in the marginal schedule used here. Each rate applies only to its own stated portion.','本課的分階制度不是這樣；每個稅率只適用於所列部分。'),sections:[
+  {title:pcPair('Use the stated model','依照題設模型'),text:pcPair('These exercises use a fictional classroom salaries-tax schedule dated 22 November 2026. It is not current Hong Kong tax law. Allowance is 100000; taxable income is max(0, income - allowance). The first 50000 of taxable income uses 2%; the remainder uses 6%. No other rules apply.','本課使用日期為 2026 年 11 月 22 日的虛構課堂薪俸稅表，並非現行香港稅法。免稅額 100000；應課稅收入為 max(0, 收入 − 免稅額)。首 50000 應課稅收入按 2%，餘額按 6%，沒有其他規則。')},
+  {title:pcPair('Split, then add','先分階，再相加'),text:pcPair('For income 175000, taxable income is 75000. Tax = 50000 × 0.02 + 25000 × 0.06 = 2500. Applying 6% to all 75000 would overstate tax. Income 80000 gives taxable income zero and tax zero; the allowance does not create negative tax.','收入 175000 的應課稅收入是 75000。稅款 = 50000 × 0.02 + 25000 × 0.06 = 2500。把全部 75000 都乘 6% 會多算。收入 80000 時應課稅收入及稅款均為零；免稅額不會產生負稅款。')},
+  {title:pcPair('Explain what each percentage measures','解釋每個百分率的意思'),text:pcPair('A band rate measures tax on that portion, while an average tax percentage would divide total tax by a stated whole such as annual income. These questions request the tax amount only. Show the allowance, each band amount and its tax before adding. Reverse salary-from-tax problems are outside this bounded slice.','稅階率描述某部分的稅款；平均稅率則須把總稅款除以清楚指定的整體，例如年收入。本組只求稅款。先列免稅額、各階收入及相應稅款，再相加。本組不包括由稅款反求年薪的題目。')}],takeaway:pcPair('Read the whole rule, split the base correctly and add the charges. A correct total still needs an explanation of the model.','讀完整規則、分對基準金額，再相加各部分稅款。總額正確仍須說明模型。'),next:pcPair('Bring the ideas together in a separate eight-family check or make a paper. Rates, ratios and proportions are planned next.','用獨立八類主題檢查或練習紙綜合所學。下一個計劃主題是率、比及比例。')}
+];
+function percentageLessonExamples(lesson){return lesson.families.map((id,i)=>generatePercentage(id,lesson.id+':model-'+i));}
+// Fixed numerical examples visible in explanations are exposure too.
+const pcStaticModels={
+ 'PC-L1':[['PC01',{kind:'change',original:100,next:'120'}],['PC01',{kind:'change',original:120,next:'100'}],['PC01',{kind:'change',original:80,next:'100'}],['PC02',{kind:'new',original:200,rate:20}],['PC02',{kind:'new',original:200,rate:-20}],['PC03',{kind:'original',next:'160',rate:-20}]],
+ 'PC-L2':[['PC04',{kind:'retail',cost:200,markup:25,discount:20,mode:'selling'}],['PC04',{kind:'retail',cost:200,markup:25,discount:20,mode:'profit-rate'}],...['new','overall'].map(mode=>['PC05',{kind:'successive',original:200,r1:20,r2:-20,mode}])],
+ 'PC-L3':[...['simple','compound'].flatMap(mode=>['amount','interest'].map(target=>['PC06',{kind:'interest',principal:1000,rate:10,years:2,mode,target}])),['PC07',{kind:'components',a:100,b:300,ra:20,rb:0}]],
+ 'PC-L4':[80000,175000].map(income=>['PC08',{kind:'tax',schedule:'fictional-classroom-2026-11-22',income,allowance:100000,band:50000,r1:2,r2:6}])
+};
+function recordedPercentageExamples(studied){return percentageLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...percentageLessonExamples(l),...pcStaticModels[l.id].map(([id,model])=>({id,exposureKey:percentageExposureKey(id,model)}))]);}
+
+// src/lessons/basic.mjs
+
+const bcPair=(en,zh)=>({en,zh});
+const basicLessons=[
+ {id:'BC-L1',families:['BC01','BC02'],title:bcPair('Read digits. Read powers.','理解數位與乘方'),why:bcPair('A short notation carries a precise instruction. Learn what to inspect before calculating.','簡短的記法也有準確的意思；先理解，再計算。'),before:bcPair('Know whole-number multiplication, division, remainders, and place value.','認識整數乘除、餘數與位值。'),goals:bcPair(['Apply the tests for divisibility by 4, 6, 8 and 9.','Evaluate a positive integer power.','Recover a positive exponent when the base and value are given.'],['運用 4、6、8、9 的整除性判別方法。','計算正整數的乘方。','由給定的底數及值找出正整數指數。']),readiness:bcPair('Is 372 divisible by 4? What part of the number would you inspect?','372 能被 4 整除嗎？你會檢查哪部分？'),readinessAnswer:bcPair('Its last two digits form 72. Since 72 is divisible by 4, so is 372. We apply the test; proving the general rule is not required here.','末兩位數字組成 72。72 能被 4 整除，所以 372 也可以。這裡要求運用判別方法，不要求證明一般規則。'),sections:[
+  {title:bcPair('Choose the right digit test','選對整除性判別方法'),text:bcPair('For 4 inspect the last two digits; for 8 inspect the last three. A shorter number can be read with leading zeros. For 9 add all digits and test the sum. Each test must also identify numbers that fail it.','4 看末兩位，8 看末三位；位數較少時可在前面補零。9 看各位數字的和。每種方法都要能判斷「可整除」及「不可整除」。')},
+  {title:bcPair('Both conditions matter for 6','6 的兩個條件缺一不可'),text:bcPair('A number is divisible by 6 exactly when it is even and its digit sum is divisible by 3. The factors 2 and 3 are coprime. Checking 2 and 4 does not similarly test 8: 12 passes both tests but is not divisible by 8.','一個數能被 6 整除，當且僅當它是偶數，而且各位數字的和能被 3 整除。2 與 3 互質。同樣檢查 2 和 4 並不能判斷 8 的整除性：12 能被 2 和 4 整除，卻不能被 8 整除。')},
+  {title:bcPair('The exponent counts factors','指數表示相同因數的個數'),text:bcPair('3⁴ means 3 × 3 × 3 × 3 = 81, rather than 3 × 4. Reading in reverse, 81 = 3⁴ has base 3 and exponent 4. An exponent of 1 means one factor. These questions use positive integer bases and exponents; laws of indices and zero or negative exponents are later topics.','3⁴ 表示 3 × 3 × 3 × 3 = 81，不是 3 × 4。反過來，81 = 3⁴ 的底數是 3，指數是 4。指數 1 表示只有一個因數。這組題目只用正整數底數及指數；指數定律、零及負指數留待之後學習。')}],takeaway:bcPair('Divisibility tests inspect place value or digit sums. Powers count repeated equal factors. State which instruction you are using.','整除性判別利用位值或數字和；乘方表示重複相同的因數。清楚指出你所用的方法。'),next:bcPair('Next, use powers to record prime factorisation and compare several numbers.','下一課用乘方記錄質因數分解，並比較多個數。')},
+ {id:'BC-L2',families:['BC03','BC04','BC05'],title:bcPair('Factor, then compare','先分解，再比較'),why:bcPair('The same prime factors explain both shared divisors and shared multiples. The exponent choice changes with the question.','同一組質因數可以幫助找公因數及公倍數；關鍵在於如何選指數。'),before:bcPair('Multiply positive integers, read powers, and distinguish factors from multiples.','能計算正整數乘法、理解乘方，並分辨因數與倍數。'),goals:bcPair(['Recognise a complete prime factorisation.','Find GCD/HCF by the smallest exponent across every input.','Find LCM by the largest exponent across every input, including three numbers.'],['辨認完整的質因數分解。','以每個數中最小的指數找最大公因數。','以每個數中最大的指數找最小公倍數，包括三個數的情況。']),readiness:bcPair('Is 72 = 4 × 18 already a prime factorisation?','72 = 4 × 18 已經是質因數分解嗎？'),readinessAnswer:bcPair('No. Both 4 and 18 are composite. Continue splitting: 72 = 2³ × 3². All bases are now prime.','不是。4 及 18 都是合數。繼續分解可得 72 = 2³ × 3²，所有底數都是質數。'),sections:[
+  {title:bcPair('Stop only at primes','直到質因數才停止'),text:bcPair('A prime has exactly two positive factors, 1 and itself. The number 1 is neither prime nor composite. A factor tree or repeated division can organise the work; its final product must reconstruct the input. Collect repeated prime factors using powers. Different factor orders are acceptable.','質數只有兩個正因數：1 及本身。1 既不是質數，也不是合數。可用因數樹或連除整理過程；最後的乘積必須等於原數。用乘方表示重複的質因數；排列次序可以不同。')},
+  {title:bcPair('Shared factors: use the minimum','共同因數取最小指數'),text:bcPair('12 = 2² × 3 and 18 = 2 × 3². A divisor of both cannot use more copies of a prime than either input supplies. Their GCD is 2 × 3 = 6. An absent prime has exponent zero. For three inputs, compare all three: the GCD of 6, 10 and 15 is 1, even though each pair shares a prime.','12 = 2² × 3，18 = 2 × 3²。公因數所用的某質因數個數不能超過任何一個原數所含的個數，因此最大公因數是 2 × 3 = 6。未出現的質因數指數視作零。三個數要一起比較：6、10、15 的最大公因數是 1，雖然每一對都有共同質因數。')},
+  {title:bcPair('Enough factors: use the maximum','包含全部因數取最大指數'),text:bcPair('A common multiple must contain enough copies for every input. The LCM of 12 and 18 is 2² × 3² = 36. The LCM of 6, 10 and 15 is 2 × 3 × 5 = 30; multiplying all three inputs would repeat unnecessary factors. With short division on three numbers, a prime may divide only some of the current numbers: carry the others unchanged.','公倍數必須包含每個原數所需的所有質因數。12 和 18 的最小公倍數是 2² × 3² = 36。6、10、15 的最小公倍數是 2 × 3 × 5 = 30；直接把三個數相乘會重複計入不必要的因數。三個數用短除法時，某個質數可以只整除其中部分數，其餘數照寫。')}],takeaway:bcPair('Prime factorisation is a shared representation. GCD uses each minimum exponent; LCM uses each maximum. Check every input.','質因數分解提供共同的表示方式。最大公因數取最小指數；最小公倍數取最大指數。必須檢查所有原數。'),next:bcPair('Next, use factors, fractions and grouping to calculate exactly.','下一課結合因數、分數及括號作準確運算。')},
+ {id:'BC-L3',families:['BC06','BC07','BC08'],title:bcPair('Keep the grouping. Keep the value.','保留組合，保持準確'),why:bcPair('A long calculation becomes manageable when each line preserves the grouping and the exact value.','每一步都保留括號的組合及準確值，較長的計算也能有條理地完成。'),before:bcPair('Add and multiply fractions; read terminating decimals and nested brackets.','能作分數加法及乘法，並理解有限小數及多重括號。'),goals:bcPair(['Work from inner brackets outwards.','Apply multiplication/division left to right, then addition/subtraction left to right.','Mix integers, fractions and decimals without premature rounding.'],['由內至外處理括號。','同級乘除由左至右，再處理同級加減。','整數、分數及小數混合運算時保持準確，不提早取近似值。']),readiness:bcPair('In 14 + [9 - (6 - 2)], which operation comes first?','14 + [9 - (6 - 2)] 應先算哪一步？'),readinessAnswer:bcPair('Start with 6 - 2 = 4, then 9 - 4 = 5, then 14 + 5 = 19.','先算 6 - 2 = 4，再算 9 - 4 = 5，最後 14 + 5 = 19。'),sections:[
+  {title:bcPair('Brackets override the outside order','括號決定先後'),text:bcPair('Parentheses, square brackets and braces can show layers of grouping. Finish the innermost group first and rewrite the surrounding expression accurately. Multiplication and division have equal priority and run left to right; addition and subtraction also share priority. A bracket around a whole divisor must stay intact.','圓括號、方括號及花括號可以表示不同層次的組合。先完成最內層，再準確重寫外面的算式。乘除同級，由左至右；加減亦同級。若除數是一整個括號，必須先把整個除數算好。')},
+  {title:bcPair('Fractions preserve exact values','分數保留準確值'),text:bcPair('For (1/3 + 2/5) ÷ (2 - 1/4), the brackets give 11/15 and 7/4. Dividing by 7/4 means multiplying by 4/7, so the result is 44/105. Add fractions with a common denominator; do not add their denominators. Denominators above 12 and more than three operands can occur.','(1/3 + 2/5) ÷ (2 - 1/4) 的兩個括號分別是 11/15 和 7/4。除以 7/4 等於乘以 4/7，結果是 44/105。分數加法要通分，不能把分母相加。題目可以有大於 12 的分母及多於三個運算數。')},
+  {title:bcPair('A decimal can be an exact fraction','小數也能準確表示'),text:bcPair('In (1.2 + 0.35) × 0.4 ÷ 2, the bracket is 1.55 = 31/20. Then (31/20) × (2/5) ÷ 2 = 31/100 = 0.31. Convert a terminating decimal using place value when it helps. The checker accepts an equivalent final fraction or decimal, and does not round to match a nearby answer. Written working is reviewed separately.','(1.2 + 0.35) × 0.4 ÷ 2 中，括號是 1.55 = 31/20，再算 (31/20) × (2/5) ÷ 2 = 31/100 = 0.31。可按位值把有限小數化成分數。檢查器接受等值的最終分數或小數，不會把鄰近答案當作相同；書寫過程另行檢視。')}],takeaway:bcPair('Respect grouping, preserve operation order and retain exact values. Choose a useful representation instead of rounding early.','尊重括號、依照運算次序，並保留準確值。選擇方便的表示方式，不提早取近似值。'),next:bcPair('Continue with directed numbers to extend these operations across zero. Continue with percentages to track reference quantities.','繼續學習有向數，把運算延伸至零的兩側。可繼續學習百分法，追蹤基準量。')}
+];
+function basicLessonExamples(lesson){return lesson.families.map((id,i)=>generateBasic(id,lesson.id+':model-'+i));}
+const basicStaticModels={
+ 'BC-L1':[['BC01',{kind:'divisibility',n:372,divisor:4}],['BC01',{kind:'divisibility',n:12,divisor:8}],['BC02',{kind:'power',mode:'value',base:3,exponent:4}],['BC02',{kind:'power',mode:'exponent',base:3,value:81}]],
+ 'BC-L2':[['BC03',{kind:'prime-factorisation',powers:[3,2,0]}],...['BC04','BC05'].flatMap(id=>[[id,{kind:id==='BC04'?'gcd':'lcm',numbers:[12,18]}],[id,{kind:id==='BC04'?'gcd':'lcm',numbers:[6,10,15]}]])],
+ 'BC-L3':[['BC06',{kind:'nested',mode:'nested-add',a:14,b:9,c:6,d:2}],['BC07',{kind:'fractions',a:'1/3',b:'2/5',c:2,d:'1/4',operation:'divide'}],['BC08',{kind:'decimals',mode:'decimal',a:12,b:35,c:4,d:2}]]
+};
+function recordedBasicExamples(studied){return basicLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...basicLessonExamples(l),...basicStaticModels[l.id].map(([id,model])=>({id,exposureKey:basicExposureKey(id,model)}))]);}
+
+// src/lessons/signed.mjs
+
+const signedLessons=[
+ {id:'SN-L1',families:['SN01','SN02'],title:{en:'Where is zero?',zh:'零在哪裏？'},why:{en:'A reference point lets us describe opposite directions and compare values accurately.',zh:'先定基準，才能準確描述相反方向和比較數值。'},
+  before:{en:'Read equally spaced ticks and compare positive numbers. You can revisit arithmetic at any time.',zh:'能讀等距刻度、比較正數；需要時可隨時重溫計算。'},
+  goals:{en:['Explain positive, negative and zero relative to a stated reference.','Place and compare directed numbers, including fractions.'],zh:['按已知基準解釋正數、負數與零。','在數線上表示及比較有向數，包括分數。']},
+  readiness:{en:'A thermometer reads 2 °C below zero. Before calculating, which side of zero should you use?',zh:'溫度計顯示低於零度 2 °C。未計算前，應選零的哪一側？'},
+  readinessAnswer:{en:'The negative side: −2 °C. The reference is 0 °C, not the first temperature you happen to see.',zh:'應選負數的一側，即 −2 °C。基準是 0 °C，並不是隨意看到的第一個氣溫。'},
+  sections:[
+   {title:{en:'Name the reference first',zh:'先說清基準'},text:{en:'Zero marks the reference. Values above it are positive; values below it are negative. Zero itself is neither positive nor negative. A thermometer uses 0 °C; a net balance can use no gain or loss. State the convention before attaching a sign.',zh:'零標示基準。高於基準用正數，低於基準用負數；零本身既不是正數，也不是負數。氣溫可用 0 °C 作基準，淨收支可用沒有盈虧作基準。加正負號前，先說清約定。'}},
+   {title:{en:'Order is position, not unsigned digits',zh:'大小取決於位置，不是忽略符號後的數字'},text:{en:'On an equally spaced number line, values increase to the right. Thus −3 is greater than −7, although 3 is smaller than 7. Distance from zero answers a different question. Opposite numbers such as −4 and 4 are equally far from zero on opposite sides.',zh:'在等距數線上，數值向右增加。因此 −3 大於 −7，雖然 3 小於 7。離零多遠是另一個問題。相反數如 −4 和 4，位於零的兩側，距離相同。'}},
+   {title:{en:'Fractions use the same scale',zh:'分數沿用同一刻度'},text:{en:'−1/2 lies between −1 and 0. Compare numbers using the same reference and tick scale; an exact fraction and its exact decimal name the same point. You do not need to memorise a separate ordering rule for fractions.',zh:'−1/2 位於 −1 與 0 之間。比較時要用相同基準與刻度；準確分數和相應準確小數表示同一個點，不用另背一套分數大小規則。'}}],
+  takeaway:{en:'State the reference, keep the sign, then compare positions. Zero is neither positive nor negative.',zh:'先定基準、保留符號，再比較位置；零既不是正數，也不是負數。'},
+  next:{en:'Next, use movement and inverse operations to add and subtract directed numbers.',zh:'下一步，用移動與逆運算理解有向數的加減法。'}},
+ {id:'SN-L2',families:['SN03','SN04'],title:{en:'Moves, inverses and sign patterns',zh:'移動、逆運算與符號規律'},why:{en:'Inverse relationships explain sign rules and give a reliable way to check a calculation.',zh:'逆運算能解釋符號規律，也能幫助檢驗計算。'},
+  before:{en:'Know what the signs mean and how values are ordered. Revisit “Where is zero?” if needed.',zh:'能理解正負號和數值大小；需要時可重溫「零在哪裏？」。'},
+  goals:{en:['Interpret addition and subtraction as directed movement.','Use multiplication patterns and inverse products to check signs.'],zh:['以有向移動理解加減法。','用乘法規律和逆運算檢驗乘除符號。']},
+  readiness:{en:'Starting at −4, would adding 7 move left or right? What changes if the operation is subtracting −7?',zh:'從 −4 出發，加 7 應向左還是向右？如果改為減去 −7，又會怎樣？'},
+  readinessAnswer:{en:'Adding 7 moves right. Subtracting −7 also moves right, because subtraction adds the opposite: −4−(−7)=−4+7=3.',zh:'加 7 向右移；減去 −7 也向右移，因為減去一個數即加上其相反數：−4−（−7）=−4+7=3。'},
+  sections:[
+   {title:{en:'Keep the operation and the operand separate',zh:'分清運算符號與數的正負號'},text:{en:'The first number gives the starting position. Adding a positive moves right; adding a negative moves left. Subtracting a number means adding its opposite. For example, 5−(−2)=5+2=7, whereas 5+(−2)=3. Read the operation before choosing the direction.',zh:'第一個數是起點。加正數向右移，加負數向左移；減去一個數即加上其相反數。例如 5−（−2）=5+2=7，但 5+（−2）=3。先讀清運算，再選方向。'}},
+   {title:{en:'Explain the sign with a pattern',zh:'用規律解釋符號'},text:{en:'The products 3×2=6, 3×1=3 and 3×0=0 decrease by 3, so continuing gives 3×(−1)=−3. Likewise, (−3)×2=−6, (−3)×1=−3, (−3)×0=0 increase by 3, so (−3)×(−1)=3. These patterns explain why two negative factors have a positive product.',zh:'3×2=6、3×1=3、3×0=0 的結果每次減 3，繼續便得 3×（−1）=−3。同樣，（−3）×2=−6、（−3）×1=−3、（−3）×0=0 的結果每次加 3，所以（−3）×（−1）=3。這解釋了兩個負因數相乘為何得正數。'}},
+   {title:{en:'Check division with multiplication',zh:'用乘法檢驗除法'},text:{en:'Since (−3)×2=−6, we have (−6)÷(−3)=2. For nonzero factors or quotients, equal signs give a positive result and different signs give a negative result. A zero factor gives a zero product, and 0 divided by a nonzero number is 0. Division by 0 is not defined.',zh:'因為（−3）×2=−6，所以（−6）÷（−3）=2。非零數相乘或相除，同號得正、異號得負。因數為零，積為零；零除以非零數，商為零。除以零沒有定義。'}}],
+  takeaway:{en:'Read the operation, add the opposite when subtracting, and check division using an inverse product.',zh:'讀清運算；減法可改成加上相反數；除法可用乘法檢驗。'},
+  next:{en:'Next, combine these operations in brackets and distinguish a change from a final value.',zh:'下一步，把運算放進括號，並分清變化與最後數值。'}},
+ {id:'SN-L3',families:['SN05','SN06'],title:{en:'A change is not a final value',zh:'變化不等於最後數值'},why:{en:'Correct operation order and a clear model prevent plausible calculations from answering the wrong question.',zh:'運算次序和清楚的模型，能避免算式看似合理卻答非所問。'},
+  before:{en:'Add, subtract, multiply and divide directed numbers; use exact fractions. Revisit the previous session if sign handling is uncertain.',zh:'能進行有向數四則運算，並使用準確分數；如正負號仍不穩，可重溫上一節。'},
+  goals:{en:['Calculate a bracketed expression in the correct order.','Find and interpret final minus initial, then check by addition.'],zh:['按正確次序計算含括號的算式。','求並解釋「最後減最初」，再用加法檢驗。']},
+  readiness:{en:'A temperature goes from −4 °C to 3 °C. Is 3 °C the final temperature or the change?',zh:'氣溫由 −4 °C 變為 3 °C。3 °C 是最後氣溫，還是氣溫變化？'},
+  readinessAnswer:{en:'It is the final temperature. The change is 3−(−4)=+7 °C, a rise of 7 °C.',zh:'它是最後氣溫。變化是 3−（−4）=+7 °C，即上升 7 °C。'},
+  sections:[
+   {title:{en:'Let the bracket define a whole quantity',zh:'把括號內看成整個量'},text:{en:'In [−3+2×(−4)]÷(−2), first multiply inside the brackets: 2×(−4)=−8. Then add: −3+(−8)=−11. Finally divide the whole result: (−11)÷(−2)=11/2=5.5. A fraction is an exact answer; no rounding is needed.',zh:'在［−3+2×（−4）］÷（−2）中，先算括號內乘法：2×（−4）=−8；再相加：−3+（−8）=−11；最後把整個結果相除：（−11）÷（−2）=11/2=5.5。分數是準確答案，不用取近似值。'}},
+   {title:{en:'Name the initial value, change and final value',zh:'分清最初數值、變化與最後數值'},text:{en:'Initial + change = final, so change = final − initial. For a temperature from −4 °C to 3 °C, the change is +7 °C. For the reverse journey from 3 °C to −4 °C, it is −7 °C. The size of the change is the same, but its direction differs.',zh:'最初數值 + 變化 = 最後數值，所以變化 = 最後數值 − 最初數值。由 −4 °C 變為 3 °C，變化為 +7 °C；反過來由 3 °C 變為 −4 °C，變化為 −7 °C。變化的幅度相同，方向不同。'}},
+   {title:{en:'Check the model, then explain the sign',zh:'檢驗模型，再解釋符號'},text:{en:'Substitute your change back into initial + change = final. State the unit and whether the quantity rises or falls. A correct final number checks one part of the work; a written explanation still needs self or teacher review. Use a fresh check to see whether you can choose the method without a model beside it.',zh:'把變化代回「最初數值 + 變化 = 最後數值」檢驗，再說明單位和上升或下降。最終數值正確只核對了部分作答；書面解釋仍需自行或由教師評閱。可透過沒有參考例子的新題檢視是否能自行選擇方法。'}}],
+  takeaway:{en:'Follow the bracket structure. In context, answer the requested quantity and verify initial + change = final.',zh:'按括號結構計算；在情境中求題目指定的量，並檢驗「最初數值 + 變化 = 最後數值」。'},
+  next:{en:'Use these directed values when reading algebraic expressions and solving equations. The expressions path is now available as a draft; equations and angles remain in design.',zh:'之後可用有向數理解代數式和解方程；代數式路線已有初稿；方程和角仍在設計階段。'}}
+];
+const signedModelSeeds={'SN-L1':['SN-L1:model-0:0','SN-L1:model-1:7'],'SN-L2':['SN-L2:model-0:2','SN-L2:model-1:2'],'SN-L3':['SN-L3:model-0:0','SN-L3:model-1:0']};
+function lessonExamples(lesson){return lesson.families.map((id,i)=>generateCurriculum(id,signedModelSeeds[lesson.id][i]));}
+const lessonExposureModels={
+ 'SN-L1':[['SN01',{kind:'reference',magnitude:2,direction:-1}],['SN02',{kind:'comparison',a:'-7',b:'-3'}]],
+ 'SN-L2':[['SN03',{kind:'movement',a:-4,b:7,operation:'add'}],['SN03',{kind:'movement',a:-4,b:-7,operation:'subtract'}],['SN03',{kind:'movement',a:5,b:-2,operation:'subtract'}],['SN03',{kind:'movement',a:5,b:-2,operation:'add'}],...[[3,2],[3,1],[3,0],[3,-1],[-3,2],[-3,1],[-3,0],[-3,-1]].map(([a,b])=>['SN04',{kind:'product',a,b,operation:'multiply'}]),['SN04',{kind:'product',a:-6,b:-3,operation:'divide'}]],
+ 'SN-L3':[['SN05',{kind:'mixed',a:-3,b:2,c:-4,d:-2}],['SN06',{kind:'change',initial:-4,final:3}],['SN06',{kind:'change',initial:3,final:-4}]]
+};
+function recordedLessonExamples(studied){return signedLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...lessonExamples(l),...lessonExposureModels[l.id].map(([id,model])=>({id,exposureKey:id+':'+JSON.stringify(model)}))]);}
+
+// src/lessons/expressions.mjs
+
+const expressionLessons=[
+ {id:'EX-L1',families:['EX01','EX02','EX03'],title:{en:'Say it, group it, write it',zh:'說清、分組、寫成式'},why:{en:'Symbols help you describe a relationship precisely, provided the order and grouping keep their meaning.',zh:'符號能準確表達關係，但運算次序和分組必須保留原意。'},
+  before:{en:'Use directed arithmetic, read a letter as a quantity and recall basic area formulas. Revisit signed numbers whenever useful.',zh:'能進行有向數運算、以字母表示量，並重溫基本面積公式；需要時可返回有向數課題。'},
+  goals:{en:['Translate words into an expression and read the expression back.','Use brackets and multiplication notation accurately.','Represent a two-quantity formula and explain it through manual review.'],zh:['把文字寫成代數式，也能把代數式說成文字。','準確使用括號和乘法記法。','用兩個量寫公式，並透過人工評閱解釋其意思。']},
+  readiness:{en:'Compare “three times the sum of x and 2” with “the sum of three times x and 2”. Do they describe the same operation?',zh:'比較「x 與 2 的和的三倍」和「x 的三倍與 2 的和」，它們是否表示相同運算？'},
+  readinessAnswer:{en:'The first is 3(x+2); the second is 3x+2. At x=1 they give 9 and 5, so their meanings differ.',zh:'前者是 3(x+2)，後者是 3x+2。當 x=1 時，兩者分別為 9 和 5，意思不同。'},
+  sections:[
+   {title:{en:'Keep the whole quantity together',zh:'把整個量放在一起'},text:{en:'In 3(x+2), the sum x+2 is one whole factor. In “five less than three times x”, first form 3x, then subtract 5 to obtain 3x−5. “Subtract three times x from five” reverses the order: 5−3x. Reading an expression back into words is a useful check. You may use an equivalent expression; expansion is not required here.',zh:'在 3(x+2) 中，x+2 這個和是整個因數。「x 的三倍減去五」先形成 3x，再減去 5，得 3x−5；「五減去 x 的三倍」則是 5−3x，次序相反。把代數式讀回文字可幫助檢驗；此處接受等價式，不要求展開。'}},
+   {title:{en:'Letters and the fraction bar',zh:'字母與分數線'},text:{en:'bh means b×h, the product of two quantities. It does not join digits into a two-digit number. The expression bh/2 means half the product. A fraction bar or explicit brackets makes division clearer: 4/(2b) should not be written ambiguously as 4÷2b. Reading notation accurately comes before manipulating it.',zh:'bh 表示 b×h，是兩個量的積，並不是把數字拼成兩位數。bh/2 表示積的一半。分數線或清楚的括號可避免除法含糊，例如 4/(2b) 不應含糊地寫成 4÷2b。準確讀懂記法，是運算之前的重要一步。'}},
+   {title:{en:'A formula expresses a relationship',zh:'公式表達量之間的關係'},text:{en:'For a rectangle of length b and width h, area A=bh. For a triangle of base b and perpendicular height h, A=bh/2: two congruent copies form a parallelogram with area bh. Both lengths are positive and the area uses square units. In these tasks the formula and its explanation are recorded for manual review; the one-variable checker does not decide whether a formula in b and h is correct.',zh:'長方形的長為 b、闊為 h，面積 A=bh。三角形的底為 b、垂直高度為 h，面積 A=bh/2：兩個全等的三角形可拼成面積為 bh 的平行四邊形。兩個長度均為正，面積使用平方單位。這類題目的公式和解釋會記錄待人工評閱，不會由只處理一個變量的核對器判定 b、h 公式是否正確。'}}],
+  takeaway:{en:'Read both ways, preserve grouping and define each quantity. An expression is not an equation, and a recorded formula is not an automatically verified response.',zh:'要能雙向理解，保留運算分組，並定義每個量。代數式不等於方程；已記錄的公式亦不代表已自動核實。'},
+  next:{en:'Next, distinguish a proposed sequence pattern from a supplied rule that fixes a particular term.',zh:'下一步，分清提出的數列規律和能確定指定項的已知規則。'}},
+ {id:'EX-L2',families:['EX04','EX05'],title:{en:'A pattern is a proposal',zh:'規律是一個有理由的提議'},why:{en:'A short pattern suggests possibilities; an explicit general term gives a different kind of information.',zh:'短短幾項可提示可能的規律；已給通項則提供另一種資訊。'},
+  before:{en:'Read grouped expressions and substitute a number for a letter. Keep the term position separate from its value.',zh:'能讀含括號的代數式，並以數值代入字母；要分清項的位置和項的值。'},
+  goals:{en:['Suggest a continuation with a rule fitting every given term.','Recognise that a finite prefix alone need not determine a unique next term.','Evaluate odd, even, square and triangular general terms at a stated positive index.'],zh:['提出延伸，並說明符合所有已知項的規律。','認識有限的已知項未必能確定唯一下一項。','按指定的正整數位置，求奇數、偶數、正方形數及三角形數的項值。']},
+  readiness:{en:'For 1, 3, 6, 10, one learner suggests 15. What reason could support it? Does that reason make every other continuation impossible?',zh:'對 1、3、6、10，有同學提出下一項為 15。有甚麼理由支持？這是否表示其他延伸都不可能？'},
+  readinessAnswer:{en:'The differences 2,3,4 can continue with 5, giving 15. This is one consistent rule; a different rule can agree with the first four terms and then differ.',zh:'相鄰項的差為 2、3、4，若下一個差取 5，便得 15。這是一個一致的規律，但其他規律也可符合前四項，之後才不同。'},
+  sections:[
+   {title:{en:'Explain what you are continuing',zh:'說清延伸哪個規律'},text:{en:'Consecutive odd numbers increase by 2, as do consecutive even numbers with a different starting value. Square numbers 1,4,9,16 count square arrays. Triangular numbers 1,3,6,10 count triangular arrays with one more row each time. These are useful patterns, but an unlabelled finite list does not require the next shape or rule to keep changing in the same way. Your explanation must fit every given term and your proposal.',zh:'連續奇數每次增加 2；連續偶數也一樣，但起點不同。正方形數 1、4、9、16 可數正方形點陣；三角形數 1、3、6、10 可數每次多一行的三角形點陣。這些規律很有用，但若題目只給有限項，並沒有規定之後必須沿用同一變化。解釋須符合所有已知項及你提出的下一項。'}},
+   {title:{en:'A stated general term changes the task',zh:'給定通項，題目便不同'},text:{en:'If aₙ=n(n+1)/2 is supplied for positive integers n, the sixth term is fixed: replace n by 6 to get 6×7/2=21. The 6 is the position; 21 is the term value. There is no guessing of a rule in this question. The familiar rules 2n−1, 2n, n² and n(n+1)/2 generate odd, even, square and triangular numbers respectively.',zh:'若已給 aₙ=n(n+1)/2，且 n 為正整數，第六項便確定：把 n 換成 6，得 6×7/2=21。6 是位置，21 是項值；這題不用猜規則。2n−1、2n、n²、n(n+1)/2 分別產生奇數、偶數、正方形數和三角形數。'}},
+   {title:{en:'Use the right kind of review',zh:'用合適的方法檢視'},text:{en:'A numerical term from a supplied rule can be checked exactly. A proposed continuation with an explanation stays a manual response. A different coherent rule is not wrong merely because it differs from the illustrative model. Comparing your response with a rubric is self-review, not independent verification. No algebraic recurrence notation is needed.',zh:'由已知規則求得的數值可準確核對；提出延伸並解釋則屬人工評閱。合理一致的規律，不會只因不同於參考例子而算錯。按評準自行比較不等於已獲獨立核實；此處不需要代數遞推記法。'}}],
+  takeaway:{en:'A prefix invites an explained proposal; a supplied general term determines the requested term. Keep index and value separate.',zh:'有限項要求有理由的提議；已知通項則決定指定項。要分清位置與項值。'},
+  next:{en:'Next, use the same idea of a stated rule in input–processing–output machines.',zh:'下一步，把已知規則的概念用於輸入—處理—輸出機器。'}},
+ {id:'EX-L3',families:['EX06','EX05'],title:{en:'Follow the processing rule',zh:'依規則處理輸入'},why:{en:'Tables, formulas and processing steps can describe the same dependable relationship.',zh:'表格、公式和處理步驟可表達同一個明確關係。'},
+  before:{en:'Substitute into a supplied expression and handle negative inputs with brackets.',zh:'能把數值代入已知代數式，並用括號處理負的輸入。'},
+  goals:{en:['Identify input, processing and output as different roles.','Follow a stated affine or square-plus rule in the specified order.','Connect a sequence index to an input and its term to the output.'],zh:['分辨輸入、處理和輸出三種作用。','按指定次序處理一次運算鏈或平方後加減的規則。','把數列位置連到輸入，把項值連到輸出。']},
+  readiness:{en:'A machine squares its input, then adds 1. With input −2, is the first result −4 or 4?',zh:'機器先把輸入平方，再加 1。輸入 −2，第一步應得 −4 還是 4？'},
+  readinessAnswer:{en:'Square the whole input: (−2)²=4. Then add 1, so the output is 5.',zh:'要把整個輸入平方：（−2）²=4；再加 1，輸出為 5。'},
+  sections:[
+   {title:{en:'Keep the order written in the rule',zh:'保留規則指定的次序'},text:{en:'For “multiply by 3, then add 2”, input 4 gives 3×4+2=14. Adding 2 first would give 3×(4+2)=18, a different rule. The processing card describes the operations; the output is the result after all of them.',zh:'按「先乘以 3，再加 2」，輸入 4 得 3×4+2=14。若先加 2，便得 3×(4+2)=18，那是另一個規則。處理卡描述運算，輸出則是全部處理完成後的結果。'}},
+   {title:{en:'Use the whole signed input',zh:'使用整個有向輸入值'},text:{en:'For x²+1 with input −2, write (−2)²+1=5. Squaring the whole negative input gives a positive square. The same input through another rule can give a different output; the same input through the same stated rule gives the same output.',zh:'對 x²+1，輸入 −2 時寫成（−2）²+1=5。把整個負數平方會得正的平方值。相同輸入經不同規則可得不同輸出；同一規則對同一輸入則有相同輸出。'}},
+   {title:{en:'Connect the table back to the rule',zh:'把表格連回規則'},text:{en:'A sequence general term also processes an input: its positive integer position n. For n², position 3 gives term 9. A square’s area x² can use a positive length that is not an integer, so its allowed inputs differ from a sequence’s positions. We use these rules informally here; formal definitions of functions belong to later study.',zh:'數列通項也會處理輸入，即正整數位置 n。對 n²，位置 3 的項值為 9。但正方形面積 x² 可使用非整數的正長度，與數列位置的容許輸入不同。此處先直觀理解規則，正式函數定義留待之後學習。'}}],
+  takeaway:{en:'Identify the input, follow the exact rule and report the output. Use brackets for negative substitutions and distinguish allowed inputs in context.',zh:'先辨輸入，依照規則，再報輸出；代入負數要用括號，並按情境分清容許的輸入。'},
+  next:{en:'Next, these expressions can be used to form equations. Continue with the equations learning path; angles are now available as an author draft.',zh:'之後可用代數式建立方程；接著可使用方程學習路線；角的課節已以作者初稿提供。'}}
+];
+function expressionLessonExamples(lesson){return lesson.families.map((id,i)=>generateExpression(id,lesson.id+':model-'+i));}
+const expressionStaticModels={
+ 'EX-L1':[['EX01',{kind:'words',a:3,b:2,mode:'scale-sum'}],['EX01',{kind:'words',a:3,b:5,mode:'less-than'}],['EX01',{kind:'words',a:3,b:5,mode:'subtract-from'}],['EX02',{kind:'reading',mode:'grouped',a:3,b:2}],['EX02',{kind:'reading',mode:'two-variables'}],['EX03',{kind:'area-formula',shape:'triangle'}],['EX03',{kind:'area-formula',shape:'rectangle'}]],
+ 'EX-L2':[['EX04',{kind:'open-sequence',rule:'triangular',start:1,terms:[1,3,6,10]}],['EX04',{kind:'open-sequence',rule:'square',start:1,terms:[1,4,9,16]}],['EX05',{kind:'general-term',rule:'triangular',n:6}]],
+ 'EX-L3':[['EX06',{kind:'machine',rule:'square-plus',b:1,input:-2}],['EX06',{kind:'machine',rule:'affine',a:3,b:2,input:4}],['EX05',{kind:'general-term',rule:'square',n:3}]]
+};
+function recordedExpressionExamples(studied){return expressionLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...expressionLessonExamples(l),...expressionStaticModels[l.id].map(([id,model])=>({id,exposureKey:id+':'+JSON.stringify(model)}))]);}
+
+// src/lessons/equations.mjs
+
+const equationLessons=[
+ {id:'EQ-L1',families:['EQ01','EQ02'],title:{en:'What counts as a solution?',zh:'怎樣才算是方程的解？'},why:{en:'A value becomes a solution by making the original sides equal. Inverse operations help find that value.',zh:'能令原方程兩邊相等的數值才是解；逆運算則幫助我們找出這個值。'},before:{en:'Read expressions, substitute signed values and use exact fractions. Revisit directed numbers and expressions when helpful.',zh:'能讀代數式、代入有向數並使用準確分數；需要時可重溫有向數和代數式。'},goals:{en:['Test a candidate in the original equation.','Apply the same subtraction or nonzero division to both sides.','Solve an affine equation and substitute back to check.'],zh:['把所提的值代入原方程檢驗。','兩邊同減一數，或同除以非零數。','解一次方程，並代回原方程檢查。']},readiness:{en:'Does x=−2 make 3x+1=−5 true? Compare both sides before trying to solve it.',zh:'x=−2 能否令 3x+1=−5 成立？先比較兩邊，再考慮解法。'},readinessAnswer:{en:'The left side is 3(−2)+1=−5 and the right side is −5. They agree, so −2 is a solution.',zh:'左邊為 3(−2)+1=−5，右邊也是 −5，所以 −2 是方程的解。'},sections:[
+  {title:{en:'An equation asserts equality',zh:'方程說明兩邊相等'},text:{en:'An expression describes a quantity. An equation states that two expressions have the same value. A solution is a value for the unknown that makes that statement true; a nearby value need not work. Test the proposed value in the original equation, not only a later line.',zh:'代數式描述一個量；方程表示兩個代數式的值相同。解是能令這句說話成立的未知數值，鄰近的值未必可行。須把所提的值代入原方程，不應只檢查後來改寫的一行。'}},
+  {title:{en:'Undo the chain in reverse order',zh:'按相反次序逆轉運算鏈'},text:{en:'In ax+b=c, subtract b from both sides to get ax=c−b, then divide both sides by the nonzero a. For −3x+5=17, subtract 5 to obtain −3x=12 and divide by −3 to obtain x=−4. “Move and change sign” is only shorthand for the same operation on both sides.',zh:'在 ax+b=c，兩邊同減 b，得 ax=c−b，再同除以非零的 a。對 −3x+5=17，先同減 5 得 −3x=12，再同除以 −3 得 x=−4。「移項變號」只是兩邊同作運算的簡寫。'}},
+  {title:{en:'Check the original statement',zh:'檢查原來的等式'},text:{en:'For x=−4, the original left side is −3(−4)+5=17, matching the right side. Retain an exact fraction when division does not give an integer. The final-number checker checks the submitted value; unseen working or a written comparison still needs review.',zh:'當 x=−4，原左邊為 −3(−4)+5=17，與右邊相同。除法不整除時應保留準確分數。數值核對器只檢查所交數值，沒有展示的步驟或書面比較仍需評閱。'}}],takeaway:{en:'A solution makes both original sides equal. Find it by preserving equality, then check it by substitution.',zh:'解須令原方程兩邊相等；求解時保持等式成立，最後代入檢驗。'},next:{en:'Next, preserve equality when brackets and variable terms appear on both sides.',zh:'下一節，把保持等式成立的方法用於括號和兩邊均有未知數的情況。'}},
+ {id:'EQ-L2',families:['EQ03','EQ04'],title:{en:'Keep every step equal',zh:'每一步都保持相等'},why:{en:'A correct final number is stronger when each transformation preserves the original relationship.',zh:'每次改寫都保留原來關係，才能有根據地得到最終數值。'},before:{en:'Use the distributive law in a simple bracket and solve an affine chain. This lesson applies those tools to one-unknown equations.',zh:'能在簡單括號中使用分配律，並解基本一次方程；本節把這些工具用於一元一次方程。'},goals:{en:['Explain why a bracket factor multiplies every term.','Collect variable terms while applying the same operation to both sides.','Check an exact root in both original expressions.'],zh:['解釋括號外的因數為何須乘以每一項。','把兩邊同作運算，再合併未知數項。','把準確的解代回原來兩個代數式檢驗。']},readiness:{en:'From 2(x−3)=10, a learner writes 2x−3=10. Which term missed the factor?',zh:'某同學由 2(x−3)=10 寫成 2x−3=10，哪一項漏乘了因數？'},readinessAnswer:{en:'The −3 term also needs multiplication by 2, so a correct line is 2x−6=10.',zh:'−3 這一項也須乘以 2，所以正確的一行是 2x−6=10。'},sections:[
+  {title:{en:'Distribute to every signed term',zh:'把因數分配到每個帶號項'},text:{en:'The factor in a(x+b) multiplies x and b. Keep the sign of each term. An error in distribution changes the equation; the new equation may have a root that does not solve the original. Explain the specific invalid step rather than only giving another answer.',zh:'在 a(x+b)，a 須同時乘以 x 和 b，並保留每項的正負號。分配錯誤會改變方程，新方程的解未必符合原式。應解釋哪一步為何不成立，而不只另交一個答案。'}},
+  {title:{en:'Collect without losing equality',zh:'合併時不失去相等關係'},text:{en:'For 2(x−3)+1=x+4, expand to 2x−5=x+4. Subtract x from both sides and add 5 to both sides, giving x=9. You could instead subtract 2x first; different valid routes can give the same root.',zh:'對 2(x−3)+1=x+4，展開得 2x−5=x+4。兩邊同減 x，再同加 5，得 x=9。也可先同減 2x；不同的有效步驟可得到相同的解。'}},
+  {title:{en:'Use the declared scope',zh:'留意本課題的範圍'},text:{en:'The pilot generates linear equations with exactly one solution. After collecting, the coefficient of x is nonzero, so dividing by it is valid. Equations with no solution or infinitely many solutions, variable denominators and quadratic equations are outside this slice. For the worked x=9 example, both original sides equal 13.',zh:'此試點只產生恰有一個解的一次方程；合併後 x 的系數不為零，所以可同除以它。無解、無限多解、分母含未知數及二次方程均不在本節範圍。上述 x=9 的例子，代回原式兩邊均為 13。'}}],takeaway:{en:'Distribute to the whole bracket, apply the same operations to both sides, and verify the root in the original equation.',zh:'因數乘以整個括號、兩邊同作運算，並把解代回原方程檢驗。'},next:{en:'Next, build an equation from a situation before solving and interpreting it.',zh:'下一節，先從情境建立方程，再求解和解釋。'}},
+ {id:'EQ-L3',families:['EQ05','EQ06'],title:{en:'Model, solve, interpret',zh:'建模、求解、解釋'},why:{en:'An equation connects quantities; its solution must also make sense under the situation’s units and rules.',zh:'方程把各個量連起來；所得的解也須符合情境的單位和規定。'},before:{en:'Distinguish a fixed fee from a rate and solve a one-unknown equation. Read whether fractional units are allowed.',zh:'能分清固定費用和單位費用，並解一元一次方程；留意情境是否容許非整數單位。'},goals:{en:['Define an unknown with its unit.','Represent one fixed charge plus a repeated rate as an equation.','Solve, substitute back and interpret a permitted half-hour duration.'],zh:['定義未知數及其單位。','以方程表示一次固定費用加按次數計的費用。','求解、代回檢驗，並按半小時的規定解釋時間。']},readiness:{en:'Entry is $8 once and each game is $3. With total $23, does x count games or dollars?',zh:'一次入場費 $8，每局 $3，總費用 $23。若 x 是遊戲局數，它的單位是局還是元？'},readinessAnswer:{en:'x counts games. The cost of those games is 3x dollars, so 3x+8=23 models the situation.',zh:'x 的單位是局；遊戲費用為 3x 元，所以可用 3x+8=23 表示情境。'},sections:[
+  {title:{en:'Define before writing',zh:'先定義，再寫方程'},text:{en:'State what x measures. A one-time fee is added once, while the per-unit rate is multiplied by x. Keep all money amounts in the same currency and all durations in the stated unit. A cost table lists givens; you still decide how they form an equality.',zh:'先說清 x 代表甚麼。一次費用只加一次，每單位費用才乘以 x。金額使用相同貨幣，時間使用題目指定的單位。費用表只列已知資料，仍須判斷如何以等式把它們連起來。'}},
+  {title:{en:'Solve the model and test it',zh:'解模型並檢驗'},text:{en:'For a rental of $12 once plus $4 per hour and total $30, let x be hours. Then 12+4x=30, giving x=18/4=9/2 hours. Substitute back: 12+4×(9/2)=30. Dividing the whole $30 by $4 would incorrectly treat the fixed fee as time.',zh:'一次租用費 $12、每小時 $4、總費用 $30，設時間為 x 小時，則 12+4x=30，得 x=18/4=9/2 小時。代回：12+4×(9/2)=30。把整個 $30 除以 $4，會錯把一次費用也計作時間。'}},
+  {title:{en:'Interpret the allowed units',zh:'按容許的單位解釋'},text:{en:'If half-hours are allowed proportionally, 9/2 hours is permitted: it is nine half-hours and is positive. A whole-game count would need an integer. Do not round a root without checking the context. Here numerical correctness is automatic; the equation, units, check and interpretation are manually reviewed.',zh:'若容許按比例計費的半小時，9/2 小時便可接受，因為它是九個半小時，且為正數。完整遊戲局數則須為整數。不可不看情境就把解四捨五入。此處只自動核對最終數值；方程、單位、檢驗與解釋另作人工評閱。'}}],takeaway:{en:'Define the unknown, form an equality, solve exactly, substitute back and interpret the allowed units.',zh:'定義未知數、建立等式、準確求解、代回檢驗，並按容許的單位解釋。'},next:{en:'Use these equations to connect earlier expression work to later geometry. Continue with the angles and parallel-lines path.',zh:'用方程把之前的代數式連到之後的幾何；接著可學習角與平行線。'}}
+];
+function equationLessonExamples(lesson){return lesson.families.map((id,i)=>generateEquation(id,lesson.id+':model-'+i));}
+const equationStaticModels={
+ 'EQ-L1':[['EQ01',{kind:'candidate',a:3,b:1,c:'-5',candidate:'-2'}],['EQ02',{kind:'affine',a:-3,b:5,c:'17'}]],
+ 'EQ-L2':[['EQ03',{kind:'repair',a:2,b:3,c:10}],['EQ04',{kind:'both-sides',a:2,b:-3,c:1,d:1,e:'4'}]],
+ 'EQ-L3':[['EQ05',{kind:'model-choice',fixed:8,rate:3,total:'23'}],['EQ06',{kind:'rental',fixed:12,rate:4,total:'30'}]]
+};
+function recordedEquationExamples(studied){return equationLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...equationLessonExamples(l),...equationStaticModels[l.id].map(([id,model])=>({id,exposureKey:id+':'+JSON.stringify(model)}))]);}
+
+// src/lessons/angles.mjs
+
+const angleLessons=[
+ {id:'GE-L1',families:['GE01','GE02'],title:{en:'Name the relation before calculating',zh:'先辨關係，再作計算'},why:{en:'A local angle fact and an angle-pair name play different roles. Identify what is given before deciding what follows.',zh:'局部角性質與角對名稱的作用不同；先辨認已知條件，再判斷可推出甚麼。'},before:{en:'Recognise a right angle, a straight angle and a full turn. Identify vertices, lines and rays.',zh:'能辨認直角、平角和周角，並分清頂點、直線與射線。'},goals:{en:['Choose the correct local equality or total.','Classify corresponding, alternate interior and same-side interior pairs.','Avoid inferring parallelism or equality from a pair name alone.'],zh:['選用正確的局部相等關係或角度總和。','辨認同位角、內錯角和同旁內角。','不單憑角對名稱便推斷平行或相等。']},readiness:{en:'An angle of 48° is adjacent to x on a straight line. Would x still have the same value if it were vertically opposite the 48° angle instead?',zh:'48° 的角與 x 相鄰並在同一直線上；若 x 改為與 48° 的角對頂，其值會相同嗎？'},readinessAnswer:{en:'On the straight line x=180−48=132°. In the vertically opposite case x=48°. The relationship changes the rule.',zh:'在直線上 x=180−48=132°；若是對頂角，則 x=48°。關係不同，所用性質也不同。'},sections:[
+  {title:{en:'State the local fact',zh:'先說清局部性質'},text:{en:'Adjacent angles filling a straight angle sum to 180°; sectors making one complete turn sum to 360°. Complementary angles sum to 90° and supplementary angles to 180°. Vertically opposite angles formed by two intersecting straight lines are equal. Use the stated structure, not the apparent size of a sector.',zh:'鄰角合成平角時總和為 180°，一周角的各角區域總和為 360°。餘角之和為 90°，補角之和為 180°；兩直線相交的對頂角相等。須根據已知結構，不應只看角區域的外觀大小。'}},
+  {title:{en:'Locate a pair at two intersections',zh:'在兩交點定位角對'},text:{en:'A transversal meets two lines at distinct points. Corresponding angles occupy the same relative position. Alternate interior angles lie inside and on opposite sides of the transversal; same-side interior angles lie inside on the same side. The text descriptions use the directed transversal from B towards A, so left and right still make sense after rotating the diagram.',zh:'截線在兩個不同點與兩線相交。同位角位於相同的相對位置；內錯角在內側、分居截線兩方；同旁內角在內側、位於截線同一方。文字以由 B 指向 A 的截線方向定義左右，旋轉圖形後仍可按此方向辨認。'}},
+  {title:{en:'A position name is not an equality',zh:'位置名稱不等於相等關係'},text:{en:'These pair names apply even when the two lines are not parallel. Equality of corresponding/alternate interior angles, or a 180° same-side interior sum, needs an appropriate parallel premise or can be used as a parallel test. Do not silently add parallel arrows or a right-angle assumption to an unmarked sketch.',zh:'即使兩線不平行，仍可使用這些角對名稱。同位角或內錯角相等、同旁內角和為 180°，須有適當的平行條件，或可用來判定平行。不可自行在未標示的圖上加上平行或直角的假設。'}}],takeaway:{en:'Name the relation, list the givens and then choose the justified equality or sum. A number alone does not verify its geometric reason.',zh:'先辨關係、列出已知，再選用有根據的相等或總和；數值本身不能核實幾何理由。'},next:{en:'Next, distinguish using parallel lines from establishing that lines are parallel.',zh:'下一節，分清運用已知平行線和判定兩線平行。'}},
+ {id:'GE-L2',families:['GE03','GE04'],title:{en:'Given parallel, or proving parallel?',zh:'已知平行，還是要判定平行？'},why:{en:'A property uses an existing premise; a parallel test establishes the premise from angle data.',zh:'性質以已知條件推論；平行判定則由角資料建立平行條件。'},before:{en:'Identify angle pairs and use straight-angle sums. Read the given and requested conclusion separately.',zh:'能辨認角對並使用平角總和；把已知條件和所求結論分開閱讀。'},goals:{en:['Use an explicit parallel premise to deduce an angle.','Apply the correct converse condition to test parallelism.','Distinguish a failed condition from insufficient information.'],zh:['用明確的平行條件推算角度。','用正確的逆向條件判定平行。','分清條件不成立和資料不足。']},readiness:{en:'Same-side interior angles at two intersections are 112° and 68°. Do they establish parallel lines? What changes if 68° is replaced by 67°?',zh:'兩交點的同旁內角為 112° 和 68°，是否足以判定兩線平行？若把 68° 改為 67°，又如何？'},readinessAnswer:{en:'112+68=180, so the same-side interior condition establishes parallelism. With 112+67=179, that condition fails and parallel lines are ruled out for this specified pair.',zh:'112+68=180，所以同旁內角互補的條件可判定平行。若 112+67=179，這個指定角對不符合條件，可排除兩線平行。'},sections:[
+  {title:{en:'Use the given premise',zh:'運用已知條件'},text:{en:'When l ∥ m is explicitly given, corresponding and alternate interior angles are equal; same-side interior angles sum to 180°. For corresponding angles P=68° and Q=x, x=68°. A target adjacent to the corresponding angle may need a second straight-angle step. Name both facts rather than treating every marked pair as equal.',zh:'明確已知 l ∥ m 時，同位角及內錯角相等，同旁內角之和為 180°。若同位角 P=68°、Q=x，則 x=68°。若所求角與同位角相鄰，可能還須使用平角；應交代兩個性質，不能把所有標示角都當成相等。'}},
+  {title:{en:'Reverse the reasoning carefully',zh:'小心逆向推理'},text:{en:'If a transversal gives equal corresponding or alternate interior angles, the two lines are parallel. The same-side interior test instead needs a sum of 180°. The pair must be the named pair at the two different intersections. Equal but unrelated angles do not establish the condition.',zh:'截線形成相等的同位角或內錯角，可判定兩線平行；同旁內角的判定則要求總和為 180°。必須是兩個不同交點的指定角對，兩個沒有相關位置的角即使相等，也不足以建立條件。'}},
+  {title:{en:'No and insufficient are different',zh:'「否」與「資料不足」不同'},text:{en:'For a specified corresponding pair with different sizes, parallelism is ruled out: parallel lines would force equality. But vertically opposite angles at A are equal for every direction of the second target line. Without any linking information at B, those local equal angles leave parallelism undecided. Never use the drawing’s slant as an extra premise.',zh:'若指定的同位角不相等，便可排除平行，因平行必會令它們相等。但 A 的對頂角本來就相等，不論另一條目標線方向如何都一樣；若 B 沒有可連起兩線的資料，便未能判定平行。不可把圖形看起來的斜度加作已知條件。'}}],takeaway:{en:'Write the direction of the argument: parallel premise to angle conclusion, or angle condition to parallel conclusion.',zh:'說清推理方向：由平行條件推角的結果，或由角的條件推平行結論。'},next:{en:'Next, use a constructed parallel line to justify triangle angle rules.',zh:'下一節，透過所作的平行線證明三角形角定理。'}},
+ {id:'GE-L3',families:['GE05','GE06'],title:{en:'From a diagram to a deduction',zh:'由圖形走向演繹推論'},why:{en:'A geometric theorem needs a chain of reasons that applies beyond one measured sketch.',zh:'幾何定理需要有理由的推理鏈，而不只是量度一幅圖。'},before:{en:'Use parallel-line and straight-angle facts. Distinguish the interior angle at C from the exterior sector after BC is extended.',zh:'能使用平行線與平角性質，並分清 C 的內角和 BC 延長後的外角區域。'},goals:{en:['Calculate an interior or exterior angle from the stated givens.','Prove the triangle-sum theorem using a constructed parallel.','Derive the exterior-angle result without circular reasoning.'],zh:['由已知條件計算內角或外角。','利用所作的平行線證明三角形內角和定理。','不用循環論證推導外角結果。']},readiness:{en:'In triangle ABC, A=47° and B=68°. Is the interior C equal to 65° or 115°? Which sector would have the other value?',zh:'在三角形 ABC，A=47°、B=68°。內角 C 是 65° 還是 115°？另一個值屬於哪個角區域？'},readinessAnswer:{en:'C=180−47−68=65°. The exterior angle between CA and CD, after BC is extended beyond C, is 115°.',zh:'C=180−47−68=65°。BC 越過 C 延長至 D 後，CA 與 CD 之間的外角為 115°。'},sections:[
+  {title:{en:'Identify the requested sector',zh:'辨認所求角區域'},text:{en:'An interior angle is inside the triangle. Extending BC beyond C creates the exterior angle ACD, adjacent to the interior angle at C. Those two sectors form a straight angle. The exterior angle equals the sum of the two remote interior angles, not an arbitrary pair of angles in the diagram.',zh:'內角在三角形內部；把 BC 越過 C 延長，便形成與 C 內角相鄰的外角 ACD。這兩角合成平角；外角等於兩個不相鄰內角之和，不是圖中任意兩角之和。'}},
+  {title:{en:'Construct and justify',zh:'作輔助線並給理由'},text:{en:'Construct uAv through A parallel to BC. With the labels in the proof figure, p=β and q=γ by alternate interior angles. Along the straight line at A, p+α+q=180°. Substitution gives α+β+γ=180°. The construction and each reason must be stated; the triangle-sum theorem cannot be used as its own starting proof.',zh:'過 A 作 uAv ∥ BC。按證明圖的標記，內錯角相等，故 p=β、q=γ。在 A 的平角上，p+α+q=180°；代入便得 α+β+γ=180°。須交代作圖和每個理由，不能以三角形內角和定理作為證明它自己的起點。'}},
+  {title:{en:'Derive and review the exterior rule',zh:'推導並評閱外角定理'},text:{en:'Because B,C,D lie on one straight line, E+γ=180°. Compare this with α+β+γ=180° and obtain E=α+β. The proof uses the same relationships for any nondegenerate triangle. A typed number, a diagram measurement or a self-reviewed outline is not automatically a verified proof; the whole argument needs manual review.',zh:'因 B、C、D 共線，E+γ=180°；與 α+β+γ=180° 比較，得 E=α+β。相同關係適用於任何非退化三角形。單一數值、量角結果或自行比較過的提綱，都不會自動成為已核實證明；整個論證須人工評閱。'}}],takeaway:{en:'Name the angles, list the givens, justify each new relationship and distinguish calculation from proof.',zh:'說清各角、列出已知、逐步給理由，並分清計算和證明。'},next:{en:'The four-topic pilot is now implemented as an author draft. Review the combined learning path, printed output and content before expanding to later topics.',zh:'四個課題的試點現已實作為作者初稿；擴展其他課題前，先檢視整體學習路線、列印結果與內容。'}}
+];
+function angleLessonExamples(lesson){return lesson.families.map((id,i)=>generateAngle(id,lesson.id+':model-'+i));}
+const angleStaticModels={
+ 'GE-L1':[['GE01',{kind:'local-angles',mode:'straight',a:48,b:0}],['GE01',{kind:'local-angles',mode:'vertical',a:48,b:0}],['GE02',{pair:'corresponding',p:0,q:0}]],
+ 'GE-L2':[['GE04',{kind:'parallel-test',pair:'same',p:2,q:1,phiA:-22,phiB:-22,vertical:false,parallelGiven:false}],['GE04',{kind:'parallel-test',pair:'same',p:2,q:1,phiA:-22,phiB:-23,vertical:false,parallelGiven:false}],['GE03',{kind:'parallel-property',pair:'corresponding',p:0,q:0,phiA:22,phiB:22,vertical:false,parallelGiven:true}]],
+ 'GE-L3':[['GE05',{kind:'triangle-angles',A:47,B:68,C:65,target:'interior'}],['GE05',{kind:'triangle-angles',A:47,B:68,C:65,target:'exterior'}],['GE06',{kind:'triangle-proof'}]]
+};
+function recordedAngleExamples(studied){return angleLessons.filter(l=>studied.includes('lesson:'+l.id+':v1')).flatMap(l=>[...angleLessonExamples(l),...angleStaticModels[l.id].map(([id,model])=>({id,exposureKey:angleExposureKey(id,model)}))]);}
+
+// src/renderers/basic-diagrams.mjs
+
+// Only givens are pictured. A reverse power never reveals a factor count.
+function basicDiagram(q,lang='en'){
+ const d=q.diagram,z=lang==='zh';if(d?.type!=='basic-model')return '';
+ let values,caption;
+ if(d.kind==='digits'){values=[...String(d.n)];caption=z?`給定數 ${d.n}；檢查能否被 ${d.divisor} 整除。`:`Given number ${d.n}; test divisibility by ${d.divisor}.`;}
+ else if(d.kind==='power'){values=d.exponent===null?[`${z?'底數':'Base'}: ${d.base}`,`${z?'值':'Value'}: ${d.value}`,`${z?'指數':'Exponent'}: ?`]:[`${z?'底數':'Base'}: ${d.base}`,`${z?'指數':'Exponent'}: ${d.exponent}`];caption=z?'底數與指數的角色不同。':'The base and exponent have different roles.';}
+ else if(d.kind==='split'){values=[String(d.n),`${d.left} × ${d.right}`];caption=z?'這是一次分拆；仍須檢查每個因數是否為質數。':'This is one split; check whether every factor is prime.';}
+ else {values=d.numbers.map(String);caption=z?`對全部 ${d.numbers.length} 個給定數求 ${d.operation}。`:`Find the ${d.operation} for all ${d.numbers.length} given numbers.`;}
+ return `<figure class="basic-figure"><div class="basic-cards" role="group" aria-label="${escape(caption)}">${values.map(v=>`<span>${escape(v)}</span>`).join('')}</div><figcaption>${escape(caption)}</figcaption></figure>`;
+}
+
+// src/renderers/percentage-diagrams.mjs
+// Only supplied information and reference structure appear before reveal.
+function percentageDiagram(d,lang='en'){
+ const z=lang==='zh';
+ if(d.kind==='timeline'){
+  const label=z?`先改變 ${d.r1}%，再以第一次改變後的值為基準改變 ${d.r2}%；最終值未知。`:`First change ${d.r1}%, then ${d.r2}% based on the changed value; final value unknown.`;
+  return `<svg class="percentage-model" viewBox="0 0 480 140" role="img" aria-label="${label}"><g fill="#e0efeb" stroke="#176d65" stroke-width="2"><rect x="10" y="60" width="105" height="45" rx="8"/><rect x="185" y="60" width="105" height="45" rx="8"/><rect x="365" y="60" width="105" height="45" rx="8"/><path d="M120 82H178M170 75L178 82L170 89M295 82H358M350 75L358 82L350 89" fill="none"/></g><g fill="#173349" text-anchor="middle" font-size="17"><text x="62" y="88">${z?'原值':'Original'}</text><text x="237" y="88">${z?'新基準':'New base'}</text><text x="417" y="88">?</text><text x="149" y="40">${d.r1}%</text><text x="327" y="40">${d.r2}%</text></g></svg>`;
+ }
+ const label=z?'原值就是 100% 的基準量；此圖不顯示所求值。':'The original is the 100% reference; this diagram does not show the requested value.';
+ return `<svg class="percentage-model" viewBox="0 0 480 115" role="img" aria-label="${label}"><rect x="30" y="45" width="420" height="32" rx="5" fill="#e0efeb" stroke="#176d65" stroke-width="2"/><g stroke="#176d65">${[1,2,3,4,5,6,7,8,9].map(i=>`<path d="M${30+i*42} 45V77"/>`).join('')}</g><g fill="#173349" text-anchor="middle" font-size="19"><text x="240" y="30">${z?'原值 = 100%':'Original = 100%'}</text><text x="240" y="105">${z?'先說清基準量':'Name the reference quantity first'}</text></g></svg>`;
+}
+
+// src/renderers/math.mjs
+
+
+
+
+
+
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const optionLabel=(o,lang='en')=>typeof o.label==='string'?o.label:o.label?.[lang]||'';
+function math(text){
+ // Render our authored, bounded fixture notation with native MathML; text fallback is its aria-label.
+ const tokens=String(text).match(/\d+\/\d+|\d+(?:\.\d+)?|[A-Za-zαβγ]|[^\s]/g)||[],parts=[];
+ for(let i=0;i<tokens.length;i++){
+  const v=tokens[i];if(v==='²'&&parts.length){parts.push(`<msup>${parts.pop()}<mn>2</mn></msup>`);continue;}if(v==='ₙ'&&parts.length){parts.push(`<msub>${parts.pop()}<mi>n</mi></msub>`);continue;}
+  if(v==='^'&&parts.length&&/^[0-9?]$/.test(tokens[i+1]||'')){parts.push(`<msup>${parts.pop()}${tokens[i+1]==='?'?'<mo>?</mo>':'<mn>'+tokens[i+1]+'</mn>'}</msup>`);i++;continue;}
+  parts.push(/^\d+\/\d+$/.test(v)?`<mfrac><mn>${v.split('/')[0]}</mn><mn>${v.split('/')[1]}</mn></mfrac>`:/^\d+(?:\.\d+)?$/.test(v)?`<mn>${v}</mn>`:/^[A-Za-zαβγ]$/.test(v)?`<mi>${v}</mi>`:`<mo>${escape(v)}</mo>`);
+ }
+ const body=parts.join('');
+ return `<math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="${escape(text)}"><mrow>${body}</mrow></math>`;
+}
+function diagram(q,lang='en'){
+ if(!q.diagram)return '';
+ const d=q.diagram;
+ if(d.type==='percentage-model')return percentageDiagram(d,lang);
+ if(d.type==='basic-model')return basicDiagram(q,lang);
+ if(d.type==='angle-geometry')return angleDiagram(q,lang);
+ if(['equation-check','equation-steps','equation-balance','fee-table'].includes(d.type))return equationDiagram(q,lang);
+ if(['area-formula','sequence-cards','term-table','input-output'].includes(d.type))return expressionDiagram(q,lang);
+ if(d.type==='signed-line')return signedNumberLine(q,lang);
+ if(d.type==='line'){
+  const min=Math.min(-15,d.a,d.a+d.b)-2,max=Math.max(15,d.a,d.a+d.b)+2,pos=n=>30+(n-min)/(max-min)*420;
+  const ticks=Array.from({length:max-min+1},(_,i)=>min+i).filter(n=>n%5===0).map(n=>`<path d="M${pos(n)} 43v14"/><text x="${pos(n)}" y="78">${n}</text>`).join('');
+  return `<svg viewBox="0 0 480 105" role="img" aria-label="${lang==='zh'?'有向數數線，標示起點。':'Signed number line showing the starting value.'}"><g class="ink"><path d="M25 50H455"/>${ticks}</g><circle cx="${pos(d.a)}" cy="50" r="6" fill="#196c65"/><text x="${pos(d.a)}" y="27" class="start">${d.a}</text></svg>`;
+ }
+ if(d.type==='angle'){
+  // The known angle is measured from the left ray; x occupies the remaining angle.
+  const theta=(180-d.a)*Math.PI/180,x=240+135*Math.cos(theta),y=140-135*Math.sin(theta);
+  return `<svg viewBox="0 0 480 170" role="img" aria-label="${lang==='zh'?`直線上的兩個鄰角；已知一角為 ${d.a} 度，另一角為 x。`:`Two adjacent angles on a straight line; one is ${d.a} degrees and the other is x.`}"><path d="M35 140H445M240 140L${x} ${y}" class="ink"/><path d="M200 140A40 40 0 0 1 ${240+40*Math.cos(theta)} ${140-40*Math.sin(theta)}" fill="none" stroke="#196c65" stroke-width="2"/><text x="165" y="112">${d.a}°</text><text x="305" y="118">x</text><circle cx="240" cy="140" r="3" fill="#173349"/></svg>`;
+ }
+ return `<svg viewBox="0 0 480 110" role="img" aria-label="${lang==='zh'?'等式兩邊必須進行相同運算。':'Apply the same operation to both sides of the equation.'}"><path d="M90 45H390M240 45V95M205 95H275M120 45L90 80H150ZM360 45L330 80H390Z" class="ink"/><text x="120" y="28">${d.a}x ${d.b<0?'−':'+'} ${Math.abs(d.b)}</text><text x="360" y="28">${d.c}</text></svg>`;
+}
+
+// src/renderers/review.mjs
+// Presentation guidance is separate from immutable question snapshots so that
+// retained version-1 sessions and paper specifications continue to validate.
+function reasonGuidance(q,lang='en'){
+ const zh=lang==='zh';
+ if(q.id==='EX03'&&q.model?.kind==='area-formula'){
+  return q.model.shape==='triangle'
+   ?(zh?'整份作答需人工評閱：b 是底，h 是相應的垂直高度；公式須等價於 A = bh/2，並以兩個全等三角形組成平行四邊形來解釋一半因數。面積使用平方單位。':'Manual review of the whole response: b is the base and h its perpendicular height; the formula must be equivalent to A = bh/2. Justify the half factor using two congruent triangles forming a parallelogram. Area uses square units.')
+   :(zh?'整份作答需人工評閱：b 是長，h 是闊；公式須等價於 A = bh，並解釋兩個互相垂直的長度相乘得到面積。面積使用平方單位。':'Manual review of the whole response: b is the length and h the width; the formula must be equivalent to A = bh. Explain why multiplying the two perpendicular lengths gives the area. Area uses square units.');
+ }
+ if(q.reasonRubric?.[lang])return q.reasonRubric[lang];
+ if(q.id==='angle'&&q.manualReason)return zh?'說明同一直線上的鄰角和為 180°，並展示減法。':'State that adjacent angles on a straight line total 180° and show the subtraction.';
+ return '';
+}
+
+function markingGuide(item,lang='en'){
+ const {question:q,marks:m}=item,zh=lang==='zh';
+ if(!Number.isInteger(m)||m<1||m>20)throw Error('Marks must be an integer from 1 to 20.');
+ const marks=n=>`${n} ${n===1?'mark':'marks'}`;
+ const guidance=reasonGuidance(q,lang);
+ if(q.contract.type==='manual')return (zh?`全題 ${m} 分需人工評閱。`:m===1?'The single mark requires manual review. ':`All ${marks(m)} require manual review. `)+guidance;
+ if(q.manualReason||guidance){
+  const answer=zh?(q.options?'選項':'數值'):(q.options?'Selection':'Final value');
+  if(m===1)return zh?`${answer}：1 分。書面理由仍需人工評閱；本題未另設理由分。${guidance}`:`${answer}: 1 mark. The written reason still requires manual review; no separate reason mark is allocated. ${guidance}`;
+  return zh?`${answer}：${Math.ceil(m/2)} 分；理由：${Math.floor(m/2)} 分（人工評閱）。${guidance}`:`${answer}: ${marks(Math.ceil(m/2))}; reason: ${marks(Math.floor(m/2))} (manual review). ${guidance}`;
+ }
+ if(q.options)return zh?`選對答案：${m} 分。`:`Correct selection: ${marks(m)}.`;
+ if(m===1)return zh?'正確答案：1 分。':'Correct final answer: 1 mark.';
+ return zh?`正確答案：1 分；有效方法：${m-1} 分。方法分必須有可評閱的步驟證據；接受有效的其他方法。`:`Correct final answer: 1 mark; valid method: ${marks(m-1)}. Method credit requires recorded working; accept valid alternatives.`;
+}
+
+// src/renderers/angles.mjs
+
+
+function angleDiagram(question,lang='en'){
+ const m=question.diagram.model,s=geometryScene(m),z=lang==='zh',move=p=>geometryTransform(p,m.rotation,m.reflected),polar=(a,t,r)=>[a[0]+r*Math.cos(t*Math.PI/180),a[1]+r*Math.sin(t*Math.PI/180)];
+ const cloud=[...s.segments.flatMap(x=>[x.from,x.to]),...s.labels.map(x=>x.point),...s.arcs.flatMap(a=>[polar(a.center,(a.start+a.end)/2,a.radius+20)])].map(move);
+ const xs=cloud.map(p=>p[0]),ys=cloud.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),scale=Math.min(390/(maxX-minX||1),255/(maxY-minY||1));
+ const project=p=>{const [x,y]=move(p);return [240+(x-(minX+maxX)/2)*scale,170-(y-(minY+maxY)/2)*scale];};
+ const pos=p=>project(p).map(x=>x.toFixed(2)).join(' '),text=(p,label,cls='')=>{const [x,y]=project(p);return `<text x="${x.toFixed(2)}" y="${(y+6).toFixed(2)}" class="${cls}">${escape(label)}</text>`;};
+ const segments=s.segments.map(a=>`<path d="M${pos(a.from)}L${pos(a.to)}" class="geometry-line" ${a.dashed?'stroke-dasharray="6 5"':''}/>`).join('');
+ const arcs=s.arcs.map(a=>{const r=a.radius*scale,start=polar(a.center,a.start,a.radius),end=polar(a.center,a.end,a.radius),large=a.end-a.start>180?1:0,sweep=m.reflected?1:0;return `<path d="M${pos(start)}A${r.toFixed(2)} ${r.toFixed(2)} 0 ${large} ${sweep} ${pos(end)}" class="geometry-arc"/>${text(polar(a.center,(a.start+a.end)/2,a.radius+21),a.label,'geometry-angle-label')}`;}).join('');
+ const marks=s.parallel.map(a=>[0,8].map(offset=>{const c=polar(a.point,a.angle,offset),back=polar(c,a.angle+180,9),one=polar(back,a.angle+90,5),two=polar(back,a.angle-90,5);return `<path d="M${pos(one)}L${pos(c)}L${pos(two)}" class="geometry-parallel"/>`;}).join('')).join('');
+ const right=s.markers.map(points=>`<path d="M${points.map(pos).join('L')}" class="geometry-arc"/>`).join('');
+ const alternative=z?'角區域、點及直線以字母標示；完整的已知條件和所求角均見題目。只在已知或所作平行時標上平行記號，勿以外觀代替理由。':'Letters identify sectors, vertices and lines. The question gives the complete conditions and requested angle. Parallel marks appear only for a given or constructed parallel premise; appearance is not a reason.';
+ return `<figure class="angle-figure"><svg class="angle-geometry" viewBox="0 0 480 340" role="img" aria-label="${escape(alternative)}">${segments}${right}${marks}${arcs}${s.labels.map(l=>text(l.point,l.text,'geometry-point-label')).join('')}</svg><figcaption>${alternative}</figcaption></figure>`;
+}
+
+// src/renderers/equation-diagrams.mjs
+
+function equationDiagram(q,lang='en'){
+ const d=q.diagram,z=lang==='zh';
+ if(d.type==='fee-table')return `<div class="expression-table-wrap"><table class="expression-table"><caption>${z?'費用資料（固定費用只付一次）':'Cost information (fixed charge paid once)'}</caption><tbody><tr><th>${z?'固定費用':'Fixed charge'}</th><td>$${d.fixed}</td></tr><tr><th>${d.unit==='hour'?(z?'每小時':'Per hour'):(z?'每局':'Per game')}</th><td>$${d.rate}</td></tr><tr><th>${z?'總費用':'Total'}</th><td>$${escape(d.total)}</td></tr></tbody></table></div>`;
+ if(d.type==='equation-steps'){
+  // Keep inverse-operation guidance behind the hint/solution control in fresh checks.
+  // Render only the equation's givens here; retained question snapshots stay unchanged.
+  const lines=q.id==='EQ02'?[{en:`Original: ${q.math}`,zh:`原式：${q.math}`},{en:`The left side starts with x: multiply by ${q.model.a}, then add ${q.model.b}.`,zh:`左邊由 x 開始：乘以 ${q.model.a}，再加上 ${q.model.b}。`},{en:`The equation asserts that this equals ${q.model.c}.`,zh:`方程表示這個值等於 ${q.model.c}。`}]:d.lines;
+  return `<ol class="equation-steps" aria-label="${z?'按次序閱讀的資料':'Information in reading order'}">${lines.map(line=>`<li>${escape(line[lang])}</li>`).join('')}</ol>`;
+ }
+ if(d.type==='equation-check')return `<div class="equation-panels"><section><h3>${z?'原左邊的代入式':'Original left side after substitution'}</h3>${math(d.left)}</section><section><h3>${z?'原右邊':'Original right side'}</h3>${math(d.right)}</section></div><p class="muted">${z?'先計算，再比較兩邊；這些面板不預先判定相等。':'Calculate, then compare both sides; these panels do not pre-judge equality.'}</p>`;
+ return `<div class="equation-panels"><section><h3>${z?'原方程左邊':'Original left side'}</h3>${math(d.left)}</section><section><h3>${z?'原方程右邊':'Original right side'}</h3>${math(d.right)}</section></div><p class="muted">${z?'等號表示相同的值；兩邊須進行相同的有效運算。這不是以正負數當作實物重量的圖。':'Equality means the same value: apply the same valid operation to both sides. These are expression panels, not physical weights for signed quantities.'}</p>`;
+}
+
+// src/renderers/number-line.mjs
+
+
+function numberLineModel(q){
+ const d=q.diagram,values=d.values.map(v=>Number(scalar(v).n)/Number(scalar(v).d)),all=[0,...values,...(d.bounds||[])];
+ if(d.minimum!==undefined)all.push(d.minimum);if(d.maximum!==undefined)all.push(d.maximum);
+ const lo=Math.min(...all),hi=Math.max(...all),span=Math.max(hi-lo,2),step=d.tick||[.5,1,2,5,10].find(s=>span/s<=10)||10;
+ const minimum=Math.floor((lo-step)/step)*step,maximum=Math.ceil((hi+step)/step)*step;
+ const position=v=>28+(v-minimum)/(maximum-minimum)*424;
+ const ticks=Array.from({length:Math.round((maximum-minimum)/step)+1},(_,i)=>minimum+i*step);
+ return {minimum,maximum,step,ticks,points:values.map((v,i)=>({value:v,label:d.values[i],x:position(v),labelY:116+i%2*24})),movement:d.movement?{start:position(d.movement.start),end:position(d.movement.start+d.movement.delta),delta:d.movement.delta}:null,position};
+}
+function signedNumberLine(q,lang='en'){
+ const m=numberLineModel(q),description=q.diagram.description[lang];
+ const ticks=m.ticks.map(v=>`<path d="M${m.position(v)} 65v12"/><text x="${m.position(v)}" y="98">${v}</text>`).join('');
+ const points=m.points.map(p=>`<circle cx="${p.x}" cy="70" r="5" fill="#176d65"/>${m.ticks.some(t=>Math.abs(t-p.value)<1e-10)?'':`<text x="${p.x}" y="${p.labelY}" class="point-label">${escape(p.label)}</text>`}`).join('');
+ let move='';if(m.movement){const {start,end,delta}=m.movement,dir=delta>=0?1:-1;move=delta===0?`<text x="${start}" y="35">${lang==='zh'?'位置不變':'No movement'}</text>`:`<path d="M${start} 55V30H${end}M${end-dir*8} 24L${end} 30L${end-dir*8} 36" fill="none" stroke="#a85d25" stroke-width="3"/><text x="${(start+end)/2}" y="19">${delta>0?'+':''}${delta}</text>`;}
+ return `<figure class="signed-line-figure"><svg class="signed-numberline" viewBox="0 0 480 155" role="img" aria-label="${escape(description)}"><g class="ink"><path d="M22 70H458"/>${ticks}</g>${points}${move}</svg><figcaption>${escape(description)}</figcaption></figure>`;
+}
+
+// src/renderers/expression-diagrams.mjs
+
+function expressionDiagram(q,lang='en'){
+ const d=q.diagram,zh=lang==='zh';
+ if(d.type==='area-formula'){
+  const triangle=d.shape==='triangle',description=triangle?(zh?'底為 b、垂直高度為 h 的三角形；高度垂足有直角記號。':'Triangle with base b and perpendicular height h; the height foot has a right-angle marker.'):(zh?'長為 b、闊為 h 的長方形。':'Rectangle of length b and width h.');
+  const shape=triangle?'<path d="M55 155H355L225 35Z"/><path d="M225 35V155" stroke-dasharray="5 4"/><path d="M225 141H239V155"/>':'<path d="M65 40H350V155H65ZM65 141H79V155"/>';
+  return `<figure class="expression-figure"><svg viewBox="0 0 420 205" role="img" aria-label="${escape(description)}"><g class="ink">${shape}</g><text x="205" y="185">b</text><text x="${triangle?245:375}" y="100">h</text></svg><figcaption>${escape(description)}</figcaption></figure>`;
+ }
+ if(d.type==='sequence-cards'){
+  const description=zh?'已知四項依次為 '+d.terms.join('、')+'；下一項未知。':'The four given terms are '+d.terms.join(', ')+'. The next term is not supplied.';
+  return `<figure class="expression-figure"><svg viewBox="0 0 480 100" role="img" aria-label="${escape(description)}">${[...d.terms,'?'].map((v,i)=>`<rect x="${8+i*95}" y="20" width="82" height="55" rx="9" fill="#eef5f2" stroke="#9abeb5"/><text x="${49+i*95}" y="55">${v}</text>`).join('')}</svg><figcaption>${escape(description)}</figcaption></figure>`;
+ }
+ if(d.type==='term-table')return `<div class="expression-table-wrap"><table class="expression-table"><caption>${zh?'分清位置與項值':'Distinguish position from term value'}</caption><thead><tr><th>${zh?'位置 n':'Position n'}</th><th>${zh?'項值 aₙ':'Term aₙ'}</th></tr></thead><tbody><tr><td>${d.n}</td><td>?</td></tr></tbody></table></div>`;
+ if(d.type==='input-output')return `<div class="machine-flow" role="group" aria-label="${zh?'輸入、處理、輸出':'Input, processing, output'}"><div><small>${zh?'輸入':'Input'}</small><strong>${d.input}</strong></div><span aria-hidden="true">→</span><div><small>${zh?'處理':'Processing'}</small><span>${escape(d.processing[lang])}</span></div><span aria-hidden="true">→</span><div><small>${zh?'輸出':'Output'}</small><strong>?</strong></div></div>`;
+ return '';
+}
+
+// src/app/percentage-views.mjs
+
+
+
+
+
+function percentageHub(lang,studied=[]){
+ const z=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${z?'百分法 · 初中試行':'PERCENTAGES · JUNIOR PILOT'}</p><h1>${z?'百分之幾？先問以甚麼為基準。':'Percent of what? Start with the base.'}</h1><p class="lede">${z?'四課連結百分變化、商業情境、利息、成分及分階規則。':'Four lessons connect percentage change, shop prices, interest, components and tiered rules.'}</p></div><p class="notice">${z?'作者草稿，待獨立數學及語文審閱。最終值可自動核對，理由與方法須人工檢視。':'Author draft awaiting independent mathematics and language review. Final values are checked automatically; reasons and methods need manual review.'}</p><section class="panel"><h2>${z?'準備及方向':'Preparation and direction'}</h2><p>${z?'重溫百分數、分數和小數互化，以及準確運算。課堂不設分數門檻。':'Revisit percentages, fractions, decimals and exact arithmetic. Lessons have no score gate.'}</p><a href="#basic">${z?'重溫基本運算':'Revisit basic computation'}</a>${percentageDiagram({kind:'base'},lang)}</section><div class="lesson-grid">${percentageLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${z?'第':'LESSON'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(z?'已開啟':'Opened'):(z?'可開啟':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${z?'開啟本課':'Open lesson'}</span></a>`).join('')}</div><section class="panel"><h2>${z?'練習與獨立檢查':'Practice and separate checks'}</h2><div class="hero-actions"><button class="primary" data-action="percentages-practice">${z?'練習全部八類題目':'Practise all eight families'}</button><button class="secondary" data-action="percentages-check">${z?'獨立主題檢查':'Separate topic check'}</button><button class="secondary" data-action="percentages-paper">${z?'製作百分法練習紙':'Create a percentages paper'}</button></div><details><summary>${z?'題目及範圍':'Families and scope'}</summary><ul>${percentageFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul><p>${z?'正原值；求唯一原值時倍數非零。所有題目要求準確值，不取近似值。利息採假設規則；稅表是有日期的虛構課堂模型，並非現行香港法例。':'Positive original values; recovery requires a nonzero multiplier. Answers are exact, without rounding. Interest rules are hypothetical. The dated fictional classroom tax schedule is supplied in each task and is not current Hong Kong law.'}</p></details></section><section class="panel"><h2>${z?'把方法連起來':'Connect the methods'}</h2><p>${z?'說清基準、選倍數、追蹤變化，再檢查單位及結果。下一個計劃主題是率、比及比例。':'Name the base, choose a multiplier, track the change, then check units and interpretation. Rates, ratios and proportions are planned next.'}</p><a href="#topic/js-5">${z?'學習目標及來源':'Objectives and sources'}</a></section>`;
+}
+function percentageLessonView(id,lang){
+ const l=percentageLessons.find(l=>l.id===id);if(!l)return '';const z=lang==='zh',i=percentageLessons.indexOf(l);
+ return `<a class="back-link" href="#percentages">${z?'百分法學習路徑':'Percentages learning path'}</a><div class="page-heading"><p class="eyebrow">${z?'第':'LESSON'} ${i+1} / 4 · ${z?'作者草稿':'AUTHOR DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${z?'學習路線':'Lesson roadmap'}">${percentageLessons.map((s,j)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${j+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${z?'你將學會甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${z?'準備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${z?'開啟本頁只記錄接觸內容，不代表掌握。':'Opening this page records exposure, not mastery.'}</p></section><section class="panel"><h2>${z?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${z?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,j)=>`<section class="panel lesson-explanation"><p class="eyebrow">${j+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}<figure class="panel">${percentageDiagram(id==='PC-L2'?{kind:'timeline',r1:20,r2:-20}:{kind:'base'},lang)}<figcaption>${z?'每個百分率都有自己的基準量。':'Each percentage has its own reference quantity.'}</figcaption></figure><section class="panel"><h2>${z?'比較解題模型':'Compare worked models'}</h2>${percentageLessonExamples(l).map(q=>`<details class="worked-example"><summary>${escape(q.prompt[lang])}</summary><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}<p>${escape(q.solution[lang])}</p><p class="muted">${escape(reasonGuidance(q,lang))}</p></details>`).join('')}</section><section class="panel lesson-takeaway"><h2>${z?'帶走的重點':'Takeaway'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="percentages-lesson-practice" data-lesson="${id}">${z?'引導練習':'Guided practice'}</button><button class="secondary" data-action="percentages-lesson-check" data-lesson="${id}">${z?'獨立檢查':'Separate check'}</button>${percentageLessons[i+1]?`<a class="secondary" href="#lesson/${percentageLessons[i+1].id}">${z?'下一課':'Next lesson'}</a>`:`<a class="secondary" href="#percentages">${z?'返回主題':'Return to topic'}</a>`}</div></section>`;
+}
+
+// src/app/basic-views.mjs
+
+
+
+
+function basicHub(lang,studied=[]){
+ const z=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${z?'基本運算 · 初中試行':'BASIC COMPUTATION · JUNIOR PILOT'}</p><h1>${z?'理解數的結構，準確計算。':'Read the structure. Calculate exactly.'}</h1><p class="lede">${z?'三課連結整除性、乘方、質因數及準確的混合運算。':'Three lessons connect divisibility, powers, prime factors and exact mixed operations.'}</p></div><p class="notice">${z?'作者草稿，待獨立數學及語文審閱。數值及選項可自動檢查；書寫方法與理由仍需人工檢視。':'Author draft, awaiting independent mathematics and language review. Values and choices can be checked automatically; written methods and reasons require manual review.'}</p><section class="panel"><h2>${z?'準備及方向':'Preparation and direction'}</h2><p>${z?'先重溫位值、乘除、餘數及基本分數。沿著以下三課學習；準備項目不會鎖定課程。':'Revisit place value, multiplication, division, remainders and basic fractions. Follow the three lessons below; preparation never locks a lesson.'}</p></section><div class="lesson-grid">${basicLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${z?'第':'LESSON'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(z?'已開啟':'Opened'):(z?'可開啟':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${z?'開啟本課':'Open lesson'}</span></a>`).join('')}</div><section class="panel"><h2>${z?'練習、獨立檢查及試卷':'Practice, separate checks and papers'}</h2><div class="hero-actions"><button class="primary" data-action="basic-practice">${z?'練習全部八類題目':'Practise all eight families'}</button><button class="secondary" data-action="basic-check">${z?'獨立主題檢查':'Separate topic check'}</button><button class="secondary" data-action="basic-paper">${z?'製作基本運算試卷':'Create a basic-computation paper'}</button></div><details><summary>${z?'題目及範圍':'Families and scope'}</summary><ul>${basicFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul><p>${z?'整除性要求運用判別方法，不要求證明。乘方只用正整數底數及指數；包括兩個或三個數的最大公因數及最小公倍數。指數定律、一般根式及聯立方程不在本組範圍。':'Apply divisibility tests without a proof requirement. Powers use positive integer bases and exponents. GCD/LCM includes two or three numbers. Laws of indices, general surds and simultaneous equations are outside this slice.'}</p></details></section><section class="panel"><h2>${z?'把方法帶到下一步':'Carry the method forward'}</h2><p>${z?'有向數將準確運算延伸至負數。可繼續學習百分法，追蹤基準量。':'Directed numbers extend exact operations to negative values. Continue with percentages to track reference quantities.'}</p><a href="#signed">${z?'下一步：有向數':'Next: directed numbers'}</a> · <a href="#topic/js-1">${z?'目標及來源':'Objectives and sources'}</a></section>`;
+}
+function basicLessonView(id,lang){
+ const l=basicLessons.find(l=>l.id===id);if(!l)return '';const z=lang==='zh',i=basicLessons.indexOf(l);
+ return `<a class="back-link" href="#basic">${z?'基本運算學習路徑':'Basic-computation learning path'}</a><div class="page-heading"><p class="eyebrow">${z?'第':'LESSON'} ${i+1} / 3 · ${z?'作者草稿':'AUTHOR DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${z?'學習路線':'Lesson roadmap'}">${basicLessons.map((s,j)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${j+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${z?'你將學會甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${z?'準備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${z?'開啟本頁只記錄接觸內容，不代表掌握。':'Opening this page records study exposure, not mastery.'}</p></section><section class="panel"><h2>${z?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${z?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,j)=>`<section class="panel lesson-explanation"><p class="eyebrow">${j+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}${id==='BC-L2'?`<figure class="panel basic-lesson-tree"><svg viewBox="0 0 400 180" role="img" aria-label="${z?'72 分成 8 乘 9；8 分成三個 2，9 分成兩個 3。':'72 splits into 8 and 9; 8 splits into three twos, and 9 into two threes.'}"><g fill="none" stroke="#176d65" stroke-width="2"><path d="M200 35L100 85M200 35L300 85M100 100L40 145M100 100L100 145M100 100L160 145M300 100L260 145M300 100L340 145"/></g><g fill="#173349" text-anchor="middle" font-size="20"><text x="200" y="25">72</text><text x="100" y="95">8</text><text x="300" y="95">9</text><text x="40" y="170">2</text><text x="100" y="170">2</text><text x="160" y="170">2</text><text x="260" y="170">3</text><text x="340" y="170">3</text></g></svg><figcaption>${z?'72 = 2³ × 3²；底層全部是質數。':'72 = 2³ × 3²; every leaf is prime.'}</figcaption></figure>`:''}<section class="panel"><h2>${z?'先嘗試，再比較示例':'Try first, then compare worked models'}</h2>${basicLessonExamples(l).map(q=>`<article class="lesson-model"><h3>${escape(q.prompt[lang])}</h3><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}${q.options?`<ul>${q.options.map(o=>`<li>${escape(optionLabel(o,lang))}</li>`).join('')}</ul>`:''}<details><summary>${z?'顯示方法及檢視準則':'Reveal method and review criteria'}</summary><p>${escape(q.hint[lang])}</p><p>${escape(q.solution[lang])}</p>${q.reasonRubric?`<p>${escape(reasonGuidance(q,lang))}</p>`:''}</details></article>`).join('')}</section><section class="panel lesson-takeaway"><h2>${z?'連結所學':'Connect the ideas'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="basic-lesson-practice" data-lesson="${id}">${z?'引導練習':'Try guided practice'}</button><button class="secondary" data-action="basic-lesson-check" data-lesson="${id}">${z?'獨立檢查':'Try a separate check'}</button><a href="${i<2?'#lesson/'+basicLessons[i+1].id:'#signed'}">${z?'下一步':'Continue'} →</a></div><p class="muted">${z?'正確數值並不驗證書寫方法；自我檢視不是獨立驗證。':'A correct value does not verify written working; self-review is not independent verification.'}</p></section>`;
+}
+
+// src/app/signed-views.mjs
+
+
+
+
+const signedText=(v,lang)=>v[lang];
+function signedHub(lang,studied=[]){
+ const zh=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${zh?'有向數 · 初中試點教材':'DIRECTED NUMBERS · JUNIOR PILOT'}</p><h1>${zh?'從基準到有向變化':'From a reference to a directed change'}</h1><p class="lede">${zh?'先理解正負號，再用運算與情境鞏固。三節課可依次閱讀，也可直接選擇。':'Understand signs first, then connect operations and contexts. Follow the three sessions or choose one directly.'}</p></div><p class="notice">${zh?'試點初稿：已實作，尚待獨立數學及語文評閱。學習紀錄不代表已掌握課題。':'Pilot draft: implemented, awaiting independent mathematics and language review. Study records do not establish mastery.'}</p><section class="panel"><h2>${zh?'開始前與學習方向':'Before you start and where this leads'}</h2><p>${zh?'預備：讀等距刻度、正數大小、分數及小數四則運算。需要時可重溫，不會限制你開始學習。':'Preparation: equal number-line ticks, positive-number order, and fraction/decimal arithmetic. Revisit these when helpful; access remains open.'}</p><p>${zh?'目標：表示及比較有向數、進行四則混合運算，並解釋情境中的變化（JS2.1–2.3）。':'Goals: represent and compare directed numbers, calculate mixed operations and explain contextual changes (JS2.1–2.3).'}</p></section><div class="lesson-grid">${signedLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${zh?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(zh?'曾開啟':'Opened'):(zh?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${zh?'開啟課節':'Open session'} →</span></a>`).join('')}</div><section class="panel"><h2>${zh?'練習與獨立檢視':'Practice and a separate check'}</h2><p>${zh?'練習可隨時查看提示；獨立檢視會分開記錄未看提示的首次作答。溫度變化的書面理由仍需人工評閱。':'Practice offers hints. A separate check records first unrevealed answers distinctly. Written explanations of temperature changes still need manual review.'}</p><div class="hero-actions"><button class="primary" data-action="signed-practice">${zh?'六類混合練習':'Practise all six families'}</button><button class="secondary" data-action="signed-check">${zh?'六類獨立檢視':'Separate six-family check'}</button><a href="#paper">${zh?'製作練習紙':'Create a paper'}</a></div><details><summary>${zh?'六類題目與課程連結':'Six task families and curriculum links'}</summary><ul>${curriculumFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul></details></section><section class="panel"><h2>${zh?'帶到下一個課題':'Carry this forward'}</h2><p>${zh?'在代數式和方程中，你仍需讀清正負號與運算。接著學習代數式，再連接方程及幾何推理。':'Expressions and equations also require careful reading of signs and operations. Continue with expressions next, then connect equations and geometric reasoning.'}</p><a href="#expressions">${zh?'下一步：代數式':'Next: expressions'}</a> <a href="#topic/js-2">${zh?'查看正式學習目標及資料來源':'View the mapped objectives and sources'}</a></section>`;
+}
+function signedLessonView(id,lang){
+ const l=signedLessons.find(l=>l.id===id);if(!l)return '';
+ const zh=lang==='zh',index=signedLessons.indexOf(l),models=lessonExamples(l);
+ return `<a class="back-link" href="#signed">${zh?'有向數學習路線':'Directed-number learning path'}</a><div class="page-heading"><p class="eyebrow">${zh?'第':'SESSION'} ${index+1} / 3 · ${zh?'試點初稿':'PILOT DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${zh?'課節路線':'Session roadmap'}">${signedLessons.map((s,i)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${i+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${zh?'這節學甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${zh?'預備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${zh?'開啟本頁只記錄曾閱讀，不會標示為已掌握。':'Opening this page records study exposure only; it does not mark the topic mastered.'}</p></section><section class="panel"><h2>${zh?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${zh?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,i)=>`<section class="panel lesson-explanation"><p class="eyebrow">${i+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}<section class="panel"><h2>${zh?'一起看兩個例子':'Two worked models'}</h2><p>${zh?'先讀題，試想方法，再開啟步驟。這些例子會視為已看過，不算新題的獨立作答。':'Read each question and choose an approach before opening its working. These models count as exposed examples, not fresh independent tasks.'}</p>${models.map(q=>`<article class="lesson-model"><h3>${escape(q.prompt[lang])}</h3><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}<details><summary>${zh?'查看方法與答案':'Reveal the method and answer'}</summary><p>${escape(q.hint[lang])}</p><p>${escape(q.solution[lang])}</p>${q.reasonRubric?`<p>${escape(reasonGuidance(q,lang))}</p>`:''}</details></article>`).join('')}</section><section class="panel lesson-takeaway"><h2>${zh?'把重點連起來':'Connect the ideas'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="lesson-practice" data-lesson="${id}">${zh?'先做引導練習':'Try guided practice'}</button><button class="secondary" data-action="lesson-check" data-lesson="${id}">${zh?'另做未看過的新題':'Try a separate fresh check'}</button>${index<2?`<a href="#lesson/${signedLessons[index+1].id}">${zh?'下一節':'Next session'} →</a>`:`<a href="#signed">${zh?'返回課題路線':'Return to the topic path'}</a>`}</div><p class="muted">${zh?'引導研習、使用提示的練習、首次獨立作答及自行評閱會分開記錄。':'Study, assisted practice, first-independent answers and self-review remain separate records.'}</p></section>`;
+}
+
+// src/app/expression-views.mjs
+
+
+
+
+function expressionHub(lang,studied=[]){
+ const z=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${z?'代數式 · 初中試點教材':'EXPRESSIONS · JUNIOR PILOT'}</p><h1>${z?'用符號把意思說清楚':'Make meaning clear with symbols'}</h1><p class="lede">${z?'由文字和公式，走到數列及輸入輸出規則。三節課把相同的「關係」概念連起來。':'Move from words and formulas to sequences and input–output rules. Three sessions connect different ways of describing a relationship.'}</p></div><p class="notice">${z?'作者初稿，尚待獨立數學及語文評閱。兩變量公式與開放數列解釋會記錄待人工評閱，不會自動標示正確。':'Author draft, awaiting independent mathematics/language review. Two-variable formulas and open sequence explanations are recorded for manual review, never automatically labelled correct.'}</p><section class="panel"><h2>${z?'開始前與目標':'Preparation and goals'}</h2><p>${z?'預備：有向數、基本面積公式、字母表示數量。目標：雙向理解文字與代數式，提出及評估規律，並按已知規則求指定值（JS7.1–7.4）。':'Preparation: directed numbers, basic area formulas and letters representing quantities. Goals: translate between words and expressions, explain a proposed pattern, and evaluate supplied rules (JS7.1–7.4).'}</p><a href="#signed">${z?'需要時重溫有向數':'Revisit directed numbers when helpful'}</a></section><div class="lesson-grid">${expressionLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(z?'曾開啟':'Opened'):(z?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${z?'開啟課節':'Open session'} →</span></a>`).join('')}</div><section class="panel"><h2>${z?'練習、檢視與人工評閱':'Practice, checks and manual review'}</h2><p>${z?'自動核對只涵蓋已聲明的數值、選擇和單變量代數式。書面規律或公式的自行評閱會另外記錄；其他一致的數列延伸亦可能有效。':'Automatic checks cover declared numbers, choices and one-variable expressions. Self-review of a written rule or formula stays separate; another consistent sequence continuation may be valid.'}</p><div class="hero-actions"><button class="primary" data-action="expressions-practice">${z?'六類混合練習':'Practise all six families'}</button><button class="secondary" data-action="expressions-check">${z?'另做檢視題目':'Separate topic check'}</button><button class="secondary" data-action="expressions-paper">${z?'建立代數式練習紙':'Create an expressions paper'}</button></div><details><summary>${z?'題型與範圍':'Families and scope'}</summary><ul>${expressionFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}${f.contract==='manual'?' · '+(z?'人工評閱':'manual review'):''}</li>`).join('')}</ul><p>${z?'合併同類項及展開多項式屬第 11 單元，不會用舊開發示例當作本課題已完成。':'Collecting like terms and polynomial expansion belong to unit 11; the retained development fixture is not unit-7 completion.'}</p></details></section><section class="panel"><h2>${z?'把關係帶到下一步':'Carry the relationship forward'}</h2><p>${z?'方程會把兩個代數式連成等式。這個課題先處理如何表達和理解每個量；方程和角的課節仍在設計。':'Equations connect two expressions with an equality. Here the focus is expressing and interpreting each quantity; equations lessons are now available; angles are now available as an author draft.'}</p><a href="#equations">${z?'下一步：學習方程':'Next: learn equations'}</a> <a href="#topic/js-7">${z?'查看學習目標及資料來源':'View mapped objectives and sources'}</a></section>`;
+}
+function expressionLessonView(id,lang){
+ const l=expressionLessons.find(l=>l.id===id);if(!l)return '';const z=lang==='zh',i=expressionLessons.indexOf(l),models=expressionLessonExamples(l);
+ return `<a class="back-link" href="#expressions">${z?'代數式學習路線':'Expressions learning path'}</a><div class="page-heading"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} / 3 · ${z?'作者初稿':'AUTHOR DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${z?'課節路線':'Session roadmap'}">${expressionLessons.map((s,j)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${j+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${z?'這節學甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${z?'預備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${z?'開啟本頁只記錄研習曝光，不會認證已掌握。':'Opening this page records study exposure, not mastery.'}</p></section><section class="panel"><h2>${z?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${z?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,j)=>`<section class="panel lesson-explanation"><p class="eyebrow">${j+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}<section class="panel"><h2>${z?'看例子，並比較方法':'Compare worked models'}</h2><p>${z?'先讀題和試想方法，再開啟參考例子。人工題目的參考例子不是唯一答案。':'Read and choose an approach before revealing a model. A manual task’s illustration need not be its only valid response.'}</p>${models.map(q=>`<article class="lesson-model"><h3>${escape(q.prompt[lang])}</h3><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}${q.options?`<ul>${q.options.map(o=>`<li>${escape(optionLabel(o,lang))}</li>`).join('')}</ul>`:''}<details><summary>${z?'查看方法與評準':'Reveal the method and review criteria'}</summary><p>${escape(q.hint[lang])}</p><p>${escape(q.solution[lang])}</p>${q.reasonRubric?`<p>${escape(reasonGuidance(q,lang))}</p>`:''}</details></article>`).join('')}</section><section class="panel lesson-takeaway"><h2>${z?'把重點連起來':'Connect the ideas'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="expression-lesson-practice" data-lesson="${id}">${z?'先做引導練習':'Try guided practice'}</button><button class="secondary" data-action="expression-lesson-check" data-lesson="${id}">${z?'另做檢視題目':'Try a separate check'}</button>${i<2?`<a href="#lesson/${expressionLessons[i+1].id}">${z?'下一節':'Next session'} →</a>`:`<a href="#expressions">${z?'返回課題路線':'Return to the topic path'}</a>`}</div><p class="muted">${z?'公式、規律與理由需人工評閱；自行比較不會變成自動正確或獨立認證。':'Formulas, rules and explanations need manual review; self-comparison does not become automatic correctness or independent verification.'}</p></section>`;
+}
+
+// src/app/equation-views.mjs
+
+
+
+
+function equationHub(lang,studied=[]){
+ const z=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${z?'方程 · 初中試點':'EQUATIONS · JUNIOR PILOT'}</p><h1>${z?'保持相等，找出未知數':'Preserve equality. Find the unknown.'}</h1><p class="lede">${z?'三節課連起檢驗、求解、建模和解釋。':'Three sessions connect testing, solving, modelling and interpretation.'}</p></div><p class="notice">${z?'作者初稿，尚待獨立數學及語文評閱。本試點的方程均恰有一個解；書面理由與自動數值核對分開處理。':'Author draft, awaiting independent mathematics/language review. Every equation in this slice has exactly one solution; written reasons remain separate from automatic answer checks.'}</p><section class="panel"><h2>${z?'預備知識與目標':'Preparation and goals'}</h2><p>${z?'重溫有向數、分數、代入和簡單分配律；目標是保持等式成立、建立情境模型並按單位解釋（JS8.1–8.3）。':'Revisit directed numbers, fractions, substitution and simple distribution. Preserve equality, form a contextual model and interpret the units (JS8.1–8.3).'}</p><a href="#expressions">${z?'重溫代數式':'Revisit expressions'}</a></section><div class="lesson-grid">${equationLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(z?'已開啟':'Opened'):(z?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${z?'開啟課節':'Open session'}</span></a>`).join('')}</div><section class="panel"><h2>${z?'練習、檢視和理由評閱':'Practice, checks and reasoning review'}</h2><p>${z?'數值和選項可自動核對；建立的模型、推理步驟和情境解釋另作人工評閱。':'Numbers and choices can be checked automatically; models, working and contextual interpretations require manual review.'}</p><div class="hero-actions"><button class="primary" data-action="equations-practice">${z?'練習六類題目':'Practise all six families'}</button><button class="secondary" data-action="equations-check">${z?'另做課題檢視':'Separate topic check'}</button><button class="secondary" data-action="equations-paper">${z?'製作方程練習紙':'Create an equations paper'}</button></div><details><summary>${z?'題型與範圍':'Families and scope'}</summary><ul>${equationFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul><p>${z?'本試點不含無解、無限多解、分母含未知數、二次方程或自由輸入的方程等價核對。':'No-solution and infinitely-many-solution cases, variable denominators, quadratics and free equation-equivalence marking are outside this slice.'}</p></details></section><section class="panel"><h2>${z?'把方法帶到下一步':'Carry the method forward'}</h2><p>${z?'把方程用於幾何關係；接著可使用角與平行線學習路線。':'Use equations to describe geometric relationships. Continue with the angles and parallel-lines path.'}</p><a href="#angles">${z?'下一步：角與平行線':'Next: angles and parallel lines'}</a> <a href="#topic/js-8">${z?'查看學習重點及來源':'View mapped objectives and sources'}</a></section>`;
+}
+function equationLessonView(id,lang){
+ const l=equationLessons.find(l=>l.id===id);if(!l)return '';const z=lang==='zh',i=equationLessons.indexOf(l),models=equationLessonExamples(l);
+ return `<a class="back-link" href="#equations">${z?'方程學習路線':'Equations learning path'}</a><div class="page-heading"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} / 3 · ${z?'作者初稿':'AUTHOR DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${z?'課節路線':'Session roadmap'}">${equationLessons.map((s,j)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${j+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${z?'這節學甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${z?'預備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${z?'開啟本頁只記錄研習曝光，不會認證已掌握。':'Opening this page records study exposure, not mastery.'}</p></section><section class="panel"><h2>${z?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${z?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,j)=>`<section class="panel lesson-explanation"><p class="eyebrow">${j+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}<section class="panel"><h2>${z?'看例子，並比較方法':'Compare worked models'}</h2><p>${z?'先讀題並試想方法，再開啟參考例子。數值或選項正確不代表書面理由已獲核實。':'Read and try an approach before revealing a model. A correct value or selection does not verify written reasoning.'}</p>${models.map(q=>`<article class="lesson-model"><h3>${escape(q.prompt[lang])}</h3><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}${q.options?`<ul>${q.options.map(o=>`<li>${escape(optionLabel(o,lang))}</li>`).join('')}</ul>`:''}<details><summary>${z?'查看方法與評準':'Reveal the method and review criteria'}</summary><p>${escape(q.hint[lang])}</p><p>${escape(q.solution[lang])}</p>${q.reasonRubric?`<p>${escape(reasonGuidance(q,lang))}</p>`:''}</details></article>`).join('')}</section><section class="panel lesson-takeaway"><h2>${z?'把重點連起來':'Connect the ideas'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="equation-lesson-practice" data-lesson="${id}">${z?'先做引導練習':'Try guided practice'}</button><button class="secondary" data-action="equation-lesson-check" data-lesson="${id}">${z?'另做檢視題目':'Try a separate check'}</button>${i<2?`<a href="#lesson/${equationLessons[i+1].id}">${z?'下一節':'Next session'} →</a>`:`<a href="#equations">${z?'返回課題路線':'Return to the topic path'}</a>`}</div><p class="muted">${z?'書面步驟、模型與解釋需人工評閱；自行比較不等於獨立認證。':'Written working, models and interpretations need manual review; self-comparison is not independent verification.'}</p></section>`;
+}
+
+// src/app/angle-views.mjs
+
+
+
+
+function angleHub(lang,studied=[]){
+ const z=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${z?'角與平行線 · 初中試點':'ANGLES AND PARALLEL LINES · JUNIOR PILOT'}</p><h1>${z?'先看已知，再給理由':'Start with the givens. Give a reason.'}</h1><p class="lede">${z?'三節課連起局部角關係、平行判定，以及三角形的演繹推論。':'Three sessions connect local angle facts, parallel-line tests and triangle deductions.'}</p></div><p class="notice">${z?'作者初稿，尚待獨立數學及語文評閱。圖形外觀不是額外已知條件；數值核對不代表理由或證明已獲核實。':'Author draft, awaiting independent mathematics/language review. Appearance is not an extra premise; checking a number does not verify a reason or a proof.'}</p><section class="panel"><h2>${z?'預備知識與目標':'Preparation and goals'}</h2><p>${z?'重溫度量、直線、射線與基本減法；辨認角對，分清已知平行與判定平行，最後建立三角形角定理的理由（JS19.1–19.5）。':'Revisit degrees, lines, rays and subtraction. Identify pairs, distinguish given parallelism from a parallel test, then justify triangle angle rules (JS19.1–19.5).'}</p><a href="#equations">${z?'重溫方程與推理':'Revisit equations and reasoning'}</a></section><div class="lesson-grid">${angleLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(z?'已開啟':'Opened'):(z?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${z?'開啟課節':'Open session'}</span></a>`).join('')}</div><section class="panel"><h2>${z?'計算、分類與證明':'Calculate, classify and justify'}</h2><p>${z?'角度和分類可自動核對；幾何理由另作評閱。一般證明整題均須人工評閱，不會加入自動分數的分母。旋轉或反射同一題不會變成新的獨立作答證據。':'Angle values and classifications can be checked automatically; geometric reasons remain separate. The general proof task is wholly manual and excluded from the automatic-score denominator. Rotating or reflecting the same task does not make it fresh independent evidence.'}</p><div class="hero-actions"><button class="primary" data-action="angles-practice">${z?'練習六類題目':'Practise all six families'}</button><button class="secondary" data-action="angles-check">${z?'另做課題檢視':'Separate topic check'}</button><button class="secondary" data-action="angles-paper">${z?'製作角的練習紙':'Create an angles paper'}</button></div><details><summary>${z?'題型與範圍':'Families and scope'}</summary><ul>${angleFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}${f.contract==='manual'?' · '+(z?'全題人工評閱':'wholly manual proof'):''}</li>`).join('')}</ul><p>${z?'只在已知或所作平行時標上平行記號；一般證明不以量度或單一數值代替。':'Parallel marks appear only for given or constructed parallelism. Measurement or a single number does not replace a general proof.'}</p></details></section><section class="panel"><h2>${z?'把四個課題連起來':'Connect the four topics'}</h2><p>${z?'由有向數的運算，走到代數式、方程，再以已知幾何性質給出有根據的推論。四個課題均為作者初稿，整體課程覆蓋仍在規劃中。':'Directed arithmetic supports expressions and equations; geometry adds premises and reasons to the deductions. These four topics are author drafts; complete curriculum coverage remains planned.'}</p><a href="#topic/js-19">${z?'查看學習重點與資料來源':'View mapped objectives and sources'}</a> <a href="#home">${z?'返回整體學習路線':'Return to the learning overview'}</a></section>`;
+}
+function angleLessonView(id,lang){
+ const l=angleLessons.find(l=>l.id===id);if(!l)return '';const z=lang==='zh',i=angleLessons.indexOf(l),models=angleLessonExamples(l);
+ return `<a class="back-link" href="#angles">${z?'角的學習路線':'Angles learning path'}</a><div class="page-heading"><p class="eyebrow">${z?'第':'SESSION'} ${i+1} / 3 · ${z?'作者初稿':'AUTHOR DRAFT'}</p><h1>${escape(l.title[lang])}</h1><p class="lede">${escape(l.why[lang])}</p></div><nav class="lesson-roadmap" aria-label="${z?'課節路線':'Session roadmap'}">${angleLessons.map((s,j)=>`<a href="#lesson/${s.id}" ${s.id===id?'aria-current="step"':''}>${j+1}. ${escape(s.title[lang])}</a>`).join('')}</nav><section class="panel"><h2>${z?'這節學甚麼？':'What will you learn?'}</h2><ul>${l.goals[lang].map(g=>`<li>${escape(g)}</li>`).join('')}</ul><p><strong>${z?'預備：':'Preparation: '}</strong>${escape(l.before[lang])}</p><p class="muted">${z?'開啟本頁只記錄研習曝光，不會認證已掌握。':'Opening this page records study exposure, not mastery.'}</p></section><section class="panel"><h2>${z?'先想一想':'Think first'}</h2><p>${escape(l.readiness[lang])}</p><details><summary>${z?'比較想法':'Compare your idea'}</summary><p>${escape(l.readinessAnswer[lang])}</p></details></section>${l.sections.map((s,j)=>`<section class="panel lesson-explanation"><p class="eyebrow">${j+1}</p><h2>${escape(s.title[lang])}</h2><p>${escape(s.text[lang])}</p></section>`).join('')}<section class="panel"><h2>${z?'看例子，並比較方法':'Compare worked models'}</h2><p>${z?'先讀題並試想方法，再開啟參考例子。數值或選項正確不代表書面理由已獲核實。':'Read and try an approach before revealing a model. A correct value or selection does not verify written reasoning.'}</p>${models.map(q=>`<article class="lesson-model"><h3>${escape(q.prompt[lang])}</h3><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}${q.options?`<ul>${q.options.map(o=>`<li>${escape(optionLabel(o,lang))}</li>`).join('')}</ul>`:''}<details><summary>${z?'查看方法與評準':'Reveal the method and review criteria'}</summary><p>${escape(q.hint[lang])}</p><p>${escape(q.solution[lang])}</p>${q.reasonRubric?`<p>${escape(reasonGuidance(q,lang))}</p>`:''}</details></article>`).join('')}</section><section class="panel lesson-takeaway"><h2>${z?'把重點連起來':'Connect the ideas'}</h2><p>${escape(l.takeaway[lang])}</p><p>${escape(l.next[lang])}</p><div class="hero-actions"><button class="primary" data-action="angle-lesson-practice" data-lesson="${id}">${z?'先做引導練習':'Try guided practice'}</button><button class="secondary" data-action="angle-lesson-check" data-lesson="${id}">${z?'另做檢視題目':'Try a separate check'}</button>${i<2?`<a href="#lesson/${angleLessons[i+1].id}">${z?'下一節':'Next session'} →</a>`:`<a href="#angles">${z?'返回課題路線':'Return to the topic path'}</a>`}</div><p class="muted">${z?'書面步驟、模型與解釋需人工評閱；自行比較不等於獨立認證。':'Written working, models and interpretations need manual review; self-comparison is not independent verification.'}</p></section>`;
+}
+
+// src/papers/paper.mjs
+
+function canonical(v){if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';if(v&&typeof v==='object')return '{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';return JSON.stringify(v);}
+function questionSnapshotMatches(q){
+ const expected=generate(q.id,q.seed,q.version);
+ if(canonical(expected)===canonical(q))return true;
+ // Pre-fix standalone builds consumed the doubled dollar sign in the EQ05/06
+ // prompt templates. Accept exactly that historical text variant, preserving
+ // all model, answer, contract, diagram and other snapshot fields unchanged.
+ if(q.version!==1||!['EQ05','EQ06'].includes(q.id))return false;
+ const legacy=structuredClone(expected);
+ for(const lang of ['en','zh'])legacy.prompt[lang]=legacy.prompt[lang].replace(/\$(?=\d)/g,'');
+ return canonical(legacy)===canonical(q);
+}
+async function identity(spec){const bytes=new TextEncoder().encode(canonical(spec));const hash=await crypto.subtle.digest('SHA-256',bytes);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+// A digest and its displayed/exported paper must come from the same immutable snapshot.
+async function preparePaper(spec,compute=identity){const snapshot=structuredClone(spec);return {spec:snapshot,fingerprint:await compute(snapshot)};}
+function previewCoordinator(compute=identity){let revision=0;return async spec=>{const ticket=++revision,result=await preparePaper(spec,compute);return ticket===revision?result:null;};}
+function createPaper(ids,seed,count=6,lang='en'){
+ return {kind:'secondary-mathquiz-paper',schema:1,generatorVersion:FIXTURE_VERSION,title:'Secondary MathQuiz',seed,lang,layout:{format:'A4',perPage:3},items:makeItems(ids,seed,count).map(question=>({question,marks:question.marks,lines:question.lines}))};
+}
+function validatePaper(p){
+ if(!p||p.kind!=='secondary-mathquiz-paper'||p.schema!==1||![1,FIXTURE_VERSION].includes(p.generatorVersion))throw new Error('This paper needs the original supported prototype version.');
+ if(Object.keys(p).some(k=>!['kind','schema','generatorVersion','title','seed','lang','layout','items'].includes(k)))throw new Error('Unknown paper fields are not accepted.');
+ if(typeof p.title!=='string'||p.title.length>100||typeof p.seed!=='string'||p.seed.length>60||!['en','zh'].includes(p.lang)||p.layout?.format!=='A4'||p.layout.perPage!==3||!Array.isArray(p.items)||!p.items.length||p.items.length>12)throw new Error('Invalid paper specification.');
+ if(Object.keys(p.layout).some(k=>!['format','perPage'].includes(k)))throw new Error('Unknown layout fields are not accepted.');
+ for(const item of p.items){if(Object.keys(item).some(k=>!['question','marks','lines'].includes(k)))throw new Error('Unknown question fields are not accepted.');if(!Number.isInteger(item.marks)||item.marks<1||item.marks>20||!Number.isInteger(item.lines)||item.lines<1||item.lines>6)throw new Error('Marks/working space are out of range.');const q=item.question;if(!questionSnapshotMatches(q))throw new Error('The question snapshot does not match its version.');}
+ return p;
+}
+
+// src/papers/render.mjs
+
+
+const paperCSS=`.basic-figure{margin:12px 0}.basic-cards{display:flex;flex-wrap:wrap;gap:8px}.basic-cards>span{border:1px solid #bdceca;border-radius:8px;padding:10px 14px;font-size:18px;max-width:100%;overflow-wrap:anywhere}.basic-figure figcaption{font-size:12px;margin-top:6px}.basic-lesson-tree svg{display:block;width:100%;max-height:210px}
+body{font:15px/1.5 'Segoe UI','Microsoft JhengHei',sans-serif;color:#172b3d;background:#edf1f3;margin:0}*{box-sizing:border-box}.paper-page{background:#fff;width:210mm;min-height:297mm;padding:14mm 16mm 16mm;margin:18px auto;position:relative;page-break-after:always;break-after:page}.paper-page:last-child{page-break-after:auto;break-after:auto}.paper-header{border-bottom:2px solid #18374b;padding-bottom:8px;margin-bottom:15px}.paper-header h1{font-size:23px;margin:0 0 5px}.paper-header p{margin:4px 0;font-size:12px}.paper-meta{display:flex;justify-content:space-between;gap:20px}.paper-question{break-inside:avoid;page-break-inside:avoid;margin:18px 0 28px}.paper-question header{display:flex;justify-content:space-between;gap:15px}.paper-question h2{font-size:15px;font-weight:500;margin:0 0 10px}.paper-question math{font-size:23px;display:block;margin:10px 0}.paper-question svg{display:block;max-width:100%;height:80px;margin:5px auto}.ink{stroke:#173349;stroke-width:2;fill:none}svg text{font:15px 'Segoe UI',sans-serif;text-anchor:middle;fill:#173349}.paper-work{border-bottom:1px solid #c3cbd0;height:24px}.paper-answer{margin-top:8px}.paper-footer{position:absolute;bottom:8mm;left:16mm;right:16mm;font-size:11px;display:flex;justify-content:space-between}.solution{font-size:14px;padding:7px 12px;border-left:3px solid #176d65}.signed-line-figure{margin:8px 0}.signed-line-figure svg{height:130px!important;max-width:100%;width:100%}.signed-line-figure figcaption{font-size:11px;line-height:1.4;color:#334b5a}.signed-numberline text{font-size:18px;stroke:none}.expression-figure{margin:8px 0}.expression-figure svg{height:120px!important;width:100%;max-width:100%}.expression-figure figcaption{font-size:11px;line-height:1.4}.expression-table-wrap{margin:10px 0}.expression-table{border-collapse:collapse;width:100%;max-width:420px;font-size:13px}.expression-table caption{text-align:left;margin-bottom:5px}.expression-table th,.expression-table td{padding:6px 12px;border:1px solid #bdceca;text-align:center}.machine-flow{display:grid;grid-template-columns:1fr auto 2fr auto 1fr;align-items:center;gap:8px;margin:10px 0;font-size:12px}.machine-flow>div{border:1px solid #bdceca;border-radius:5px;padding:8px;text-align:center;min-width:0}.machine-flow small{display:block;margin-bottom:4px}.machine-flow strong{font-size:17px}.print-action{margin:20px;text-align:center}button{font:inherit;padding:10px 18px}.sample-label{font-weight:600;letter-spacing:.05em;text-transform:uppercase}.equation-panels{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px}.equation-panels section{padding:8px;border:1px solid #bdceca;min-width:0}.equation-panels h3{font-size:12px}.equation-panels math{font-size:18px}.equation-steps{font-size:13px;padding-left:20px}.angle-figure{margin:1rem 0}.angle-figure svg{display:block;width:100%;max-height:360px}.angle-figure figcaption{font-size:.875rem;line-height:1.5;color:#526a77}.angle-geometry text{font:21px 'Segoe UI','Microsoft JhengHei',sans-serif;text-anchor:middle;fill:#173349}.geometry-line{stroke:#173349;stroke-width:2.4;fill:none}.geometry-arc{stroke:#176d65;stroke-width:1.8;fill:none}.geometry-parallel{stroke:#173349;stroke-width:2.2;fill:none}.angle-figure svg{height:200px!important;max-height:none;width:100%}.angle-figure figcaption{font-size:11px} @media print{@page{size:A4;margin:0}body{background:#fff}.paper-page{margin:0;width:210mm;height:297mm;min-height:0;box-shadow:none}.print-action{display:none}a{color:inherit;text-decoration:none}}`;
+function paginate(spec,key=false){
+ const pages=[];let current=[],height=0,start=0;
+ for(let i=0;i<spec.items.length;i++){
+  const item=spec.items[i],q=item.question;
+  // Conservative block budget, with the original question kept together.
+  const promptLines=Math.max(1,Math.ceil(q.prompt[spec.lang].length/(spec.lang==='zh'?36:80)));
+  const solutionLines=Math.max(1,Math.ceil(q.solution[spec.lang].length/(spec.lang==='zh'?32:65)));
+  const expressionTask=(q.id.startsWith('BC')||q.id.startsWith('EX')||q.id.startsWith('EQ')||q.id.startsWith('GE')),optionLines=q.options?q.options.reduce((n,o)=>n+Math.max(1,Math.ceil(optionLabel(o,spec.lang).length/(spec.lang==='zh'?28:60))),0):0;
+  const cost=promptLines*23+50+(q.diagram?.type==='angle-geometry'?280:q.diagram?.type==='signed-line'?185:q.diagram?expressionTask?165:90:0)+(q.options?expressionTask?optionLines*23:28:0)+(key?Math.max(115,solutionLines*23+100):item.lines*24+28)+28;
+  if(current.length&&(current.length>=spec.layout.perPage||height+cost>810)){pages.push({items:current,start});current=[];height=0;start=i;}
+  current.push(item);height+=cost;
+ }
+ if(current.length)pages.push({items:current,start});return pages;
+}
+function renderPaper(spec,fingerprint,key=false){
+ const zh=spec.lang==='zh',pages=paginate(spec,key),pilot=spec.items.some(i=>i.question.resourceState==='author-draft');
+ return pages.map(({items,start},pi)=>`<section class="paper-page"><header class="paper-header"><p class="sample-label">${zh?'原型示例練習':'Prototype sample paper'}${key?zh?' · 答案及評閱指引':' · Solutions & review guide':''}</p><h1>${escape(spec.title)}</h1><div class="paper-meta"><span>${zh?'姓名：________________　班別：________':'Name: ____________________  Class: ________'}</span><span>${zh?'總分':'Total marks'}: ${spec.items.reduce((s,x)=>s+x.marks,0)}</span></div><p>${zh?'非官方考試試卷。除選擇題外，請列出必要步驟。':'Not an official examination paper. Show necessary working except for selection questions.'}</p></header>${items.map((item,j)=>{const q=item.question;return `<article class="paper-question"><header><h2>${start+j+1}. ${escape(q.prompt[spec.lang])}</h2><span>(${item.marks})</span></header>${math(q.math)}${diagram(q,spec.lang)}${q.options?`<p>${q.options.map((o,oi)=>`${String.fromCharCode(65+oi)}. ${escape(optionLabel(o,spec.lang))}`).join('　　')}</p>`:''}${key?`<div class="solution">${escape(q.solution[spec.lang])}${q.options?`<p>${zh?'正確選項':'Correct option'}: ${String.fromCharCode(65+q.options.findIndex(o=>o.id===q.answer))}</p>`:''}<p>${zh?'本機示例評分':'Local sample marking'}: ${escape(markingGuide(item,spec.lang))}</p></div>`:`${Array.from({length:item.lines},()=>'<div class="paper-work"></div>').join('')}<p class="paper-answer">${zh?'答案':'Answer'}: ____________________${q.manualReason?`　${zh?'理由：____________________':'Reason: ____________________'}`:''}</p>`}</article>`;}).join('')}<footer class="paper-footer"><span>${escape(fingerprint.slice(0,12))} · ${key?'KEY':'PAPER'} · ${escape(spec.lang.toUpperCase())}</span><span>${pi+1} / ${pages.length}</span></footer></section>`).join('');
+}
+function printableDocument(spec,fingerprint,key){return `<!doctype html><html lang="${spec.lang==='zh'?'zh-Hant':'en'}"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(spec.title)} - ${key?'Solutions':'Paper'}</title><style>${paperCSS}</style><div class="print-action"><button onclick="window.print()">Print / Save as PDF · 列印 / 儲存為 PDF</button></div>${renderPaper(spec,fingerprint,key)}</html>`;}
+
+// src/app/storage.mjs
+
+
+const PREFIX='secondary-mathquiz:qa:'+(()=>{const run=new URL(location.href).searchParams.get('run');if(!/^[a-zA-Z0-9-]{8,64}$/.test(run||''))throw new Error('Open this copy through the acceptance runner.');return run;})()+':';
+function freshProfile(id='learner-1',name='Learner 1'){return {schema:1,id,name,revision:0,sessions:[],paper:null,studied:[]};}
+function validRegistry(v){return v?.schema===1&&Array.isArray(v.profiles)&&v.profiles.length>=1&&v.profiles.length<=10&&v.profiles.every(p=>p&&typeof p.id==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/.test(p.id)&&typeof p.name==='string'&&p.name.trim()&&p.name.length<=40)&&new Set(v.profiles.map(p=>p.id)).size===v.profiles.length&&v.profiles.some(p=>p.id===v.active);}
+function repository(storage){
+ let volatile=false;
+ const parse=(key)=>{try{const v=storage.getItem(key);return v?JSON.parse(v):null;}catch{volatile=true;return null;}};
+ return {
+  get volatile(){return volatile;},
+  registry(){const v=parse(PREFIX+'profiles');if(v&&!validRegistry(v))volatile=true;return validRegistry(v)?v:{schema:1,active:'learner-1',profiles:[{id:'learner-1',name:'Learner 1'}]};},
+  saveRegistry(value){
+   try{
+    if(!validRegistry(value))throw new Error('Invalid learner registry.');
+    const raw=storage.getItem(PREFIX+'profiles'),remote=raw?JSON.parse(raw):null;
+    if(remote&&!validRegistry(remote))throw new Error('The saved registry needs a supported version.');
+    // Profiles can be added or selected here, never deleted: merge the latest known identities.
+    const profiles=[...new Map([...(remote?.profiles||[]),...value.profiles].map(p=>[p.id,p])).values()],next={schema:1,active:value.active,profiles};
+    if(!validRegistry(next))throw new Error('Use up to 10 learner profiles.');
+    storage.setItem(PREFIX+'profiles',JSON.stringify(next));value.profiles=profiles;return true;
+   }catch{volatile=true;return false;}
+  },
+  load(id,name){const v=parse(PREFIX+id);if(!v)return freshProfile(id,name);if(v.schema!==1||v.id!==id||typeof v.name!=='string'||!Number.isInteger(v.revision)||!Array.isArray(v.sessions)||v.sessions.length>100||!Array.isArray(v.studied))throw new Error('This saved profile needs a supported version. It has not been overwritten.');v.sessions.forEach(validateSession);if(v.paper)validatePaper(v.paper);return v;},
+  save(profile){
+   try{
+    const key=PREFIX+profile.id,raw=storage.getItem(key),remote=raw?JSON.parse(raw):null;
+    if(remote&&remote.revision!==profile.revision)return {ok:false,reason:'conflict'};
+    const next={...profile,revision:profile.revision+1};storage.setItem(key,JSON.stringify(next));profile.revision=next.revision;return {ok:true};
+   }catch{volatile=true;return {ok:false,reason:'unavailable'};}
+  }
+ };
+}
+
+// src/app/session.mjs
+
+
+
+const sessionSeed=s=>typeof s==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9:_-]{0,59}$/.test(s);
+function createSession(ids,seed,mode='practice',count=6){
+ if(!['practice','check','learn'].includes(mode))throw new Error('Invalid session mode.');
+ if(!sessionSeed(seed))throw new Error('Invalid session seed.');
+ const session={schema:1,id:'session-'+seed,mode,seed,index:0,createdAt:new Date().toISOString(),completedAt:null,
+  items:makeItems(ids,seed,count),responses:Array.from({length:count},()=>({input:'',reason:'',hint:false,solution:false,priorExposure:false,attempts:[],manualReview:null}))};
+ if(mode==='learn')session.workedExample=generate(session.items[0].id,seed+':worked-example');
+ return session;
+}
+function workedExample(session){return session.workedExample||generate(session.items[0].id,session.seed+':worked-example',session.items[0].version);}
+function avoidExposedExamples(session,previous=[],extraExposed=[]){
+ const signature=q=>q.exposureKey||q.id+':'+q.math,seen=new Set(extraExposed.map(signature));
+ for(const old of previous){old.items.forEach((q,i)=>{const r=old.responses[i];if(r.attempts.length||r.hint||r.solution)seen.add(signature(q));});if(old.mode==='learn')seen.add(signature(workedExample(old)));}
+ if(session.mode==='learn')seen.add(signature(workedExample(session)));
+ for(let i=0;i<session.items.length;i++){
+  let q=session.items[i],tries=0;while(seen.has(signature(q))&&tries<40)q=generate(q.id,`${session.seed}:${i}:retry-${++tries}`,q.version);
+  session.items[i]=q;session.responses[i].priorExposure=seen.has(signature(q));seen.add(signature(q));
+ }
+ return session;
+}
+function setReason(session,index,value){
+ const r=session.responses[index],text=String(value);if(text.length>2000)throw new Error('Use at most 2,000 characters for the reason.');
+ if(text!==r.reason)r.manualReview=null;r.reason=text;
+}
+function setAnswerDraft(session,index,value){
+ const r=session.responses[index],text=String(value);if(text.length>200)throw Error('Use at most 200 characters for the answer.');
+ if(text!==r.input)r.manualReview=null;r.input=text;
+}
+function selfReviewReason(session,index){
+ const q=session.items[index],r=session.responses[index];
+ if(!q.manualReason||!r.solution||!r.attempts.length||!r.reason.trim()||r.input!==r.attempts.at(-1).input)throw new Error('Write a reason, record/check the current answer and compare the solution before self-reviewing.');
+ r.manualReview='self';
+}
+function answer(session,index,input){
+ const response=session.responses[index],q=session.items[index];
+ setAnswerDraft(session,index,input);if(response.manualReview&&response.attempts.at(-1)?.input!==response.input)response.manualReview=null;
+ const result=mark(q.contract,input);
+ response.input=String(input);
+ if(!['empty','invalid','unsupported'].includes(result.status)){
+  if(response.attempts.length>=100)response.attempts.splice(1,1); // Keep the original first attempt.
+  response.attempts.push({...result,input:String(input),assisted:response.hint||response.solution,at:new Date().toISOString()});
+ }
+ return result;
+}
+function evidenceSummary(session){
+ const result={correct:0,attempted:0,independentCorrect:0,assisted:0,manualPending:0,selfReviewed:0,automaticTotal:session.items.filter(q=>q.contract.type!=='manual').length,manualSubmitted:0};
+ session.responses.forEach((r,i)=>{
+  const attempts=r.attempts||[],last=attempts.at(-1);if(last)result.attempted++;
+  if(last?.status==='correct')result.correct++;
+  if(last?.status==='manual')result.manualSubmitted++;
+  if(r.hint||r.solution)result.assisted++;
+  // Count only the first submitted, unrevealed answer as independent evidence.
+  if(session.mode==='check'&&!r.priorExposure&&attempts[0]?.status==='correct'&&!attempts[0].assisted)result.independentCorrect++;
+  if((session.items[i].manualReason||session.items[i].contract.type==='manual')&&last){if(r.manualReview==='self'&&r.reason.trim()&&r.input===last.input)result.selfReviewed++;else result.manualPending++;}
+ });return result;
+}
+function validateSession(s){
+ if(!s||s.schema!==1||!sessionSeed(s.seed)||s.id!=='session-'+s.seed||!['practice','check','learn'].includes(s.mode))throw new Error('Unsupported session.');
+ if(!Array.isArray(s.items)||!s.items.length||s.items.length>12||!Array.isArray(s.responses)||s.responses.length!==s.items.length)throw new Error('Invalid session size.');
+ if(!Number.isInteger(s.index)||s.index<0||s.index>=s.items.length)throw new Error('Invalid saved question.');
+ if(s.workedExample){const q=s.workedExample;if(s.mode!=='learn'||q.id!==s.items[0].id||q.seed!==s.seed+':worked-example'||!questionSnapshotMatches(q))throw new Error('The worked-example snapshot does not match its declared version.');}
+ for(let i=0;i<s.items.length;i++){
+  const q=s.items[i],r=s.responses[i];if(!questionSnapshotMatches(q))throw new Error('The question snapshot does not match its declared version.');
+  if(!r||typeof r.input!=='string'||r.input.length>200||typeof r.reason!=='string'||r.reason.length>2000||typeof r.hint!=='boolean'||typeof r.solution!=='boolean'||typeof r.priorExposure!=='boolean'||!Array.isArray(r.attempts)||r.attempts.length>100)throw new Error('Invalid response record.');
+  if(r.manualReview!==null&&r.manualReview!=='self')throw new Error('Unsupported manual review label.');
+  for(const a of r.attempts)if(!['correct','incorrect','wrong-form','manual'].includes(a.status)||typeof a.input!=='string'||a.input.length>200||typeof a.assisted!=='boolean'||typeof a.at!=='string')throw new Error('Invalid attempt.');
+ }
+ return s;
+}
+function validateBackup(data){
+ if(!data||data.kind!=='secondary-mathquiz-progress'||data.schema!==1||!data.profile)throw new Error('Choose a P1 progress backup (version 1).');
+ const p=data.profile;
+ if(typeof p.name!=='string'||p.name.length>40||!Array.isArray(p.sessions)||p.sessions.length>100||!Array.isArray(p.studied)||p.studied.length>100||p.studied.some(id=>typeof id!=='string'||id.length>100))throw new Error('Invalid profile backup.');
+ p.sessions.forEach(validateSession);
+ if(new Set(p.sessions.map(s=>s.id)).size!==p.sessions.length)throw new Error('Duplicate session identity.');
+ return p;
+}
+
+// src/app/imports.mjs
+
+
+// A confirmation applies only to the fully validated copy and learner that were reviewed.
+function progressImportReview(){
+ let pending=null;
+ return {
+  cancel(){pending=null;},
+  review(data,profileId){
+   pending=null;
+   const candidate=validateBackup(structuredClone(data));
+   if(candidate.paper)validatePaper(candidate.paper);
+   pending={profileId,profile:candidate};
+   return {sessions:candidate.sessions.length};
+  },
+  apply(current){
+   const reviewed=pending;pending=null;
+   if(!reviewed||reviewed.profileId!==current.id)throw new Error('Review this backup for the selected learner before replacing any work.');
+   const saved=reviewed.profile;
+   return {...current,sessions:structuredClone(saved.sessions),studied:structuredClone(saved.studied),paper:saved.paper?structuredClone(saved.paper):null};
+  }
+ };
+}
+
+// src/app/app.mjs
+const esc=escape;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const t=(en,zh)=>lang==='zh'?zh:en;
+const L={en:'English',zh:'繁體中文'};
+const root=document.querySelector('#app');
+let lang=new URL(location.href).searchParams.get('lang')==='zh'?'zh':'en';
+let storage;try{storage=localStorage;}catch{storage={getItem(){throw Error();},setItem(){throw Error();}};}
+const repo=repository(storage);
+let registry=repo.registry(),profile,storageIssue='',catalogue=[],units=[],currentFeedback=null,menuOpen=false,paperKey=false;
+const preparePreview=previewCoordinator();
+const backupReview=progressImportReview();
+try{profile=repo.load(registry.active,registry.profiles.find(p=>p.id===registry.active)?.name);}catch{profile=freshProfile(registry.active);storageIssue='version';}
+if(repo.volatile)storageIssue='unavailable';
+const queryParams=new URL(location.href).searchParams;
+let filters={year:/^S[1-6]$/.test(queryParams.get('year'))?queryParams.get('year'):'all',classification:['foundation','non-foundation','enrichment'].includes(queryParams.get('scope'))?queryParams.get('scope'):'all',q:(queryParams.get('q')||'').slice(0,100)};
+function saveFilters(){const url=new URL(location.href);for(const [key,value] of [['year',filters.year],['scope',filters.classification],['q',filters.q]]){if(!value||value==='all')url.searchParams.delete(key);else url.searchParams.set(key,value);}history.replaceState(null,'',url);}
+const icon=(name)=>{
+ const paths={learn:'M5 4h7c3 0 4 2 4 2s1-2 4-2h7v22h-7c-3 0-4 2-4 2s-1-2-4-2H5ZM16 6v22',practice:'M5 16h22M16 5v22M7 7l18 18M7 25L25 7',revise:'M25 11A11 11 0 1 0 27 20M25 4v8h-8',paper:'M8 3h13l6 6v20H8ZM21 3v7h6M12 16h10M12 21h10'};
+ return `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="${paths[name]||paths.practice}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+};
+function save(){if(storageIssue==='version')return;const result=repo.save(profile);if(!result.ok)storageIssue=result.reason;updateStorageNotice();}
+function notice(){return storageIssue?`<div class="notice warning" role="status">${storageIssue==='conflict'?t('Another tab changed this profile. This tab keeps your work in memory. Export a backup before reloading.','另一分頁已更新此學習者。本分頁保留目前資料；重新載入前請先匯出備份。'):storageIssue==='version'?t('This saved profile needs a supported version. It has not been overwritten.','已儲存的資料需要相容版本；原資料未被覆寫。'):t('Browser saving is unavailable. Work continues in memory; export a backup before closing.','瀏覽器暫時無法儲存。可繼續使用，但關閉前請匯出備份。')} <a href="#progress">${t('Backups','備份')}</a></div>`:'';}
+function updateStorageNotice(){const el=document.querySelector('#storage-notice');if(el)el.innerHTML=notice();}
+function seed(){return Date.now().toString(36)+'-'+crypto.getRandomValues(new Uint32Array(1))[0].toString(36);}
+function go(hash){currentFeedback=null;if(location.hash==='#'+hash)render();else location.hash=hash;}
+function setMenu(open){
+ menuOpen=open;
+ const sidebar=document.querySelector('.sidebar'),column=document.querySelector('.main-column');
+ sidebar?.classList.toggle('open',open);
+ if(column)column.inert=open;
+ if(open){sidebar?.setAttribute('role','dialog');sidebar?.setAttribute('aria-modal','true');}
+ else {sidebar?.removeAttribute('role');sidebar?.removeAttribute('aria-modal');}
+ document.querySelector('.mobile-menu')?.setAttribute('aria-expanded',String(open));
+ document.querySelector(open?'.sidebar a':'.mobile-menu')?.focus();
+}
+function active(){const id=location.hash.split('/')[1];return profile.sessions.find(s=>s.id===id);}
+function selected(ids){return families.filter(f=>ids.includes(f.id));}
+function title(en,zh,description=''){return `<div class="page-heading"><p class="eyebrow">${t('YOUR MATHEMATICS WORKSPACE','你的數學學習空間')}</p><h1>${t(en,zh)}</h1>${description?`<p class="lede">${description}</p>`:''}</div>`;}
+function button(text,action,extra='',secondary=false){return `<button ${/\btype=/.test(extra)?'':'type="button"'} class="${secondary?'secondary':'primary'}" data-action="${action}" ${extra}>${text}</button>`;}
+function statusLabel(c){return {foundation:t('Foundation','基礎'), 'non-foundation':t('Non-foundation','非基礎'),mixed:t('Foundation + non-foundation','基礎及非基礎'),enrichment:t('Optional enrichment','選修增潤'),'integrated-statement':t('Integrated activity','綜合活動')}[c]||c;}
+function shell(content,section){
+ document.documentElement.lang=lang==='zh'?'zh-Hant':'en';document.title=t('Secondary MathQuiz','中學 MathQuiz');
+ const route=location.hash.slice(1).split('/'),mode=route[0]==='session'?active()?.mode:route[0]==='learn'?'learn':route[1],navActive=section==='setup'?'setup/'+(mode==='check'?'check':'practice'):section;
+ const nav=[['home',t('Overview','學習總覽'),'learn'],['basic',t('Learn basic computation','學習基本運算'),'learn'],['percentages',t('Learn percentages','學習百分法'),'learn'],['signed',t('Learn directed numbers','學習有向數'),'learn'],['expressions',t('Learn expressions','學習代數式'),'learn'],['equations',t('Learn equations','學習方程'),'learn'],['angles',t('Learn angles','學習角與平行線'),'learn'],['catalogue',t('Curriculum','課程目錄'),'practice'],['setup/practice',t('Practise','練習'),'practice'],['setup/check',t('Revise & check','複習與檢視'),'revise'],['paper',t('Create a paper','製作練習紙'),'paper'],['progress',t('Your progress','學習紀錄'),'revise']];
+ root.innerHTML=`<div class="workspace"><aside class="sidebar ${menuOpen?'open':''}" aria-label="${t('Main navigation','主導覽')}"><div class="brand-row"><a class="brand" href="#home"><span class="brand-mark">∠</span><span>MathQuiz<small>${t('SECONDARY','中學數學')}</small></span></a><button type="button" class="icon-button sidebar-close" data-action="menu" aria-label="${t('Close navigation','關閉導覽')}">×</button></div><nav>${nav.map(([href,label,ico])=>`<a href="#${href}" ${navActive===href?'aria-current="page"':''}>${icon(ico)}<span>${label}</span></a>`).join('')}</nav><div class="sidebar-route"><p>${t('YOUR YEAR','按年級探索')}</p><div>${[1,2,3,4,5,6].map(n=>`<a href="#year/S${n}">${t('S'+n,'中'+['一','二','三','四','五','六'][n-1])}</a>`).join('')}</div></div><div class="sidebar-bottom"><span class="pill">${t('PILOT DRAFT','試點初稿')}</span><p>${t('Draft pilot. Your work stays on this device.','試點初稿。學習資料儲存於此裝置。')}</p><a href="#about">${t('About & sources','關於及資料來源')}</a></div></aside><div class="main-column"><header class="topbar"><button class="icon-button mobile-menu" data-action="menu" aria-expanded="${menuOpen}" aria-label="${t('Toggle navigation','開關導覽')}">☰</button><span class="topbar-label">${t('Hong Kong · S1–S6','香港 · 中一至中六')}</span><div class="topbar-controls"><label class="sr-only" for="profile-select">${t('Learner profile','學習者')}</label><select id="profile-select">${registry.profiles.map(p=>`<option value="${esc(p.id)}" ${p.id===profile.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select><button class="language-button" data-action="language">${lang==='en'?'繁體中文':'English'}</button></div></header><div id="storage-notice">${notice()}</div><main id="main" tabindex="-1">${content}</main><footer class="site-footer">${t('Build understanding. Practise with purpose.','理解概念，有效練習。')}<span>${t('Six-topic author draft; independent content review pending.','六課題作者初稿，尚待獨立內容評閱。')}</span></footer></div></div>`;
+}
+function home(){
+ const unfinished=profile.sessions.filter(s=>!s.completedAt).at(-1);
+ return `<section class="panel pilot-start"><div><p class="eyebrow">${t('YOUR PILOT LEARNING PATH','試點學習路線')}</p><h2>${t('Six connected topics','六個主題，互相連結')}</h2><p>${t('Start with basic computation, apply percentage changes, extend to directed numbers, express a relationship, solve an equation, then justify a geometric deduction. Nineteen bilingual lessons are available as author drafts.','從基本運算開始，運用百分變化、延伸至有向數，再表達關係、解方程及作幾何推論。十九個雙語課堂均為作者草稿。')}</p><div class="hero-actions"><a class="primary" href="#basic">${t('Basic computation','基本運算')}</a><a class="secondary" href="#percentages">${t('Percentages','百分法')}</a><a class="secondary" href="#signed">${t('Directed numbers','有向數')}</a><a class="secondary" href="#expressions">${t('Expressions','代數式')}</a><a class="secondary" href="#equations">${t('Equations','方程')}</a><a class="secondary" href="#angles">${t('Angles and parallel lines','角與平行線')}</a></div></div></section><section class="home-hero"><div><p class="eyebrow">${t('A CLEAR PATH THROUGH MATHEMATICS','循序理解數學')}</p><h1>${t('A little clarity.<br>A lot of possibility.','每一步理解，<br>都是更多可能。')}</h1><p class="lede">${t('Explore your topics, work through a problem, and see what comes next.','探索課題、逐步解題，並找出下一個學習方向。')}</p><div class="hero-actions">${unfinished?`<a class="primary" href="#session/${unfinished.id}">${t('Continue your session','繼續上次練習')}</a>`:`<a class="primary" href="#setup/practice">${t('Try a practice session','試做練習')}</a>`}<a class="text-link" href="#catalogue">${t('Explore the curriculum','探索課程')}</a></div></div><div class="hero-art" aria-hidden="true"><svg viewBox="0 0 380 260"><defs><pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#cddfdf" stroke-width=".8"/></pattern></defs><rect x="22" y="18" width="325" height="220" rx="18" fill="url(#grid)"/><path d="M65 207L196 55L316 207Z" fill="#d9eee9" stroke="#196c65" stroke-width="2"/><path d="M65 207H196V55" fill="none" stroke="#196c65" stroke-width="1.5" stroke-dasharray="5 5"/><path d="M196 188h19v19" fill="none" stroke="#196c65" stroke-width="1.5"/><circle cx="196" cy="55" r="6" fill="#dd9659"/><circle cx="65" cy="207" r="5" fill="#196c65"/><circle cx="316" cy="207" r="5" fill="#196c65"/><rect x="235" y="65" width="108" height="54" rx="12" fill="white" stroke="#d4dfdf"/><text x="289" y="100" text-anchor="middle" fill="#173349" font-size="24" font-family="Georgia">a² + b²</text></svg></div></section><section class="section"><div class="section-heading"><h2>${t('What would you like to do?','今天想怎樣學習？')}</h2><span>${t('Choose your next step','選擇下一步')}</span></div><div class="activity-grid">${[
+  ['learn','setup/learn',t('Understand an idea','理解概念'),t('A short guided example, then a fresh check.','先看引導例子，再獨立試做。')],
+  ['practice','setup/practice',t('Build confidence','鞏固能力'),t('Work at your pace with hints when needed.','按自己的步伐練習，需要時查看提示。')],
+  ['revise','setup/check',t('Check your understanding','檢視理解'),t('Try new questions and review your evidence.','獨立解答新題目，檢視學習證據。')],
+  ['paper','paper',t('Make a practice paper','製作練習紙'),t('Arrange questions and print a matching key.','編排題目，列印練習紙及答案。')]
+ ].map(([ico,href,name,desc])=>`<a class="activity-card" href="#${href}"><span class="activity-icon ${ico}">${icon(ico)}</span><h3>${name}</h3><p>${desc}</p><span class="card-cta">${t('Open','開始')}</span></a>`).join('')}</div></section><section class="route-strip"><div><p class="eyebrow">${t('FIND YOUR STARTING POINT','找出適合你的起點')}</p><h2>${t('Your year. Your route.','按年級，找方向。')}</h2><p>${t('Suggested routes, with every topic always accessible.','建議學習路線；你仍可自由查看所有課題。')}</p></div><div class="year-links">${[1,2,3,4,5,6].map(n=>`<a href="#year/S${n}"><strong>${t('S'+n,'中'+['一','二','三','四','五','六'][n-1])}</strong><span>${n<=3?t('Junior','初中'):t('Compulsory','必修部分')}</span></a>`).join('')}</div></section>`;
+}
+function catalogueView(year=null){
+ if(year)filters.year=year;
+ return title(year?year+' learning route':'Explore the curriculum',year?`中${{'S1':'一','S2':'二','S3':'三','S4':'四','S5':'五','S6':'六'}[year]}學習路線`:'探索課程',t('Find a topic by year, keyword or official objective. These routes are suggestions; schools can teach in a different order.','按年級、關鍵字或官方學習重點搜尋。路線只供參考，學校可按需要調整次序。'))+`<div class="filter-panel"><label class="search-field"><span>${t('Search topics and objectives','搜尋課題及學習重點')}</span><input id="catalogue-search" type="search" maxlength="100" value="${esc(filters.q)}" placeholder="${t('Try fractions, angles or JS8.1','例如：分數、角、JS8.1')}"></label><label>${t('Year','年級')}<select id="year-filter"><option value="all">${t('All years','所有年級')}</option>${[1,2,3,4,5,6].map(n=>`<option ${filters.year==='S'+n?'selected':''}>S${n}</option>`).join('')}</select></label><label>${t('Curriculum scope','課程範圍')}<select id="class-filter">${['all','foundation','non-foundation','enrichment'].map(c=>`<option value="${c}" ${filters.classification===c?'selected':''}>${c==='all'?t('All topics','所有課題'):statusLabel(c)}</option>`).join('')}</select></label></div><div class="section-heading catalogue-summary"><p id="catalogue-count" class="muted" aria-live="polite"></p><button type="button" class="secondary" data-action="clear-filters">${t('Clear filters','清除篩選')}</button></div><div id="catalogue-grid" class="topic-grid"></div>`;
+}
+function filterCatalogue(){
+ const normalize=s=>String(s).toLowerCase().replace(/[\s:._-]/g,'');const query=normalize(filters.q);
+ const matching=catalogue.filter(r=>{
+  const years=r.suggested_route;
+  const yearOK=filters.year==='all'||years===filters.year||(years==='S1-S3'&&['S1','S2','S3'].includes(filters.year))||(years==='S4-S6'&&['S4','S5','S6'].includes(filters.year))||(filters.year==='S6'&&r.stage==='cp');
+  const classOK=filters.classification==='all'||r.official_classification===filters.classification||(r.official_classification==='mixed'&&['foundation','non-foundation'].includes(filters.classification));
+  const text=normalize(r.id+' '+r.stage+r.official_reference+' '+r.unit_title.en+' '+r.unit_title['zh-Hant']+' '+r.description.en+' '+r.description['zh-Hant']);
+  return yearOK&&classOK&&text.includes(query);
+ });
+ const found=new Set(matching.map(r=>r.stage+'-'+r.unit));
+ const list=units.filter(u=>found.has(u.key));
+ document.querySelector('#catalogue-count').textContent=t(`${list.length} topics · ${matching.length} mapped objectives and statements`,`${list.length} 個課題 · ${matching.length} 項學習重點及綜合陳述`);
+ document.querySelector('#catalogue-grid').innerHTML=list.length?list.map(u=>`<a class="topic-card" href="#topic/${u.key}"><div class="topic-meta"><span>${u.stage==='js'?t('JUNIOR','初中'):t('SENIOR COMPULSORY','高中必修')}</span><span class="pill subtle">${families.some(f=>f.topic===u.key&&!f.development)?t('Pilot draft','試點初稿'):families.some(f=>f.topic===u.key)?t('Sample practice','示例練習'):t('Planned','規劃中')}</span></div><h2>${esc(u.title[lang==='zh'?'zh-Hant':'en'])}</h2><p>${esc(matching.filter(r=>r.stage+'-'+r.unit===u.key)[0].description[lang==='zh'?'zh-Hant':'en'])}</p><div class="topic-bottom"><span>${u.records.length} ${t('mapped records','項記錄')}</span><span>${t('View topic','查看課題')}</span></div></a>`).join(''):`<div class="empty-state"><h2>${t('No matching topics','沒有符合條件的課題')}</h2><p>${t('Try a shorter keyword or choose all years.','請嘗試較短的關鍵字或選擇所有年級。')}</p></div>`;
+}
+function topicView(key){
+ const u=units.find(u=>u.key===key);if(!u)return notFound();
+ const available=families.filter(f=>f.topic===key),fs=available.some(f=>!f.development)?available.filter(f=>!f.development):available;
+ const prereqs=[...new Set(u.records.flatMap(r=>r.prerequisites.required))].slice(0,5).map(id=>catalogue.find(r=>r.id===id)).filter(Boolean);
+ return (key==='js-5'?`<section class="panel pilot-start"><div><h2>${t('Learn percentages','學習百分法')}</h2><p>${t('Four bilingual lessons and eight families: bases, multipliers and real-life models.','四課雙語教材與八類題目：基準量、倍數及生活模型。')}</p></div><a class="primary" href="#percentages">${t('Open the learning path','開啟學習路徑')}</a></section>`:'')+(key==='js-1'?`<section class="panel pilot-start"><div><h2>${t('Learn basic computation','學習基本運算')}</h2><p>${t('Three bilingual lessons and eight draft families, from divisibility to exact mixed operations.','三個雙語課堂及八類草稿題目，從整除性到準確的混合運算。')}</p></div><a class="primary" href="#basic">${t('Open the learning path','開啟學習路徑')}</a></section>`:'')+(key==='js-19'?`<section class="panel pilot-start"><div><h2>${t('Learn angles and parallel lines','學習角與平行線')}</h2><p>${t('Three bilingual lessons, six families and an explicitly manual proof path.','三節雙語課、六類題目，以及明確標示人工評閱的證明路線。')}</p></div><a class="primary" href="#angles">${t('Open the learning path','開啟學習路線')}</a></section>`:'')+(key==='js-8'?`<section class="panel pilot-start"><div><h2>${t('Learn equations','學習方程')}</h2><p>${t('Three bilingual lessons and six draft families: one solution, equality-preserving steps and contextual models.','三節雙語課與六類初稿題目：唯一解、保持等式成立及情境模型。')}</p></div><a class="primary" href="#equations">${t('Open the learning path','開啟學習路線')}</a></section>`:'')+(key==='js-7'?`<section class="panel pilot-start"><div><h2>${t('Learn expressions','學習代數式')}</h2><p>${t('Three bilingual lessons and six draft families, including explicitly manual formula and pattern responses.','三節雙語課、六類初稿題目，包括明確標示人工評閱的公式和數列解釋。')}</p></div><a class="primary" href="#expressions">${t('Open the learning path','開啟學習路線')}</a></section>`:'')+(key==='js-2'?`<section class="panel pilot-start"><div><h2>${t('Learn directed numbers','學習有向數')}</h2><p>${t('Three bilingual sessions and six task families, available as an author draft.','三節雙語課與六類題目，現以作者初稿提供。')}</p></div><a class="primary" href="#signed">${t('Open the learning path','開啟學習路線')}</a></section>`:'')+`<a class="back-link" href="#catalogue">${t('Curriculum','課程目錄')}</a>`+title(u.title.en,u.title['zh-Hant'],t('See the goals, preparation and next connections for this topic.','查看學習目標、預備知識及相關課題。'))+`<div class="topic-layout"><div><section class="panel"><div class="section-heading"><h2>${t('What you will work towards','學習目標')}</h2><span class="pill">${t('Content planned','教材規劃中')}</span></div><ul class="objective-list">${u.records.map(r=>`<li><div><strong>${esc(r.description[lang==='zh'?'zh-Hant':'en'])}</strong><small>${esc(r.official_reference||t('Integrated statement','綜合陳述'))} · ${statusLabel(r.official_classification)}</small>${r.classification_components?.length?`<ul>${r.classification_components.map(c=>`<li>${esc(c.description[lang==='zh'?'zh-Hant':'en'])} <small>${statusLabel(c.classification)}</small></li>`).join('')}</ul>`:''}</div></li>`).join('')}</ul></section><details class="panel scope"><summary>${t('Scope and source notes','範圍及資料來源')}</summary><p>${esc(u.records[0].scope.site_unit_boundary_summary)}</p><p>${t('The scope summary is an English planning note. Official English and Chinese objective wording is paired in the catalogue.','以上範圍摘要為英文規劃筆記；目錄中的學習重點已配對官方中英文版本。')}</p><a href="../planning/source-register.md" target="_blank" rel="noopener">${t('Source register','資料來源記錄')}</a></details></div><aside><section class="panel topic-action"><span class="activity-icon">${icon('practice')}</span><h2>${fs.length?t('Try this topic','試做這個課題'):t('On the learning map','已加入學習地圖')}</h2><p>${fs.length?t('Use a sample session to try the practice workflow.','透過示例題目，體驗練習流程。'):t('Lessons and questions will be authored after the prototype is checked.','原型檢查後，將按規劃編寫教材及題目。')}</p>${fs.length?button(t('Start sample practice','開始示例練習'),'start-topic',`data-topic="${key}"`):`<a class="secondary" href="#setup/practice">${t('Explore sample practice','查看示例練習')}</a>`}</section><section class="panel"><h3>${t('Before this','預備知識')}</h3>${prereqs.length?`<ul class="link-list">${prereqs.map(r=>`<li><a href="#topic/${r.stage}-${r.unit}">${esc(r.unit_title[lang==='zh'?'zh-Hant':'en'])}</a></li>`).join('')}</ul>`:`<p>${t('Check arithmetic, measurement and vocabulary readiness as needed.','按需要重溫計算、度量及詞彙。')}</p>`}<p class="muted">${t('Preparation helps; it never locks a topic.','預備知識有助學習，但不會限制課題存取。')}</p></section></aside></div>`;
+}
+function setup(mode){
+ const isLearn=mode==='learn',isCheck=mode==='check';
+ return title(isLearn?'Understand, then try':isCheck?'A fresh look at your understanding':'Make room for practice',isLearn?'先理解，再試做':isCheck?'重新檢視你的理解':'給自己一些練習空間',t('The six topic pilots are author drafts. Development examples are labelled separately.','六個課題試點為作者初稿；開發示例會另作標示。'))+`<div class="setup-layout"><form id="session-setup" class="panel"><fieldset><legend>${t('Choose your topics','選擇課題')}</legend><div class="set-list">${families.map(f=>`<label class="set-option"><input type="checkbox" name="family" value="${f.id}" ${f.development?'':'checked'}><span><strong>${esc(f.title[lang])}</strong><small>${f.objective} · ${f.development?t('Development example','開發示例'):t('Pilot draft','試點初稿')}</small></span></label>`).join('')}</div></fieldset><div class="form-row"><label>${t('Questions','題數')}<select name="count">${[4,6,8,12].map(n=>`<option ${n===6?'selected':''}>${n}</option>`).join('')}</select></label><p class="muted">${isCheck?t('Fresh first answers are recorded separately from assisted work.','新題目的首次獨立作答與使用提示後的作答會分開記錄。'):t('Take your time. Hints and solutions are always labelled.','按自己的步伐作答；提示及答案均有清楚標示。')}</p></div><input type="hidden" name="mode" value="${mode}">${button(isLearn?t('Open guided example','開啟引導例子'):t('Start session','開始練習'),'submit-setup','type="submit"')}</form><aside class="panel quiet-panel"><h2>${t('A useful rhythm','一步一步來')}</h2><ol class="step-list"><li><strong>${t('Think it through','先思考')}</strong><span>${t('Read the question and choose a method.','讀題並選擇方法。')}</span></li><li><strong>${t('Try your answer','試作答案')}</strong><span>${t('Use the keyboard or the compact maths pad.','使用鍵盤或簡易數學鍵盤。')}</span></li><li><strong>${t('Learn from the result','從回饋中學習')}</strong><span>${t('Review the reason and decide what comes next.','查看理由，決定下一步。')}</span></li></ol><p>${t('No score predicts a school result or a DSE grade.','這些紀錄不會預測校內成績或文憑試等級。')}</p></aside></div>`;
+}
+function learnView(id){
+ const s=profile.sessions.find(s=>s.id===id);if(!s)return notFound();
+ const q=workedExample(s);
+ return title('Notice the idea. Try it yourself.','留意概念，再自己試做。',t('Read the model, then try questions whose retained exposure is checked separately.','先看引導例子，再試做題目；系統會另外檢查已儲存的例子曝光紀錄。'))+`<div class="learn-layout"><section class="question-card"><p class="eyebrow">${t('WORKED EXAMPLE','引導例子')}</p><h2>${esc(q.prompt[lang])}</h2><div class="math-display">${math(q.math)}</div>${diagram(q,lang)}<div class="explanation"><h3>${t('Choose the idea','選擇方法')}</h3><p>${esc(q.hint[lang])}</p><h3>${t('Follow the working','查看步驟')}</h3><p>${esc(q.solution[lang])}</p></div>${button(t('Try fresh questions','試做新題目'),'begin-after-learn',`data-session="${s.id}"`)}</section><aside class="panel"><h2>${t('What to carry forward','記住這個重點')}</h2><p>${esc(q.hint[lang])}</p><p>${t('Reading a solution is study. A fresh, unrevealed check provides different evidence.','閱讀答案屬於研習；未看提示的新題目能提供不同的學習證據。')}</p></aside></div>`;
+}
+function reasonReviewText(r){return r.manualReview==='self'&&r.reason.trim()?t('Reasoning: self-reviewed, not teacher-verified.','理由：已自行評閱，並未經教師核實。'):t('Your written reason still needs review.','書面理由仍需評閱。');}
+function feedbackHTML(result,q,r){
+ if(!result)return '';
+ const words={correct:t('Correct answer','答案正確'),incorrect:t('Try another approach','再試一個方法'),'wrong-form':q.contract.type==='number'?t('Give a final number or fraction','請填寫最終數值或分數'):t('Equivalent value — expand the brackets','數值等價；請展開括號'),invalid:t('Check the input','檢查輸入'),unsupported:t('This input needs another form','請使用支援的輸入形式'),empty:t('Enter your answer','請輸入答案'),manual:t('Ready for review','待評閱')};
+ const explanations={manual:t('Recorded for model/rubric review. This response has not been automatically judged correct or incorrect.','已記錄，待按參考例子及評準評閱；系統並未自動判定此作答正確或錯誤。'),correct:t('Your final answer matches.','你的最終答案相符。'),incorrect:t('Check the signs, operations and question conditions.','請檢查正負號、運算及題目條件。'),'wrong-form':q.contract.type==='number'?t('The calculation has the right value. Work it out and enter a final number or fraction.','此算式的值相符。請完成計算，並輸入最終數值或分數。'):t('Your expression is equivalent, but the question asks for an expanded expression.','你的代數式等價，但題目要求展開形式。'),invalid:t('Use a number, fraction or the supported expression notation.','請使用數、分數或支援的代數式格式。'),unsupported:t('Supported here: numbers, fractions, x, +, −, ×, /, brackets and powers 0–2. Variable denominators are not supported.','目前支援數、分數、x、+、−、×、/、括號及 0–2 次方；不支援含變量的分母。'),empty:t('Add an answer before checking.','請先輸入答案，再檢查。')};
+ return `<div class="feedback ${result.status==='correct'?'success':'attention'}" role="status" tabindex="-1"><strong>${words[result.status]||words.invalid}</strong><p>${esc(result.status==='incorrect'?(percentageFeedback(q,r.input)?.[lang]||basicFeedback(q,r.input)?.[lang]||signedFeedback(q,r.input)?.[lang]||explanations.incorrect):(explanations[result.status]||''))}</p></div>`;
+}
+function sessionView(s){
+ if(!s)return notFound();if(s.completedAt)return resultView(s);
+ const q=s.items[s.index],r=s.responses[s.index],last=r.attempts.at(-1);
+ const result=currentFeedback||last;
+ const manual=q.contract.type==='manual';
+ const help=manual&&q.id==='GE06'?t('Record a short proof outline here and explain each step below. The whole proof requires manual review.','先記錄簡短證明提綱，再在下方逐步解釋；全題均需人工評閱。'):manual?t('Record your formula or proposed term here, then explain below. It is not automatically marked correct or incorrect.','先記錄公式或所提下一項，再在下方解釋；此題不會自動判定正確或錯誤。'):q.contract.type==='expression'?t('Use x, brackets and ordinary notation such as 3(x+2). Equivalent forms are accepted; expansion is not required unless stated.','可用 x、括號及一般格式，如 3(x+2)。接受等價式；除非題目要求，否則不必展開。'):t('Exact fractions such as 3/2 and exact decimals are accepted.','支援準確分數（如 3/2）及準確小數。');
+ const input=q.options?`<fieldset class="answer-options"><legend>${t('Your answer','你的答案')}</legend>${q.options.map(o=>`<label><input type="radio" name="answer" value="${o.id}" ${r.input===o.id?'checked':''}><span>${esc(optionLabel(o,lang))}</span></label>`).join('')}</fieldset>`:`<label class="answer-label" for="answer-input">${manual?t('Your response (manual review)','你的作答（人工評閱）'):t('Your answer','你的答案')}${q.answerUnit?' ('+esc(q.answerUnit[lang])+')':q.contract.unit==='degree'?t(' (degrees)','（度）'):''}</label><input id="answer-input" name="answer" class="answer-input" value="${esc(r.input)}" autocomplete="off" spellcheck="false" maxlength="${manual?200:160}" inputmode="text" aria-describedby="input-help"><p id="input-help" class="muted">${help}</p>${manual?'':`<details class="math-pad"><summary>${t('Maths pad','數學鍵盤')}</summary><div>${['−','+','×','/','(',')','x','^2'].map(v=>`<button type="button" class="key" data-action="key" data-key="${v}">${v}</button>`).join('')}</div></details>`}`;
+
+ return `${r.priorExposure?`<div class="notice">${t('You have seen this example before. It counts as practice, not a fresh independent answer.','你曾看過這個例子；此題會記錄為練習，不作新題的獨立作答證據。')}</div>`:''}<div class="session-top"><a class="back-link" href="#setup/${s.mode}">${t('Session choices','練習設定')}</a><span>${t('Question','第')} ${s.index+1} ${t('of','/')} ${s.items.length}</span></div><div class="session-track" aria-label="${t('Session progress','練習進度')}"><span style="width:${(s.index+1)/s.items.length*100}%"></span></div><div class="session-layout"><section class="question-card"><div class="question-meta"><span class="pill">${s.mode==='check'?t('Independent check','獨立檢視'):s.mode==='learn'?t('Guided practice','引導練習'):t('Practice','練習')}</span><span>${esc(families.find(f=>f.id===q.id).title[lang])}</span></div><h1>${esc(q.prompt[lang])}</h1><div class="math-display">${math(q.math)}</div><div class="question-diagram">${diagram(q,lang)}</div><form id="answer-form">${input}${q.manualReason?`<label class="answer-label" for="reason-input">${t('Explain your reason','解釋理由')}</label><textarea id="reason-input" name="reason" maxlength="2000" rows="3">${esc(r.reason)}</textarea><p class="muted">${esc(reasonGuidance(q,lang)||t('This written explanation uses manual review.','書面解釋需要人工評閱。'))}</p><p id="reason-review-status" class="muted" role="status">${r.attempts.length?esc(reasonReviewText(r)):''}</p>`:''}${feedbackHTML(result,q,r)}<div class="question-actions">${button(manual?t('Record for review','記錄待評閱'):t('Check answer','檢查答案'),'check','type="submit"')}${last?button(s.index===s.items.length-1?t('Finish & review','完成並檢視'):t('Next question','下一題'),'next','type="button"',true):''}</div></form></section><aside class="session-support"><section class="panel"><h2>${t('Need a little help?','需要一些提示？')}</h2><p>${t('Use a hint when it helps you move forward. Assisted work is recorded separately.','需要時可使用提示；系統會分開記錄使用提示後的作答。')}</p>${button(t('Show a hint','查看提示'),'hint','',true)}${r.hint?`<div class="hint-content">${esc(q.hint[lang])}</div>`:''}<details class="solution-disclosure" ${r.solution?'open':''}><summary data-action="solution">${t('View solution','查看答案')}</summary>${r.solution?`<p>${esc(q.solution[lang])}</p>`:''}</details>${q.manualReason&&r.solution&&r.attempts.length?button(manual?t('Mark response as self-reviewed','標示作答已自行評閱'):t('Mark reason as self-reviewed','標示理由已自行評閱'),'self-review',r.reason.trim()?'':'disabled',true):''}</section><section class="panel quiet-panel"><h3>${t('Saved as you work','隨時儲存進度')}</h3><p>${t('You can leave and resume this exact question. Switching language keeps your answer.','可離開後繼續同一道題目；切換語言亦會保留答案。')}</p><a href="#progress">${t('View session records','查看練習紀錄')}</a></section></aside></div>`;
+}
+function resultView(s){
+ const summary=evidenceSummary(s);
+ return (s.items.every(q=>q.id.startsWith('PC'))?`<section class="panel"><h2>${t('Name the base and track the changes','說清基準，追蹤變化')}</h2><p>${t('Multiply forwards, divide to recover, and keep each reference quantity explicit. Correct final values do not verify written explanations.','求新值用乘法，還原用除法，並清楚標明每個基準量。最終值正確不代表理由已獲核實。')}</p><a href="#percentages">${t('Return to percentages','返回百分法')}</a></section>`:'')+(s.items.every(q=>q.id.startsWith('GE'))?`<section class="panel"><h2>${t('A conclusion needs its givens and reasons','結論需要已知條件和理由')}</h2><p>${t('Name the pair, separate a premise from a conclusion and justify each step. A recorded proof remains manually reviewed, never automatically verified.','辨認角對、分清前提與結論，並逐步給理由。已記錄的證明仍須人工評閱，不會自動獲核實。')}</p><a href="#angles">${t('Return to the angles path','返回角的學習路線')}</a></section>`:'')+(s.items.every(q=>q.id.startsWith('EQ'))?`<section class="panel"><h2>${t('Preserve equality and interpret the result','保持等式成立並解釋結果')}</h2><p>${t('Test in the original equation, keep each operation equal on both sides, and check the situation’s units. Correct final answers do not verify written reasoning.','代入原方程、兩邊同作運算，並檢查情境單位。最終答案正確不代表書面推理已獲核實。')}</p><a href="#equations">${t('Return to the equations path','返回方程路線')}</a></section>`:'')+(s.items.every(q=>q.id.startsWith('EX'))?`<section class="panel"><h2>${t('Keep the meaning, not just the symbols','保留意思，不只記住符號')}</h2><p>${t('Read both ways, preserve grouping, and distinguish a proposed pattern from a supplied rule. Formula and pattern explanations remain manual evidence.','要能雙向理解、保留分組，並分清提出的規律與已知規則。公式和數列解釋仍屬人工評閱證據。')}</p><a href="#expressions">${t('Return to the expressions path','返回代數式路線')}</a></section>`:'')+(s.items.every(q=>q.id.startsWith('SN'))?`<section class="panel"><h2>${t('Carry the idea forward','把概念帶到下一步')}</h2><p>${t('Use a reference, read the operation, and distinguish a change from a final value. Correct numbers do not verify written explanations.','先定基準、讀清運算，並分清變化與最後數值。數值正確不代表書面解釋已獲核實。')}</p><a href="#signed">${t('Return to the three-session path','返回三節課路線')}</a></section>`:'')+title('Look at what you learned','看看這次的收穫',t('Review the answers, then choose one useful next step.','檢視答案，再選擇一個有幫助的下一步。'))+`<div class="result-grid"><div class="metric"><strong>${summary.automaticTotal?summary.correct+' / '+summary.automaticTotal:'—'}</strong><span>${t('Automatically checked answers correct','自動核對的答案正確')}</span></div><div class="metric"><strong>${s.mode==='check'?summary.independentCorrect:'—'}</strong><span>${t('First independent answers correct','首次獨立作答正確')}</span></div><div class="metric"><strong>${summary.assisted}</strong><span>${t('Questions with help viewed','曾查看提示或答案')}</span></div><div class="metric"><strong>${summary.manualPending}</strong><span>${t('Manual responses/reasons awaiting review','待評閱的作答／理由')}</span></div></div>${summary.manualSubmitted?`<p class="notice">${t('Manual responses are excluded from the automatic-score denominator. A self-review is not an independent correctness judgement.','人工題目不計入自動分數的分母；自行評閱不代表已獲獨立核實。')}</p>`:''}<section class="panel"><h2>${t('Your question review','題目檢視')}</h2>${s.items.map((q,i)=>{const r=s.responses[i],last=r.attempts.at(-1);return `<details class="review-row"><summary><span>${i+1}. ${esc(q.prompt[lang])}</span><span class="pill ${last?.status==='correct'?'success-pill':''}">${last?.status==='correct'?t('Correct','正確'):t('Review','待重溫')}</span></summary><div class="math-display">${math(q.math)}</div><p>${t('Your answer','你的答案')}: ${esc(last?.input ?? r.input)}</p><p>${esc(q.solution[lang])}</p>${q.manualReason?`<p>${t('Your reason','你的理由')}: ${esc(r.reason)||t('No reason entered.','未填寫理由。')}</p><p>${r.manualReview==='self'&&r.reason.trim()?t('Self-reviewed; not independently verified.','已自行評閱，未經獨立核實。'):t('Manual review pending.','待人工評閱。')}</p>`:''}<p class="muted">${r.hint||r.solution?t('Help was viewed.','曾查看提示或答案。'):t('No help was viewed before submission.','作答前未查看提示或答案。')}</p></details>`;}).join('')}</section><div class="next-step panel"><div><h2>${t('Make the next step count','選擇下一步')}</h2><p>${t('Try fresh questions on the topics you want to strengthen.','以新題目鞏固想重溫的課題。')}</p></div>${button(t('New questions on these topics','同課題的新題目'),'retry-session',`data-session="${s.id}"`)}<a class="secondary" href="#progress">${t('View progress','查看紀錄')}</a></div>`;
+}
+function progressView(){
+ const done=profile.sessions.filter(s=>s.completedAt),ind=done.filter(s=>s.mode==='check').reduce((n,s)=>n+evidenceSummary(s).independentCorrect,0);
+ return title('Your progress, with context','有脈絡的學習紀錄',t('Study, assisted practice and independent answers tell you different things.','研習、使用提示的練習與獨立作答，各自提供不同的資訊。'))+`<div class="result-grid"><div class="metric"><strong>${profile.studied.length}</strong><span>${t('Guided examples studied','已研習引導例子')}</span></div><div class="metric"><strong>${done.filter(s=>s.mode!=='check').length}</strong><span>${t('Practice sessions completed','已完成練習')}</span></div><div class="metric"><strong>${done.filter(s=>s.mode==='check').length}</strong><span>${t('Independent checks completed','已完成獨立檢視')}</span></div><div class="metric"><strong>${ind}</strong><span>${t('Fresh first answers correct','新題首次作答正確')}</span></div></div><section class="panel"><h2>${t('Sessions','練習紀錄')}</h2>${profile.sessions.length?profile.sessions.slice().reverse().map(s=>`<a class="session-record" href="#session/${s.id}"><div><strong>${s.mode==='check'?t('Independent check','獨立檢視'):s.mode==='learn'?t('Guided practice','引導練習'):t('Practice','練習')}</strong><span>${new Date(s.createdAt).toLocaleDateString(lang==='zh'?'zh-HK':'en-GB')} · ${s.items.length} ${t('questions','題')}</span></div><span class="pill">${s.completedAt?t('Review','檢視'):t(`Resume ${s.index+1}/${s.items.length}`,`繼續 ${s.index+1}/${s.items.length}`)}</span></a>`).join(''):`<div class="empty-state"><h3>${t('A fresh start','由這裏開始')}</h3><p>${t('Your sessions will appear here when you begin.','開始練習後，紀錄便會顯示於此。')}</p><a class="primary" href="#setup/practice">${t('Start sample practice','開始示例練習')}</a></div>`}</section><div class="two-columns"><section class="panel"><h2>${t('Learners on this device','此裝置的學習者')}</h2><p>${t('Profiles separate local work; they are not password-protected accounts.','個人檔案可分開儲存本機紀錄，並非設有密碼的帳戶。')}</p><form id="profile-form"><label>${t('New learner name','新學習者名稱')}<input name="name" maxlength="40" required placeholder="${t('e.g. Learner 2','例如：學習者 2')}"></label>${button(t('Add learner','新增學習者'),'add-profile','type="submit"','true')}</form></section><section class="panel"><h2>${t('Keep a backup','保留備份')}</h2><p>${t('Export only this learner’s work. Import replaces this learner’s local work after a review step.','只匯出目前學習者的資料。匯入前可先檢視，確認後會取代目前學習者的本機紀錄。')}</p>${button(t('Export progress','匯出進度'),'export-progress','',true)}<details class="import-panel"><summary>${t('Import a backup','匯入備份')}</summary><label>${t('Paste the backup file contents','貼上備份檔內容')}<textarea id="progress-import" rows="5" maxlength="2000000"></textarea></label>${button(t('Review import','檢視匯入資料'),'review-progress','',true)}<div id="import-review"></div></details><details><summary>${t('Reset this learner','重設目前學習者')}</summary><p>${t('Other learners and other websites are unaffected. Export a backup first if needed.','不會影響其他學習者或網站；如有需要，請先匯出備份。')}</p>${button(t('Clear this learner’s work','清除此學習者紀錄'),'reset-profile','',true)}</details></section></div>`;
+}
+function paperView(){
+ const spec=profile.paper;
+ return title('A paper, made your way','按需要製作練習紙',t('Choose sample questions, adjust the working space, and keep a reproducible copy.','選擇示例題目、調整作答空間，並保留可重現的副本。'))+`<div class="paper-builder"><section class="panel"><form id="paper-setup"><fieldset><legend>${t('Question sets','題組')}</legend><div class="paper-family-list">${families.map(f=>`<label><input name="family" type="checkbox" value="${f.id}" ${f.development?'':'checked'}>${esc(f.title[lang])}${f.development?' · '+t('Development example','開發示例'):''}</label>`).join('')}</div></fieldset><div class="form-row"><label>${t('Questions','題數')}<select name="count">${[3,6,9,12].map(n=>`<option ${n===6?'selected':''}>${n}</option>`).join('')}</select></label>${button(t('Build a new paper','建立新練習紙'),'build-paper','type="submit"')}</div></form><details class="import-panel"><summary>${t('Reopen a saved paper','重新開啟已儲存的練習紙')}</summary><label>${t('Paste the saved specification','貼上已儲存的練習紙規格')}<textarea id="paper-import" rows="4" maxlength="1000000"></textarea></label>${button(t('Reopen paper','重新開啟練習紙'),'import-paper','',true)}<p class="muted">${t('A paper specification contains questions and layout, not learner answers.','練習紙規格包含題目及版面，不包含學習者答案。')}</p></details></section>${spec?`<section class="panel"><div class="form-row"><label class="grow">${t('Paper title','練習紙標題')}<input id="paper-title" value="${esc(spec.title)}" maxlength="100"></label><label>${t('Paper language','練習紙語言')}<select id="paper-lang"><option value="en" ${spec.lang==='en'?'selected':''}>English</option><option value="zh" ${spec.lang==='zh'?'selected':''}>繁體中文</option></select></label></div><h2>${t('Arrange & adjust','編排及調整')}</h2><div class="paper-edit-list">${spec.items.map((item,i)=>`<div class="paper-edit-row"><div><strong>${i+1}. ${esc(families.find(f=>f.id===item.question.id).title[lang])}</strong><small>${esc(item.question.math)}</small></div><label>${t('Marks','分數')}<input type="number" min="1" max="20" value="${item.marks}" data-paper-index="${i}" data-field="marks"></label><label>${t('Lines','行數')}<input type="number" min="1" max="6" value="${item.lines}" data-paper-index="${i}" data-field="lines"></label><button class="icon-button" data-action="paper-up" data-index="${i}" aria-label="${t(`Move question ${i+1} up`,`把第 ${i+1} 題上移`)}" ${i===0?'disabled':''}>↑</button><button class="icon-button" data-action="paper-down" data-index="${i}" aria-label="${t(`Move question ${i+1} down`,`把第 ${i+1} 題下移`)}" ${i===spec.items.length-1?'disabled':''}>↓</button></div>`).join('')}</div><div class="paper-actions">${button(t('Print / save PDF','列印／儲存 PDF'),'print-paper')}${button(t('Download student sheet','下載學生練習紙'),'download-paper','',true)}${button(t('Download solutions','下載答案'),'download-key','',true)}${button(t('Save paper specification','儲存練習紙規格'),'export-paper','',true)}</div><p class="muted">${t('Use the browser’s Save as PDF destination. Downloads are self-contained printable HTML.','可於瀏覽器列印選擇「儲存為 PDF」。下載檔為可獨立開啟及列印的 HTML。')}</p></section><section class="paper-preview"><div class="section-heading"><h2>${t('Print preview','列印預覽')}</h2><button class="secondary" data-action="toggle-key">${paperKey?t('Student sheet','學生練習紙'):t('Show solutions','顯示答案')}</button></div><p class="muted">${t('Paper ID','練習紙編號')}: <span id="paper-id">…</span> · A4</p><div class="paper-preview-scroll"><div id="paper-pages"></div></div></section>`:`<section class="empty-state paper-empty"><span class="activity-icon">${icon('paper')}</span><h2>${t('Start with a few good questions','由幾道好題目開始')}</h2><p>${t('Your paper and matching solutions will appear here.','練習紙及配對答案會顯示於此。')}</p></section>`}</div>`;
+}
+function aboutView(){return title('A bounded teaching pilot','逐步建立的教學試點',t('Six connected topic paths are available as author drafts. The broader course remains planned.','六個主題路徑現有作者草稿；其餘課程仍在規劃。'))+`<div class="two-columns"><section class="panel"><h2>${t('Available in this draft','目前初稿內容')}</h2><ul><li>${t('Nineteen bilingual lessons and forty original curriculum families: basic computation (JS1.1–1.6), percentages (JS5.1–5.2), directed numbers, expressions, equations and angles (JS2.1–2.3, JS7.1–7.4, JS8.1–8.3 and JS19.1–19.5).','十九個雙語課堂及四十類原創題目：基本運算、百分法、有向數、代數式、方程及角（JS1.1–1.6、JS5.1–5.2、JS2.1–2.3、JS7.1–7.4、JS8.1–8.3、JS19.1–19.5）。')}</li><li>${t('Six retained development examples, labelled separately.','另外保留六種開發示例，並另作標示。')}</li><li>${t('237 mapped objectives across 52 topics; completed curriculum coverage is not claimed.','52 個課題、237 項學習重點記錄；尚未宣稱完成課程覆蓋。')}</li><li>${t('Local profiles, exact checking within declared contracts, and matching A4 student/key exports.','本機學習者記錄、有限格式內的準確核對，以及配對的 A4 學生紙和解答。')}</li></ul><a href="#signed">${t('Open the signed-number path','開啟有向數路線')}</a><h3>${t('Next','下一步')}</h3><p>${t('Review these slices, then implement rates/ratios/proportions and estimation. Independent mathematics/language and classroom review remain pending. No score predicts a school or DSE grade.','先審閱這些草稿，再開發率、比及比例與估算。獨立數學、語文審閱及課堂試用仍待進行；分數並不預測學校或文憑試成績。')}</p></section><section class="panel"><h2>${t('Sources and boundaries','資料來源與範圍')}</h2><p>${t('The map follows EDB 2017 learning content, junior 2020 notes and compulsory notes updated December 2021. All practice tasks are original project-authored work. M1/M2 and examination profiles are not included in this pilot.','課程地圖依據教育局 2017 年學習內容、2020 年初中補充說明，以及 2021 年 12 月更新的必修部分說明。有向數題目由本項目原創；本試點不包括 M1/M2 或考試藍圖。')}</p><a href="../planning/source-register.md" target="_blank" rel="noopener">${t('Source register','資料來源記錄')}</a><h3>${t('Your data','你的資料')}</h3><p>${t('Work stays in this browser, without sign-in or external progress storage. Export backups before moving devices. P2 uses a separate local namespace; a P1 backup can be reviewed and imported. Profiles are not password-protected accounts.','資料保留在此瀏覽器，不設登入或外部進度儲存。轉用裝置前請匯出備份。P2 使用獨立的本機儲存範圍，可評閱後匯入 P1 備份；學習者記錄並非受密碼保護的帳戶。')}</p></section></div>`;}
+function notFound(){return title('Let’s find your place','找回你的學習位置')+`<div class="empty-state"><p>${t('This page or session is not available in the current profile.','目前的學習者檔案沒有此頁面或練習紀錄。')}</p><a class="primary" href="#home">${t('Back to overview','返回總覽')}</a></div>`;}
+async function refreshPaper(){if(!profile.paper)return;const current=profile.paper,pages=document.querySelector('#paper-pages'),id=document.querySelector('#paper-id');if(pages)pages.innerHTML='';if(id)id.textContent='…';const result=await preparePreview(current);if(!result||profile.paper!==current)return;const target=document.querySelector('#paper-pages'),label=document.querySelector('#paper-id');if(target)target.innerHTML=renderPaper(result.spec,result.fingerprint,paperKey);if(label)label.textContent=result.fingerprint.slice(0,12);}
+function render(){
+ backupReview.cancel();
+ const parts=(location.hash.slice(1)||'home').split('/'),page=parts[0];menuOpen=false;
+ let content;
+ if(page==='percentages')content=percentageHub(lang,profile.studied);else if(page==='basic')content=basicHub(lang,profile.studied);else if(page==='angles')content=angleHub(lang,profile.studied);else if(page==='equations')content=equationHub(lang,profile.studied);else if(page==='expressions')content=expressionHub(lang,profile.studied);else if(page==='signed')content=signedHub(lang,profile.studied);else if(page==='lesson'){const lesson=[...percentageLessons,...basicLessons,...signedLessons,...expressionLessons,...equationLessons,...angleLessons].find(l=>l.id===parts[1]);if(lesson){const key='lesson:'+lesson.id+':v1';if(!profile.studied.includes(key)){profile.studied.push(key);profile.studied=profile.studied.slice(-100);save();}content=lesson.id.startsWith('PC')?percentageLessonView(lesson.id,lang):lesson.id.startsWith('BC')?basicLessonView(lesson.id,lang):lesson.id.startsWith('GE')?angleLessonView(lesson.id,lang):lesson.id.startsWith('EQ')?equationLessonView(lesson.id,lang):lesson.id.startsWith('EX')?expressionLessonView(lesson.id,lang):signedLessonView(lesson.id,lang);}else content=notFound();}else if(page==='home')content=home();else if(page==='catalogue')content=catalogueView();else if(page==='year'&&/^S[1-6]$/.test(parts[1]))content=catalogueView(parts[1]);else if(page==='topic')content=topicView(parts[1]);else if(page==='setup')content=setup(['check','learn'].includes(parts[1])?parts[1]:'practice');else if(page==='learn')content=learnView(parts[1]);else if(page==='session')content=sessionView(active());else if(page==='progress')content=progressView();else if(page==='paper')content=paperView();else if(page==='about')content=aboutView();else content=notFound();
+ shell(content,['session','learn','setup'].includes(page)?'setup':page==='lesson'?(parts[1]?.startsWith('PC')?'percentages':parts[1]?.startsWith('BC')?'basic':parts[1]?.startsWith('GE')?'angles':parts[1]?.startsWith('EQ')?'equations':parts[1]?.startsWith('EX')?'expressions':'signed'):page==='year'?'catalogue':page);
+ if(page==='catalogue'||page==='year')filterCatalogue();if(page==='paper'&&profile.paper)refreshPaper().catch(err=>error(err.message));
+}
+function download(filename,text,type='application/json'){
+ const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function start(ids,mode,count){
+ const s=avoidExposedExamples(createSession(ids,seed(),mode,count),profile.sessions,[...recordedPercentageExamples(profile.studied),...recordedBasicExamples(profile.studied),...recordedLessonExamples(profile.studied),...recordedExpressionExamples(profile.studied),...recordedEquationExamples(profile.studied),...recordedAngleExamples(profile.studied)]);
+  profile.sessions.push(s);if(profile.sessions.length>100)profile.sessions.shift();save();go((mode==='learn'?'learn/':'session/')+s.id);
+}
+function error(message){let el=document.querySelector('#action-error');if(!el){el=document.createElement('div');el.id='action-error';el.className='notice warning';el.setAttribute('role','alert');document.querySelector('#main').prepend(el);}el.textContent=message;el.scrollIntoView({block:'nearest'});}
+root.addEventListener('submit',e=>{
+ e.preventDefault();try{
+  if(e.target.id==='session-setup'){const data=new FormData(e.target);start(data.getAll('family'),data.get('mode'),Number(data.get('count')));}
+  if(e.target.id==='answer-form'){
+   const s=active(),r=s.responses[s.index],data=new FormData(e.target);setReason(s,s.index,String(data.get('reason')||''));currentFeedback=answer(s,s.index,String(data.get('answer')||''));save();render();document.querySelector('.feedback')?.focus();
+  }
+  if(e.target.id==='profile-form'){
+   if(registry.profiles.length>=10)throw new Error(t('Use up to 10 profiles on this device.','此裝置最多可建立 10 個學習者檔案。'));
+   const name=String(new FormData(e.target).get('name')).trim();if(!name)throw new Error(t('Enter a name.','請輸入名稱。'));
+   const id='learner-'+seed();registry.profiles.push({id,name});registry.active=id;repo.saveRegistry(registry);profile=freshProfile(id,name);storageIssue=repo.volatile?'unavailable':'';save();go('progress');render();
+  }
+  if(e.target.id==='paper-setup'){const data=new FormData(e.target);profile.paper=createPaper(data.getAll('family'),seed(),Number(data.get('count')),lang);save();render();}
+ }catch(err){error(err.message);}
+});
+root.addEventListener('input',e=>{
+ const s=active();
+ if(s&&e.target.name==='answer'){setAnswerDraft(s,s.index,e.target.value);save();const status=document.querySelector('#reason-review-status');if(status&&s.items[s.index].manualReason)status.textContent=reasonReviewText(s.responses[s.index]);}
+ if(s&&e.target.name==='reason'){setReason(s,s.index,e.target.value);save();const review=document.querySelector('[data-action="self-review"]'),status=document.querySelector('#reason-review-status');if(review)review.disabled=!s.responses[s.index].reason.trim();if(status)status.textContent=s.responses[s.index].attempts.length?reasonReviewText(s.responses[s.index]):'';}
+ if(e.target.id==='catalogue-search'){filters.q=e.target.value.slice(0,100);saveFilters();filterCatalogue();}
+ if(e.target.id==='paper-title'&&profile.paper){profile.paper.title=e.target.value;save();refreshPaper().catch(err=>error(err.message));}
+});
+root.addEventListener('change',e=>{
+ try{
+  if(e.target.id==='profile-select'){registry.active=e.target.value;repo.saveRegistry(registry);profile=repo.load(registry.active,registry.profiles.find(p=>p.id===registry.active).name);storageIssue=repo.volatile?'unavailable':'';currentFeedback=null;go('home');render();}
+  if(e.target.id==='year-filter'){filters.year=e.target.value;saveFilters();if(location.hash.startsWith('#year/'))go(filters.year==='all'?'catalogue':'year/'+filters.year);else filterCatalogue();}
+  if(e.target.id==='class-filter'){filters.classification=e.target.value;saveFilters();filterCatalogue();}
+  if(e.target.id==='paper-lang'){profile.paper.lang=e.target.value;save();refreshPaper().catch(err=>error(err.message));}
+  if(e.target.dataset.paperIndex!==undefined){const item=profile.paper.items[Number(e.target.dataset.paperIndex)],field=e.target.dataset.field,n=Number(e.target.value);if(!Number.isInteger(n)||n<1||n>(field==='marks'?20:6))throw new Error(t('Choose a value in the shown range.','請在顯示範圍內選擇數值。'));item[field]=n;save();refreshPaper().catch(err=>error(err.message));}
+ }catch(err){error(err.message);}
+});
+root.addEventListener('click',async e=>{
+ const control=e.target.closest('[data-action]');if(!control)return;const action=control.dataset.action;
+ if(control.type==='submit'&&control.form)return;
+ try{
+  if(action==='language'){lang=lang==='en'?'zh':'en';const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(null,'',url);render();}
+  if(action==='menu')setMenu(!menuOpen);
+  if(action==='clear-filters'){filters={q:'',year:'all',classification:'all'};saveFilters();go('catalogue');render();}
+  if(action==='start-topic'){const fs=families.filter(f=>f.topic===control.dataset.topic);start((fs.some(f=>!f.development)?fs.filter(f=>!f.development):fs).map(f=>f.id),'practice',4);}
+  if(action==='percentages-practice'||action==='percentages-check')start(percentageFamilies.map(f=>f.id),action==='percentages-check'?'check':'practice',8);
+  if(action==='percentages-paper'){profile.paper=createPaper(percentageFamilies.map(f=>f.id),seed(),8,lang);save();go('paper');}
+  if(action==='percentages-lesson-practice'||action==='percentages-lesson-check'){const lesson=percentageLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='percentages-lesson-check'?'check':'learn',4);}
+  if(action==='basic-practice'||action==='basic-check')start(basicFamilies.map(f=>f.id),action==='basic-check'?'check':'practice',8);
+  if(action==='basic-paper'){profile.paper=createPaper(basicFamilies.map(f=>f.id),seed(),8,lang);save();go('paper');}
+  if(action==='basic-lesson-practice'||action==='basic-lesson-check'){const lesson=basicLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='basic-lesson-check'?'check':'learn',4);}
+  if(action==='angles-practice'||action==='angles-check')start(angleFamilies.map(f=>f.id),action==='angles-check'?'check':'practice',6);
+  if(action==='angles-paper'){profile.paper=createPaper(angleFamilies.map(f=>f.id),seed(),6,lang);save();go('paper');}
+  if(action==='angle-lesson-practice'||action==='angle-lesson-check'){const lesson=angleLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='angle-lesson-check'?'check':'learn',4);}
+  if(action==='equations-practice'||action==='equations-check')start(equationFamilies.map(f=>f.id),action==='equations-check'?'check':'practice',6);
+  if(action==='equations-paper'){profile.paper=createPaper(equationFamilies.map(f=>f.id),seed(),6,lang);save();go('paper');}
+  if(action==='equation-lesson-practice'||action==='equation-lesson-check'){const lesson=equationLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='equation-lesson-check'?'check':'learn',4);}
+  if(action==='expressions-practice'||action==='expressions-check')start(expressionFamilies.map(f=>f.id),action==='expressions-check'?'check':'practice',6);
+  if(action==='expressions-paper'){profile.paper=createPaper(expressionFamilies.map(f=>f.id),seed(),6,lang);save();go('paper');}
+  if(action==='expression-lesson-practice'||action==='expression-lesson-check'){const lesson=expressionLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='expression-lesson-check'?'check':'learn',4);}
+  if(action==='signed-practice'||action==='signed-check')start(curriculumFamilies.map(f=>f.id),action==='signed-check'?'check':'practice',6);
+  if(action==='lesson-practice'||action==='lesson-check'){const lesson=signedLessons.find(l=>l.id===control.dataset.lesson);if(!lesson)throw Error('Unknown lesson.');start(lesson.families,action==='lesson-check'?'check':'learn',4);}
+  if(action==='begin-after-learn'){if(!profile.studied.includes(control.dataset.session)){profile.studied.push(control.dataset.session);profile.studied=profile.studied.slice(-100);}save();go('session/'+control.dataset.session);}
+  if(['hint','solution','self-review','next'].includes(action)){
+   const s=active(),r=s.responses[s.index];if(action==='hint')r.hint=true;if(action==='solution'){e.preventDefault();r.solution=!r.solution;if(!r.solution)r.solution=true;}
+   if(action==='self-review')selfReviewReason(s,s.index);
+   if(action==='next'){if(!r.attempts.length)return;if(r.input!==r.attempts.at(-1).input)throw new Error(t('Check your revised answer before continuing.','繼續前，請先檢查已修改的答案。'));if(s.index===s.items.length-1)s.completedAt=new Date().toISOString();else s.index++;currentFeedback=null;}
+   save();render();if(action==='next')document.querySelector('#main')?.focus();
+  }
+  if(action==='key'){const input=document.querySelector('#answer-input');if(input){const a=input.selectionStart??input.value.length,b=input.selectionEnd??a;input.value=input.value.slice(0,a)+control.dataset.key+input.value.slice(b);input.focus();input.setSelectionRange(a+control.dataset.key.length,a+control.dataset.key.length);input.dispatchEvent(new Event('input',{bubbles:true}));}}
+  if(action==='retry-session'){const s=profile.sessions.find(s=>s.id===control.dataset.session);start([...new Set(s.items.map(q=>q.id))],'check',s.items.length);}
+  if(action==='export-progress')download('secondary-mathquiz-progress.json',JSON.stringify({kind:'secondary-mathquiz-progress',schema:1,profile},null,2));
+  if(action==='review-progress'){
+   backupReview.cancel();document.querySelector('#import-review').innerHTML='';
+   const text=document.querySelector('#progress-import').value;if(text.length>2000000)throw Error('Backup too large.');const reviewed=backupReview.review(JSON.parse(text),profile.id);
+   document.querySelector('#import-review').innerHTML=`<div class="notice"><p>${esc(t(`Ready to import ${reviewed.sessions} sessions into ${profile.name}. This replaces this profile’s current work.`,`將把 ${reviewed.sessions} 個練習紀錄匯入 ${profile.name}，並取代目前檔案的紀錄。`))}</p>${button(t('Replace this profile’s work','取代此學習者的紀錄'),'confirm-progress','',true)} ${button(t('Cancel import','取消匯入'),'cancel-progress','',true)}</div>`;
+  }
+  if(action==='confirm-progress'){profile=backupReview.apply(profile);save();render();}
+  if(action==='cancel-progress'){backupReview.cancel();document.querySelector('#import-review').innerHTML='';}
+  if(action==='reset-profile'){profile={...freshProfile(profile.id,profile.name),revision:profile.revision};save();render();}
+  if(action==='import-paper'){const text=document.querySelector('#paper-import').value;if(text.length>1000000)throw Error('Paper too large.');profile.paper=validatePaper(JSON.parse(text));save();render();}
+  if(action==='export-paper')download('secondary-mathquiz-paper.json',JSON.stringify(profile.paper,null,2));
+  if(action==='paper-up'||action==='paper-down'){const i=Number(control.dataset.index),j=i+(action==='paper-up'?-1:1);if(j>=0&&j<profile.paper.items.length){[profile.paper.items[i],profile.paper.items[j]]=[profile.paper.items[j],profile.paper.items[i]];save();render();}}
+  if(action==='toggle-key'){paperKey=!paperKey;render();}
+  if(['print-paper','download-paper','download-key'].includes(action)){
+   const key=action==='download-key'||action==='print-paper'&&paperKey,{spec,fingerprint:hash}=await preparePaper(profile.paper);
+   if(action==='print-paper'){
+    const frame=document.createElement('iframe');frame.className='print-frame';frame.title=t('Print paper','列印練習紙');frame.srcdoc=printableDocument(spec,hash,key);document.body.append(frame);frame.onload=()=>{frame.contentWindow.focus();frame.contentWindow.print();setTimeout(()=>frame.remove(),60000);};
+   }else download(key?'Secondary_MathQuiz_Solutions.html':'Secondary_MathQuiz_Student_Paper.html',printableDocument(spec,hash,key),'text/html;charset=utf-8');
+  }
+ }catch(err){error(t('Unable to complete that action: ','未能完成：')+err.message);}
+});
+window.addEventListener('hashchange',()=>{currentFeedback=null;render();document.querySelector('#main')?.focus();window.scrollTo(0,0);});
+window.addEventListener('storage',e=>{if(e.key===PREFIX+profile.id){storageIssue='conflict';updateStorageNotice();}});
+// The skip link is an in-page focus action, not an application route.
+window.addEventListener('click',e=>{
+ if(e.target.closest?.('a.skip[href="#main"]')){e.preventDefault();if(menuOpen)setMenu(false);document.querySelector('#main')?.focus();}
+});
+window.addEventListener('keydown',e=>{
+ if(!menuOpen)return;
+ if(e.key==='Escape'){e.preventDefault();setMenu(false);}
+ if(e.key==='Tab'){
+  const controls=[...document.querySelectorAll('.sidebar a[href], .sidebar button')].filter(el=>el.getClientRects().length&&!el.disabled);
+  const first=controls[0],last=controls.at(-1);
+  if(!first)return;
+  const current=document.activeElement;
+  if(e.shiftKey&&(current===first||!controls.includes(current))){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&(current===last||!controls.includes(current))){e.preventDefault();first.focus();}
+ }
+});
+window.addEventListener('resize',()=>{if(menuOpen&&window.innerWidth>900)setMenu(false);});
+try{
+ const embedded=document.querySelector('#embedded-curriculum');
+ if(embedded)catalogue=JSON.parse(embedded.textContent).records;
+ else {const response=await fetch(new URL('../../curriculum/catalogue.json',import.meta.url));if(!response.ok)throw Error('Curriculum catalogue unavailable.');catalogue=(await response.json()).records;}
+ const map=new Map();for(const r of catalogue){const key=r.stage+'-'+r.unit;if(!map.has(key))map.set(key,{key,stage:r.stage,title:r.unit_title,records:[]});map.get(key).records.push(r);}units=[...map.values()];
+ render();
+}catch(err){root.innerHTML=`<main class="loading"><h1>${t('The workspace could not load','未能載入學習空間')}</h1><p>${t('Open the self-contained Secondary_MathQuiz_Prototype.html directly. For the modular index.html, start the included local server and open its HTTP address.','請直接開啟獨立版 Secondary_MathQuiz_Prototype.html；如使用模組版 index.html，請啟動隨附的本機伺服器並開啟其 HTTP 網址。')}</p><p>${esc(err.message)}</p><button onclick="location.reload()">${t('Retry','重試')}</button></main>`;}

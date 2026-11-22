@@ -1,9 +1,9 @@
-# Handoff — basic-computation author draft v0.10.0
+# Handoff — percentages author draft v0.11.0
 
-Basic computation adds BC01–BC08 and three bilingual lessons to the retained four-topic pilot: 32 curriculum families and 15 bilingual lessons in total. All 71 Node checks pass, including 2,400 independently checked basic variants. The six development fixtures remain separate, and all 237 objective coverage records remain planned.
+PC01–PC08 and four bilingual lessons are implemented: 40 curriculum families and 19 bilingual lessons in six topics. All 77 Node checks pass, including 2,400 independently checked percentage variants. Six development fixtures remain separate; all 237 objective records remain planned.
 
-The source brief is `planning/topics/basic.md`. Published and verified: all 27 current-source hosted application workflows and four combined English/Traditional Chinese student/key booklets (108 HTML pages) pass; prior release reports are preserved. Current evidence is in `site/planning/release-identity.json` and `site/planning/release-basic-v1.md`.
+Source/domain brief: planning/topics/percentages.md. Release evidence: site/planning/release-percentages-v1.md and site/planning/release-identity.json. Thirty current-source hosted workflows are defined. Four combined student/key booklets have 127 generated HTML pages. Browser workflow/layout execution is pending after local browser access timed out. Prior reports remain historical.
 
-Next curriculum slice: percentages (JS-5-1/JS-5-2), beginning with a source/scope brief. Make the base quantity explicit, keep exact values, and exclude a zero recovery multiplier when a unique original value is requested. Then rates/ratios/proportions and approximation/estimation, as saved in `planning/next-batch.md`. Complete each slice before broadening the bank.
+Finish the percentage publication and current-source browser/layout checks before broadening the bank. Next curriculum slice: rates, ratios and proportions (JS-6-1/JS-6-2), starting with a fresh source/scope brief; then approximation/estimation. Confirm the retained source notes, including the appropriate scope of inverse proportion, rather than assuming that the earlier candidate list exhausts the curriculum.
 
-Actual current PDF/physical printing, native keyboard/zoom, spoken assistive output, independent mathematics/Traditional Chinese review and learner trials remain pending. Written reasons and methods remain manually reviewed; automatic values never certify them. Preserve existing generator versions and snapshots.
+Actual current PDF/physical printing, native keyboard/zoom, spoken output, independent mathematics/Traditional Chinese review and learner trials remain pending. Automatic values do not verify written methods; preserve earlier generator versions and snapshots.

@@ -17,3 +17,5 @@
 .signed-numberline text{stroke:none}
 
 .basic-figure{margin:12px 0}.basic-cards{display:flex;flex-wrap:wrap;gap:8px}.basic-cards>span{border:1px solid #bdceca;border-radius:8px;padding:10px 14px;font-size:18px;max-width:100%;overflow-wrap:anywhere}.basic-figure figcaption{font-size:12px;margin-top:6px}.basic-lesson-tree svg{display:block;width:100%;max-height:210px}
+
+.percentage-model{display:block;width:100%;max-width:560px;height:auto;margin:1rem auto}.worked-example{padding:1rem 0;border-top:1px solid #d4dfdf}.worked-example summary{cursor:pointer;line-height:1.6;overflow-wrap:anywhere}

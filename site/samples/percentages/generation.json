@@ -1,0 +1,37 @@
+{
+  "state": "generated HTML; browser/PDF review separate",
+  "results": [
+    {
+      "lang": "en",
+      "document": "Student",
+      "pages": 5,
+      "specification_sha256": "1da5b5205fd794affb70e9cc7fc130243b9a26b133ad6c6cabfcf3bd8c27261e",
+      "actual_browser_layout": "pending",
+      "actual_pdf": "pending"
+    },
+    {
+      "lang": "en",
+      "document": "Solutions",
+      "pages": 5,
+      "specification_sha256": "1da5b5205fd794affb70e9cc7fc130243b9a26b133ad6c6cabfcf3bd8c27261e",
+      "actual_browser_layout": "pending",
+      "actual_pdf": "pending"
+    },
+    {
+      "lang": "zh",
+      "document": "Student",
+      "pages": 5,
+      "specification_sha256": "5b2d51d01fbcbc8b64ceabcc70292ef18d53964b2476837bb6d92a32abf94418",
+      "actual_browser_layout": "pending",
+      "actual_pdf": "pending"
+    },
+    {
+      "lang": "zh",
+      "document": "Solutions",
+      "pages": 4,
+      "specification_sha256": "5b2d51d01fbcbc8b64ceabcc70292ef18d53964b2476837bb6d92a32abf94418",
+      "actual_browser_layout": "pending",
+      "actual_pdf": "pending"
+    }
+  ]
+}

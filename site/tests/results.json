@@ -12,6 +12,7 @@
     "tests/equations.test.mjs",
     "tests/expressions.test.mjs",
     "tests/math.test.mjs",
+    "tests/percentages.test.mjs",
     "tests/review.test.mjs",
     "tests/signed.test.mjs",
     "tests/state.test.mjs"

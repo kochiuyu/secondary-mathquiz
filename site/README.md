@@ -1,50 +1,21 @@
-# Secondary MathQuiz — five-topic pilot v0.10.0
+# Secondary MathQuiz — six-topic pilot v0.11.0
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects basic computation, directed numbers, expressions, equations and angles. There are 32 curriculum families and 15 bilingual author-draft lessons, plus six separately labelled development fixtures. All 71 Node checks pass. The 27 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-basic-v1.md` for scope and review limits.
+40 curriculum families and 19 bilingual author-draft lessons: basic computation, percentages, directed numbers, expressions, linear equations and angles. Six separately labelled development fixtures remain. All 237 curriculum records retain planned status.
 
-Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
+From this directory, run node tools/serve.mjs and open http://127.0.0.1:5175/secondary-mathquiz/. The portable HTML also opens directly.
 
-## Run or develop
+Development commands:
 
-Node 22 or later is sufficient, with no package installation:
+    node tools/build.mjs
+    node --check tests/bundle-syntax.mjs
+    node tools/verify.mjs
+    node tools/make-percentage-samples.mjs
+    node tools/make-pilot-print-review.mjs
 
-```powershell
-node tools/serve.mjs
-```
+Edit shell.html or modules and rebuild the default, portable and QA copies together. The runner at qa/index.html has 30 workflows; qa/print.html inspects combined booklet geometry. See planning/release-percentages-v1.md for actual evidence and limits. All 77 Node checks pass; current-source browser/layout execution is pending.
 
-Open `http://127.0.0.1:5175/secondary-mathquiz/?lang=en#angles` (or `lang=zh`). The 27-case acceptance runner is `/secondary-mathquiz/qa/index.html`; it uses synthetic profiles and keeps manual observations separate. Opening the standalone HTML needs no server.
+P2 retains the secondary-mathquiz:p2: storage namespace, version-1 curriculum generators, historical bundled fee snapshots, paper schema 1 and validated backup imports. Percentage IDs PC01–PC08 use generator version 1. Language, title, order, marks, working lines and snapshots contribute to paper identity. Preserve specifications and HTML with source for exact historical output.
 
-```powershell
-node tools/build.mjs
-node --check tests/bundle-syntax.mjs
-node tools/verify.mjs
-node tools/make-basic-samples.mjs
-node tools/make-pilot-print-review.mjs
-```
+Opening lessons records fixed and generated models as exposure. Exhausted variants are labelled practice. This is retained-model freshness, not universal semantic novelty or a mastery score. Manual explanations remain separate from final-answer scores and edits clear self-review. Learner records stay in the browser; export a backup before moving devices.
 
-Rebuild after application-source changes. `qa/build.json` identifies the build, not a browser pass. `planning/release-identity.json` identifies this draft. Historical reports retain their original hashes.
-
-## Saved versions and evidence
-
-P2 uses `secondary-mathquiz:p2:` local storage, preserving P1's namespace. Review/import an old P1 backup explicitly if wanted; selected-learner replacement requires its own confirmation. Legacy v1/v2 snapshots and paper schema 1 remain supported. Curriculum IDs BC01–BC08, SN01–SN06, EX01–EX06, EQ01–EQ06 and GE01–GE06 retain per-family generator version 1. Regeneration validates the complete retained snapshot.
-
-Paper schema 1's `generatorVersion:2` is a compatibility marker; items retain their own generator version. Fingerprints identify complete specifications, not byte-identical output across renderer versions. Keep HTML, specifications and source together when preserving exact output.
-
-Opening a lesson records exposure, including fixed and generated models. A bounded fresh search excludes retained exposure; exhausted variants are labelled practice. This is retained-model freshness, not universal semantic novelty or a mastery score. EX03 has only two shape variants and may exhaust after studying both.
-
-Manual tasks remain distinct from automatic final-answer scores. Editing a response clears its self-review label. Self-review requires recording the current response and comparing its model. Reading, hints, retries and reasons do not constitute independent mastery evidence.
-
-Sample HTML and specifications are in `samples/basic`, `samples/angles`, `samples/equations`, `samples/expressions` and `samples/signed`. Basic-computation samples contain all eight families; the other topic samples retain their six families. Every review task has six working lines. Generated page counts are separate from browser/PDF acceptance. Physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.
-
-
-The default `index.html` and portable page are generated from `shell.html`; edit the shell or modules, then rebuild. The QA runner and its definition module use content-versioned URLs to prevent stale browser scripts.
-
-Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `planning/release-navigation-v1.md` for current evidence.
-
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 32 families in English/Traditional Chinese student/key formats. All four current booklet HTML layouts (108 pages) pass; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
-
-Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) has implemented basic computation as an author draft; percentages are next.
-
-The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 71 Node checks.
-
-Basic computation is published: eight families and three bilingual lessons, with 27/27 current-source hosted workflows and 108/108 booklet HTML pages passing. See `planning/release-basic-v1.md`. The first run uncovered test-runner transition/radio-control errors; its raw report is retained separately.
+Percentage samples are in samples/percentages. They use exact values and a supplied fictional tax schedule. Four combined English/Traditional Chinese student/key booklets contain 127 generated HTML pages. Generation does not certify geometry or actual PDFs. Current PDF/physical printing, native zoom, spoken output and independent mathematics/language/classroom review remain pending.

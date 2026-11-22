@@ -52,3 +52,7 @@ These are candidate question forms, not claims that every subtype is required by
 Do not expand into simultaneous equations, general surds or integral-index rules as a side effect of this batch. They have separate prerequisites and renderer/checker needs in the retained ledger and should receive their own briefs.
 
 Before implementing percentage recovery, require a nonzero change multiplier when a unique original value is requested. State the denominator/base and rounding convention explicitly. For rates and ratios, declare units and positive/nonzero domains. For estimation, choose a rounding/tie policy before sampling boundary cases; a proposed contextual strategy may have several valid answers.
+
+## Percentages implementation
+
+PC01–PC08 and four bilingual lessons are implemented as author drafts in v0.11.0. See topics/percentages.md and ../site/planning/release-percentages-v1.md for actual scope and evidence. Rates, ratios and proportions are next after percentage acceptance. Recheck the original Unit 6 notes, including inverse proportion, before fixing that slice’s scope.

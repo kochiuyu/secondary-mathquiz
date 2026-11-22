@@ -3,23 +3,15 @@
 English/Traditional Chinese mathematics lessons, practice and printable worksheets for Hong Kong secondary schools.
 
 - [Live learning site](https://kochiuyu.github.io/secondary-mathquiz/)
-- [Hosted browser checks](https://kochiuyu.github.io/secondary-mathquiz/site/qa/index.html)
+- [Percentages learning path](https://kochiuyu.github.io/secondary-mathquiz/site/#percentages)
 - [Development instructions](site/README.md)
-- [Basic-computation release and limits](site/planning/release-basic-v1.md)
+- [Percentages release and limits](site/planning/release-percentages-v1.md)
 - [Next actions](planning/next-action.md)
 
-The v0.10.0 five-topic pilot has 32 curriculum question families and 15 bilingual lessons: basic computation, directed numbers, expressions, linear equations, and angles/parallel lines. All are author drafts. All 71 Node checks pass; 27 current hosted workflows pass. Earlier 18/18 results belong to v0.8.0.
+The v0.11.0 six-topic pilot contains 40 curriculum question families and 19 bilingual author-draft lessons: basic computation, percentages, directed numbers, expressions, linear equations and angles/parallel lines. Six development fixtures remain separately labelled. All 237 mapped objective records retain planned status.
 
-Proofs and written reasons need manual review. Rotating or reflecting a question does not make it fresh. All 237 mapped objective records remain planned; this pilot is not complete secondary-curriculum coverage. Six development fixtures remain separately labelled. Independent content/classroom review and actual PDF/physical printing are pending.
+All 77 Node checks pass, including 2,400 independently checked percentage variants. Thirty hosted workflows are defined; execution against this release is pending. Four generated bilingual student/key booklets total 127 HTML pages; current browser layout and actual PDF/physical-print acceptance are pending. Prior release evidence is preserved with its original source identity. Independent mathematics/Traditional Chinese review and learner trials remain pending.
 
-Learner records stay in each browser; export a backup before moving devices. Ordinary storage is shared by pages on the same browser origin. No learner backups or source PDF archive are published. The default app is one bundled HTML build; `site/shell.html` is the modular development template. Build source and generated default/portable/QA pages together.
+Written methods and reasons require manual review. Percentage tasks state the reference quantity and require exact values. Recovery excludes a zero multiplier. Tax questions supply a dated fictional classroom schedule rather than current law.
 
-Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `site/planning/release-navigation-v1.md` for current evidence.
-
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](site/qa/print.html) covers all 32 families in English/Traditional Chinese student/key formats. All four current booklet HTML layouts (108 pages) pass; actual current PDF acceptance remains pending; see `site/planning/release-print-v1.md`.
-
-Marking guidance now follows the actual area shape and edited mark allocation. See `site/planning/release-review-v1.md`. [Next curriculum batch](planning/next-batch.md) has implemented basic computation as an author draft; percentages are next.
-
-The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 71 Node checks.
-
-Basic computation is published: eight families and three bilingual lessons, with 27/27 current-source hosted workflows and 108/108 booklet HTML pages passing. See `site/planning/release-basic-v1.md`. The first run uncovered test-runner transition/radio-control errors; its raw report is retained separately.
+Learner records stay in each browser; export a backup before moving devices. Ordinary storage is shared by pages on the same origin. No learner backups or source PDF archive are published. The default app and portable/QA copies are built from site/shell.html and modules. Existing generator versions and historical bundled fee snapshots remain supported.

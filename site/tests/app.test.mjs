@@ -124,7 +124,7 @@ test('angle routes, manual proof, appearance exposure and five-answer score inte
   if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
   await click('next');
  }
- assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Five connected topics/);
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Six connected topics/);
 });
 
 test('skip navigation preserves the current route, content and answer draft',async()=>{
@@ -151,6 +151,21 @@ test('basic learning routes, eight-family checks, bilingual draft resume and mat
  assert.equal(current().sessions.at(-1).id,sid);assert.match(root.innerHTML,/8 \/ 8/);assert.ok(current().sessions.at(-1).responses.filter(r=>r.reason).every(r=>r.manualReview===null));
  location.hash='basic';await click('basic-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.equal((node('#paper-pages').innerHTML.match(/class="paper-question"/g)||[]).length,8);
  location.hash='home';
+});
+
+test('percentage lessons, exact eight-family check, reviewed reasons, bilingual drafts and paper integrate',async()=>{
+ const current=()=>JSON.parse(memory.get(PREFIX+JSON.parse(memory.get(PREFIX+'profiles')).active));
+ if(document.documentElement.lang!=='en')await click('language');
+ location.hash='topic/js-5';assert.match(root.innerHTML,/Learn percentages/);
+ location.hash='percentages';assert.match(root.innerHTML,/Percent of what/);
+ for(const id of ['PC-L1','PC-L2','PC-L3','PC-L4']){location.hash='lesson/'+id;assert.match(root.innerHTML,/percentages-lesson-check/);assert.ok(current().studied.includes('lesson:'+id+':v1'));}
+ await click('percentages-lesson-practice',{lesson:'PC-L3'});assert.match(location.hash,/#learn\//);assert.ok(current().sessions.at(-1).items.every(q=>['PC06','PC07'].includes(q.id)));
+ location.hash='percentages';await click('percentages-check');const id=current().sessions.at(-1).id;assert.equal(current().sessions.at(-1).items.length,8);
+ input('answer-input','answer','-50/3');await click('language');assert.ok(root.innerHTML.includes('value="-50/3"'));await click('language');
+ for(let i=0;i<8;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Reference quantity and model'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reference');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');}
+ assert.equal(current().sessions.at(-1).id,id);assert.match(root.innerHTML,/8 \/ 8/);assert.match(root.innerHTML,/Name the base and track/);
+ location.hash='percentages';await click('percentages-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('PC')));
+ assert.match(node('#paper-pages').innerHTML,/percentage-model/);location.hash='home';assert.match(root.innerHTML,/Six connected topics/);
 });
 
 
