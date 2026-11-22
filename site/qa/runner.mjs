@@ -214,7 +214,7 @@ document.querySelector('#run').addEventListener('click',async()=>{
    await go('angles','[data-action="angles-paper"]');click('[data-action="angles-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'geometry paper');assert(currentProfile().paper.items.every(i=>i.question.id.startsWith('GE')),'Non-geometry family in paper.');change('#paper-lang','zh');const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese geometry paper identity');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'geometry key');assert(appDocument().querySelectorAll('.angle-geometry').length===6,'Expected six paper diagrams.');assert(el('#paper-pages').textContent.includes('人工評閱'),'Proof review rubric missing.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated geometry choice.');assert(currentProfile().paper.items.at(-1).question.contract.type==='manual','Proof contract changed.');return 'Six versioned geometry snapshots, Chinese paper/key hash, diagrams and manually reviewed proof rubric rendered; actual PDF remains separate.';
   });
   await step('A22',async()=>{
-   await startSession(['SN01'],'check',1);input('#answer-input','-17');
+   await startSession(['SN01'],'check',4);input('#answer-input','-17');
    for(const language of ['en','zh']){
     if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
     const route=frame.contentWindow.location.hash,form=el('#answer-form'),before=JSON.stringify(currentProfile());
