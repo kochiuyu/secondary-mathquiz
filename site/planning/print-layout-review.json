@@ -1,0 +1,804 @@
+{
+  "kind": "secondary-mathquiz-print-layout-review",
+  "schema": 1,
+  "date": "2026-11-22T04:05:25.391Z",
+  "method": "Browser DOM geometry of production-rendered review booklets; not PDF/physical-print acceptance",
+  "documents": [
+    {
+      "file": "en_Student.html",
+      "lang": "en",
+      "kind": "Student",
+      "status": "pass",
+      "expected_pages": 21,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "topic": "signed",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 476
+        },
+        {
+          "pdf_page": 2,
+          "topic": "signed",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 414
+        },
+        {
+          "pdf_page": 3,
+          "topic": "signed",
+          "topic_page": 3,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 198
+        },
+        {
+          "pdf_page": 4,
+          "topic": "signed",
+          "topic_page": 4,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 203
+        },
+        {
+          "pdf_page": 5,
+          "topic": "expressions",
+          "topic_page": 1,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 329
+        },
+        {
+          "pdf_page": 6,
+          "topic": "expressions",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 467
+        },
+        {
+          "pdf_page": 7,
+          "topic": "expressions",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 464
+        },
+        {
+          "pdf_page": 8,
+          "topic": "expressions",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 525
+        },
+        {
+          "pdf_page": 9,
+          "topic": "expressions",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 531
+        },
+        {
+          "pdf_page": 10,
+          "topic": "equations",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 443
+        },
+        {
+          "pdf_page": 11,
+          "topic": "equations",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 541
+        },
+        {
+          "pdf_page": 12,
+          "topic": "equations",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 516
+        },
+        {
+          "pdf_page": 13,
+          "topic": "equations",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 471
+        },
+        {
+          "pdf_page": 14,
+          "topic": "equations",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 440
+        },
+        {
+          "pdf_page": 15,
+          "topic": "equations",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 460
+        },
+        {
+          "pdf_page": 16,
+          "topic": "angles",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 356
+        },
+        {
+          "pdf_page": 17,
+          "topic": "angles",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 269
+        },
+        {
+          "pdf_page": 18,
+          "topic": "angles",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 329
+        },
+        {
+          "pdf_page": 19,
+          "topic": "angles",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 224
+        },
+        {
+          "pdf_page": 20,
+          "topic": "angles",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 375
+        },
+        {
+          "pdf_page": 21,
+          "topic": "angles",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 328
+        }
+      ]
+    },
+    {
+      "file": "en_Solutions.html",
+      "lang": "en",
+      "kind": "Solutions",
+      "status": "pass",
+      "expected_pages": 21,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "topic": "signed",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 545
+        },
+        {
+          "pdf_page": 2,
+          "topic": "signed",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 470
+        },
+        {
+          "pdf_page": 3,
+          "topic": "signed",
+          "topic_page": 3,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 337
+        },
+        {
+          "pdf_page": 4,
+          "topic": "signed",
+          "topic_page": 4,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 342
+        },
+        {
+          "pdf_page": 5,
+          "topic": "expressions",
+          "topic_page": 1,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 433
+        },
+        {
+          "pdf_page": 6,
+          "topic": "expressions",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 516
+        },
+        {
+          "pdf_page": 7,
+          "topic": "expressions",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 471
+        },
+        {
+          "pdf_page": 8,
+          "topic": "expressions",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 574
+        },
+        {
+          "pdf_page": 9,
+          "topic": "expressions",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 579
+        },
+        {
+          "pdf_page": 10,
+          "topic": "equations",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 435
+        },
+        {
+          "pdf_page": 11,
+          "topic": "equations",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 590
+        },
+        {
+          "pdf_page": 12,
+          "topic": "equations",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 508
+        },
+        {
+          "pdf_page": 13,
+          "topic": "equations",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 520
+        },
+        {
+          "pdf_page": 14,
+          "topic": "equations",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 475
+        },
+        {
+          "pdf_page": 15,
+          "topic": "equations",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 488
+        },
+        {
+          "pdf_page": 16,
+          "topic": "angles",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 425
+        },
+        {
+          "pdf_page": 17,
+          "topic": "angles",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 303
+        },
+        {
+          "pdf_page": 18,
+          "topic": "angles",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 398
+        },
+        {
+          "pdf_page": 19,
+          "topic": "angles",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 237
+        },
+        {
+          "pdf_page": 20,
+          "topic": "angles",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 445
+        },
+        {
+          "pdf_page": 21,
+          "topic": "angles",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 313
+        }
+      ]
+    },
+    {
+      "file": "zh_Student.html",
+      "lang": "zh",
+      "kind": "Student",
+      "status": "pass",
+      "expected_pages": 21,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "topic": "signed",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 476
+        },
+        {
+          "pdf_page": 2,
+          "topic": "signed",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 414
+        },
+        {
+          "pdf_page": 3,
+          "topic": "signed",
+          "topic_page": 3,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 198
+        },
+        {
+          "pdf_page": 4,
+          "topic": "signed",
+          "topic_page": 4,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 203
+        },
+        {
+          "pdf_page": 5,
+          "topic": "expressions",
+          "topic_page": 1,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 329
+        },
+        {
+          "pdf_page": 6,
+          "topic": "expressions",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 490
+        },
+        {
+          "pdf_page": 7,
+          "topic": "expressions",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 464
+        },
+        {
+          "pdf_page": 8,
+          "topic": "expressions",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 525
+        },
+        {
+          "pdf_page": 9,
+          "topic": "expressions",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 553
+        },
+        {
+          "pdf_page": 10,
+          "topic": "equations",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 443
+        },
+        {
+          "pdf_page": 11,
+          "topic": "equations",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 541
+        },
+        {
+          "pdf_page": 12,
+          "topic": "equations",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 538
+        },
+        {
+          "pdf_page": 13,
+          "topic": "equations",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 494
+        },
+        {
+          "pdf_page": 14,
+          "topic": "equations",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 463
+        },
+        {
+          "pdf_page": 15,
+          "topic": "equations",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 483
+        },
+        {
+          "pdf_page": 16,
+          "topic": "angles",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 395
+        },
+        {
+          "pdf_page": 17,
+          "topic": "angles",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 308
+        },
+        {
+          "pdf_page": 18,
+          "topic": "angles",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 345
+        },
+        {
+          "pdf_page": 19,
+          "topic": "angles",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 285
+        },
+        {
+          "pdf_page": 20,
+          "topic": "angles",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 392
+        },
+        {
+          "pdf_page": 21,
+          "topic": "angles",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 367
+        }
+      ]
+    },
+    {
+      "file": "zh_Solutions.html",
+      "lang": "zh",
+      "kind": "Solutions",
+      "status": "pass",
+      "expected_pages": 21,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "topic": "signed",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 545
+        },
+        {
+          "pdf_page": 2,
+          "topic": "signed",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 470
+        },
+        {
+          "pdf_page": 3,
+          "topic": "signed",
+          "topic_page": 3,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 337
+        },
+        {
+          "pdf_page": 4,
+          "topic": "signed",
+          "topic_page": 4,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 342
+        },
+        {
+          "pdf_page": 5,
+          "topic": "expressions",
+          "topic_page": 1,
+          "questions": 2,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 454
+        },
+        {
+          "pdf_page": 6,
+          "topic": "expressions",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 559
+        },
+        {
+          "pdf_page": 7,
+          "topic": "expressions",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 513
+        },
+        {
+          "pdf_page": 8,
+          "topic": "expressions",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 595
+        },
+        {
+          "pdf_page": 9,
+          "topic": "expressions",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 623
+        },
+        {
+          "pdf_page": 10,
+          "topic": "equations",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 477
+        },
+        {
+          "pdf_page": 11,
+          "topic": "equations",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 611
+        },
+        {
+          "pdf_page": 12,
+          "topic": "equations",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 573
+        },
+        {
+          "pdf_page": 13,
+          "topic": "equations",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 542
+        },
+        {
+          "pdf_page": 14,
+          "topic": "equations",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 497
+        },
+        {
+          "pdf_page": 15,
+          "topic": "equations",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 510
+        },
+        {
+          "pdf_page": 16,
+          "topic": "angles",
+          "topic_page": 1,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 464
+        },
+        {
+          "pdf_page": 17,
+          "topic": "angles",
+          "topic_page": 2,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 363
+        },
+        {
+          "pdf_page": 18,
+          "topic": "angles",
+          "topic_page": 3,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 415
+        },
+        {
+          "pdf_page": 19,
+          "topic": "angles",
+          "topic_page": 4,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 320
+        },
+        {
+          "pdf_page": 20,
+          "topic": "angles",
+          "topic_page": 5,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 461
+        },
+        {
+          "pdf_page": 21,
+          "topic": "angles",
+          "topic_page": 6,
+          "questions": 1,
+          "width_px": 794,
+          "height_px": 1123,
+          "footer_clearance_px": 394
+        }
+      ]
+    }
+  ],
+  "pdf_acceptance": "pending",
+  "independent_content_review": false,
+  "source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
+  "status": "pass"
+}

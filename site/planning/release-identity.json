@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.3b",
-  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
   "portable_source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
   "automated": {
     "tests": 60,
@@ -11,17 +11,24 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 22,
-    "observed_pass": 0,
+    "observed_pass": 22,
+    "fail": 0,
+    "blocked": 0,
     "source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
-    "raw_report": "site/planning/browser-hosted-print-run.json"
+    "run": "14d5d1a0-00ce-45a4-83b2-4fc03cee7d77",
+    "raw_report": "site/planning/browser-hosted-print-run.json",
+    "manual_rows": "pending",
+    "overall_acceptance_record": "pending"
   },
   "print_layout": {
-    "state": "pending",
+    "state": "HTML geometry passed; actual current PDF pending",
     "documents": 4,
-    "expected_pages": 84,
+    "pages_measured": 84,
+    "families_per_language_and_document": 24,
     "raw_report": "site/planning/print-layout-review.json",
+    "scope": "Retained deterministic samples only; not every generated variant",
     "actual_current_pdf": "pending"
   },
   "scope": {
@@ -36,8 +43,11 @@
     "Fingerprints describe specifications, not byte-identical output across renderer versions."
   ],
   "publication": {
-    "state": "authorized; deployment pending",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "branch": "main"
+    "state": "published; deployment succeeded",
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
+    "print_review": "https://kochiuyu.github.io/secondary-mathquiz/site/qa/print.html",
+    "tested_source_commit": "98dedfef7ff473445979733f2bdf0f74da97dc62",
+    "tested_deployment_run": 44983367549,
+    "deployment_result": "success"
   }
 }

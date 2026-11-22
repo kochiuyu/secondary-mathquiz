@@ -8,7 +8,7 @@ English/Traditional Chinese mathematics lessons, practice and printable workshee
 - [Angles release and limits](site/planning/release-angles-v1.md)
 - [Next actions](planning/next-action.md)
 
-The v0.9.2 four-topic pilot has 24 curriculum question families and 12 bilingual lessons: directed numbers, expressions, linear equations, and angles/parallel lines. All are author drafts. All 60 Node checks pass; the current 22-workflow hosted run is pending. Earlier 18/18 results belong to v0.8.0.
+The v0.9.2 four-topic pilot has 24 curriculum question families and 12 bilingual lessons: directed numbers, expressions, linear equations, and angles/parallel lines. All are author drafts. All 60 Node checks pass; all 22 current hosted workflows pass. Earlier 18/18 results belong to v0.8.0.
 
 Proofs and written reasons need manual review. Rotating or reflecting a question does not make it fresh. All 237 mapped objective records remain planned; this pilot is not complete secondary-curriculum coverage. Six development fixtures remain separately labelled. Independent content/classroom review and actual PDF/physical printing are pending.
 
@@ -16,4 +16,4 @@ Learner records stay in each browser; export a backup before moving devices. Ord
 
 Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `site/planning/release-navigation-v1.md` for current evidence.
 
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](site/qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. Current browser results and PDF acceptance are separate; see `site/planning/release-print-v1.md`.
+Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](site/qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. All four booklet HTML layouts (84 pages) pass; actual current PDF acceptance remains pending; see `site/planning/release-print-v1.md`.
