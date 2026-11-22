@@ -10,6 +10,6 @@ Hosted browser runner: https://kochiuyu.github.io/secondary-mathquiz/site/qa/ind
 
 Run the 15 workflow checks there and export actual evidence for the published source hash. Use synthetic test profiles. The runner's isolated storage is distinct from the ordinary application namespace. Do not upload learner backups or local browser data to this repository.
 
-This is an author draft for review. All 46 Node checks pass for v0.7.0; 15 hosted browser workflows now pass. Actual PDF and independent review remain pending; see `site/planning/github-pages-release.md`. All curriculum coverage records remain planned. Publishing a preview does not certify curriculum completion.
+This is an author draft for review. All 52 Node checks and 18 hosted browser workflows pass for v0.8.0. Actual PDF and independent review remain pending; see `site/planning/release-equations-v1.md`. All curriculum coverage records remain planned. Publishing a preview does not certify curriculum completion.
 
 For later updates, rebuild with `node site/tools/build.mjs`, run `node site/tools/verify.mjs`, and commit the source and generated portable/QA copies together. Keep historical browser evidence tied to its recorded source hash.

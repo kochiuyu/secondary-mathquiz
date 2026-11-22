@@ -1,6 +1,6 @@
 # Secondary MathQuiz — equations pilot v0.8.0
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). Choose Learn equations, Learn expressions or Learn directed numbers. There are now 18 curriculum families and nine bilingual author-draft lessons. All 52 Node checks pass. The current 18-case hosted browser run is pending until recorded. See `planning/release-equations-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). Choose Learn equations, Learn expressions or Learn directed numbers. There are now 18 curriculum families and nine bilingual author-draft lessons. All 52 Node checks pass. All 18 current hosted browser workflows pass; raw manual acceptance remains pending. See `planning/release-equations-v1.md` for scope and review limits.
 
 The equation slice always has exactly one solution. Candidate checks, bracket-error explanations and contextual models keep written reasoning distinct from automatically checked values/choices. All 237 curriculum records retain planned status. Angles remain in design. Actual PDF/physical printing, independent content review, native zoom and spoken assistive output remain pending.
 

@@ -256,10 +256,10 @@
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
       "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/lessons/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -293,10 +293,10 @@
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
       "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/lessons/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -330,10 +330,10 @@
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
       "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/lessons/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {

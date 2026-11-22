@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-22",
+  "source_sha256": "a8a915b00d9b26b12d645ef8a31c1c810babc6b9f8c66d2d3e6e875c9328e3cd",
+  "observed": [
+    "Equation learning path and EQ-L1/EQ-L2 navigation rendered on the live site.",
+    "English EQ-L2 desktop lesson appearance inspected.",
+    "Chinese EQ-L3 inspected in the runner at its 390px outer-frame setting.",
+    "Chinese direct-link reload checked.",
+    "English/Chinese equation student/key HTML: each 6 pages, questions 1–6; no question/footer overlap or horizontal page overflow; final forward-operation givens rendered."
+  ],
+  "limits": [
+    "HTML bounds are not actual PDF/physical-print evidence.",
+    "Raw manual runner rows remain pending.",
+    "Independent mathematics/language/classroom review, native 200% zoom and spoken assistive output pending."
+  ]
+}

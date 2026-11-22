@@ -835,10 +835,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -897,10 +897,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -980,10 +980,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -1044,10 +1044,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -1129,10 +1129,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
@@ -1193,10 +1193,10 @@
       },
       "publication": "not implemented or published",
       "implementation": {
-        "state": "implemented-author-draft; hosted review pending",
+        "state": "implemented-author-draft",
         "version": 1,
         "source": "site/src/math/equations.mjs",
-        "review": "52 Node checks pass; independent review pending"
+        "review": "52 Node checks and 18 hosted workflows pass; independent review pending"
       }
     },
     {
