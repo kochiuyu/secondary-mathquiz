@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=f85b42f71ef7';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -184,6 +184,34 @@ document.querySelector('#run').addEventListener('click',async()=>{
   await step('A18',async()=>{
    await go('equations','[data-action="equations-paper"]');click('[data-action="equations-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'equations paper');assert(currentProfile().paper.items.every(i=>i.question.id.startsWith('EQ')),'Non-equation family in paper.');
    change('#paper-lang','zh');const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese equation paper identity');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'equation key');assert(el('#paper-pages').textContent.includes('人工評閱'),'Equation reasoning rubric missing.');assert(appDocument().querySelector('.equation-panels'),'Equation panels absent.');assert(appDocument().querySelector('.expression-table'),'Context cost table absent.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated equation choice object.');return 'Six retained equation snapshots, Chinese paper/key hash, substitution panels, fee tables and separate reasoning rubrics rendered; actual PDF remains pending.';
+  });
+
+  await step('A19',async()=>{
+   const names={en:['Name the relation before calculating','Given parallel, or proving parallel?','From a diagram to a deduction'],'zh-Hant':['先辨關係，再作計算','已知平行，還是要判定平行？','由圖形走向演繹推論']};
+   for(const language of ['en','zh-Hant']){
+    if(appDocument().documentElement.lang!==language)click('[data-action="language"]');
+    for(let i=0;i<3;i++){
+     await go('lesson/GE-L'+(i+1),'.lesson-roadmap');await waitFor(()=>appDocument()?.querySelector('h1')?.textContent===names[language][i],'angle lesson title');assert(appDocument().querySelectorAll('.lesson-model').length===2,'Expected two geometry models.');assert(appDocument().querySelectorAll('.angle-geometry').length===2,'Geometry models missing.');frame.width='390';await new Promise(resolve=>frame.contentWindow.requestAnimationFrame(()=>frame.contentWindow.requestAnimationFrame(resolve)));const doc=appDocument();assert(Math.max(doc.body.scrollWidth,doc.documentElement.scrollWidth)-doc.documentElement.clientWidth<=2,'Geometry lesson horizontal overflow.');
+    }
+   }
+   assert(['GE-L1','GE-L2','GE-L3'].every(id=>currentProfile().studied.includes('lesson:'+id+':v1')),'Geometry study exposure missing.');click('[data-action="language"]');frame.width='1120';return 'Three bilingual angle lessons, two geometry models each and 390px page reflow checked; content/diagram judgement remains manual.';
+  });
+  await step('A20',async()=>{
+   const ids=['GE01','GE02','GE03','GE04','GE05','GE06'];await startSession(ids,'check',6);
+   for(let i=0;i<6;i++){
+    const q=latestSession().items[i];assert(q.id===ids[i]&&q.version===1,'Geometry identity/version mismatch.');const reason='I cite the given relation and justify each equality or deduction.';
+    if(q.options){el('input[name="answer"][value="'+q.answer+'"]').click();if(q.manualReason)input('#reason-input',reason);el('#answer-form').requestSubmit();}else checkAnswer(q.answer,q.manualReason?reason:'');
+    assert(latestSession().responses[i].attempts.at(-1)?.status===(q.id==='GE06'?'manual':'correct'),'Proof received an automatic grade or geometry answer failed.');
+    if(q.manualReason){click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Revised geometric reasoning');assert(latestSession().responses[i].manualReview===null,'Edited geometry reason retained review.');}
+    if(q.id==='GE06'){
+     assert(latestSession().responses[i].priorExposure,'A redrawn general proof counted as fresh.');input('#answer-input','A revised proof outline');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'proof draft reload');assert(el('#answer-input').value==='A revised proof outline','Proof draft lost.');click('[data-action="language"]');click('[data-action="self-review"]');assert(el('#action-error').textContent.includes('current answer'),'Unrecorded proof edit could be self-reviewed.');checkAnswer(q.answer,reason);
+    }
+    click('[data-action="next"]');
+   }
+   assert(el('.result-grid .metric strong').textContent==='5 / 5','Proof entered automatic score denominator.');assert(el('#main').textContent.includes('excluded from the automatic-score denominator'),'Manual proof score notice missing.');return 'Six geometry families, 5/5 automatic answer score, wholly manual proof, redraw exposure, bilingual proof draft/reload and review invalidation checked.';
+  });
+  await step('A21',async()=>{
+   await go('angles','[data-action="angles-paper"]');click('[data-action="angles-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'geometry paper');assert(currentProfile().paper.items.every(i=>i.question.id.startsWith('GE')),'Non-geometry family in paper.');change('#paper-lang','zh');const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese geometry paper identity');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'geometry key');assert(appDocument().querySelectorAll('.angle-geometry').length===6,'Expected six paper diagrams.');assert(el('#paper-pages').textContent.includes('人工評閱'),'Proof review rubric missing.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated geometry choice.');assert(currentProfile().paper.items.at(-1).question.contract.type==='manual','Proof contract changed.');return 'Six versioned geometry snapshots, Chinese paper/key hash, diagrams and manually reviewed proof rubric rendered; actual PDF remains separate.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

@@ -1,3 +1,5 @@
+> All four pilot topics now have implemented author drafts. Angles: JS19.1 GE01; JS19.2 GE02; JS19.3 GE04; JS19.4 GE03/GE06; JS19.5 GE05/GE06. No official coverage state is promoted. Earlier availability notes below are historical.
+
 > Equation draft availability: JS8.1 EQ01–EQ04; JS8.2 EQ05/EQ06; JS8.3 EQ06. Three bilingual equation lessons are implemented as author drafts; no coverage status is promoted. Angles remain designs.
 
 > Expressions draft availability: JS7.1 EX01/EX03; JS7.2 EX02; JS7.3 EX04/EX05; JS7.4 EX06. Three bilingual lessons are implemented. Current browser/PDF review is pending; no coverage status is promoted. Equations and angles remain designs.

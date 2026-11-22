@@ -109,3 +109,15 @@ test('equation lesson routes, six-family checks, reviewed reasoning and paper in
  assert.match(root.innerHTML,/6 \/ 6/);assert.match(root.innerHTML,/Preserve equality and interpret/);
  location.hash='equations';await click('equations-paper');await new Promise(resolve=>setImmediate(resolve));assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EQ')));assert.match(node('#paper-pages').innerHTML,/equation-panels/);
 });
+
+test('angle routes, manual proof, appearance exposure and five-answer score integrate with the four-topic app',async()=>{
+ location.hash='angles';assert.match(root.innerHTML,/Start with the givens/);location.hash='lesson/GE-L3';assert.match(root.innerHTML,/From a diagram to a deduction/);
+ const reg=()=>JSON.parse(memory.get(PREFIX+'profiles')),current=()=>JSON.parse(memory.get(PREFIX+reg().active));assert.ok(current().studied.includes('lesson:GE-L3:v1'));await click('angles-check');assert.deepEqual(current().sessions.at(-1).items.map(q=>q.id),['GE01','GE02','GE03','GE04','GE05','GE06']);
+ for(let i=0;i<6;i++){
+  const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:q.manualReason?'I state the premise and justify every geometric step.':''});
+  if(q.manualReason){await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','A revised geometric reason');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);}
+  if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
+  await click('next');
+ }
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await new Promise(resolve=>setImmediate(resolve));assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Four connected topics/);
+});

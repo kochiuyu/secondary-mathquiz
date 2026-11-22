@@ -1,6 +1,6 @@
 {
-  "name": "secondary-mathquiz-equations-pilot",
-  "version": "0.8.0",
+  "name": "secondary-mathquiz-four-topic-pilot",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "scripts": {

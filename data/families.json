@@ -1254,7 +1254,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE02",
@@ -1324,7 +1330,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE03",
@@ -1381,7 +1393,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE04",
@@ -1440,7 +1458,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE05",
@@ -1496,7 +1520,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE06",
@@ -1557,7 +1587,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     }
   ]
 }

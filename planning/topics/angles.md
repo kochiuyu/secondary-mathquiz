@@ -1,3 +1,5 @@
+> Implemented as an author draft in `site` v0.9.0: GE01–GE06 and GE-L1–GE-L3. The brief below is historical; see `../../site/planning/release-angles-v1.md` for current verification limits.
+
 # Angles and parallel lines / 角和平行線
 
 22 November 2026 · P2.1 preparatory design · not an implemented lesson

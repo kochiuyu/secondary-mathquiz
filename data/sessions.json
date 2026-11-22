@@ -365,7 +365,13 @@
       "separate_check": "Find an angle with a written reason and classify a fresh rotated angle pair.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE-L2",
@@ -396,7 +402,13 @@
       "separate_check": "Include valid, near-miss and insufficient-information claims; retain the stated angle relationships.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE-L3",
@@ -427,7 +439,13 @@
       "separate_check": "Compute a fresh interior/exterior angle and write a proof outline; no numeric score certifies proof.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/angles.mjs",
+        "review": "59 Node checks pass; independent review pending"
+      }
     }
   ]
 }

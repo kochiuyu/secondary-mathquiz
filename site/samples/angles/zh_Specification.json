@@ -1,0 +1,424 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "角與平行線 — 試行草稿",
+  "seed": "angles-print-v1",
+  "lang": "zh",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "GE01",
+        "seed": "angles-print-v1:0",
+        "version": 1,
+        "objective": "JS-19-1",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "local-angles",
+          "mode": "straight",
+          "a": 98,
+          "b": 0,
+          "rotation": 180,
+          "reflected": false
+        },
+        "answer": "82",
+        "math": "x = ?",
+        "prompt": {
+          "en": "Two adjacent angles lie on one straight line. The known angle is 98°. Find x in degrees and give a reason.",
+          "zh": "兩個鄰角在同一直線上。已知角為 98°。求 x（度），並給理由。"
+        },
+        "hint": {
+          "en": "Identify the given relationship before choosing an equality or a total.",
+          "zh": "先辨認已知角關係，再選擇相等或角的總和。"
+        },
+        "solution": {
+          "en": "The stated straight/supplementary angle total is 180°. Hence x=82°.",
+          "zh": "已知平角或補角的總和為 180°。所以 x=82°。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Name the applicable given relation and show the equality/subtraction. Numerical correctness alone does not verify this reason.",
+          "zh": "須說明適用的已知角關係，並展示相等或減法；數值正確不代表理由已獲核實。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "82",
+          "unit": "degree",
+          "form": "number-literal"
+        },
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "local-angles",
+            "mode": "straight",
+            "a": 98,
+            "b": 0,
+            "rotation": 180,
+            "reflected": false
+          }
+        },
+        "exposureKey": "GE01:{\"kind\":\"local-angles\",\"mode\":\"straight\",\"a\":98,\"b\":0}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "GE02",
+        "seed": "angles-print-v1:1",
+        "version": 1,
+        "objective": "JS-19-2",
+        "marks": 1,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "angle-pair",
+          "pair": "corresponding",
+          "p": 3,
+          "q": 3,
+          "phiA": -6,
+          "phiB": 6,
+          "vertical": false,
+          "parallelGiven": false,
+          "rotation": 240,
+          "reflected": false
+        },
+        "answer": "corresponding",
+        "options": [
+          {
+            "id": "alternate",
+            "label": {
+              "en": "alternate interior angles",
+              "zh": "內錯角"
+            }
+          },
+          {
+            "id": "same",
+            "label": {
+              "en": "same-side interior angles",
+              "zh": "同旁內角"
+            }
+          },
+          {
+            "id": "corresponding",
+            "label": {
+              "en": "corresponding angles",
+              "zh": "同位角"
+            }
+          }
+        ],
+        "math": "P, Q",
+        "prompt": {
+          "en": "A transversal t meets l at A and m at B. Direct t from B towards A. P is at A, inside the two-intersection region and on the right of directed t; Q is at B, outside the two-intersection region and on the right of directed t. Name the pair. Parallelism is not given; the sketch is not a premise about equality.",
+          "zh": "截線 t 與 l、m 分別相交於 A、B，t 的方向由 B 指向 A。P 在 A，位於兩交點之間區域的內側，且在有方向的 t 的右方；Q 在 B，位於兩交點之間區域的外側，且在有方向的 t 的右方。辨認角對。未有給定平行；不可從草圖外觀推斷角相等。"
+        },
+        "hint": {
+          "en": "Use intersection, inside/outside and side of the directed transversal.",
+          "zh": "按交點、內外位置及截線的哪一方來辨認。"
+        },
+        "solution": {
+          "en": "P and Q are corresponding angles. This names their positions; without parallelism it does not establish equality or a 180° sum.",
+          "zh": "P、Q 是同位角。這只表示位置；未有平行條件，不可因此判定相等或和為 180°。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "corresponding"
+        },
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "angle-pair",
+            "pair": "corresponding",
+            "p": 3,
+            "q": 3,
+            "phiA": -6,
+            "phiB": 6,
+            "vertical": false,
+            "parallelGiven": false,
+            "rotation": 240,
+            "reflected": false
+          }
+        },
+        "exposureKey": "GE02:{\"pair\":\"corresponding\",\"p\":3,\"q\":3}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "GE03",
+        "seed": "angles-print-v1:2",
+        "version": 1,
+        "objective": "JS-19-4",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "parallel-property",
+          "pair": "two-step",
+          "p": 0,
+          "q": 1,
+          "phiA": 10,
+          "phiB": 10,
+          "vertical": false,
+          "parallelGiven": true,
+          "rotation": 300,
+          "reflected": false
+        },
+        "answer": "100",
+        "math": "P = 80°; Q = x",
+        "prompt": {
+          "en": "A transversal t meets l at A and m at B. Direct t from B towards A. P is at A, outside the two-intersection region and on the right of directed t; Q is at B, inside the two-intersection region and on the left of directed t. Given l ∥ m and P=80°, find Q=x and give a reason.",
+          "zh": "截線 t 與 l、m 分別相交於 A、B，t 的方向由 B 指向 A。P 在 A，位於兩交點之間區域的外側，且在有方向的 t 的右方；Q 在 B，位於兩交點之間區域的內側，且在有方向的 t 的左方。已知 l ∥ m，P=80°。求 Q=x，並給理由。"
+        },
+        "hint": {
+          "en": "Use the stated parallel premise together with the marked pair positions.",
+          "zh": "須同時使用已知平行條件及所標示的角對位置。"
+        },
+        "solution": {
+          "en": "First use the corresponding angle at B, then its adjacent straight-line angle. Thus Q=100°.",
+          "zh": "先用 B 的同位角，再用其鄰接平角。所以 Q=100°。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Name l ∥ m, identify the angle pair and any local straight-angle step. Review the written chain separately from the final number.",
+          "zh": "須指出 l ∥ m、角對，以及適用的鄰接平角步驟；書面推理與最終數值分開評閱。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "100",
+          "unit": "degree",
+          "form": "number-literal"
+        },
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "parallel-property",
+            "pair": "two-step",
+            "p": 0,
+            "q": 1,
+            "phiA": 10,
+            "phiB": 10,
+            "vertical": false,
+            "parallelGiven": true,
+            "rotation": 300,
+            "reflected": false
+          }
+        },
+        "exposureKey": "GE03:{\"kind\":\"parallel-property\",\"pair\":\"two-step\",\"p\":0,\"q\":1,\"phiA\":10,\"phiB\":10,\"vertical\":false,\"parallelGiven\":true}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "GE04",
+        "seed": "angles-print-v1:3",
+        "version": 1,
+        "objective": "JS-19-3",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "parallel-test",
+          "pair": "same",
+          "p": 2,
+          "q": 1,
+          "phiA": -16,
+          "phiB": -17,
+          "vertical": false,
+          "parallelGiven": false,
+          "rotation": 90,
+          "reflected": true
+        },
+        "answer": "no",
+        "math": "P = 106°; Q = 73°",
+        "options": [
+          {
+            "id": "insufficient",
+            "label": {
+              "en": "The data are insufficient to decide",
+              "zh": "資料不足，未能判定"
+            }
+          },
+          {
+            "id": "yes",
+            "label": {
+              "en": "Yes, they must be parallel",
+              "zh": "是，必定平行"
+            }
+          },
+          {
+            "id": "no",
+            "label": {
+              "en": "No, the stated angle data rule out parallelism",
+              "zh": "否，已知角資料排除了平行"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "A transversal t meets l at A and m at B. Direct t from B towards A. P is at A, inside the two-intersection region and on the right of directed t; Q is at B, inside the two-intersection region and on the right of directed t. P=106° and Q=73°. The marked pair is same-side interior angles. Must l and m be parallel? Explain using only these givens; appearance is not a premise.",
+          "zh": "截線 t 與 l、m 分別相交於 A、B，t 的方向由 B 指向 A。P 在 A，位於兩交點之間區域的內側，且在有方向的 t 的右方；Q 在 B，位於兩交點之間區域的內側，且在有方向的 t 的右方。P=106°，Q=73°。所標示的是同旁內角。l、m 是否必定平行？只用已知條件解釋，不可以外觀作依據。"
+        },
+        "hint": {
+          "en": "A parallel test needs a relationship linking the two different intersections, not just a local equality at one intersection.",
+          "zh": "判定平行須有連起兩個不同交點的角關係，不能只憑同一交點的局部相等。"
+        },
+        "solution": {
+          "en": "106+73=179 do not satisfy the 180° same-side interior condition. Therefore l and m cannot be parallel under these givens.",
+          "zh": "106+73=179 不符合同旁內角和為 180°的條件，所以在這些已知條件下 l、m 不平行。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Identify the stated relationship and its parallel test, or explain why local vertical equality gives no information about the second line.",
+          "zh": "指出已知角關係和相應的平行判定條件，或解釋為何局部對頂角相等不能提供另一條線的資料。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "no"
+        },
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "parallel-test",
+            "pair": "same",
+            "p": 2,
+            "q": 1,
+            "phiA": -16,
+            "phiB": -17,
+            "vertical": false,
+            "parallelGiven": false,
+            "rotation": 90,
+            "reflected": true
+          }
+        },
+        "exposureKey": "GE04:{\"kind\":\"parallel-test\",\"pair\":\"same\",\"p\":2,\"q\":1,\"phiA\":-16,\"phiB\":-17,\"vertical\":false,\"parallelGiven\":false}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "GE05",
+        "seed": "angles-print-v1:4",
+        "version": 1,
+        "objective": "JS-19-5",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "triangle-angles",
+          "A": 74,
+          "B": 61,
+          "C": 45,
+          "target": "interior",
+          "rotation": 300,
+          "reflected": false
+        },
+        "math": "A = 74°; B = 61°",
+        "answer": "45",
+        "prompt": {
+          "en": "In triangle ABC, A=74° and B=61°. Find the interior angle C=x. Give a reason.",
+          "zh": "在三角形 ABC，A=74°，B=61°。求內角 C=x。並給理由。"
+        },
+        "hint": {
+          "en": "Identify whether x is inside the triangle or between AC and the extended ray CD.",
+          "zh": "先辨認 x 是三角形內角，還是 AC 與延長射線 CD 之間的外角。"
+        },
+        "solution": {
+          "en": "A+B+C=180°, so C=180−74−61=45°.",
+          "zh": "A+B+C=180°，所以 C=180−74−61=45°。"
+        },
+        "reasonRubric": {
+          "en": "Identify the requested sector and use the triangle interior sum or exterior-angle theorem with the two remote interior angles.",
+          "zh": "指出所求角區域，並使用三角形內角和，或外角等於兩個不相鄰內角之和的定理。"
+        },
+        "manualReason": true,
+        "contract": {
+          "type": "number",
+          "answer": "45",
+          "unit": "degree",
+          "form": "number-literal"
+        },
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "triangle-angles",
+            "A": 74,
+            "B": 61,
+            "C": 45,
+            "target": "interior",
+            "rotation": 300,
+            "reflected": false
+          }
+        },
+        "exposureKey": "GE05:{\"kind\":\"triangle-angles\",\"A\":74,\"B\":61,\"C\":45,\"target\":\"interior\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "GE06",
+        "seed": "angles-print-v1:5",
+        "version": 1,
+        "objective": "JS-19-5",
+        "marks": 4,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "triangle-proof",
+          "A": 60,
+          "B": 55,
+          "C": 65,
+          "target": "proof",
+          "rotation": 60,
+          "reflected": false
+        },
+        "math": "α + β + γ = ?",
+        "answer": "p=β; q=γ; p+α+q=180°; E+γ=180°; therefore E=α+β.",
+        "contract": {
+          "type": "manual"
+        },
+        "prompt": {
+          "en": "In triangle ABC, the constructed line uAv is parallel to BC. The marked angles at A on that line are p and q; the triangle angles are α, β, γ. Use alternate interior and straight angles to prove α+β+γ=180°. Then, with BC extended to D, prove the exterior angle E at C equals α+β.",
+          "zh": "在三角形 ABC，已作 uAv ∥ BC。A 點直線上的兩個標示角為 p、q；三角形內角為 α、β、γ。請用內錯角及平角證明 α+β+γ=180°，再在 BC 延長至 D 時證明 C 的外角 E=α+β。"
+        },
+        "hint": {
+          "en": "Match p with β and q with γ using the constructed parallel lines. Do not use the triangle-sum theorem to prove itself.",
+          "zh": "先利用所作平行線把 p 與 β、q 與 γ 配對；不要用三角形內角和定理來證明它自己。"
+        },
+        "solution": {
+          "en": "Because uAv ∥ BC, p=β and q=γ by alternate interior angles. Along the straight line at A, p+α+q=180°. Substitute to obtain α+β+γ=180°. Also E+γ=180° along BCD, so E=α+β. This is a deductive proof, not a measurement of this particular drawing.",
+          "zh": "因 uAv ∥ BC，內錯角相等，故 p=β、q=γ。在 A 的平角上，p+α+q=180°，代入得 α+β+γ=180°。又因 BCD 為直線，E+γ=180°，所以 E=α+β。這是演繹證明，不是量度某幅圖的結果。"
+        },
+        "reasonRubric": {
+          "en": "Manual review of the entire proof: cite the constructed parallel premise, match both alternate pairs, use the straight angle at A, and derive the exterior claim using E+γ=180°. Do not accept a numerical answer or circular use of triangle-sum as a proof of the general statement.",
+          "zh": "整份證明需人工評閱：引用所作的平行條件、配對兩組內錯角、使用 A 的平角，再由 E+γ=180° 推出外角結果。單一數值或以內角和定理循環證明本身，不能構成一般命題的證明。"
+        },
+        "manualReason": true,
+        "diagram": {
+          "type": "angle-geometry",
+          "model": {
+            "kind": "triangle-proof",
+            "A": 60,
+            "B": 55,
+            "C": 65,
+            "target": "proof",
+            "rotation": 60,
+            "reflected": false
+          }
+        },
+        "exposureKey": "GE06:triangle-angle-proof:v1"
+      },
+      "marks": 4,
+      "lines": 6
+    }
+  ]
+}

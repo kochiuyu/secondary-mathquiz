@@ -1,0 +1,84 @@
+{
+  "version": "0.9.0",
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "milestone": "P2.2d",
+  "state": "implemented-author-draft; hosted angle checks pending",
+  "families": [
+    "GE01",
+    "GE02",
+    "GE03",
+    "GE04",
+    "GE05",
+    "GE06"
+  ],
+  "lessons": [
+    "GE-L1",
+    "GE-L2",
+    "GE-L3"
+  ],
+  "mapped_objectives": [
+    "JS-19-1",
+    "JS-19-2",
+    "JS-19-3",
+    "JS-19-4",
+    "JS-19-5"
+  ],
+  "portable_source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
+  "automated": {
+    "tests": 59,
+    "pass": 59,
+    "fail": 0,
+    "new_angle_seed_cases": 1800,
+    "geometry_render_cases": 480
+  },
+  "browser": {
+    "state": "pending",
+    "planned_workflows": 21,
+    "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf"
+  },
+  "review_limits": [
+    "Independent mathematics/language and classroom review pending.",
+    "Actual PDF/physical printing, native 200% zoom and spoken assistive output pending.",
+    "Generated geometry and label anchors are checked; complete collision-free rendering for all shapes is not certified.",
+    "Manual proof is never automatically correct; numeric correctness does not verify geometric reasons.",
+    "All 237 curriculum coverage records remain planned; four implemented topics are not a completed secondary course."
+  ],
+  "samples": {
+    "state": "generated HTML; browser/PDF review separate",
+    "results": [
+      {
+        "lang": "en",
+        "document": "Student",
+        "pages": 6,
+        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "en",
+        "document": "Solutions",
+        "pages": 6,
+        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "zh",
+        "document": "Student",
+        "pages": 6,
+        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "zh",
+        "document": "Solutions",
+        "pages": 6,
+        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      }
+    ]
+  }
+}

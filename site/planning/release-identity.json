@@ -1,61 +1,57 @@
 {
-  "version": "0.8.0",
+  "version": "0.9.0",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.2c",
-  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
+  "milestone": "P2.2d",
+  "state": "implemented-author-draft; hosted angle checks pending",
   "families": [
-    "EQ01",
-    "EQ02",
-    "EQ03",
-    "EQ04",
-    "EQ05",
-    "EQ06"
+    "GE01",
+    "GE02",
+    "GE03",
+    "GE04",
+    "GE05",
+    "GE06"
   ],
   "lessons": [
-    "EQ-L1",
-    "EQ-L2",
-    "EQ-L3"
+    "GE-L1",
+    "GE-L2",
+    "GE-L3"
   ],
   "mapped_objectives": [
-    "JS-8-1",
-    "JS-8-2",
-    "JS-8-3"
+    "JS-19-1",
+    "JS-19-2",
+    "JS-19-3",
+    "JS-19-4",
+    "JS-19-5"
   ],
-  "portable_source_sha256": "a8a915b00d9b26b12d645ef8a31c1c810babc6b9f8c66d2d3e6e875c9328e3cd",
+  "portable_source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
   "automated": {
-    "tests": 52,
-    "pass": 52,
+    "tests": 59,
+    "pass": 59,
     "fail": 0,
-    "new_equation_seed_cases": 1800
+    "new_angle_seed_cases": 1800,
+    "geometry_render_cases": 480
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
-    "planned_workflows": 18,
-    "observed_pass": 18,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "a8a915b00d9b26b12d645ef8a31c1c810babc6b9f8c66d2d3e6e875c9328e3cd",
-    "run": "2306de7f-df1b-4ee7-a3be-fff1549dcc7d",
-    "raw_report": "site/planning/browser-hosted-equations-run.json",
-    "overall_acceptance_record": "pending",
-    "manual_rows": "pending"
+    "state": "pending",
+    "planned_workflows": 21,
+    "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf"
   },
   "review_limits": [
-    "Equation HTML page bounds pass in both languages; actual PDF/physical printing pending.",
-    "Independent mathematics, language and classroom review pending.",
-    "Native 200% zoom and spoken assistive output pending.",
-    "Coverage remains planned; published author drafts do not certify course completion.",
-    "Exact final answers and choices do not verify written reasoning or unobserved working."
+    "Independent mathematics/language and classroom review pending.",
+    "Actual PDF/physical printing, native 200% zoom and spoken assistive output pending.",
+    "Generated geometry and label anchors are checked; complete collision-free rendering for all shapes is not certified.",
+    "Manual proof is never automatically correct; numeric correctness does not verify geometric reasons.",
+    "All 237 curriculum coverage records remain planned; four implemented topics are not a completed secondary course."
   ],
   "samples": {
-    "state": "generated HTML; browser/PDF acceptance separate",
+    "state": "generated HTML; browser/PDF review separate",
     "results": [
       {
         "lang": "en",
         "document": "Student",
         "pages": 6,
-        "specification_sha256": "0c15627c5f7da0f7752e47dc6cbac4a751b6c1d9cf196a6fae2e4324fcfaccf2",
+        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
         "actual_browser_layout": "pending",
         "actual_pdf": "pending"
       },
@@ -63,7 +59,7 @@
         "lang": "en",
         "document": "Solutions",
         "pages": 6,
-        "specification_sha256": "0c15627c5f7da0f7752e47dc6cbac4a751b6c1d9cf196a6fae2e4324fcfaccf2",
+        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
         "actual_browser_layout": "pending",
         "actual_pdf": "pending"
       },
@@ -71,7 +67,7 @@
         "lang": "zh",
         "document": "Student",
         "pages": 6,
-        "specification_sha256": "4f3a1b0af3b780087bc47a90873d9bb02762142fc237ca44635255c1580af965",
+        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
         "actual_browser_layout": "pending",
         "actual_pdf": "pending"
       },
@@ -79,17 +75,10 @@
         "lang": "zh",
         "document": "Solutions",
         "pages": 6,
-        "specification_sha256": "4f3a1b0af3b780087bc47a90873d9bb02762142fc237ca44635255c1580af965",
+        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
         "actual_browser_layout": "pending",
         "actual_pdf": "pending"
       }
     ]
-  },
-  "publication": {
-    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#equations",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "tested_source_commit": "d27e967b9569c660aa6b56097bd8dbbfc56fd324",
-    "tested_deployment_run": 44972635322,
-    "deployment_result": "success"
   }
 }
