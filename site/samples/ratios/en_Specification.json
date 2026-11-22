@@ -1,0 +1,474 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Rates, ratios and proportions - pilot draft",
+  "seed": "ratio-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "RP01",
+        "seed": "ratio-print-v1:0",
+        "version": 1,
+        "objective": "JS-6-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "common-unit-ratio",
+          "gramsA": 450,
+          "gramsB": 250
+        },
+        "answer": "simplest",
+        "math": "A: 9/20 kg; B: 250 g",
+        "prompt": {
+          "en": "Choose the simplest whole-number mass ratio A:B. Keep the order A then B, and explain the unit conversion.",
+          "zh": "選出最簡整數質量比 A:B。依照先 A 後 B 的次序，並說明單位換算。"
+        },
+        "options": [
+          {
+            "id": "reversed",
+            "label": "5:9"
+          },
+          {
+            "id": "wrong-unit",
+            "label": "9:5000"
+          },
+          {
+            "id": "simplest",
+            "label": "9:5"
+          },
+          {
+            "id": "unreduced",
+            "label": "18:10"
+          }
+        ],
+        "hint": {
+          "en": "Convert both masses to grams, then divide both terms by their greatest common divisor. Equivalent ratios need not be in simplest form.",
+          "zh": "先把兩個質量都換成克，再把兩項同除以最大公因數。等值的比未必已是最簡比。"
+        },
+        "solution": {
+          "en": "A = 450 g, B = 250 g. Divide both by 50: A:B = 9:5. 18:10 is equivalent but not simplest. Reversing the order changes the comparison.",
+          "zh": "A = 450 克，B = 250 克。兩項同除以 50，得 A:B = 9:5。18:10 等值但未約至最簡；次序顛倒會改變比較對象。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "simplest"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP01:{\"kind\":\"common-unit-ratio\",\"a\":9,\"b\":5}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP02",
+        "seed": "ratio-print-v1:1",
+        "version": 1,
+        "objective": "JS-6-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "sharing",
+          "parts": [
+            2,
+            3
+          ],
+          "total": 290,
+          "target": 1
+        },
+        "math": "A:B = 2:3",
+        "prompt": {
+          "en": "A total of 290 litres is shared completely between 2 containers in the stated volume ratio. Find container B's volume in litres. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "把 290 公升全部按所示體積比分給 2 個容器。求容器 B 的體積（公升）。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "hint": {
+          "en": "The whole is the sum of all ratio parts, not just the parts other than the requested one. Fractional litres are allowed.",
+          "zh": "總份數是所有比項之和，並非只加其他部分。體積可以是分數公升。"
+        },
+        "solution": {
+          "en": "Total parts = 5. One part = 290/5 litres. Container B receives 3 parts: 174 litres. Adding all shares reconstructs 290.",
+          "zh": "總份數 = 5，每份 = 290/5 公升。容器 B 佔 3 份，得 174 公升；各份額相加須回到 290。"
+        },
+        "diagram": {
+          "type": "ratio-model",
+          "kind": "parts",
+          "parts": [
+            2,
+            3
+          ],
+          "target": 1
+        },
+        "answer": "174",
+        "contract": {
+          "type": "number",
+          "answer": "174",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP02:{\"kind\":\"sharing\",\"parts\":[2,3],\"total\":290,\"target\":1}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP03",
+        "seed": "ratio-print-v1:2",
+        "version": 1,
+        "objective": "JS-6-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "unit-rate",
+          "mode": "ms-to-kmh",
+          "speed": 18
+        },
+        "math": "18 m/s",
+        "prompt": {
+          "en": "Convert the given speed to km/h. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "把所示速率換成公里／小時（km/h）。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "solution": {
+          "en": "1 km = 1000 m; 1 h = 3600 s. 18 × 3600/1000 = 324/5 km/h.",
+          "zh": "1 公里 = 1000 米，1 小時 = 3600 秒。18 × 3600/1000 = 324/5 公里／小時。"
+        },
+        "hint": {
+          "en": "A rate is an amount per one unit of another quantity. Convert both numerator and denominator units before comparing or calculating.",
+          "zh": "率表示一個量相對另一個量每一單位的數量；分子及分母的單位都要換對。"
+        },
+        "answer": "324/5",
+        "contract": {
+          "type": "number",
+          "answer": "324/5",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP03:{\"kind\":\"unit-rate\",\"mode\":\"ms-to-kmh\",\"speed\":18}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP04",
+        "seed": "ratio-print-v1:3",
+        "version": 1,
+        "objective": "JS-6-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "average-speed",
+          "v1": 70,
+          "v2": 50,
+          "t1": 45,
+          "t2": 20
+        },
+        "math": "70 km/h, 45 min; 50 km/h, 20 min",
+        "prompt": {
+          "en": "A vehicle travels at the first speed for the first time, then at the second speed for the second time, with no stop between. Find its average speed for the whole journey in km/h. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "車輛先按第一個速率行駛第一段時間，再按第二個速率行駛第二段時間，中途不停站。求全程平均速率（公里／小時）。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "hint": {
+          "en": "Average speed is total distance divided by total time. A simple average of speeds works here only when the two times are equal.",
+          "zh": "平均速率 = 總路程 ÷ 總時間；只有兩段時間相等時，才可直接把兩個速率取平均。"
+        },
+        "solution": {
+          "en": "Distances = 105/2 km and 50/3 km. Total time = 13/12 h. Average speed = 830/13 km/h.",
+          "zh": "兩段路程為 105/2 公里及 50/3 公里；總時間為 13/12 小時，平均速率 = 830/13 公里／小時。"
+        },
+        "answer": "830/13",
+        "contract": {
+          "type": "number",
+          "answer": "830/13",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP04:{\"kind\":\"average-speed\",\"v1\":70,\"v2\":50,\"t1\":45,\"t2\":20}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP05",
+        "seed": "ratio-print-v1:4",
+        "version": 1,
+        "objective": "JS-6-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "direct",
+          "mass1": 5,
+          "cost1": 140,
+          "mass2": 7
+        },
+        "math": "5 kg → HK$140; 7 kg → ?",
+        "prompt": {
+          "en": "The total cost is directly proportional to the mass bought: there is no fixed charge or bulk discount. Given the first purchase, find the second cost in HK$. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "總價與所買質量成正比例，沒有固定收費或大量購買折扣。由第一次購買的資料，求第二次的總價（港元）。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "hint": {
+          "en": "Keep cost/mass unchanged. Find the price for one kg, then multiply by the new mass.",
+          "zh": "每公斤單價保持不變；先求一公斤的價錢，再乘以新質量。"
+        },
+        "solution": {
+          "en": "The mass ratio is 7/5, so the cost ratio is the same. New cost = 140 × 7/5 = HK$196.",
+          "zh": "質量倍數為 7/5，總價亦乘相同倍數。新總價 = 140 × 7/5 = HK$196。"
+        },
+        "diagram": {
+          "type": "ratio-model",
+          "kind": "table",
+          "left": "kg",
+          "right": "HK$",
+          "rows": [
+            [
+              5,
+              140
+            ],
+            [
+              7,
+              "?"
+            ]
+          ]
+        },
+        "answer": "196",
+        "contract": {
+          "type": "number",
+          "answer": "196",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP05:{\"kind\":\"direct\",\"mass1\":5,\"cost1\":140,\"mass2\":7}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP06",
+        "seed": "ratio-print-v1:5",
+        "version": 1,
+        "objective": "JS-6-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "inverse",
+          "workers1": 4,
+          "hours1": 9,
+          "workers2": 5
+        },
+        "math": "4 workers → 9 h; 5 workers → ?",
+        "prompt": {
+          "en": "For the same fixed job, completion time is inversely proportional to the number of workers. Assume identical constant productivity, no interference and no setup time. Find the new completion time in hours. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "完成同一固定工作所需時間與工人人數成反比例。假設每人生產力相同且固定，互不干擾，沒有準備時間。求新的人數所需時間（小時）。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "hint": {
+          "en": "If the worker count is multiplied by a factor, divide the time by that factor. The total worker-hours must stay unchanged.",
+          "zh": "人數乘某個倍數，時間便除以同一倍數；總人時須保持不變。"
+        },
+        "solution": {
+          "en": "The worker ratio is 5/4, so the time ratio is 4/5. New time = 9 × 4/5 = 36/5 h. Both cases use 36 worker-hours.",
+          "zh": "人數倍數為 5/4，時間倍數則為 4/5。新時間 = 9 × 4/5 = 36/5 小時；兩種情況均需 36 人時。"
+        },
+        "diagram": {
+          "type": "ratio-model",
+          "kind": "table",
+          "left": "workers",
+          "right": "h",
+          "rows": [
+            [
+              4,
+              9
+            ],
+            [
+              5,
+              "?"
+            ]
+          ]
+        },
+        "answer": "36/5",
+        "contract": {
+          "type": "number",
+          "answer": "36/5",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP06:{\"kind\":\"inverse\",\"workers1\":4,\"hours1\":9,\"workers2\":5}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP07",
+        "seed": "ratio-print-v1:6",
+        "version": 1,
+        "objective": "JS-6-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "classification",
+          "rule": "offset",
+          "k": 2,
+          "c": 13
+        },
+        "answer": "neither",
+        "math": "1 → 15; 2 → 17; 4 → 21",
+        "prompt": {
+          "en": "A charge has a fixed HK$13 fee plus HK$2 for each unit. Classify the relationship between input and output throughout the stated model. The table illustrates the rule; it does not by itself define every unobserved value. Explain using ratios or a counterexample.",
+          "zh": "總收費包含固定費 HK$13，另加每單位 HK$2。 判斷題設模型中輸入與輸出的關係。表中數據只用於展示規則，不能單靠幾組數據確定所有未列出的值。請用比或反例解釋。"
+        },
+        "options": [
+          {
+            "id": "direct",
+            "label": {
+              "en": "Direct proportion",
+              "zh": "正比例"
+            }
+          },
+          {
+            "id": "inverse",
+            "label": {
+              "en": "Inverse proportion",
+              "zh": "反比例"
+            }
+          },
+          {
+            "id": "neither",
+            "label": {
+              "en": "Neither",
+              "zh": "兩者皆非"
+            }
+          }
+        ],
+        "hint": {
+          "en": "Direct: doubling input doubles output. Inverse: doubling input halves output. Increasing together, or moving in opposite directions, is insufficient.",
+          "zh": "正比例：輸入加倍，輸出也加倍；反比例：輸入加倍，輸出減半。只看同增或一增一減並不足夠。"
+        },
+        "solution": {
+          "en": "For inputs 1 and 2, outputs are 15 and 17. The output neither doubles nor halves, so both proportional claims fail. The stated rule is needed to justify a conclusion over the full domain.",
+          "zh": "輸入由 1 變成 2，輸出為 15 及 17，既非加倍，也非減半，因此兩種比例關係都不成立。要判斷整個範圍的關係，仍須根據題設規則。"
+        },
+        "diagram": {
+          "type": "ratio-model",
+          "kind": "table",
+          "left": "input",
+          "right": "output",
+          "rows": [
+            [
+              1,
+              "15"
+            ],
+            [
+              2,
+              "17"
+            ],
+            [
+              4,
+              "21"
+            ]
+          ]
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "neither"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP07:{\"kind\":\"classification\",\"rule\":\"offset\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RP08",
+        "seed": "ratio-print-v1:7",
+        "version": 1,
+        "objective": "JS-6-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "scale",
+          "scale": 200,
+          "planTenths": 32,
+          "mode": "plan"
+        },
+        "math": "1:200",
+        "prompt": {
+          "en": "A plan has scale 1:200, meaning 1 cm on the plan represents 200 cm in reality. The actual length is 32/5 m. Find its length on the plan in cm. Do not measure this schematic drawing. Enter an exact final number or fraction without units. Do not round; explain your method and units.",
+          "zh": "平面圖比例尺為 1:200，即圖上 1 厘米代表實際 200 厘米。實際長度是 32/5 米。求圖上長度（厘米），不要量度示意圖。 請輸入準確的最終數值或分數，不加單位、不取近似值；另說明方法及單位。"
+        },
+        "hint": {
+          "en": "The scale compares lengths in the same units. Convert metres to centimetres or centimetres to metres at the appropriate step.",
+          "zh": "比例尺比較的是同單位長度；在適當步驟把米換成厘米，或把厘米換成米。"
+        },
+        "solution": {
+          "en": "32/5 m = 640 cm. Plan length = 640 ÷ 200 = 16/5 cm.",
+          "zh": "32/5 米 = 640 厘米；圖上長度 = 640 ÷ 200 = 16/5 厘米。"
+        },
+        "diagram": {
+          "type": "ratio-model",
+          "kind": "plan",
+          "scale": 200,
+          "label": "? cm"
+        },
+        "answer": "16/5",
+        "contract": {
+          "type": "number",
+          "answer": "16/5",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the order of quantities, common units, total parts and stated proportional assumptions as applicable. A correct value or selected model does not verify the explanation.",
+          "zh": "按題意檢視量的次序、統一單位、總份數及已知比例假設。數值或選項正確，並不代表解釋已獲核實。"
+        },
+        "exposureKey": "RP08:{\"kind\":\"scale\",\"scale\":200,\"planTenths\":32,\"mode\":\"plan\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    }
+  ]
+}

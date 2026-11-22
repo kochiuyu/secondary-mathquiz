@@ -1,6 +1,6 @@
-# Secondary MathQuiz — six-topic pilot v0.11.0
+# Secondary MathQuiz — seven-topic pilot v0.12.0
 
-40 curriculum families and 19 bilingual author-draft lessons: basic computation, percentages, directed numbers, expressions, linear equations and angles. Six separately labelled development fixtures remain. All 237 curriculum records retain planned status.
+48 curriculum families and 23 bilingual author-draft lessons across seven topics. Six development fixtures remain separate. All 237 curriculum records retain planned status.
 
 From this directory, run node tools/serve.mjs and open http://127.0.0.1:5175/secondary-mathquiz/. The portable HTML also opens directly.
 
@@ -9,13 +9,15 @@ Development commands:
     node tools/build.mjs
     node --check tests/bundle-syntax.mjs
     node tools/verify.mjs
-    node tools/make-percentage-samples.mjs
+    node tools/make-ratio-samples.mjs
     node tools/make-pilot-print-review.mjs
 
-Edit shell.html or modules and rebuild the default, portable and QA copies together. The runner at qa/index.html has 30 workflows; qa/print.html inspects combined booklet geometry. See planning/release-percentages-v1.md for actual evidence and limits. All 77 Node checks, 30 hosted workflows and 127 booklet HTML pages pass. Raw evidence is retained with its source hash.
+Edit shell.html or source modules, then build default/portable/QA copies together. All 83 Node checks pass. The runner at qa/index.html defines 33 workflows; qa/print.html reviews four combined booklets (150 HTML pages). Current-source browser execution and layout acceptance are pending. See planning/release-ratios-v1.md for scope and actual evidence.
 
-P2 retains the secondary-mathquiz:p2: storage namespace, version-1 curriculum generators, historical bundled fee snapshots, paper schema 1 and validated backup imports. Percentage IDs PC01–PC08 use generator version 1. Language, title, order, marks, working lines and snapshots contribute to paper identity. Preserve specifications and HTML with source for exact historical output.
+RP01–RP08 use generator version 1. Earlier generator versions, stored models, historical bundled fee snapshots and paper schema 1 remain supported. Language, title, order, marks, working lines and snapshots contribute to paper identity. Preserve specifications, HTML and source to retain exact historical output.
 
-Opening lessons records fixed and generated models as exposure. Exhausted variants are labelled practice. This is retained-model freshness, not universal semantic novelty or a mastery score. Manual explanations remain separate from final-answer scores and edits clear self-review. Learner records stay in the browser; export a backup before moving devices.
+Lesson opening records fixed/generated examples as exposure, not mastery. Scaling both masses in RP01 or renaming a coefficient in RP07 does not create fresh conceptual evidence. Exhausted rule types remain prior exposure/practice. Explanations stay separate from final-answer scores and edits clear self-review. Learner work stays in the browser; export a backup before moving devices.
 
-Percentage samples are in samples/percentages. They use exact values and a supplied fictional tax schedule. Four combined English/Traditional Chinese student/key booklets contain 127 generated HTML pages. Generation does not certify geometry or actual PDFs. Current PDF/physical printing, native zoom, spoken output and independent mathematics/language/classroom review remain pending.
+Rates/ratios samples are in samples/ratios, with all eight families and six working lines. Proportional premises, unit conversions and the order of scale ratios are explicit. Numerical answers are exact. Scale figures are schematic and must not be measured. Formal variation methods, proportion graphs and similar-figure area rules are separate topics.
+
+Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending.

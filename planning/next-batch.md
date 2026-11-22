@@ -56,3 +56,7 @@ Before implementing percentage recovery, require a nonzero change multiplier whe
 ## Percentages implementation
 
 PC01–PC08 and four bilingual lessons are implemented as author drafts in v0.11.0. See topics/percentages.md and ../site/planning/release-percentages-v1.md for actual scope and evidence. Rates, ratios and proportions are next after percentage acceptance. Recheck the original Unit 6 notes, including inverse proportion, before fixing that slice’s scope.
+
+## Rates, ratios and proportions implementation
+
+RP01–RP08 and four bilingual lessons are implemented as author drafts in v0.12.0. The fresh Unit 6 source check confirmed inverse proportion and scale plans, and assigned formal variation/proportion graphs to later study. See topics/ratios.md and ../site/planning/release-ratios-v1.md. Approximation/estimation is next after this slice’s browser acceptance.

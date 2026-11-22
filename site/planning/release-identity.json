@@ -1,51 +1,40 @@
 {
-  "version": "0.11.0",
+  "version": "0.12.0",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.4b",
-  "state": "published author draft; hosted workflows and HTML layout checks passed; independent review pending",
-  "portable_source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
+  "milestone": "P2.4c",
+  "state": "implemented author draft; browser/layout execution and publication pending",
+  "portable_source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
   "automated": {
-    "tests": 77,
-    "pass": 77,
+    "tests": 83,
+    "pass": 83,
     "fail": 0
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
-    "planned_workflows": 30,
-    "observed_pass": 30,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
-    "run": "ce0dbafa-37f6-474e-9cb2-f1a50e7ff7ed",
-    "raw_report": "site/planning/browser-percentages-run.json",
-    "manual_rows": "pending",
-    "overall_acceptance_record": "pending"
+    "state": "pending",
+    "planned_workflows": 33,
+    "observed_pass": 0,
+    "source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7"
   },
   "print_layout": {
-    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
+    "state": "generated HTML; current geometry/PDF acceptance pending",
     "documents": 4,
-    "expected_pages": 127,
-    "pages_measured": 127,
-    "raw_report": "site/planning/percentages-print-layout.json",
-    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
+    "expected_pages": 150,
+    "source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
     "actual_current_pdf": "pending"
   },
   "scope": {
-    "curriculum_families": 40,
-    "bilingual_lessons": 19,
+    "curriculum_families": 48,
+    "bilingual_lessons": 23,
     "mapped_objective_records": 237,
     "coverage_state": "planned"
   },
   "review_limits": [
-    "Independent mathematics/Traditional Chinese/classroom review, native keyboard/zoom, spoken output and actual current PDF/physical printing remain pending."
+    "Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending."
   ],
   "publication": {
-    "state": "published; deployment succeeded",
-    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#percentages",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "tested_source_commit": "df8afcf29ea10759173ccd1c60c86ff807951dbf",
-    "tested_deployment_run": 45025125112,
-    "deployment_result": "success"
+    "state": "pending",
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#ratios",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
   }
 }

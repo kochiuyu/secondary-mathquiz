@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=b9c134ff2195';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=6a1d394bfdf5';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -355,6 +355,42 @@ document.querySelector('#run').addEventListener('click',async()=>{
     change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'percentages paper identity');
     assert(el('#paper-pages').querySelectorAll('.paper-question').length===8,'Percentage question numbering changed.');assert(el('#paper-pages').querySelectorAll('.solution').length===8,'Percentage key incomplete.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Choice labels not translated.');assert(el('#paper-pages').querySelectorAll('.percentage-model').length>=1,'Percentage reference diagrams missing.');
     const reason=el('#paper-pages .paper-question .solution').textContent;assert(reason.includes(language==='en'?'manual review':'人工'),'Percentage reason lost manual status.');
+   }
+   return 'Eight snapshots survived reload; language-sensitive identities, MathML reference diagrams, values and manual criteria passed.';
+  });
+  await step('A31',async()=>{
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    await go('ratios','[data-action="ratios-check"]');assert(el('.lesson-grid').children.length===4,'Missing ratios lessons.');
+    frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'ratios mobile viewport');
+    for(const id of ['RP-L1','RP-L2','RP-L3','RP-L4']){
+     await go('lesson/'+id,'[data-action="ratios-lesson-check"]');await waitFor(()=>appDocument()?.querySelector('.lesson-roadmap [aria-current="step"]')?.getAttribute('href')==='#lesson/'+id,'current ratios lesson '+id);assert(el('.lesson-roadmap').querySelectorAll('a').length===4,'Missing ratios roadmap.');assert(el('.lesson-explanation').textContent.length>60,'Brief ratios explanation.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Rate/ratio lesson overflows at 390px.');
+     assert(currentProfile().studied.includes('lesson:'+id+':v1'),'Rate/ratio study exposure not retained.');
+    }
+   }
+   frame.width='1120';return 'Four lessons in both languages, study exposure, roadmap and 390px reflow passed.';
+  });
+  await step('A32',async()=>{
+   if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
+   await go('ratios','[data-action="ratios-check"]');click('[data-action="ratios-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'eight-family ratios check');
+   const s=latestSession();assert(s.responses[6].priorExposure===true,'Studied ratio rule was relabelled fresh.');assert(s.items.length===8&&new Set(s.items.map(q=>q.id)).size===8,'Not all eight families present.');
+   click('input[name="answer"][value="simplest"]');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('input[name="answer"][value="simplest"]'),'ratios draft reload');assert(el('input[name="answer"][value="simplest"]').checked&&latestSession().responses[0].input==='simplest'&&latestSession().id===s.id,'Rate/ratio draft changed on reload.');click('[data-action="language"]');
+   for(let i=0;i<8;i++){
+    const q=latestSession().items[i];checkAnswer(q.answer,q.manualReason?'Base quantity and interpretation need review.':'');assert(latestSession().responses[i].attempts.at(-1).status==='correct','Rate/ratio answer not accepted.');
+    if(q.manualReason){assert(latestSession().responses[i].manualReview===null,'Reason automatically verified.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Edited method');assert(latestSession().responses[i].manualReview===null,'Reason edit retained review.');}
+    click('[data-action="next"]');
+   }
+   assert(el('.result-grid').textContent.includes('8 / 8'),'Rate/ratio automatic denominator wrong.');return 'All eight families answered, bilingual draft reloaded, reasoning remained separate and edits invalidated review.';
+  });
+  await step('A33',async()=>{
+   await go('ratios','[data-action="ratios-paper"]');click('[data-action="ratios-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'ratios paper');
+   assert(currentProfile().paper.items.length===8,'Rate/ratio paper omitted a family.');const snapshot=JSON.stringify(currentProfile().paper);
+   await reloadApplication();await waitFor(()=>appDocument()?.querySelector('.paper-page'),'ratios paper reopen');assert(JSON.stringify(currentProfile().paper)===snapshot,'Rate/ratio paper snapshots changed on reload.');
+   if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
+   for(const language of ['en','zh']){
+    change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'ratios paper identity');
+    assert(el('#paper-pages').querySelectorAll('.paper-question').length===8,'Rate/ratio question numbering changed.');assert(el('#paper-pages').querySelectorAll('.solution').length===8,'Rate/ratio key incomplete.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Choice labels not translated.');assert(el('#paper-pages').querySelectorAll('.ratio-model').length>=1,'Rate/ratio reference diagrams missing.');
+    const reason=el('#paper-pages .paper-question .solution').textContent;assert(reason.includes(language==='en'?'manual review':'人工'),'Rate/ratio reason lost manual status.');
    }
    return 'Eight snapshots survived reload; language-sensitive identities, MathML reference diagrams, values and manual criteria passed.';
   });
