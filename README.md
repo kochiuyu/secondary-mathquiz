@@ -7,6 +7,7 @@ English/Traditional Chinese mathematics lessons, practice and printable workshee
 - [Development instructions](site/README.md)
 - [Current release and limits](site/planning/release-estimation-v1.md)
 - [Next actions](planning/next-action.md)
+- [Next topic plan: rational and irrational numbers](planning/topics/rational.md)
 
 The v0.13.0 eight-topic author-draft pilot has 56 curriculum question families and 27 bilingual lessons. The new topic has three core lessons, seven core families and a separate optional, wholly manual investigation (AP08, JS-3-4). Six development fixtures remain separately labelled. All 237 mapped objective records retain planned status.
 

@@ -28,3 +28,22 @@ These are authoring conventions checked against the retained EDB learning-conten
 | first independent answer evidence | 首次獨立作答紀錄 | Local bounded evidence, not a mastery or grade claim |
 
 Subtraction-order examples need special care: “five less than three times x” is 3x−5 (x 的三倍減去五). “Subtract three times x from five” is 5−3x (五減去 x 的三倍). Avoid ambiguous colloquial wording.
+
+## Rational and irrational numbers — planned authoring terms
+
+Checked against the bilingual Unit 4 sources on 22 November 2026 (Hong Kong); independent language review remains pending.
+
+| English | 繁體中文 | Use and boundary |
+| --- | --- | --- |
+| nth root | n 次方根 | Distinguish the index from a coefficient; negative radicands are allowed for odd real roots. |
+| square root / cube root | 平方根／立方根 | The square-root sign denotes the principal nonnegative value. |
+| positive square root | 正平方根 | Use for a positive radicand; the principal square root of zero is zero. |
+| rational / irrational number | 有理數／無理數 | Classify exact numbers, not the length of a calculator display. |
+| recurring decimal | 循環小數 | Explicitly state or mark the repeating block. |
+| simple quadratic surd | 簡單二次根式 | Respect the bounded Unit 4 arithmetic scope. |
+| simplest surd form | 最簡根式 | Separate an equivalent exact value from the requested simplified form. |
+| like surds | 同類根式 | Compare the simplified radical parts. |
+| constructible number | 可構造數 | State the straightedge/compass and unit-length assumptions. |
+| compasses and straightedge construction | 尺規作圖 | Optional investigation follows the required construction/geometry recap. |
+
+Prefer “在數線上標示大約位置” for an approximate number-line representation. Avoid treating “近似值” as the exact irrational value, or “有理數” as a synonym for a positive fraction.

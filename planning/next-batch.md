@@ -64,3 +64,9 @@ RP01–RP08 and four bilingual lessons are implemented as author drafts in v0.12
 ## Approximation and estimation implementation
 
 AP01–AP08 and four bilingual lessons (three core plus one optional enrichment) are implemented as author drafts in v0.13.0. This completes implementation of the four-topic number-route batch, subject to recorded acceptance/review limits. See topics/estimation.md and ../site/planning/release-estimation-v1.md. Next proposed scope: a fresh Unit 4 rational/irrational-numbers brief, with exact root representation and separate optional enrichment.
+
+## Next topic: rational and irrational numbers — plan completed
+
+A fresh bilingual Unit 4 source/prerequisite brief is now in [topics/rational.md](topics/rational.md), checked 22 November 2026 (Hong Kong). It proposes RI01–RI09 and five lessons: foundation roots/classification/number-line work, a separate non-foundation surd route, and optional manual constructibility. The four Unit 4 records' blanket JS-10-3 prerequisite needs a site-authored readiness correction during implementation; construction also needs its actual geometry preparation. All classifications and coverage states remain unchanged.
+
+Implement the bounded exact quadratic-surd representation/checker before exposing nonrational automatic answers. Then complete foundation and non-foundation lessons, optional activity, snapshot/paper integration, current-source tests and browser evidence. This is a plan, not a new application release; v0.13.0 remains current.
