@@ -19,7 +19,7 @@ Provisional family IDs are not selectable until implemented. Preserve the six ex
 | --- | --- | --- | --- |
 | BC01 | JS-1-1 | Divisibility by 4, 6, 8 or 9; stable selection and a separately reviewed explanation. | A test for 6 requires both 2 and 3; keep a digit-pattern test distinct from merely computing a quotient. |
 | BC02 | JS-1-2 | Interpret repeated multiplication as a positive-integer power and calculate a final value. | Distinguish base and exponent. Specify the domain; no zero/negative-exponent scope is implied. Render exponents beyond a square explicitly. |
-| BC03 | JS-1-3 | Recognise a prime factorisation from distinct product choices, with reasoning. | Every factor is prime and the product equals the original positive integer. Do not grade free factor strings with the one-variable expression checker. |
+| BC03 | JS-1-3 | Recognise a prime factorisation from distinct product choices, with reasoning. | Use integers at least 2; every factor is prime and the product equals the original integer. Treat 1 separately if introduced, and never list 1 as a prime factor. Do not grade free factor strings with the one-variable expression checker. |
 | BC04 | JS-1-4 | Find a greatest common divisor from a factor model. | Derive it independently by Euclid's algorithm; distinguish a common divisor from the greatest one. |
 | BC05 | JS-1-4 | Find a least common multiple from multiples or a prime-factor model. | Check divisibility by each original number and minimality; include coprime and one-divides-the-other cases. |
 | BC06 | JS-1-5 | Evaluate positive-integer mixed operations with nested brackets. | Generate a valid expression tree and derive its exact answer; exclude zero divisors and ambiguous order notation. |
@@ -50,3 +50,5 @@ These are candidate question forms, not claims that every subtype is required by
 6. Publish the bounded author draft and update handoff/release evidence. Leave coverage planned until the declared evidence is reviewed; independent/classroom review cannot be replaced by author tests.
 
 Do not expand into simultaneous equations, general surds or integral-index rules as a side effect of this batch. They have separate prerequisites and renderer/checker needs in the retained ledger and should receive their own briefs.
+
+Before implementing percentage recovery, require a nonzero change multiplier when a unique original value is requested. State the denominator/base and rounding convention explicitly. For rates and ratios, declare units and positive/nonzero domains. For estimation, choose a rounding/tie policy before sampling boundary cases; a proposed contextual strategy may have several valid answers.

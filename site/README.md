@@ -1,6 +1,6 @@
 # Secondary MathQuiz — four-topic pilot v0.9.3
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 63 Node checks pass. The current 23-workflow hosted run is pending; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 65 Node checks pass. The current 24-workflow hosted run is pending; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
@@ -12,7 +12,7 @@ Node 22 or later is sufficient, with no package installation:
 node tools/serve.mjs
 ```
 
-Open `http://127.0.0.1:5175/secondary-mathquiz/?lang=en#angles` (or `lang=zh`). The 23-case acceptance runner is `/secondary-mathquiz/qa/index.html`; it uses synthetic profiles and keeps manual observations separate. Opening the standalone HTML needs no server.
+Open `http://127.0.0.1:5175/secondary-mathquiz/?lang=en#angles` (or `lang=zh`). The 24-case acceptance runner is `/secondary-mathquiz/qa/index.html`; it uses synthetic profiles and keeps manual observations separate. Opening the standalone HTML needs no server.
 
 ```powershell
 node tools/build.mjs
@@ -43,3 +43,5 @@ Keyboard consolidation: skip navigation now focuses the current content without 
 Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. The updated four-booklet HTML layout check (84 pages) is pending; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
 
 Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) starts with basic computation; it remains a proposal.
+
+The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 65 Node checks.

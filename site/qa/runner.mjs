@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=56300714d397';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=9bfdc1ee7d01';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -260,6 +260,19 @@ document.querySelector('#run').addEventListener('click',async()=>{
    change('[data-paper-index="0"][data-field="marks"]','1');const edited=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===edited.slice(0,12),'edited-mark key');
    const guide=el('#paper-pages .paper-question .solution').textContent;assert(guide.includes('Selection: 1 mark')&&guide.includes('no separate reason mark'),'One-mark choice guidance lost manual reason review.');
    return 'Lesson and English/Chinese practice criteria follow the actual area shape; retained rectangle paper/key and edited one-mark selection keep manual review without zero-mark criteria. Version-1 question snapshots remain valid.';
+  });
+  await step('A24',async()=>{
+   const fixture=await (await fetch('../tests/fixtures/bundled-currency-v1.json',{cache:'no-store'})).json();
+   await go('paper','#paper-import');const legacy=structuredClone(currentProfile().paper);legacy.title='Retained bundled fee snapshots';legacy.items=fixture.questions.map(question=>({question,marks:question.marks,lines:6}));
+   input('#paper-import',JSON.stringify(legacy));click('[data-action="import-paper"]');await waitFor(()=>currentProfile().paper.title===legacy.title,'historical fee paper import');
+   const before=JSON.stringify(currentProfile().paper);await reloadApplication();await waitFor(()=>appDocument()?.querySelector('.paper-page'),'historical fee paper reload');assert(JSON.stringify(currentProfile().paper)===before,'Historical fee snapshots were rewritten or lost.');
+   await startSession(['EQ05','EQ06'],'check',6);
+   for(const q of latestSession().items)for(const language of ['en','zh'])assert((q.prompt[language].match(/\$/g)||[]).length===3,'Bundled fee prompt lost a literal currency marker.');
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    assert((el('.question-card h1').textContent.match(/\$/g)||[]).length===3,'Rendered fee prompt lost currency markers.');
+   }
+   return 'Published HTML preserves all three currency markers in both languages; exact historical bundled fee papers import and reload without changing retained snapshots. Modular/bundled parity and tamper rejection also have Node regressions.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

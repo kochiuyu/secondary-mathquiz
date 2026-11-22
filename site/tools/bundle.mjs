@@ -12,9 +12,11 @@ let script=files.map(file=>{
  if(file==='src/app/app.mjs')source='const esc=escape;\n'+source;
  return '// '+file+'\n'+source;
 }).join('\n');
-const css=fs.readFileSync(path.join(root,'styles.css'),'utf8').replace("@import url('src/papers/preview.css');",fs.readFileSync(path.join(root,'src/papers/preview.css'),'utf8'));
+const css=fs.readFileSync(path.join(root,'styles.css'),'utf8').replace("@import url('src/papers/preview.css');",()=>fs.readFileSync(path.join(root,'src/papers/preview.css'),'utf8'));
 const data=JSON.stringify(catalogue).replace(/</g,'\\u003c');
-const html=fs.readFileSync(path.join(root,'shell.html'),'utf8').replace('<link rel="stylesheet" href="styles.css">','<style>'+css+'</style>').replace('<script type="module" src="src/app/app.mjs"></script>','<script type="application/json" id="embedded-curriculum">'+data+'</script>\n<script type="module">'+script.replace(/<\/script/gi,'<\\/script')+'</script>');
+// Replacement callbacks preserve literal dollar signs in templates (notably
+// "$${price}") rather than treating them as String.replace substitution tokens.
+const html=fs.readFileSync(path.join(root,'shell.html'),'utf8').replace('<link rel="stylesheet" href="styles.css">',()=>'<style>'+css+'</style>').replace('<script type="module" src="src/app/app.mjs"></script>',()=>'<script type="application/json" id="embedded-curriculum">'+data+'</script>\n<script type="module">'+script.replace(/<\/script/gi,'<\\/script')+'</script>');
 fs.writeFileSync(path.join(root,'Secondary_MathQuiz_Prototype.html'),html);
 // Publish the complete app as one HTML artifact to avoid mixed cached module versions.
 fs.writeFileSync(path.join(root,'index.html'),html);

@@ -4,18 +4,19 @@
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.3c",
   "state": "implemented-author-draft; hosted workflows pending; independent review pending",
-  "portable_source_sha256": "e2913ba159dc217f810e13f3f5d0ba4d668ed34b006b44ac25ed3d3607e57d54",
+  "portable_source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
   "automated": {
-    "tests": 63,
-    "pass": 63,
+    "tests": 65,
+    "pass": 65,
     "fail": 0
   },
   "browser": {
     "state": "pending",
-    "planned_workflows": 23,
+    "planned_workflows": 24,
     "observed_pass": 0,
-    "source_sha256": "e2913ba159dc217f810e13f3f5d0ba4d668ed34b006b44ac25ed3d3607e57d54",
-    "raw_report": "site/planning/browser-hosted-review-run.json"
+    "source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
+    "raw_report": "site/planning/browser-hosted-review-run.json",
+    "first_report": "site/planning/browser-review-first-run.json"
   },
   "print_layout": {
     "state": "pending",
@@ -35,9 +36,11 @@
     "changes": [
       "Rectangle and triangle guidance match the retained shape in both languages.",
       "Zero-mark criteria omitted; one-mark reason tasks retain explicit manual review without an allocated reason mark.",
-      "Selection versus final-value labels follow the response contract."
+      "Selection versus final-value labels follow the response contract.",
+      "Bundling now preserves literal dollar signs in currency templates.",
+      "Exactly matching historical version-1 bundled EQ05/EQ06 fee snapshots can reopen without rewriting answers, models or text."
     ],
-    "snapshot_policy": "Generator version-1 question snapshots and answer contracts are unchanged; guidance is a rendering concern."
+    "snapshot_policy": "Mathematical generators and answer contracts are unchanged. Validation additionally accepts only the exact known legacy fee-prompt variant; altered models, answers and arbitrary prompt edits remain rejected."
   },
   "review_limits": [
     "Actual current PDF/physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",

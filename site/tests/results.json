@@ -7,6 +7,7 @@
     "tests/acceptance.test.mjs",
     "tests/angles.test.mjs",
     "tests/app.test.mjs",
+    "tests/bundle-parity.test.mjs",
     "tests/equations.test.mjs",
     "tests/expressions.test.mjs",
     "tests/math.test.mjs",

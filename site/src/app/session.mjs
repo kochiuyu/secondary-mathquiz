@@ -1,6 +1,6 @@
 import {generate,makeItems} from '../math/registry.mjs';
 import {mark} from '../math/exact.mjs';
-import {canonical} from '../papers/paper.mjs';
+import {questionSnapshotMatches} from '../papers/paper.mjs';
 const sessionSeed=s=>typeof s==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9:_-]{0,59}$/.test(s);
 export function createSession(ids,seed,mode='practice',count=6){
  if(!['practice','check','learn'].includes(mode))throw new Error('Invalid session mode.');
@@ -61,9 +61,9 @@ export function validateSession(s){
  if(!s||s.schema!==1||!sessionSeed(s.seed)||s.id!=='session-'+s.seed||!['practice','check','learn'].includes(s.mode))throw new Error('Unsupported session.');
  if(!Array.isArray(s.items)||!s.items.length||s.items.length>12||!Array.isArray(s.responses)||s.responses.length!==s.items.length)throw new Error('Invalid session size.');
  if(!Number.isInteger(s.index)||s.index<0||s.index>=s.items.length)throw new Error('Invalid saved question.');
- if(s.workedExample){const q=s.workedExample;if(s.mode!=='learn'||canonical(generate(s.items[0].id,s.seed+':worked-example',q.version))!==canonical(q))throw new Error('The worked-example snapshot does not match its declared version.');}
+ if(s.workedExample){const q=s.workedExample;if(s.mode!=='learn'||q.id!==s.items[0].id||q.seed!==s.seed+':worked-example'||!questionSnapshotMatches(q))throw new Error('The worked-example snapshot does not match its declared version.');}
  for(let i=0;i<s.items.length;i++){
-  const q=s.items[i],r=s.responses[i];if(canonical(generate(q.id,q.seed,q.version))!==canonical(q))throw new Error('The question snapshot does not match its declared version.');
+  const q=s.items[i],r=s.responses[i];if(!questionSnapshotMatches(q))throw new Error('The question snapshot does not match its declared version.');
   if(!r||typeof r.input!=='string'||r.input.length>200||typeof r.reason!=='string'||r.reason.length>2000||typeof r.hint!=='boolean'||typeof r.solution!=='boolean'||typeof r.priorExposure!=='boolean'||!Array.isArray(r.attempts)||r.attempts.length>100)throw new Error('Invalid response record.');
   if(r.manualReview!==null&&r.manualReview!=='self')throw new Error('Unsupported manual review label.');
   for(const a of r.attempts)if(!['correct','incorrect','wrong-form','manual'].includes(a.status)||typeof a.input!=='string'||a.input.length>200||typeof a.assisted!=='boolean'||typeof a.at!=='string')throw new Error('Invalid attempt.');

@@ -386,12 +386,12 @@ function generateEquation(id,seed,version=1){
    q.answer='fixed-plus-rate';q.options=shuffle([{id:'fixed-plus-rate',label:`${rate}x + ${fixed} = ${total}`},{id:'fixed-repeated',label:`(${rate} + ${fixed})x = ${total}`},{id:'swapped',label:`${fixed}x + ${rate} = ${total}`}]);
    // Equal fixed/rate would make the swapped option identical. Use a distinct missing-fixed option instead.
    if(fixed===rate)q.options.find(o=>o.id==='swapped').label=`${rate}x = ${total}`;
-   q.prompt=qb(`Entry costs ${fixed} once and each game costs ${rate}. The total is ${total}. Let x be the number of games. Choose an equation and explain the two costs.`,`入場費一次 ${fixed}，每局遊戲 ${rate}，總費用 ${total}。設遊戲局數為 x。選出方程，並解釋兩種費用。`);
+   q.prompt=qb(`Entry costs $${fixed} once and each game costs $${rate}. The total is $${total}. Let x be the number of games. Choose an equation and explain the two costs.`,`入場費一次 $${fixed}，每局遊戲 $${rate}，總費用 $${total}。設遊戲局數為 x。選出方程，並解釋兩種費用。`);
    q.hint=qb('The fixed fee is paid once. The per-game charge is paid x times.','固定費用只付一次；每局費用須付 x 次。');
    q.solution=qb(`The repeated cost is ${rate}x and the one-time cost is ${fixed}, so ${rate}x+${fixed}=${total}. The fixed fee is not repeated.`,`重複費用為 ${rate}x，加上一次的固定費用 ${fixed}，得 ${rate}x+${fixed}=${total}。固定費用不會按局數重複。`);
    q.reasonRubric=qb('Manually review the definition of x, the rate multiplied by x, the fixed fee paid once, and the total on the other side.','人工評閱：說清 x 的定義、每局費用乘以 x、固定費用只付一次，以及另一邊的總費用。');
   }else{
-   q.answer=root.toString();q.answerUnit=qb('hours','小時');q.prompt=qb(`A rental costs ${fixed} once plus ${rate} per hour. Half-hours are allowed and charged proportionally. The total is ${total}. Let x be the rental time in hours. Find x; write your equation and explain why the time is allowed.`,`租用費為一次 ${fixed}，另加每小時 ${rate}。可按半小時租用，費用按比例計算。總費用 ${total}。設租用時間為 x 小時。求 x，寫出方程並解釋時間是否符合規定。`);
+   q.answer=root.toString();q.answerUnit=qb('hours','小時');q.prompt=qb(`A rental costs $${fixed} once plus $${rate} per hour. Half-hours are allowed and charged proportionally. The total is $${total}. Let x be the rental time in hours. Find x; write your equation and explain why the time is allowed.`,`租用費為一次 $${fixed}，另加每小時 $${rate}。可按半小時租用，費用按比例計算。總費用 $${total}。設租用時間為 x 小時。求 x，寫出方程並解釋時間是否符合規定。`);
    q.hint=qb('Remove the one-time charge before dividing by the hourly rate. Check the half-hour condition and original total.','先扣去一次費用，再除以每小時費用；檢查半小時的規定和原來總費用。');
    const remainder=scalar(total).add(new Q(-fixed));
    q.solution=qb(`Let x be hours: ${fixed}+${rate}x=${total}. Then ${rate}x=${remainder}, so x=${root} hours. This is a positive multiple of half an hour. Check: ${fixed}+${rate}×(${root})=${total}.`,`設時間為 x 小時：${fixed}+${rate}x=${total}，得 ${rate}x=${remainder}，所以 x=${root} 小時。這是半小時的正整數倍，符合規定。檢驗：${fixed}+${rate}×(${root})=${total}。`);
@@ -752,7 +752,7 @@ function angleDiagram(question,lang='en'){
 
 function equationDiagram(q,lang='en'){
  const d=q.diagram,z=lang==='zh';
- if(d.type==='fee-table')return `<div class="expression-table-wrap"><table class="expression-table"><caption>${z?'費用資料（固定費用只付一次）':'Cost information (fixed charge paid once)'}</caption><tbody><tr><th>${z?'固定費用':'Fixed charge'}</th><td>${d.fixed}</td></tr><tr><th>${d.unit==='hour'?(z?'每小時':'Per hour'):(z?'每局':'Per game')}</th><td>${d.rate}</td></tr><tr><th>${z?'總費用':'Total'}</th><td>${escape(d.total)}</td></tr></tbody></table></div>`;
+ if(d.type==='fee-table')return `<div class="expression-table-wrap"><table class="expression-table"><caption>${z?'費用資料（固定費用只付一次）':'Cost information (fixed charge paid once)'}</caption><tbody><tr><th>${z?'固定費用':'Fixed charge'}</th><td>$${d.fixed}</td></tr><tr><th>${d.unit==='hour'?(z?'每小時':'Per hour'):(z?'每局':'Per game')}</th><td>$${d.rate}</td></tr><tr><th>${z?'總費用':'Total'}</th><td>$${escape(d.total)}</td></tr></tbody></table></div>`;
  if(d.type==='equation-steps'){
   // Keep inverse-operation guidance behind the hint/solution control in fresh checks.
   // Render only the equation's givens here; retained question snapshots stay unchanged.
@@ -858,6 +858,17 @@ function angleLessonView(id,lang){
 // src/papers/paper.mjs
 
 function canonical(v){if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';if(v&&typeof v==='object')return '{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';return JSON.stringify(v);}
+function questionSnapshotMatches(q){
+ const expected=generate(q.id,q.seed,q.version);
+ if(canonical(expected)===canonical(q))return true;
+ // Pre-fix standalone builds consumed the doubled dollar sign in the EQ05/06
+ // prompt templates. Accept exactly that historical text variant, preserving
+ // all model, answer, contract, diagram and other snapshot fields unchanged.
+ if(q.version!==1||!['EQ05','EQ06'].includes(q.id))return false;
+ const legacy=structuredClone(expected);
+ for(const lang of ['en','zh'])legacy.prompt[lang]=legacy.prompt[lang].replace(/\$(?=\d)/g,'');
+ return canonical(legacy)===canonical(q);
+}
 async function identity(spec){const bytes=new TextEncoder().encode(canonical(spec));const hash=await crypto.subtle.digest('SHA-256',bytes);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');}
 // A digest and its displayed/exported paper must come from the same immutable snapshot.
 async function preparePaper(spec,compute=identity){const snapshot=structuredClone(spec);return {spec:snapshot,fingerprint:await compute(snapshot)};}
@@ -870,7 +881,7 @@ function validatePaper(p){
  if(Object.keys(p).some(k=>!['kind','schema','generatorVersion','title','seed','lang','layout','items'].includes(k)))throw new Error('Unknown paper fields are not accepted.');
  if(typeof p.title!=='string'||p.title.length>100||typeof p.seed!=='string'||p.seed.length>60||!['en','zh'].includes(p.lang)||p.layout?.format!=='A4'||p.layout.perPage!==3||!Array.isArray(p.items)||!p.items.length||p.items.length>12)throw new Error('Invalid paper specification.');
  if(Object.keys(p.layout).some(k=>!['format','perPage'].includes(k)))throw new Error('Unknown layout fields are not accepted.');
- for(const item of p.items){if(Object.keys(item).some(k=>!['question','marks','lines'].includes(k)))throw new Error('Unknown question fields are not accepted.');if(!Number.isInteger(item.marks)||item.marks<1||item.marks>20||!Number.isInteger(item.lines)||item.lines<1||item.lines>6)throw new Error('Marks/working space are out of range.');const q=item.question;if(canonical(generate(q.id,q.seed,q.version))!==canonical(q))throw new Error('The question snapshot does not match its version.');}
+ for(const item of p.items){if(Object.keys(item).some(k=>!['question','marks','lines'].includes(k)))throw new Error('Unknown question fields are not accepted.');if(!Number.isInteger(item.marks)||item.marks<1||item.marks>20||!Number.isInteger(item.lines)||item.lines<1||item.lines>6)throw new Error('Marks/working space are out of range.');const q=item.question;if(!questionSnapshotMatches(q))throw new Error('The question snapshot does not match its version.');}
  return p;
 }
 
@@ -997,9 +1008,9 @@ function validateSession(s){
  if(!s||s.schema!==1||!sessionSeed(s.seed)||s.id!=='session-'+s.seed||!['practice','check','learn'].includes(s.mode))throw new Error('Unsupported session.');
  if(!Array.isArray(s.items)||!s.items.length||s.items.length>12||!Array.isArray(s.responses)||s.responses.length!==s.items.length)throw new Error('Invalid session size.');
  if(!Number.isInteger(s.index)||s.index<0||s.index>=s.items.length)throw new Error('Invalid saved question.');
- if(s.workedExample){const q=s.workedExample;if(s.mode!=='learn'||canonical(generate(s.items[0].id,s.seed+':worked-example',q.version))!==canonical(q))throw new Error('The worked-example snapshot does not match its declared version.');}
+ if(s.workedExample){const q=s.workedExample;if(s.mode!=='learn'||q.id!==s.items[0].id||q.seed!==s.seed+':worked-example'||!questionSnapshotMatches(q))throw new Error('The worked-example snapshot does not match its declared version.');}
  for(let i=0;i<s.items.length;i++){
-  const q=s.items[i],r=s.responses[i];if(canonical(generate(q.id,q.seed,q.version))!==canonical(q))throw new Error('The question snapshot does not match its declared version.');
+  const q=s.items[i],r=s.responses[i];if(!questionSnapshotMatches(q))throw new Error('The question snapshot does not match its declared version.');
   if(!r||typeof r.input!=='string'||r.input.length>200||typeof r.reason!=='string'||r.reason.length>2000||typeof r.hint!=='boolean'||typeof r.solution!=='boolean'||typeof r.priorExposure!=='boolean'||!Array.isArray(r.attempts)||r.attempts.length>100)throw new Error('Invalid response record.');
   if(r.manualReview!==null&&r.manualReview!=='self')throw new Error('Unsupported manual review label.');
   for(const a of r.attempts)if(!['correct','incorrect','wrong-form','manual'].includes(a.status)||typeof a.input!=='string'||a.input.length>200||typeof a.assisted!=='boolean'||typeof a.at!=='string')throw new Error('Invalid attempt.');

@@ -8,7 +8,7 @@ English/Traditional Chinese mathematics lessons, practice and printable workshee
 - [Angles release and limits](site/planning/release-angles-v1.md)
 - [Next actions](planning/next-action.md)
 
-The v0.9.3 four-topic pilot has 24 curriculum question families and 12 bilingual lessons: directed numbers, expressions, linear equations, and angles/parallel lines. All are author drafts. All 63 Node checks pass; the current 23-workflow hosted run is pending. Earlier 18/18 results belong to v0.8.0.
+The v0.9.3 four-topic pilot has 24 curriculum question families and 12 bilingual lessons: directed numbers, expressions, linear equations, and angles/parallel lines. All are author drafts. All 65 Node checks pass; the current 24-workflow hosted run is pending. Earlier 18/18 results belong to v0.8.0.
 
 Proofs and written reasons need manual review. Rotating or reflecting a question does not make it fresh. All 237 mapped objective records remain planned; this pilot is not complete secondary-curriculum coverage. Six development fixtures remain separately labelled. Independent content/classroom review and actual PDF/physical printing are pending.
 
@@ -19,3 +19,5 @@ Keyboard consolidation: skip navigation now focuses the current content without 
 Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](site/qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. The updated four-booklet HTML layout check (84 pages) is pending; actual current PDF acceptance remains pending; see `site/planning/release-print-v1.md`.
 
 Marking guidance now follows the actual area shape and edited mark allocation. See `site/planning/release-review-v1.md`. [Next curriculum batch](planning/next-batch.md) starts with basic computation; it remains a proposal.
+
+The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 65 Node checks.
