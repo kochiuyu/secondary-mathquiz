@@ -1,0 +1,43 @@
+{
+  "version": "0.9.2",
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "milestone": "P2.3b",
+  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "portable_source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
+  "automated": {
+    "tests": 60,
+    "pass": 60,
+    "fail": 0
+  },
+  "browser": {
+    "state": "pending",
+    "planned_workflows": 22,
+    "observed_pass": 0,
+    "source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
+    "raw_report": "site/planning/browser-hosted-print-run.json"
+  },
+  "print_layout": {
+    "state": "pending",
+    "documents": 4,
+    "expected_pages": 84,
+    "raw_report": "site/planning/print-layout-review.json",
+    "actual_current_pdf": "pending"
+  },
+  "scope": {
+    "curriculum_families": 24,
+    "bilingual_lessons": 12,
+    "mapped_objective_records": 237,
+    "coverage_state": "planned"
+  },
+  "review_limits": [
+    "Only three retained signed-number PDFs (11 pages) have been inspected; they predate the print-style revision.",
+    "Current PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
+    "Fingerprints describe specifications, not byte-identical output across renderer versions."
+  ],
+  "publication": {
+    "state": "authorized; deployment pending",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "branch": "main"
+  }
+}

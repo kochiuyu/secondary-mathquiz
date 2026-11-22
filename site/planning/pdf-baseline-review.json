@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-22",
+  "method": "pypdf extraction with NFKC; Poppler raster review",
+  "files": [
+    {
+      "file": "signed_en_Solutions.pdf",
+      "sha256": "7d8c01a23df0cca02e5a58ccaa9fe90980ff592c24626bc0213291a76b2b5463",
+      "specification_sha256": "fabf00dee1c93c9e1cd9c7c220d6340cff017269d1fc3615a4683a29cd851728",
+      "pages": 3,
+      "A4_numbering_fingerprint_and_glyph_checks": "pass",
+      "visual_review": "All 11 retained pages rendered with Poppler and inspected; no visible page clipping. Tick labels small/heavy.",
+      "scope": "historical signed-number PDF baseline; not the rebuilt print renderer"
+    },
+    {
+      "file": "signed_en_Student.pdf",
+      "sha256": "aa5933a0178e3ef34f6f646e4bfa94fe5d9d339f391d17aded65edca1cbccafe",
+      "specification_sha256": "fabf00dee1c93c9e1cd9c7c220d6340cff017269d1fc3615a4683a29cd851728",
+      "pages": 4,
+      "A4_numbering_fingerprint_and_glyph_checks": "pass",
+      "visual_review": "All 11 retained pages rendered with Poppler and inspected; no visible page clipping. Tick labels small/heavy.",
+      "scope": "historical signed-number PDF baseline; not the rebuilt print renderer"
+    },
+    {
+      "file": "signed_zh_Student.pdf",
+      "sha256": "b544c2626955340e9cd4a92c4737765db228e1aa6645dc79e2685ad39ed52b77",
+      "specification_sha256": "ace7efa0a26b8f6532b20b3292db8745cac347e7d2fa490af28f7868bcef3590",
+      "pages": 4,
+      "A4_numbering_fingerprint_and_glyph_checks": "pass",
+      "visual_review": "All 11 retained pages rendered with Poppler and inspected; no visible page clipping. Tick labels small/heavy.",
+      "scope": "historical signed-number PDF baseline; not the rebuilt print renderer"
+    }
+  ],
+  "new_pdf_export": "blocked: native Chrome window inspection timed out on selection and retry; no new PDF/physical-print pass claimed",
+  "action": "Number-line height increased from 100 to 130 CSS px; inherited text stroke removed; pagination budget updated."
+}

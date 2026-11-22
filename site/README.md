@@ -1,6 +1,6 @@
-# Secondary MathQuiz — four-topic pilot v0.9.1
+# Secondary MathQuiz — four-topic pilot v0.9.2
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 60 Node checks pass. All 22 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 60 Node checks pass. The current 22-workflow hosted run is pending; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
@@ -39,3 +39,5 @@ Sample HTML and specifications are in `samples/angles`, `samples/equations`, `sa
 The default `index.html` and portable page are generated from `shell.html`; edit the shell or modules, then rebuild. The QA runner and its definition module use content-versioned URLs to prevent stale browser scripts.
 
 Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `planning/release-navigation-v1.md` for current evidence.
+
+Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. Current browser results and PDF acceptance are separate; see `planning/release-print-v1.md`.

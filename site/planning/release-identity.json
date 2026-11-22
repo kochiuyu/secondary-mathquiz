@@ -1,27 +1,28 @@
 {
-  "version": "0.9.1",
+  "version": "0.9.2",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.3a",
-  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
-  "portable_source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
+  "milestone": "P2.3b",
+  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "portable_source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
   "automated": {
     "tests": 60,
     "pass": 60,
     "fail": 0
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
+    "state": "pending",
     "planned_workflows": 22,
-    "observed_pass": 22,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
-    "run": "56df7c16-c860-4016-9ece-b24e58dede3e",
-    "raw_report": "site/planning/browser-hosted-navigation-run.json",
-    "first_report": "site/planning/browser-navigation-first-run.json",
-    "overall_acceptance_record": "pending",
-    "manual_rows": "pending"
+    "observed_pass": 0,
+    "source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
+    "raw_report": "site/planning/browser-hosted-print-run.json"
+  },
+  "print_layout": {
+    "state": "pending",
+    "documents": 4,
+    "expected_pages": 84,
+    "raw_report": "site/planning/print-layout-review.json",
+    "actual_current_pdf": "pending"
   },
   "scope": {
     "curriculum_families": 24,
@@ -30,17 +31,13 @@
     "coverage_state": "planned"
   },
   "review_limits": [
-    "Actual PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
-    "Prior v0.9.0 reports retain their original source hashes.",
-    "Manual proof and reasoning remain separate from automatic final-answer scores."
+    "Only three retained signed-number PDFs (11 pages) have been inspected; they predate the print-style revision.",
+    "Current PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
+    "Fingerprints describe specifications, not byte-identical output across renderer versions."
   ],
   "publication": {
-    "state": "published; deployment succeeded",
-    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
+    "state": "authorized; deployment pending",
     "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "branch": "main",
-    "tested_source_commit": "3cc519c456add95510ee2fe8be9e7bd1622bc336",
-    "tested_deployment_run": 44979430932,
-    "deployment_result": "success"
+    "branch": "main"
   }
 }

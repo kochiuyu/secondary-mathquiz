@@ -1,4 +1,4 @@
-export const acceptanceVersion='0.9.1';
+export const acceptanceVersion='0.9.2';
 export const automaticChecks=[
  ['A01','Load the application'],['A02','Catalogue and cleared URL filters'],
  ['A03','Draft, language switch and reload'],['A04','Reason review after editing'],
