@@ -43,6 +43,7 @@ test('equation selections and final values keep written reasons separate; edits 
  const clone=structuredClone(s);clone.items[3].model.e='1000';assert.throws(()=>validateSession(clone));
 });
 test('equation diagrams preserve givens without pre-revealing answer judgements and paper choices retain identities',async()=>{
+ const affine=generateEquation('EQ02','inverse-guidance');assert.doesNotMatch(diagram(affine,'en'),/Subtract .*both sides|divide both sides|Then divide/);assert.match(diagram(affine,'en'),/left side starts with x/);
  const check=generateEquation('EQ01','diagrams');const html=diagram(check,'en');assert.match(html,/Original left side after substitution/);assert.match(html,/do not pre-judge equality/);assert.doesNotMatch(html,/undefined|NaN/);
  const spec=createPaper(equationFamilies.map(f=>f.id),'equation-paper',6,'zh');const hash=await identity(spec);validatePaper(spec);const student=renderPaper(spec,hash,false),key=renderPaper(spec,hash,true);
  assert.equal((student.match(/class="paper-question"/g)||[]).length,6);assert.match(key,/人工/);assert.match(student,/費用資料/);assert.doesNotMatch(key,/undefined|NaN|\[object Object\]/);assert.notEqual(await identity({...spec,lang:'en'}),hash);

@@ -22,7 +22,7 @@
     "JS-8-2",
     "JS-8-3"
   ],
-  "portable_source_sha256": "7ab53cb9dcd0b287a93f870b161e3d61a68d272432db2efb512650282aac7a5c",
+  "portable_source_sha256": "a8a915b00d9b26b12d645ef8a31c1c810babc6b9f8c66d2d3e6e875c9328e3cd",
   "automated": {
     "tests": 52,
     "pass": 52,
@@ -32,7 +32,7 @@
   "browser": {
     "state": "pending",
     "planned_workflows": 18,
-    "source_sha256": "7ab53cb9dcd0b287a93f870b161e3d61a68d272432db2efb512650282aac7a5c"
+    "source_sha256": "a8a915b00d9b26b12d645ef8a31c1c810babc6b9f8c66d2d3e6e875c9328e3cd"
   },
   "review_limits": [
     "Actual PDF/physical print review pending.",
