@@ -31,7 +31,8 @@ async function startSession(ids,mode='practice',count=4){
 }
 function currentProfileSafe(){const registry=stored('profiles');return stored(registry?.active||'learner-1');}
 function checkAnswer(value,reason=''){
- input('#answer-input',value);if(appDocument().querySelector('#reason-input'))input('#reason-input',reason);el('#answer-form').requestSubmit();
+ if(appDocument().querySelector('#answer-input'))input('#answer-input',value);else click('input[name="answer"][value="'+value+'"]');
+ if(appDocument().querySelector('#reason-input'))input('#reason-input',reason);el('#answer-form').requestSubmit();
 }
 function drawResults(){
  results.replaceChildren();for(const [id,title] of automaticChecks){const item=automatic.find(x=>x.id===id),li=document.createElement('li'),strong=document.createElement('span'),small=document.createElement('small');li.dataset.status=item.status;strong.className='status';strong.textContent=id+' · '+title+' — '+item.status;small.textContent=item.notes;li.append(strong,small);results.append(li);}
@@ -281,7 +282,7 @@ document.querySelector('#run').addEventListener('click',async()=>{
     await go('basic','[data-action="basic-check"]');assert(el('.lesson-grid').children.length===3,'Missing basic lessons.');
     frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'basic mobile viewport');
     for(const id of ['BC-L1','BC-L2','BC-L3']){
-     await go('lesson/'+id,'[data-action="basic-lesson-check"]');assert(el('.lesson-roadmap').querySelectorAll('a').length===3,'Missing basic roadmap.');assert(el('.lesson-explanation').textContent.length>60,'Brief basic explanation.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Basic lesson overflows at 390px.');
+     await go('lesson/'+id,'[data-action="basic-lesson-check"]');await waitFor(()=>appDocument()?.querySelector('.lesson-roadmap [aria-current="step"]')?.getAttribute('href')==='#lesson/'+id,'current basic lesson '+id);assert(el('.lesson-roadmap').querySelectorAll('a').length===3,'Missing basic roadmap.');assert(el('.lesson-explanation').textContent.length>60,'Brief basic explanation.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Basic lesson overflows at 390px.');
      assert(currentProfile().studied.includes('lesson:'+id+':v1'),'Basic study exposure not retained.');
     }
    }
@@ -291,7 +292,7 @@ document.querySelector('#run').addEventListener('click',async()=>{
    if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
    await go('basic','[data-action="basic-check"]');click('[data-action="basic-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'eight-family basic check');
    const s=latestSession();assert(s.items.length===8&&new Set(s.items.map(q=>q.id)).size===8,'Not all eight families present.');
-   input('#answer-input','yes');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'basic draft reload');assert(el('#answer-input').value==='yes'&&latestSession().id===s.id,'Basic draft changed on reload.');click('[data-action="language"]');
+   click('input[name="answer"][value="yes"]');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('input[name="answer"][value="yes"]'),'basic draft reload');assert(el('input[name="answer"][value="yes"]').checked&&latestSession().responses[0].input==='yes'&&latestSession().id===s.id,'Basic draft changed on reload.');click('[data-action="language"]');
    for(let i=0;i<8;i++){
     const q=latestSession().items[i];checkAnswer(q.answer,q.manualReason?'Method and exponent choice need review.':'');assert(latestSession().responses[i].attempts.at(-1).status==='correct','Basic answer not accepted.');
     if(q.manualReason){assert(latestSession().responses[i].manualReview===null,'Reason automatically verified.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Edited method');assert(latestSession().responses[i].manualReview===null,'Reason edit retained review.');}
