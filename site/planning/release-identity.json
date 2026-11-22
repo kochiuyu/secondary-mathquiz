@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.4d",
-  "state": "implemented author draft; browser/layout execution and publication pending",
+  "state": "published author draft; hosted workflows and HTML layouts passed; independent review pending",
   "portable_source_sha256": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5",
   "automated": {
     "tests": 89,
@@ -11,16 +11,24 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 36,
-    "observed_pass": 0,
-    "source_sha256": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5"
+    "observed_pass": 36,
+    "fail": 0,
+    "blocked": 0,
+    "source_sha256": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5",
+    "run": "03ff56ea-8194-4688-a8d4-f86eb13bc06c",
+    "raw_report": "site/planning/browser-estimation-run.json",
+    "manual_rows": "pending",
+    "overall_acceptance_record": "pending"
   },
   "print_layout": {
-    "state": "generated HTML; current geometry/PDF acceptance pending",
+    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
     "documents": 4,
     "expected_pages": 166,
+    "pages_measured": 166,
     "source_sha256": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5",
+    "raw_report": "site/planning/estimation-print-layout.json",
     "actual_current_pdf": "pending"
   },
   "scope": {
@@ -35,8 +43,11 @@
     "Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending."
   ],
   "publication": {
-    "state": "pending",
+    "state": "published; deployment succeeded",
     "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#estimation",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "36632a59bd80674da69cd9b0c12ae43977891760",
+    "tested_deployment_run": 45036297092,
+    "deployment_result": "success"
   }
 }

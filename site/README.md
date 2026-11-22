@@ -12,7 +12,7 @@ Development commands:
     node tools/make-estimation-samples.mjs
     node tools/make-pilot-print-review.mjs
 
-Build default/portable/QA copies after editing shell.html or modules. All 89 Node checks pass. The runner at qa/index.html defines 36 workflows; qa/print.html reviews four combined booklets (166 HTML pages). Current-source browser/layout execution is pending. See planning/release-estimation-v1.md for scope and actual evidence.
+Build default/portable/QA copies after editing shell.html or modules. All 89 Node checks pass. The runner at qa/index.html defines 36 workflows; qa/print.html reviews four combined booklets (166 HTML pages). All 36 current-source hosted workflows and all 166 booklet HTML pages pass; source-matched raw reports are saved in planning. See planning/release-estimation-v1.md for scope and actual evidence.
 
 AP01–AP08 use generator version 1. Fixed decimal precision is an opt-in property on the number contract; old numeric contracts retain equivalent-fraction acceptance. All prior generators, historical bundled fee snapshots and paper schema 1 remain supported. Paper identity includes language, title, order, marks, working lines and stored question snapshots.
 
