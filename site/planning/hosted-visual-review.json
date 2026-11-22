@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "source_sha256": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
+  "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
+  "observed": [
+    "Root URL redirected to the application under /site/.",
+    "English and Traditional Chinese EX-L1 desktop appearance inspected.",
+    "Chinese EX-L3 processing flow inspected in the runner with a 390px outer frame (375px document client width); document scroll width equalled client width. The mathematical expression had its own horizontal scrolling area.",
+    "Chinese EX-L1 direct-link reload retained the expected heading.",
+    "Four expressions HTML samples inspected as browser documents: English/Chinese student/key, each 5 HTML pages and questions 1–6; no question overlapped its footer and no page horizontally overflowed.",
+    "A temporary viewport override did not change the main tab dimensions; it was reset. Mobile observations use the actual runner frame, not a claimed native mobile device."
+  ],
+  "not_performed": [
+    "Actual PDF/physical printing",
+    "Native 200% zoom",
+    "Spoken screen-reader output",
+    "Independent mathematics/language review",
+    "Classroom review"
+  ],
+  "raw_runner_manual_rows": "pending, left unchanged"
+}

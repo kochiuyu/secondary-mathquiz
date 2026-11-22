@@ -1,3 +1,5 @@
+> Historical implementation snapshot. The localhost blocker below was resolved by GitHub Pages hosting; see [the current hosted release](github-pages-release.md) and its 15 passing browser workflows.
+
 # Expressions implementation draft v0.7.0
 
 22 November 2026, Asia/Hong_Kong · P2.2b · not published

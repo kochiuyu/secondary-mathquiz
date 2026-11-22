@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.2b",
-  "state": "implemented-author-draft; browser verification blocked",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
   "families": [
     "EX01",
     "EX02",
@@ -31,12 +31,16 @@
     "new_expression_seed_cases": 1800
   },
   "browser": {
-    "state": "blocked-not-run",
+    "state": "workflows-passed; raw manual acceptance pending",
     "planned_workflows": 15,
-    "observed_pass": 0,
+    "observed_pass": 15,
+    "fail": 0,
+    "blocked": 0,
     "source_sha256": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
-    "blocker": "Automatic approval review rejected outbound telemetry to dc.services.visualstudio.com; local preview was unreachable. File protocol also blocked by browser URL policy.",
-    "historical_evidence": "Signed-number 12/12 run applies only to v0.6.0; not current evidence."
+    "run": "80e979e7-a50a-49af-aff7-83da582769f7",
+    "report": "site/planning/browser-hosted-expressions-run.json",
+    "overall_acceptance_record": "pending",
+    "visual_review": "site/planning/hosted-visual-review.json"
   },
   "samples": {
     "state": "generated HTML, not browser/PDF acceptance evidence",
@@ -76,11 +80,19 @@
     ]
   },
   "review_limits": [
-    "Current browser workflows and visual page bounds not verified.",
-    "Actual PDF/physical print review pending.",
-    "Independent mathematics, bilingual and classroom review pending.",
-    "Native zoom and spoken assistive output pending.",
+    "Raw runner manual rows remain pending; scoped author visual observations are recorded separately.",
+    "Actual PDF/physical printing, native zoom and spoken output pending.",
+    "Independent mathematics, language and classroom review pending.",
     "Bounded retained-model freshness; no semantic novelty guarantee.",
-    "All curriculum coverage remains planned; no public release."
-  ]
+    "All curriculum coverage remains planned; publishing the draft does not certify coverage."
+  ],
+  "publication": {
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "57e8be96a6375443447c594388e37abf7d68ffaf",
+    "deployment_run": 44970565643,
+    "deployment_result": "success",
+    "repository_source_files_verified": 103,
+    "repository_byte_mismatches": 0
+  }
 }

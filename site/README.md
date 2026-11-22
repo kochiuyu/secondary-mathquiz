@@ -2,11 +2,11 @@
 
 22 November 2026 · twelve implemented draft families · six bilingual lessons
 
-Open `Secondary_MathQuiz_Prototype.html` in a current browser and choose **Learn expressions** or **Learn directed numbers**. The application is self-contained. Source, tests, worksheet HTML and specifications are included. No public site has been published.
+Open `Secondary_MathQuiz_Prototype.html` in a current browser and choose **Learn expressions** or **Learn directed numbers**. The application is self-contained. Source, tests, worksheet HTML and specifications are included. The public review draft is live at https://kochiuyu.github.io/secondary-mathquiz/ .
 
 Expressions EX01–EX06 cover words and symbols in both directions, two-variable area formulae, open sequence proposals, supplied general terms and input–processing–output. Three English/Traditional Chinese lessons include readiness, explanations, worked models, practice, checks, takeaways and next links. Formula explanations and open sequence proposals require manual review and are excluded from automatic scores. Equivalent grouped expressions are accepted; expansion is not a unit-7 completion requirement.
 
-**All 46 Node checks pass**, including retained signed-number and legacy checks and 1,800 new expressions seed cases. The current build's 15 browser workflows remain **blocked and not run**. Earlier signed-number browser evidence applies only to its historical v0.6.0 build. Expressions sample HTML/specifications are generated; browser layout, actual PDF and independent review are pending. See [the release report](planning/release-expressions-v1.md).
+**All 46 Node checks pass**, including signed-number and legacy checks and 1,800 new expressions seed cases. All **15 hosted browser workflows pass** on GitHub Pages. Four bilingual student/key HTML samples fit their checked page bounds. Actual PDF/physical printing and independent content review remain pending. Raw manual acceptance rows remain pending; scoped observations are separate. See [the hosted release report](planning/github-pages-release.md).
 
 The four-topic design retains 24 family briefs and 12 lesson outlines. Signed numbers and expressions now have twelve implemented families and six lessons as author drafts. Equations and angles remain twelve briefs and six outlines. All 237 curriculum records retain planned coverage status. The six old development examples remain separately labelled and unselected by default. P1 and previous release packages are preserved.
 
