@@ -1,0 +1,36 @@
+{
+  "version": "0.9.1",
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "milestone": "P2.3a",
+  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "portable_source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
+  "automated": {
+    "tests": 60,
+    "pass": 60,
+    "fail": 0
+  },
+  "browser": {
+    "state": "pending; local HTTP preview unreachable",
+    "planned_workflows": 22,
+    "observed_pass": 0,
+    "source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
+    "raw_report": "site/planning/browser-hosted-navigation-run.json"
+  },
+  "scope": {
+    "curriculum_families": 24,
+    "bilingual_lessons": 12,
+    "mapped_objective_records": 237,
+    "coverage_state": "planned"
+  },
+  "review_limits": [
+    "Actual PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
+    "Prior v0.9.0 reports retain their original source hashes.",
+    "Manual proof and reasoning remain separate from automatic final-answer scores."
+  ],
+  "publication": {
+    "state": "publication authorized; deployment pending",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "branch": "main"
+  }
+}

@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=f85b42f71ef7';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=b09941094fa0';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -212,6 +212,28 @@ document.querySelector('#run').addEventListener('click',async()=>{
   });
   await step('A21',async()=>{
    await go('angles','[data-action="angles-paper"]');click('[data-action="angles-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'geometry paper');assert(currentProfile().paper.items.every(i=>i.question.id.startsWith('GE')),'Non-geometry family in paper.');change('#paper-lang','zh');const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese geometry paper identity');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'geometry key');assert(appDocument().querySelectorAll('.angle-geometry').length===6,'Expected six paper diagrams.');assert(el('#paper-pages').textContent.includes('人工評閱'),'Proof review rubric missing.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated geometry choice.');assert(currentProfile().paper.items.at(-1).question.contract.type==='manual','Proof contract changed.');return 'Six versioned geometry snapshots, Chinese paper/key hash, diagrams and manually reviewed proof rubric rendered; actual PDF remains separate.';
+  });
+  await step('A22',async()=>{
+   await startSession(['SN01'],'check',1);input('#answer-input','-17');
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    const route=frame.contentWindow.location.hash,form=el('#answer-form'),before=JSON.stringify(currentProfile());
+    click('a.skip');assert(frame.contentWindow.location.hash===route,'Skip link changed the route.');
+    assert(el('#answer-form')===form,'Skip link rebuilt the answer form.');
+    assert(el('#answer-input').value==='-17'&&JSON.stringify(currentProfile())===before,'Skip link changed the answer draft.');
+    assert(appDocument().activeElement===el('#main'),'Skip link did not focus the main content.');
+   }
+   frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'mobile viewport');
+   click('[data-action="menu"]');assert(el('.main-column').inert,'Background remains keyboard-active while the menu is open.');
+   assert(el('.sidebar').getAttribute('aria-modal')==='true','Menu lacks modal semantics.');
+   const controls=[...appDocument().querySelectorAll('.sidebar a[href], .sidebar button')].filter(x=>x.getClientRects().length&&!x.disabled);
+   const first=controls[0],last=controls.at(-1),key=(value,shift=false)=>appDocument().activeElement.dispatchEvent(new frame.contentWindow.KeyboardEvent('keydown',{key:value,shiftKey:shift,bubbles:true,cancelable:true}));
+   first.focus();key('Tab',true);assert(appDocument().activeElement===last,'Reverse Tab escaped the menu.');
+   key('Tab');assert(appDocument().activeElement===first,'Forward Tab escaped the menu.');
+   key('Escape');assert(!el('.main-column').inert&&!el('.sidebar').classList.contains('open'),'Escape did not restore the background.');
+   assert(appDocument().activeElement===el('.mobile-menu'),'Escape did not return focus to the menu button.');
+   click('[data-action="menu"]');frame.width='1120';await waitFor(()=>!el('.main-column').inert,'desktop resize releases the menu');
+   return 'English/Chinese skip links preserved the route, answer form and draft; mobile focus boundaries, background isolation, Escape and desktop resize passed. Synthetic key events check handlers; native keyboard and spoken output remain separate.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

@@ -7,7 +7,7 @@ import {PREFIX} from '../src/app/storage.mjs';
 const data=fs.readFileSync(new URL('../curriculum/catalogue.json',import.meta.url),'utf8');
 const memory=new Map(),root={innerHTML:'',events:{},addEventListener(k,fn){this.events[k]=fn;}};
 const nodes=new Map();
-function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',value:'',focus(){},scrollIntoView(){},classList:{toggle(){},remove(){}},setAttribute(){}});return nodes.get(id);}
+function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',value:'',focus(){document.activeElement=this;},scrollIntoView(){},classList:{toggle(){},remove(){}},setAttribute(){},removeAttribute(){}});return nodes.get(id);}
 const winEvents={};let href='file:///portable/Secondary_MathQuiz_Prototype.html',hash='';
 globalThis.localStorage={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,v)};
 globalThis.location={get href(){return href;},get hash(){return hash;},set hash(v){hash=v.startsWith('#')?v:'#'+v;href=href.split('#')[0]+hash;winEvents.hashchange?.();}};
@@ -19,7 +19,13 @@ const submit=(id,fields)=>root.events.submit({preventDefault(){},target:{id,fiel
 const click=async(action,dataset={})=>root.events.click({preventDefault(){},target:{closest(){return {dataset:{action,...dataset},type:'submit',form:null};}}});
 const input=(id,name,value)=>root.events.input({target:{id,name,value}});
 const profile=()=>JSON.parse(memory.get(PREFIX+'learner-1'));
+async function waitForPaper(){
+ const deadline=Date.now()+2000;
+ while(!node('#paper-pages').innerHTML&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,5));
+ assert.ok(node('#paper-pages').innerHTML,'Paper preview did not finish its asynchronous digest.');
+}
 await import('../src/app/app.mjs');
+
 
 test('application routes, bilingual draft preservation, completion, catalogue and paper wiring',async()=>{
  assert.match(root.innerHTML,/A little clarity/);
@@ -45,10 +51,10 @@ test('application routes, bilingual draft preservation, completion, catalogue an
  await click('clear-filters');assert.equal(new URL(location.href).searchParams.has('q'),false);assert.match(node('#catalogue-count').textContent,/52/);
  location.hash='topic/js-8';assert.match(root.innerHTML,/一元一次方程/);
  location.hash='paper';submit('paper-setup',{family:['signed','expression','equation','angle'],count:'6'});
- await new Promise(resolve=>setImmediate(resolve));assert.equal(profile().paper.items.length,6);assert.match(root.innerHTML,/列印／儲存 PDF/);assert.match(node('#paper-pages').innerHTML,/paper-page/);
+ await waitForPaper();assert.equal(profile().paper.items.length,6);assert.match(root.innerHTML,/列印／儲存 PDF/);assert.match(node('#paper-pages').innerHTML,/paper-page/);
  await click('paper-down',{index:'0'});assert.equal(profile().paper.items[0].question.id,'expression');
  input('paper-title','','Newest title');assert.equal(node('#paper-pages').innerHTML,'');assert.equal(node('#paper-id').textContent,'…');
- await new Promise(resolve=>setImmediate(resolve));assert.match(node('#paper-pages').innerHTML,/Newest title/);
+ await waitForPaper();assert.match(node('#paper-pages').innerHTML,/Newest title/);
  location.hash='progress';
  const backup={kind:'secondary-mathquiz-progress',schema:1,profile:profile()};node('#progress-import').value=JSON.stringify(backup);await click('review-progress');assert.match(node('#import-review').innerHTML,/取消匯入/);
  await click('cancel-progress');assert.equal(node('#import-review').innerHTML,'');assert.equal(profile().sessions.length,1);
@@ -73,7 +79,7 @@ test('signed lessons, exposure-aware check, bilingual resume, manual reason and 
  }
  assert.match(root.innerHTML,/Carry the idea forward/);assert.ok(current().sessions.at(-1).completedAt);
  location.hash='paper';submit('paper-setup',{family:['SN01','SN02','SN03','SN04','SN05','SN06'],count:'6'});
- await new Promise(resolve=>setImmediate(resolve));assert.deepEqual(current().paper.items.map(i=>i.question.id),['SN01','SN02','SN03','SN04','SN05','SN06']);assert.match(node('#paper-pages').innerHTML,/signed-numberline/);
+ await waitForPaper();assert.deepEqual(current().paper.items.map(i=>i.question.id),['SN01','SN02','SN03','SN04','SN05','SN06']);assert.match(node('#paper-pages').innerHTML,/signed-numberline/);
 });
 
 test('expression routes, bilingual manual drafts, review invalidation and automatic-score denominator integrate',async()=>{
@@ -94,7 +100,7 @@ test('expression routes, bilingual manual drafts, review invalidation and automa
   await click('next');
  }
  assert.match(root.innerHTML,/4 \/ 4/);assert.match(root.innerHTML,/excluded from the automatic-score denominator/);assert.match(root.innerHTML,/Keep the meaning/);
- location.hash='expressions';await click('expressions-paper');await new Promise(resolve=>setImmediate(resolve));assert.equal(current().paper.items.length,6);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EX')));assert.ok(!node('#paper-pages').innerHTML.includes('[object Object]'));
+ location.hash='expressions';await click('expressions-paper');await waitForPaper();assert.equal(current().paper.items.length,6);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EX')));assert.ok(!node('#paper-pages').innerHTML.includes('[object Object]'));
 });
 
 test('equation lesson routes, six-family checks, reviewed reasoning and paper integrate with retained app',async()=>{
@@ -107,7 +113,7 @@ test('equation lesson routes, six-family checks, reviewed reasoning and paper in
   await click('next');
  }
  assert.match(root.innerHTML,/6 \/ 6/);assert.match(root.innerHTML,/Preserve equality and interpret/);
- location.hash='equations';await click('equations-paper');await new Promise(resolve=>setImmediate(resolve));assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EQ')));assert.match(node('#paper-pages').innerHTML,/equation-panels/);
+ location.hash='equations';await click('equations-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EQ')));assert.match(node('#paper-pages').innerHTML,/equation-panels/);
 });
 
 test('angle routes, manual proof, appearance exposure and five-answer score integrate with the four-topic app',async()=>{
@@ -119,5 +125,17 @@ test('angle routes, manual proof, appearance exposure and five-answer score inte
   if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
   await click('next');
  }
- assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await new Promise(resolve=>setImmediate(resolve));assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Four connected topics/);
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Four connected topics/);
+});
+
+test('skip navigation preserves the current route, content and answer draft',async()=>{
+ location.hash='setup/check';
+ submit('session-setup',{family:['SN01'],mode:'check',count:'1'});
+ input('answer-input','answer','-17');
+ const before={hash:location.hash,html:root.innerHTML,profile:JSON.stringify(profile())};
+ let prevented=false;
+ winEvents.click({preventDefault(){prevented=true;},target:{closest(){return true;}}});
+ assert.ok(prevented);assert.equal(document.activeElement,node('#main'));
+ assert.equal(location.hash,before.hash);assert.equal(root.innerHTML,before.html);assert.equal(JSON.stringify(profile()),before.profile);
+ location.hash='home';
 });

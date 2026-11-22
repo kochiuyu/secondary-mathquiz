@@ -1,98 +1,36 @@
 {
-  "version": "0.9.0",
+  "version": "0.9.1",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.2d",
-  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
-  "families": [
-    "GE01",
-    "GE02",
-    "GE03",
-    "GE04",
-    "GE05",
-    "GE06"
-  ],
-  "lessons": [
-    "GE-L1",
-    "GE-L2",
-    "GE-L3"
-  ],
-  "mapped_objectives": [
-    "JS-19-1",
-    "JS-19-2",
-    "JS-19-3",
-    "JS-19-4",
-    "JS-19-5"
-  ],
-  "portable_source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
+  "milestone": "P2.3a",
+  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "portable_source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
   "automated": {
-    "tests": 59,
-    "pass": 59,
-    "fail": 0,
-    "new_angle_seed_cases": 1800,
-    "geometry_render_cases": 480
+    "tests": 60,
+    "pass": 60,
+    "fail": 0
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
-    "planned_workflows": 21,
-    "observed_pass": 21,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
-    "run": "e02343a1-f207-4487-bfd1-2763314a54b5",
-    "raw_report": "site/planning/browser-hosted-angles-run.json",
-    "overall_acceptance_record": "pending",
-    "manual_rows": "pending"
+    "state": "pending; local HTTP preview unreachable",
+    "planned_workflows": 22,
+    "observed_pass": 0,
+    "source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
+    "raw_report": "site/planning/browser-hosted-navigation-run.json"
+  },
+  "scope": {
+    "curriculum_families": 24,
+    "bilingual_lessons": 12,
+    "mapped_objective_records": 237,
+    "coverage_state": "planned"
   },
   "review_limits": [
-    "Independent mathematics/language and classroom review pending.",
-    "Current angle HTML bounds pass; actual PDF/physical printing, native 200% zoom and spoken assistive output remain pending.",
-    "Generated geometry and label anchors are checked; complete collision-free rendering for all shapes is not certified.",
-    "Manual proof is never automatically correct; numeric correctness does not verify geometric reasons.",
-    "All 237 curriculum coverage records remain planned; four implemented topics are not a completed secondary course."
+    "Actual PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
+    "Prior v0.9.0 reports retain their original source hashes.",
+    "Manual proof and reasoning remain separate from automatic final-answer scores."
   ],
-  "samples": {
-    "state": "generated HTML; browser/PDF review separate",
-    "results": [
-      {
-        "lang": "en",
-        "document": "Student",
-        "pages": 6,
-        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
-        "actual_browser_layout": "pending",
-        "actual_pdf": "pending"
-      },
-      {
-        "lang": "en",
-        "document": "Solutions",
-        "pages": 6,
-        "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
-        "actual_browser_layout": "pending",
-        "actual_pdf": "pending"
-      },
-      {
-        "lang": "zh",
-        "document": "Student",
-        "pages": 6,
-        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
-        "actual_browser_layout": "pending",
-        "actual_pdf": "pending"
-      },
-      {
-        "lang": "zh",
-        "document": "Solutions",
-        "pages": 6,
-        "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
-        "actual_browser_layout": "pending",
-        "actual_pdf": "pending"
-      }
-    ]
-  },
   "publication": {
-    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#angles",
+    "state": "publication authorized; deployment pending",
     "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "tested_source_commit": "d631d173d51cb1c4eea9b9095a8812caff8410cc",
-    "tested_deployment_run": 44974112876,
-    "deployment_result": "success"
+    "branch": "main"
   }
 }

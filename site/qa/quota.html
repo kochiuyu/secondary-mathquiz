@@ -773,7 +773,7 @@ function expressionDiagram(q,lang='en'){
 
 const signedText=(v,lang)=>v[lang];
 function signedHub(lang,studied=[]){
- const zh=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${zh?'有向數 · 初中試點教材':'DIRECTED NUMBERS · JUNIOR PILOT'}</p><h1>${zh?'從基準到有向變化':'From a reference to a directed change'}</h1><p class="lede">${zh?'先理解正負號，再用運算與情境鞏固。三節課可依次閱讀，也可直接選擇。':'Understand signs first, then connect operations and contexts. Follow the three sessions or choose one directly.'}</p></div><p class="notice">${zh?'試點初稿：已實作，尚待獨立數學及語文評閱。學習紀錄不代表已掌握課題。':'Pilot draft: implemented, awaiting independent mathematics and language review. Study records do not establish mastery.'}</p><section class="panel"><h2>${zh?'開始前與學習方向':'Before you start and where this leads'}</h2><p>${zh?'預備：讀等距刻度、正數大小、分數及小數四則運算。需要時可重溫，不會限制你開始學習。':'Preparation: equal number-line ticks, positive-number order, and fraction/decimal arithmetic. Revisit these when helpful; access remains open.'}</p><p>${zh?'目標：表示及比較有向數、進行四則混合運算，並解釋情境中的變化（JS2.1–2.3）。':'Goals: represent and compare directed numbers, calculate mixed operations and explain contextual changes (JS2.1–2.3).'}</p></section><div class="lesson-grid">${signedLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${zh?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(zh?'曾開啟':'Opened'):(zh?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${zh?'開啟課節':'Open session'} →</span></a>`).join('')}</div><section class="panel"><h2>${zh?'練習與獨立檢視':'Practice and a separate check'}</h2><p>${zh?'練習可隨時查看提示；獨立檢視會分開記錄未看提示的首次作答。溫度變化的書面理由仍需人工評閱。':'Practice offers hints. A separate check records first unrevealed answers distinctly. Written explanations of temperature changes still need manual review.'}</p><div class="hero-actions"><button class="primary" data-action="signed-practice">${zh?'六類混合練習':'Practise all six families'}</button><button class="secondary" data-action="signed-check">${zh?'六類獨立檢視':'Separate six-family check'}</button><a href="#paper">${zh?'製作練習紙':'Create a paper'}</a></div><details><summary>${zh?'六類題目與課程連結':'Six task families and curriculum links'}</summary><ul>${curriculumFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul></details></section><section class="panel"><h2>${zh?'帶到下一個課題':'Carry this forward'}</h2><p>${zh?'在代數式和方程中，你仍需讀清正負號與運算。其他三個試點課題尚在設計階段。':'Expressions and equations also require careful reading of signs and operations. Continue with expressions next; equation and angle topics remain in design.'}</p><a href="#topic/js-2">${zh?'查看正式學習目標及資料來源':'View the mapped objectives and sources'}</a></section>`;
+ const zh=lang==='zh';return `<div class="page-heading"><p class="eyebrow">${zh?'有向數 · 初中試點教材':'DIRECTED NUMBERS · JUNIOR PILOT'}</p><h1>${zh?'從基準到有向變化':'From a reference to a directed change'}</h1><p class="lede">${zh?'先理解正負號，再用運算與情境鞏固。三節課可依次閱讀，也可直接選擇。':'Understand signs first, then connect operations and contexts. Follow the three sessions or choose one directly.'}</p></div><p class="notice">${zh?'試點初稿：已實作，尚待獨立數學及語文評閱。學習紀錄不代表已掌握課題。':'Pilot draft: implemented, awaiting independent mathematics and language review. Study records do not establish mastery.'}</p><section class="panel"><h2>${zh?'開始前與學習方向':'Before you start and where this leads'}</h2><p>${zh?'預備：讀等距刻度、正數大小、分數及小數四則運算。需要時可重溫，不會限制你開始學習。':'Preparation: equal number-line ticks, positive-number order, and fraction/decimal arithmetic. Revisit these when helpful; access remains open.'}</p><p>${zh?'目標：表示及比較有向數、進行四則混合運算，並解釋情境中的變化（JS2.1–2.3）。':'Goals: represent and compare directed numbers, calculate mixed operations and explain contextual changes (JS2.1–2.3).'}</p></section><div class="lesson-grid">${signedLessons.map((l,i)=>`<a class="panel lesson-card" href="#lesson/${l.id}"><p class="eyebrow">${zh?'第':'SESSION'} ${i+1} · ${studied.includes('lesson:'+l.id+':v1')?(zh?'曾開啟':'Opened'):(zh?'可開始':'Ready to open')}</p><h2>${escape(l.title[lang])}</h2><p>${escape(l.why[lang])}</p><span class="text-link">${zh?'開啟課節':'Open session'} →</span></a>`).join('')}</div><section class="panel"><h2>${zh?'練習與獨立檢視':'Practice and a separate check'}</h2><p>${zh?'練習可隨時查看提示；獨立檢視會分開記錄未看提示的首次作答。溫度變化的書面理由仍需人工評閱。':'Practice offers hints. A separate check records first unrevealed answers distinctly. Written explanations of temperature changes still need manual review.'}</p><div class="hero-actions"><button class="primary" data-action="signed-practice">${zh?'六類混合練習':'Practise all six families'}</button><button class="secondary" data-action="signed-check">${zh?'六類獨立檢視':'Separate six-family check'}</button><a href="#paper">${zh?'製作練習紙':'Create a paper'}</a></div><details><summary>${zh?'六類題目與課程連結':'Six task families and curriculum links'}</summary><ul>${curriculumFamilies.map(f=>`<li>${f.id} · ${escape(f.title[lang])} · ${f.objective}</li>`).join('')}</ul></details></section><section class="panel"><h2>${zh?'帶到下一個課題':'Carry this forward'}</h2><p>${zh?'在代數式和方程中，你仍需讀清正負號與運算。接著學習代數式，再連接方程及幾何推理。':'Expressions and equations also require careful reading of signs and operations. Continue with expressions next, then connect equations and geometric reasoning.'}</p><a href="#expressions">${zh?'下一步：代數式':'Next: expressions'}</a> <a href="#topic/js-2">${zh?'查看正式學習目標及資料來源':'View the mapped objectives and sources'}</a></section>`;
 }
 function signedLessonView(id,lang){
  const l=signedLessons.find(l=>l.id===id);if(!l)return '';
@@ -1054,6 +1054,16 @@ function notice(){return storageIssue?`<div class="notice warning" role="status"
 function updateStorageNotice(){const el=document.querySelector('#storage-notice');if(el)el.innerHTML=notice();}
 function seed(){return Date.now().toString(36)+'-'+crypto.getRandomValues(new Uint32Array(1))[0].toString(36);}
 function go(hash){currentFeedback=null;if(location.hash==='#'+hash)render();else location.hash=hash;}
+function setMenu(open){
+ menuOpen=open;
+ const sidebar=document.querySelector('.sidebar'),column=document.querySelector('.main-column');
+ sidebar?.classList.toggle('open',open);
+ if(column)column.inert=open;
+ if(open){sidebar?.setAttribute('role','dialog');sidebar?.setAttribute('aria-modal','true');}
+ else {sidebar?.removeAttribute('role');sidebar?.removeAttribute('aria-modal');}
+ document.querySelector('.mobile-menu')?.setAttribute('aria-expanded',String(open));
+ document.querySelector(open?'.sidebar a':'.mobile-menu')?.focus();
+}
 function active(){const id=location.hash.split('/')[1];return profile.sessions.find(s=>s.id===id);}
 function selected(ids){return families.filter(f=>ids.includes(f.id));}
 function title(en,zh,description=''){return `<div class="page-heading"><p class="eyebrow">${t('YOUR MATHEMATICS WORKSPACE','你的數學學習空間')}</p><h1>${t(en,zh)}</h1>${description?`<p class="lede">${description}</p>`:''}</div>`;}
@@ -1190,7 +1200,7 @@ root.addEventListener('click',async e=>{
  if(control.type==='submit'&&control.form)return;
  try{
   if(action==='language'){lang=lang==='en'?'zh':'en';const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(null,'',url);render();}
-  if(action==='menu'){menuOpen=!menuOpen;document.querySelector('.sidebar').classList.toggle('open',menuOpen);document.querySelector('.mobile-menu')?.setAttribute('aria-expanded',String(menuOpen));document.querySelector(menuOpen?'.sidebar a':'.mobile-menu')?.focus();}
+  if(action==='menu')setMenu(!menuOpen);
   if(action==='clear-filters'){filters={q:'',year:'all',classification:'all'};saveFilters();go('catalogue');render();}
   if(action==='start-topic'){const fs=families.filter(f=>f.topic===control.dataset.topic);start((fs.some(f=>!f.development)?fs.filter(f=>!f.development):fs).map(f=>f.id),'practice',4);}
   if(action==='angles-practice'||action==='angles-check')start(angleFamilies.map(f=>f.id),action==='angles-check'?'check':'practice',6);
@@ -1236,7 +1246,23 @@ root.addEventListener('click',async e=>{
 });
 window.addEventListener('hashchange',()=>{currentFeedback=null;render();document.querySelector('#main')?.focus();window.scrollTo(0,0);});
 window.addEventListener('storage',e=>{if(e.key===PREFIX+profile.id){storageIssue='conflict';updateStorageNotice();}});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuOpen){menuOpen=false;document.querySelector('.sidebar')?.classList.remove('open');document.querySelector('.mobile-menu')?.setAttribute('aria-expanded','false');document.querySelector('.mobile-menu')?.focus();}});
+// The skip link is an in-page focus action, not an application route.
+window.addEventListener('click',e=>{
+ if(e.target.closest?.('a.skip[href="#main"]')){e.preventDefault();if(menuOpen)setMenu(false);document.querySelector('#main')?.focus();}
+});
+window.addEventListener('keydown',e=>{
+ if(!menuOpen)return;
+ if(e.key==='Escape'){e.preventDefault();setMenu(false);}
+ if(e.key==='Tab'){
+  const controls=[...document.querySelectorAll('.sidebar a[href], .sidebar button')].filter(el=>el.getClientRects().length&&!el.disabled);
+  const first=controls[0],last=controls.at(-1);
+  if(!first)return;
+  const current=document.activeElement;
+  if(e.shiftKey&&(current===first||!controls.includes(current))){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&(current===last||!controls.includes(current))){e.preventDefault();first.focus();}
+ }
+});
+window.addEventListener('resize',()=>{if(menuOpen&&window.innerWidth>900)setMenu(false);});
 try{
  const embedded=document.querySelector('#embedded-curriculum');
  if(embedded)catalogue=JSON.parse(embedded.textContent).records;

@@ -42,6 +42,16 @@ function notice(){return storageIssue?`<div class="notice warning" role="status"
 function updateStorageNotice(){const el=document.querySelector('#storage-notice');if(el)el.innerHTML=notice();}
 function seed(){return Date.now().toString(36)+'-'+crypto.getRandomValues(new Uint32Array(1))[0].toString(36);}
 function go(hash){currentFeedback=null;if(location.hash==='#'+hash)render();else location.hash=hash;}
+function setMenu(open){
+ menuOpen=open;
+ const sidebar=document.querySelector('.sidebar'),column=document.querySelector('.main-column');
+ sidebar?.classList.toggle('open',open);
+ if(column)column.inert=open;
+ if(open){sidebar?.setAttribute('role','dialog');sidebar?.setAttribute('aria-modal','true');}
+ else {sidebar?.removeAttribute('role');sidebar?.removeAttribute('aria-modal');}
+ document.querySelector('.mobile-menu')?.setAttribute('aria-expanded',String(open));
+ document.querySelector(open?'.sidebar a':'.mobile-menu')?.focus();
+}
 function active(){const id=location.hash.split('/')[1];return profile.sessions.find(s=>s.id===id);}
 function selected(ids){return families.filter(f=>ids.includes(f.id));}
 function title(en,zh,description=''){return `<div class="page-heading"><p class="eyebrow">${t('YOUR MATHEMATICS WORKSPACE','你的數學學習空間')}</p><h1>${t(en,zh)}</h1>${description?`<p class="lede">${description}</p>`:''}</div>`;}
@@ -178,7 +188,7 @@ root.addEventListener('click',async e=>{
  if(control.type==='submit'&&control.form)return;
  try{
   if(action==='language'){lang=lang==='en'?'zh':'en';const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(null,'',url);render();}
-  if(action==='menu'){menuOpen=!menuOpen;document.querySelector('.sidebar').classList.toggle('open',menuOpen);document.querySelector('.mobile-menu')?.setAttribute('aria-expanded',String(menuOpen));document.querySelector(menuOpen?'.sidebar a':'.mobile-menu')?.focus();}
+  if(action==='menu')setMenu(!menuOpen);
   if(action==='clear-filters'){filters={q:'',year:'all',classification:'all'};saveFilters();go('catalogue');render();}
   if(action==='start-topic'){const fs=families.filter(f=>f.topic===control.dataset.topic);start((fs.some(f=>!f.development)?fs.filter(f=>!f.development):fs).map(f=>f.id),'practice',4);}
   if(action==='angles-practice'||action==='angles-check')start(angleFamilies.map(f=>f.id),action==='angles-check'?'check':'practice',6);
@@ -224,7 +234,23 @@ root.addEventListener('click',async e=>{
 });
 window.addEventListener('hashchange',()=>{currentFeedback=null;render();document.querySelector('#main')?.focus();window.scrollTo(0,0);});
 window.addEventListener('storage',e=>{if(e.key===PREFIX+profile.id){storageIssue='conflict';updateStorageNotice();}});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuOpen){menuOpen=false;document.querySelector('.sidebar')?.classList.remove('open');document.querySelector('.mobile-menu')?.setAttribute('aria-expanded','false');document.querySelector('.mobile-menu')?.focus();}});
+// The skip link is an in-page focus action, not an application route.
+window.addEventListener('click',e=>{
+ if(e.target.closest?.('a.skip[href="#main"]')){e.preventDefault();if(menuOpen)setMenu(false);document.querySelector('#main')?.focus();}
+});
+window.addEventListener('keydown',e=>{
+ if(!menuOpen)return;
+ if(e.key==='Escape'){e.preventDefault();setMenu(false);}
+ if(e.key==='Tab'){
+  const controls=[...document.querySelectorAll('.sidebar a[href], .sidebar button')].filter(el=>el.getClientRects().length&&!el.disabled);
+  const first=controls[0],last=controls.at(-1);
+  if(!first)return;
+  const current=document.activeElement;
+  if(e.shiftKey&&(current===first||!controls.includes(current))){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&(current===last||!controls.includes(current))){e.preventDefault();first.focus();}
+ }
+});
+window.addEventListener('resize',()=>{if(menuOpen&&window.innerWidth>900)setMenu(false);});
 try{
  const embedded=document.querySelector('#embedded-curriculum');
  if(embedded)catalogue=JSON.parse(embedded.textContent).records;
