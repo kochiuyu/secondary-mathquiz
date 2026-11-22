@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
+  "observed": [
+    "The homepage now presents one connected four-topic panel; English desktop appearance inspected.",
+    "English GE-L1 nonparallel angle-pair diagram inspected; sectors and P/Q/line labels were readable and no parallel marks were present.",
+    "Chinese GE-L3 manual proof figure inspected in the runner with a 390px outer frame; document client/scroll widths both 375px.",
+    "Chinese GE-L1 direct-link reload retained its expected heading.",
+    "English/Chinese angle student/key HTML: each 6 pages and questions 1–6, with no footer overlap or horizontal page overflow.",
+    "Text bounding rectangles in all 24 sample diagrams showed no overlapping label pairs. Chinese proof key/diagram visually inspected."
+  ],
+  "limits": [
+    "The label check applies to these retained samples, not every generated shape.",
+    "Actual PDF/physical printing remains pending.",
+    "Raw runner manual rows remain pending; scoped author observations are separate.",
+    "Independent mathematics/language/classroom review, native 200% zoom and spoken assistive output remain pending."
+  ]
+}

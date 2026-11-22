@@ -10,6 +10,15 @@ The proof constructs uAv through A parallel to BC. Alternate interior pairs give
 
 Rotation/reflection are presentation changes, not fresh question evidence. GE02 exposure also ignores unmeasured crossing slopes; the general GE06 proof has one exposure identity across redraws. Fixed and generated lesson models are recorded before separate checks. A studied general proof therefore remains practice evidence after redraw.
 
-All 59 Node checks pass: 1,800 new seed cases (not guaranteed unique tasks), 480 rendered geometry models, independent triangle/vector angles, pair-sector spans, directed left/right text under reflection, premise marks, coordinate/label anchors, exposure exhaustion, proof scoring, snapshots and app integration. The retained signed-number/expression/equation and legacy checks pass. Browser workflows: 21 planned, pending an actual current-build run. Generated HTML is not PDF acceptance.
+All 59 Node checks pass: 1,800 new seed cases (not guaranteed unique tasks), 480 rendered geometry models, independent triangle/vector angles, pair-sector spans, directed left/right text under reflection, premise marks, coordinate/label anchors, exposure exhaustion, proof scoring, snapshots and app integration. The retained signed-number/expression/equation and legacy checks pass. All 21 hosted browser workflows pass for the current source hash; the raw runner manual rows remain pending. Generated HTML is not PDF acceptance.
 
 English/Chinese six-family student/key HTML, six working lines and specifications are in `samples/angles`. Whole proof marks are manual. The four-topic pilot now has 24 curriculum families and 12 bilingual lessons, all author drafts. All 237 curriculum records remain planned; independent content/classroom review and actual PDF/physical printing remain pending.
+
+
+## Hosted review
+
+The final hosted run passes 21/21 workflows, with 0 failures and 0 blocked checks. Raw evidence is in `browser-hosted-angles-run.json`; exact source hash, tested commit and deployment run are in `release-identity.json`. The complete four-topic runtime retains earlier lessons, snapshots and evidence contracts.
+
+Scoped author observations are in `angles-visual-review.json`. The four English/Chinese student/key HTML samples each have 6 pages with questions 1–6, no question/footer overlap or horizontal page overflow, and no overlapping text-label rectangles in their 24 retained diagrams. The Chinese proof key and mobile proof diagram were inspected. These observations do not certify every generated label layout, actual PDF output, independent content quality or classroom effectiveness.
+
+The pilot's implementation phase now includes all four planned topics (24 families, 12 bilingual lessons). Its next phase is consolidation: actual PDF/physical-print review, mathematical/language review, keyboard/zoom/assistive checks and learner trials. All 237 objective coverage records remain planned.

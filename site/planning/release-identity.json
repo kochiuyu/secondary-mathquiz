@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.2d",
-  "state": "implemented-author-draft; hosted angle checks pending",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
   "families": [
     "GE01",
     "GE02",
@@ -33,13 +33,20 @@
     "geometry_render_cases": 480
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 21,
-    "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf"
+    "observed_pass": 21,
+    "fail": 0,
+    "blocked": 0,
+    "source_sha256": "476e1d9e53d334b1b23e263ab8f507a16a0eb21fb7522af4edd09f049c25b3bf",
+    "run": "e02343a1-f207-4487-bfd1-2763314a54b5",
+    "raw_report": "site/planning/browser-hosted-angles-run.json",
+    "overall_acceptance_record": "pending",
+    "manual_rows": "pending"
   },
   "review_limits": [
     "Independent mathematics/language and classroom review pending.",
-    "Actual PDF/physical printing, native 200% zoom and spoken assistive output pending.",
+    "Current angle HTML bounds pass; actual PDF/physical printing, native 200% zoom and spoken assistive output remain pending.",
     "Generated geometry and label anchors are checked; complete collision-free rendering for all shapes is not certified.",
     "Manual proof is never automatically correct; numeric correctness does not verify geometric reasons.",
     "All 237 curriculum coverage records remain planned; four implemented topics are not a completed secondary course."
@@ -80,5 +87,12 @@
         "actual_pdf": "pending"
       }
     ]
+  },
+  "publication": {
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#angles",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "d631d173d51cb1c4eea9b9095a8812caff8410cc",
+    "tested_deployment_run": 44974112876,
+    "deployment_result": "success"
   }
 }
