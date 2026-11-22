@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.4c",
-  "state": "implemented author draft; browser/layout execution and publication pending",
+  "state": "published author draft; hosted workflows and HTML layouts passed; independent review pending",
   "portable_source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
   "automated": {
     "tests": 83,
@@ -11,16 +11,24 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 33,
-    "observed_pass": 0,
-    "source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7"
+    "observed_pass": 33,
+    "fail": 0,
+    "blocked": 0,
+    "source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
+    "run": "81c82050-8ff3-45d0-a79b-b2dc95b22d7a",
+    "raw_report": "site/planning/browser-ratios-run.json",
+    "manual_rows": "pending",
+    "overall_acceptance_record": "pending"
   },
   "print_layout": {
-    "state": "generated HTML; current geometry/PDF acceptance pending",
+    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
     "documents": 4,
     "expected_pages": 150,
+    "pages_measured": 150,
     "source_sha256": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
+    "raw_report": "site/planning/ratios-print-layout.json",
     "actual_current_pdf": "pending"
   },
   "scope": {
@@ -33,8 +41,11 @@
     "Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending."
   ],
   "publication": {
-    "state": "pending",
+    "state": "published; deployment succeeded",
     "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#ratios",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "a994d3519eaa4f5cd58f5ec13d3d8802c325eb2f",
+    "tested_deployment_run": 45028571723,
+    "deployment_result": "success"
   }
 }

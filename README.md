@@ -10,7 +10,7 @@ English/Traditional Chinese mathematics lessons, practice and printable workshee
 
 The v0.12.0 seven-topic author-draft pilot has 48 curriculum question families and 23 bilingual lessons: basic computation, percentages, rates/ratios/proportions, directed numbers, expressions, linear equations and angles/parallel lines. Six development fixtures remain separately labelled. All 237 mapped objective records retain planned status.
 
-All 83 Node checks pass, including 2,400 independently checked rate/ratio variants. Thirty-three hosted workflows are defined; current-source execution is pending. Four combined English/Traditional Chinese student/key booklets have 150 generated HTML pages; current layout acceptance is pending. Historical reports retain their source identity.
+All 83 Node checks pass, including 2,400 independently checked rate/ratio variants. All 33 current-source hosted browser workflows pass. All four combined English/Traditional Chinese student/key booklets pass browser geometry checks (150 HTML pages); actual PDF/physical-print acceptance remains pending. Historical reports retain their source identity.
 
 The new topic covers common units, two/three-term sharing, unit rates, speed conversions, average speed, direct/inverse proportion and scale plans. Classification distinguishes supplied proportional models from increasing/decreasing counterexamples. Numeric renaming does not make a studied rule fresh. All explanations remain manually reviewed. Existing generators and saved snapshots remain supported.
 

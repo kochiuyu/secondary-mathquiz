@@ -12,7 +12,7 @@ Development commands:
     node tools/make-ratio-samples.mjs
     node tools/make-pilot-print-review.mjs
 
-Edit shell.html or source modules, then build default/portable/QA copies together. All 83 Node checks pass. The runner at qa/index.html defines 33 workflows; qa/print.html reviews four combined booklets (150 HTML pages). Current-source browser execution and layout acceptance are pending. See planning/release-ratios-v1.md for scope and actual evidence.
+Edit shell.html or source modules, then build default/portable/QA copies together. All 83 Node checks pass. The runner at qa/index.html defines 33 workflows; qa/print.html reviews four combined booklets (150 HTML pages). All 33 current-source hosted workflows and all 150 booklet HTML pages pass; source-matched raw reports are saved in planning. See planning/release-ratios-v1.md for scope and actual evidence.
 
 RP01–RP08 use generator version 1. Earlier generator versions, stored models, historical bundled fee snapshots and paper schema 1 remain supported. Language, title, order, marks, working lines and snapshots contribute to paper identity. Preserve specifications, HTML and source to retain exact historical output.
 
