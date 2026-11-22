@@ -1,34 +1,27 @@
 {
-  "version": "0.9.2",
+  "version": "0.9.3",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.3b",
-  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
-  "portable_source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
+  "milestone": "P2.3c",
+  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "portable_source_sha256": "e2913ba159dc217f810e13f3f5d0ba4d668ed34b006b44ac25ed3d3607e57d54",
   "automated": {
-    "tests": 60,
-    "pass": 60,
+    "tests": 63,
+    "pass": 63,
     "fail": 0
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
-    "planned_workflows": 22,
-    "observed_pass": 22,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "73e0e5b0c075624d35ebf24febef9a56a0854076f82f6ba350510c259850edd0",
-    "run": "14d5d1a0-00ce-45a4-83b2-4fc03cee7d77",
-    "raw_report": "site/planning/browser-hosted-print-run.json",
-    "manual_rows": "pending",
-    "overall_acceptance_record": "pending"
+    "state": "pending",
+    "planned_workflows": 23,
+    "observed_pass": 0,
+    "source_sha256": "e2913ba159dc217f810e13f3f5d0ba4d668ed34b006b44ac25ed3d3607e57d54",
+    "raw_report": "site/planning/browser-hosted-review-run.json"
   },
   "print_layout": {
-    "state": "HTML geometry passed; actual current PDF pending",
+    "state": "pending",
     "documents": 4,
-    "pages_measured": 84,
-    "families_per_language_and_document": 24,
-    "raw_report": "site/planning/print-layout-review.json",
-    "scope": "Retained deterministic samples only; not every generated variant",
+    "expected_pages": 84,
+    "raw_report": "site/planning/review-print-layout.json",
     "actual_current_pdf": "pending"
   },
   "scope": {
@@ -37,17 +30,22 @@
     "mapped_objective_records": 237,
     "coverage_state": "planned"
   },
+  "author_review": {
+    "scope": "Area-model review criteria and editable paper mark guidance; not a complete independent mathematics/language review",
+    "changes": [
+      "Rectangle and triangle guidance match the retained shape in both languages.",
+      "Zero-mark criteria omitted; one-mark reason tasks retain explicit manual review without an allocated reason mark.",
+      "Selection versus final-value labels follow the response contract."
+    ],
+    "snapshot_policy": "Generator version-1 question snapshots and answer contracts are unchanged; guidance is a rendering concern."
+  },
   "review_limits": [
-    "Only three retained signed-number PDFs (11 pages) have been inspected; they predate the print-style revision.",
-    "Current PDF/physical printing, native 200% zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
-    "Fingerprints describe specifications, not byte-identical output across renderer versions."
+    "Actual current PDF/physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
+    "The next curriculum batch is a proposal from the retained ledger, with detailed source-scope checks required before authoring."
   ],
   "publication": {
-    "state": "published; deployment succeeded",
-    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
-    "print_review": "https://kochiuyu.github.io/secondary-mathquiz/site/qa/print.html",
-    "tested_source_commit": "98dedfef7ff473445979733f2bdf0f74da97dc62",
-    "tested_deployment_run": 44983367549,
-    "deployment_result": "success"
+    "state": "authorized; deployment pending",
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "branch": "main"
   }
 }

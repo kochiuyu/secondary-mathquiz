@@ -1,0 +1,9 @@
+# Marking and explanation review - v0.9.3
+
+The author review identified two concrete issues: one-mark questions displayed zero method marks, and the Traditional Chinese area-formula rubric asked a rectangle response to justify a triangle's half factor. The revised presentation uses shape-specific area guidance in lessons, practice and paper keys. One-mark tasks omit zero-mark criteria; written reasons still need review when no separate reason mark is allocated. Choice tasks label the allocated answer mark as selection, while numeric tasks use final value. Whole-response formula, sequence and proof tasks remain entirely manual.
+
+The correction is presentation guidance in `src/renderers/review.mjs`. Mathematical generators, answer contracts, seeds, question versions and retained snapshots are unchanged. Old papers and learner sessions continue to validate. A specification fingerprint does not promise byte-identical output across renderer revisions.
+
+All 63 Node checks pass, including shape-specific bilingual review, 24 families at four mark allocations in both languages, edited one-mark choices, whole-proof review, and retained-paper snapshot validation. The new A23 browser workflow covers lesson/practice criteria, the retained bilingual rectangle key and a one-mark choice edit. Current 23-workflow browser and 84-page HTML layout runs are pending until recorded. The layout runner and booklet URLs are content-versioned so older browser caches do not supply stale guidance.
+
+This is a scoped author correction, not independent acceptance of all mathematics or translation. PDF/physical-print, native zoom, spoken assistive output and learner trials remain pending. The next number-route batch is proposed in `../../planning/next-batch.md`: basic computation first, then percentages, rates/ratios/proportions and estimation. Detailed source scope and classifications must be checked before implementing each family.

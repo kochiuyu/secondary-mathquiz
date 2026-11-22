@@ -25,6 +25,15 @@ function inspect(doc,entry){
     assert(q.left>=box.left&&q.right<=box.right,'Question exceeds page bounds.');questionNumbers.push(Number(n));
     assert(question.querySelectorAll('.paper-work').length===(entry.kind==='Student'?6:0),'Student working lines or key separation changed.');
     assert(Boolean(question.querySelector('.solution'))===(entry.kind==='Solutions'),'Student/key solutions are mixed.');
+    if(entry.kind==='Solutions'){
+     const guide=question.querySelector('.solution').textContent;
+     assert(!/(^|[^\d])0\s*(?:marks?|分)/.test(guide),'Key contains a zero-mark criterion.');
+     if(section.topic==='expressions'&&n==='3'){
+      const rectangle=/rectangle|長方形/.test(question.querySelector('h2').textContent);
+      if(rectangle)assert(!/1\/2|triangle|三角形/.test(guide),'Rectangle review asks for triangle reasoning.');
+      else assert(guide.includes('1/2'),'Triangle review omits the half factor.');
+     }
+    }
    }
    for(const text of page.querySelectorAll('svg text')){
     const rect=text.getBoundingClientRect();assert(rect.left>=box.left&&rect.right<=box.right,'Diagram label exceeds page bounds.');
@@ -46,7 +55,7 @@ runButton.addEventListener('click',async()=>{
   for(const entry of generation.documents){
    summary.textContent='Checking '+entry.file;
    const row={file:entry.file,lang:entry.lang,kind:entry.kind,status:'pending',expected_pages:entry.pages};
-   try{const doc=await load('../samples/pilot-review/'+entry.file);row.pages=inspect(doc,entry);row.status='pass';}
+   try{const doc=await load('../samples/pilot-review/'+entry.file+'?build='+report.source_sha256.slice(0,12));row.pages=inspect(doc,entry);row.status='pass';}
    catch(error){row.status='fail';row.error=error.message;}
    report.documents.push(row);const li=document.createElement('li');li.textContent=entry.file+': '+row.status+(row.error?' - '+row.error:' - '+row.pages.length+' pages');results.append(li);
   }

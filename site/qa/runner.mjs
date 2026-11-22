@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=673e3a373661';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=56300714d397';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -234,6 +234,32 @@ document.querySelector('#run').addEventListener('click',async()=>{
    assert(appDocument().activeElement===el('.mobile-menu'),'Escape did not return focus to the menu button.');
    click('[data-action="menu"]');frame.width='1120';await waitFor(()=>!el('.main-column').inert,'desktop resize releases the menu');
    return 'English/Chinese skip links preserved the route, answer form and draft; mobile focus boundaries, background isolation, Escape and desktop resize passed. Synthetic key events check handlers; native keyboard and spoken output remain separate.';
+  });
+  await step('A23',async()=>{
+   if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
+   await go('lesson/EX-L1','.lesson-model');
+   const rectangle=el('.lesson-model:last-child h3').textContent.includes('rectangle');
+   const lessonText=el('.lesson-model:last-child details').textContent;
+   assert(lessonText.includes('Manual review of the whole response'),'Lesson review criteria missing.');
+   assert(lessonText.includes('1/2')===!rectangle,'Lesson review criteria do not match the area shape.');
+   await startSession(['EX03'],'check',4);
+   const q=latestSession().items[0];
+   assert(el('#answer-form').textContent.includes('1/2')===(q.model.shape==='triangle'),'Practice rubric does not match the retained area model.');
+   click('[data-action="language"]');assert(el('#answer-form').textContent.includes('1/2')===(q.model.shape==='triangle'),'Chinese practice rubric does not match the retained shape.');
+   const spec=await (await fetch('../samples/expressions/en_Specification.json',{cache:'no-store'})).json();
+   assert(spec.items[2].question.model.shape==='rectangle','Expected retained rectangle sample.');
+   await go('paper','#paper-import');input('#paper-import',JSON.stringify(spec));click('[data-action="import-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'imported marking paper');
+   if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
+   for(const language of ['en','zh']){
+    change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'marking key language');
+    const key=el('#paper-pages').textContent,area=el('#paper-pages').querySelectorAll('.paper-question')[2].querySelector('.solution').textContent;
+    assert(!/(^|[^\d])0\s*(?:marks?|分)/.test(key),'Key contains zero-mark criteria.');
+    assert(!area.includes('1/2')&&!area.includes(language==='zh'?'三角形':'triangle'),'Rectangle key requests triangle reasoning.');
+   }
+   const equations=await (await fetch('../samples/equations/en_Specification.json',{cache:'no-store'})).json();input('#paper-import',JSON.stringify(equations));click('[data-action="import-paper"]');await waitFor(()=>appDocument()?.querySelector('#paper-pages')?.textContent.includes('Linear equations'),'imported selection paper');
+   change('[data-paper-index="0"][data-field="marks"]','1');const edited=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===edited.slice(0,12),'edited-mark key');
+   const guide=el('#paper-pages .paper-question .solution').textContent;assert(guide.includes('Selection: 1 mark')&&guide.includes('no separate reason mark'),'One-mark choice guidance lost manual reason review.');
+   return 'Lesson and English/Chinese practice criteria follow the actual area shape; retained rectangle paper/key and edited one-mark selection keep manual review without zero-mark criteria. Version-1 question snapshots remain valid.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}
