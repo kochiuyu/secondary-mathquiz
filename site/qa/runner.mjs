@@ -26,8 +26,11 @@ function latestSession(){return currentProfile().sessions.at(-1);}
 async function startSession(ids,mode='practice',count=4){
  await go('setup/'+mode,'#session-setup');const form=el('#session-setup');
  form.querySelectorAll('[name="family"]').forEach(x=>x.checked=ids.includes(x.value));form.querySelector('[name="count"]').value=String(count);
- const previous=currentProfileSafe()?.sessions.length||0;form.requestSubmit();
- await waitFor(()=>appDocument()?.querySelector('#answer-form'),'session form');assert(currentProfile().sessions.length===previous+1,'A new session was not retained.');
+ const previous=currentProfileSafe()?.sessions.length||0,previousId=currentProfileSafe()?.sessions.at(-1)?.id;form.requestSubmit();
+ await waitFor(()=>{
+  const doc=appDocument(),session=currentProfileSafe()?.sessions.at(-1),language=doc?.documentElement.lang==='zh-Hant'?'zh':'en';
+  return session&&session.id!==previousId&&doc?.querySelector('#answer-form')&&doc.querySelector('.question-card h1')?.textContent===session.items[0].prompt[language];
+ },'new session question');assert(currentProfile().sessions.length===previous+1,'A new session was not retained.');
 }
 function currentProfileSafe(){const registry=stored('profiles');return stored(registry?.active||'learner-1');}
 function checkAnswer(value,reason=''){
