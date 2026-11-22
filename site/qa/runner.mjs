@@ -64,7 +64,7 @@ document.querySelector('#run').addEventListener('click',async()=>{
   run=crypto.randomUUID();prefix=acceptancePrefix(run);automatic=automaticChecks.map(([id])=>({id,status:'pending',notes:''}));
   // Manual observations belong to the current run, never carry a pass into a rerun.
   for(const [id] of manualChecks){document.querySelector('#status-'+id).value='pending';document.querySelector('#notes-'+id).value='';}
-  try{sourceHash=(await (await fetch('build.json')).json()).sourceHash||'';}catch{sourceHash='';}
+  try{sourceHash=(await (await fetch('build.json',{cache:'no-store'})).json()).sourceHash||'';}catch{sourceHash='';}
   frame.src=new URL('app.html?run='+run,location.href).href;
   const loaded=await step('A01',async()=>{await waitFor(()=>appDocument()?.querySelector('.home-hero'),'application overview');assert(appDocument().documentElement.lang==='en','Expected English on a fresh run.');assert(appDocument().querySelectorAll('nav [aria-current="page"]').length===1,'Expected exactly one current navigation item.');return 'Application overview rendered in the isolated test frame.';});
   if(!loaded)return;

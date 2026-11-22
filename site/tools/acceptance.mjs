@@ -3,6 +3,10 @@ import {createHash} from 'node:crypto';
 import {acceptanceApp,acceptanceVersion,acceptanceFaultApp} from '../qa/core.mjs';
 const root=new URL('../',import.meta.url),source=fs.readFileSync(new URL('Secondary_MathQuiz_Prototype.html',root),'utf8');
 const app=acceptanceApp(source);
+// Version the runner URL so GitHub Pages/browser caching cannot retain an older test script.
+const runnerHash=createHash('sha256').update(fs.readFileSync(new URL('qa/runner.mjs',root))).digest('hex').slice(0,12);
+const runnerIndex=new URL('qa/index.html',root),indexHTML=fs.readFileSync(runnerIndex,'utf8');
+fs.writeFileSync(runnerIndex,indexHTML.replace(/src="runner\.mjs(?:\?v=[^"]*)?"/,`src="runner.mjs?v=${runnerHash}"`));
 fs.writeFileSync(new URL('qa/app.html',root),app);
 for(const mode of ['denied','quota'])fs.writeFileSync(new URL('qa/'+mode+'.html',root),acceptanceFaultApp(source,mode));
 const script=app.match(/<script type="module">([\s\S]*?)<\/script>/)?.[1];
