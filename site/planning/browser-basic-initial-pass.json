@@ -1,0 +1,260 @@
+{
+  "kind": "secondary-mathquiz-acceptance",
+  "schema": 1,
+  "prototypeVersion": "0.10.0",
+  "run": "a64608c1-7fb2-4c00-b2d8-125cf59403d5",
+  "at": "2026-11-22T09:05:00.704Z",
+  "sourceHash": "d7c5997358fa578249ac796bb8535b6efb922b73c5346b9427b8062f7579efe5",
+  "status": "pending",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+    "language": "en-US",
+    "runnerViewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "applicationViewport": {
+      "width": 1120,
+      "height": 800
+    },
+    "basePath": "/secondary-mathquiz/site/qa/"
+  },
+  "automatic": [
+    {
+      "id": "A01",
+      "title": "Load the application",
+      "status": "pass",
+      "notes": "Application overview rendered in the isolated test frame.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A02",
+      "title": "Catalogue and cleared URL filters",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A03",
+      "title": "Draft, language switch and reload",
+      "status": "pass",
+      "notes": "English/Chinese draft, reload, requested answer form and feedback focus checked.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A04",
+      "title": "Reason review after editing",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A05",
+      "title": "Learner isolation",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A06",
+      "title": "Paper identity and reopen",
+      "status": "pass",
+      "notes": "Order, edited preview identity and specification reopen checked; PDF output remains manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A07",
+      "title": "Import cancellation and failed review",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A08",
+      "title": "390px page overflow",
+      "status": "pass",
+      "notes": "home: 0px; catalogue: 0px; setup/practice: 0px; paper: 0px. Visual inspection and 200% zoom remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A09",
+      "title": "Rendered fraction geometry",
+      "status": "pass",
+      "notes": "Native fraction stacking measured on screen; print and assistive output remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A10",
+      "title": "Three bilingual signed-number lessons and mobile reflow",
+      "status": "pass",
+      "notes": "All three lesson titles/models/routes checked in both languages; 390px overflow ≤2px; study exposure retained. Spoken accessibility and content review remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A11",
+      "title": "Six curriculum families, resume and separate reason evidence",
+      "status": "pass",
+      "notes": "All six version-1 curriculum families checked; bilingual draft/reload and independent/manual reason labels exercised.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A12",
+      "title": "Curriculum paper identity and bilingual key",
+      "status": "pass",
+      "notes": "Six curriculum snapshots, Chinese paper hash, number line and contextual solution key rendered. Actual PDF pagination remains a manual observation.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A13",
+      "title": "Three bilingual expressions lessons and mobile reflow",
+      "status": "pass",
+      "notes": "All three expression lessons, model counts and 390px reflow checked in English/Traditional Chinese.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A14",
+      "title": "Manual expressions, draft review and scoring separation",
+      "status": "pass",
+      "notes": "All six expression families exercised; manual responses stayed ungraded, bilingual drafts survived, edits invalidated self-review, and automatic result remained 4/4.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A15",
+      "title": "Expressions paper and bilingual manual rubrics",
+      "status": "pass",
+      "notes": "Six expression snapshots, translated choices, sequence subscript and Chinese manual rubrics rendered; actual PDF remains a separate observation.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A16",
+      "title": "Three bilingual equation lessons and mobile reflow",
+      "status": "pass",
+      "notes": "Three equation lessons, two models each, English/Traditional Chinese titles and 390px reflow checked; study exposure retained.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A17",
+      "title": "Six equation families, draft resume and separate reasoning",
+      "status": "pass",
+      "notes": "Six equation families checked; bilingual numeric draft/reload, manual-reason labels and edit invalidation exercised; automatic answer score 6/6.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A18",
+      "title": "Equation paper snapshots and bilingual key",
+      "status": "pass",
+      "notes": "Six retained equation snapshots, Chinese paper/key hash, substitution panels, fee tables and separate reasoning rubrics rendered; actual PDF remains pending.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A19",
+      "title": "Three bilingual angle lessons and mobile geometry",
+      "status": "pass",
+      "notes": "Three bilingual angle lessons, two geometry models each and 390px page reflow checked; content/diagram judgement remains manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A20",
+      "title": "Geometry answers, manual proof and freshness",
+      "status": "pass",
+      "notes": "Six geometry families, 5/5 automatic answer score, wholly manual proof, redraw exposure, bilingual proof draft/reload and review invalidation checked.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A21",
+      "title": "Geometry paper and wholly manual proof rubric",
+      "status": "pass",
+      "notes": "Six versioned geometry snapshots, Chinese paper/key hash, diagrams and manually reviewed proof rubric rendered; actual PDF remains separate.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A22",
+      "title": "Skip navigation and mobile keyboard focus",
+      "status": "pass",
+      "notes": "English/Chinese skip links preserved the route, answer form and draft; mobile focus boundaries, background isolation, Escape and desktop resize passed. Synthetic key events check handlers; native keyboard and spoken output remain separate.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A23",
+      "title": "Shape-specific and edited-mark review guidance",
+      "status": "pass",
+      "notes": "Lesson and English/Chinese practice criteria follow the actual area shape; retained rectangle paper/key and edited one-mark selection keep manual review without zero-mark criteria. Version-1 question snapshots remain valid.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A24",
+      "title": "Currency template parity and retained fee snapshots",
+      "status": "pass",
+      "notes": "Published HTML preserves all three currency markers in both languages; exact historical bundled fee papers import and reload without changing retained snapshots. Modular/bundled parity and tamper rejection also have Node regressions.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A25",
+      "title": "Basic bilingual lessons and mobile reflow",
+      "status": "pass",
+      "notes": "Three lessons in both languages, study exposure, roadmap and 390px reflow passed.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A26",
+      "title": "Eight basic families, resume and separate written reasons",
+      "status": "pass",
+      "notes": "All eight families answered, bilingual draft reloaded, reasoning remained separate and edits invalidated review.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A27",
+      "title": "Basic bilingual paper identity, powers and factor choices",
+      "status": "pass",
+      "notes": "Eight snapshots survived reload; language-sensitive identities, MathML powers, choice labels and manual criteria passed.",
+      "evidence": "browser-runner"
+    }
+  ],
+  "manual": [
+    {
+      "id": "M01",
+      "title": "Desktop and mobile appearance in both languages",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M02",
+      "title": "Keyboard, focus and screen-reader feedback",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M03",
+      "title": "200% browser zoom",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M04",
+      "title": "English and Chinese student/key PDFs, including six working lines",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M05",
+      "title": "Two real tabs and denied/full browser storage",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M06",
+      "title": "Repository subdirectory and direct-link reload",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    }
+  ],
+  "independentCurriculumReview": false,
+  "classroomReview": false,
+  "scope": "Browser workflow measurements plus reviewer-recorded observations. A saved report does not independently certify curriculum, translation or classroom readiness."
+}

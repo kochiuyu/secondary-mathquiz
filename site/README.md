@@ -1,6 +1,6 @@
 # Secondary MathQuiz — five-topic pilot v0.10.0
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects basic computation, directed numbers, expressions, equations and angles. There are 32 curriculum families and 15 bilingual author-draft lessons, plus six separately labelled development fixtures. All 71 Node checks pass. The 27 hosted workflows are pending for this new source; raw manual acceptance remains pending. See `planning/release-basic-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects basic computation, directed numbers, expressions, equations and angles. There are 32 curriculum families and 15 bilingual author-draft lessons, plus six separately labelled development fixtures. All 71 Node checks pass. The 27 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-basic-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
@@ -34,15 +34,17 @@ Opening a lesson records exposure, including fixed and generated models. A bound
 
 Manual tasks remain distinct from automatic final-answer scores. Editing a response clears its self-review label. Self-review requires recording the current response and comparing its model. Reading, hints, retries and reasons do not constitute independent mastery evidence.
 
-Sample HTML and specifications are in `samples/basic`, `samples/angles`, `samples/equations`, `samples/expressions` and `samples/signed`. New samples contain all six angle families and six working lines per task. Generated page counts are separate from browser/PDF acceptance. Physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.
+Sample HTML and specifications are in `samples/basic`, `samples/angles`, `samples/equations`, `samples/expressions` and `samples/signed`. Basic-computation samples contain all eight families; the other topic samples retain their six families. Every review task has six working lines. Generated page counts are separate from browser/PDF acceptance. Physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.
 
 
 The default `index.html` and portable page are generated from `shell.html`; edit the shell or modules, then rebuild. The QA runner and its definition module use content-versioned URLs to prevent stale browser scripts.
 
 Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `planning/release-navigation-v1.md` for current evidence.
 
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 32 families in English/Traditional Chinese student/key formats. Four updated booklet HTML layouts (108 pages) await current-source review; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
+Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 32 families in English/Traditional Chinese student/key formats. All four current booklet HTML layouts (108 pages) pass; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
 
 Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) has implemented basic computation as an author draft; percentages are next.
 
 The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 71 Node checks.
+
+Basic computation is published: eight families and three bilingual lessons, with 27/27 current-source hosted workflows and 108/108 booklet HTML pages passing. See `planning/release-basic-v1.md`. The first run uncovered test-runner transition/radio-control errors; its raw report is retained separately.

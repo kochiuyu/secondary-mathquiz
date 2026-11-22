@@ -3,26 +3,37 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.4a",
-  "state": "implemented-author-draft; current hosted workflows pending",
-  "portable_source_sha256": "d7c5997358fa578249ac796bb8535b6efb922b73c5346b9427b8062f7579efe5",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
+  "portable_source_sha256": "d03f3d3d0aa7360d482e206454ad2ecf9f9f7a6833f63728c7340078ffbbfb97",
   "automated": {
     "tests": 71,
     "pass": 71,
     "fail": 0
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 27,
-    "observed_pass": 0,
+    "observed_pass": 27,
     "raw_report": "site/planning/browser-basic-run.json",
-    "manual_rows": "pending"
+    "manual_rows": "pending",
+    "fail": 0,
+    "blocked": 0,
+    "source_sha256": "d03f3d3d0aa7360d482e206454ad2ecf9f9f7a6833f63728c7340078ffbbfb97",
+    "run": "daef4658-449e-4b3f-8cc4-8e94a63906fb",
+    "first_report": "site/planning/browser-basic-first-run.json",
+    "overall_acceptance_record": "pending",
+    "prior_success_report": "site/planning/browser-basic-initial-pass.json",
+    "repeat_diagnostic_report": "site/planning/browser-basic-final-first-run.json"
   },
   "print_layout": {
-    "state": "pending",
+    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
     "documents": 4,
     "expected_pages": 108,
     "raw_report": "site/planning/basic-print-layout.json",
-    "actual_current_pdf": "pending"
+    "actual_current_pdf": "pending",
+    "pages_measured": 108,
+    "prior_success_report": "site/planning/basic-print-layout-initial.json",
+    "source_sha256": "d03f3d3d0aa7360d482e206454ad2ecf9f9f7a6833f63728c7340078ffbbfb97"
   },
   "scope": {
     "curriculum_families": 32,
@@ -34,8 +45,12 @@
     "Actual current PDF/physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending."
   ],
   "publication": {
-    "state": "prepared; deployment pending",
+    "state": "published; deployment succeeded",
     "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "ffb51d653679a67620211d9f4a47f17694936383",
+    "tested_deployment_run": 45006710374,
+    "deployment_result": "success",
+    "application_source_commit": "2ba8d0d2728c7fcfeec8f56b966005eb6b6abc83"
   }
 }
