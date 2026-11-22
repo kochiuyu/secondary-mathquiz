@@ -1,62 +1,41 @@
 {
-  "version": "0.9.3",
+  "version": "0.10.0",
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
-  "milestone": "P2.3c",
-  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
-  "portable_source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
+  "milestone": "P2.4a",
+  "state": "implemented-author-draft; current hosted workflows pending",
+  "portable_source_sha256": "d7c5997358fa578249ac796bb8535b6efb922b73c5346b9427b8062f7579efe5",
   "automated": {
-    "tests": 65,
-    "pass": 65,
+    "tests": 71,
+    "pass": 71,
     "fail": 0
   },
   "browser": {
-    "state": "workflows-passed; manual acceptance pending",
-    "planned_workflows": 24,
-    "observed_pass": 24,
-    "fail": 0,
-    "blocked": 0,
-    "source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
-    "run": "2e5d1b95-63b5-4602-89f3-da7273bb9d04",
-    "raw_report": "site/planning/browser-hosted-review-run.json",
-    "first_report": "site/planning/browser-review-first-run.json",
-    "overall_acceptance_record": "pending",
+    "state": "pending",
+    "planned_workflows": 27,
+    "observed_pass": 0,
+    "raw_report": "site/planning/browser-basic-run.json",
     "manual_rows": "pending"
   },
   "print_layout": {
-    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
+    "state": "pending",
     "documents": 4,
-    "pages_measured": 84,
-    "raw_report": "site/planning/review-print-layout.json",
+    "expected_pages": 108,
+    "raw_report": "site/planning/basic-print-layout.json",
     "actual_current_pdf": "pending"
   },
   "scope": {
-    "curriculum_families": 24,
-    "bilingual_lessons": 12,
+    "curriculum_families": 32,
+    "bilingual_lessons": 15,
     "mapped_objective_records": 237,
     "coverage_state": "planned"
   },
-  "author_review": {
-    "scope": "Area-model review criteria and editable paper mark guidance; not a complete independent mathematics/language review",
-    "changes": [
-      "Rectangle and triangle guidance match the retained shape in both languages.",
-      "Zero-mark criteria omitted; one-mark reason tasks retain explicit manual review without an allocated reason mark.",
-      "Selection versus final-value labels follow the response contract.",
-      "Bundling now preserves literal dollar signs in currency templates.",
-      "Exactly matching historical version-1 bundled EQ05/EQ06 fee snapshots can reopen without rewriting answers, models or text."
-    ],
-    "snapshot_policy": "Mathematical generators and answer contracts are unchanged. Validation additionally accepts only the exact known legacy fee-prompt variant; altered models, answers and arbitrary prompt edits remain rejected."
-  },
   "review_limits": [
-    "Actual current PDF/physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.",
-    "The next curriculum batch is a proposal from the retained ledger, with detailed source-scope checks required before authoring."
+    "Actual current PDF/physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending."
   ],
   "publication": {
-    "state": "published; deployment succeeded",
+    "state": "prepared; deployment pending",
     "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "tested_source_commit": "4d8df752b2e28c756fd0994ea11c9dcee2fd3a7b",
-    "tested_deployment_run": 44993758079,
-    "deployment_result": "success"
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
   }
 }

@@ -1,17 +1,34 @@
 {
-  "scope": "24 retained curriculum families; six working lines; four topic specifications concatenated using the production renderer; not a mixed-paper specification",
+  "scope": "32 retained curriculum families; six working lines; five topic specifications concatenated using the production renderer; not a mixed-paper specification",
   "documents": [
     {
       "file": "en_Student.html",
       "lang": "en",
       "kind": "Student",
-      "pages": 21,
+      "pages": 27,
       "sections": [
+        {
+          "topic": "basic",
+          "specification": "samples/basic/en_Specification.json",
+          "specification_sha256": "4978ff97bdfe57b2d545c0d083651475dc53ffbb3701b1e96519faac337b2599",
+          "first_pdf_page": 1,
+          "pages": 6,
+          "question_ids": [
+            "BC01",
+            "BC02",
+            "BC03",
+            "BC04",
+            "BC05",
+            "BC06",
+            "BC07",
+            "BC08"
+          ]
+        },
         {
           "topic": "signed",
           "specification": "samples/signed/en_Specification.json",
           "specification_sha256": "fabf00dee1c93c9e1cd9c7c220d6340cff017269d1fc3615a4683a29cd851728",
-          "first_pdf_page": 1,
+          "first_pdf_page": 7,
           "pages": 4,
           "question_ids": [
             "SN01",
@@ -26,7 +43,7 @@
           "topic": "expressions",
           "specification": "samples/expressions/en_Specification.json",
           "specification_sha256": "6f13d1ca256197fd3012d130c54d4eae07b23db46f19e3336c87fb833fe68734",
-          "first_pdf_page": 5,
+          "first_pdf_page": 11,
           "pages": 5,
           "question_ids": [
             "EX01",
@@ -41,7 +58,7 @@
           "topic": "equations",
           "specification": "samples/equations/en_Specification.json",
           "specification_sha256": "0c15627c5f7da0f7752e47dc6cbac4a751b6c1d9cf196a6fae2e4324fcfaccf2",
-          "first_pdf_page": 10,
+          "first_pdf_page": 16,
           "pages": 6,
           "question_ids": [
             "EQ01",
@@ -56,7 +73,7 @@
           "topic": "angles",
           "specification": "samples/angles/en_Specification.json",
           "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
-          "first_pdf_page": 16,
+          "first_pdf_page": 22,
           "pages": 6,
           "question_ids": [
             "GE01",
@@ -74,13 +91,30 @@
       "file": "en_Solutions.html",
       "lang": "en",
       "kind": "Solutions",
-      "pages": 21,
+      "pages": 27,
       "sections": [
+        {
+          "topic": "basic",
+          "specification": "samples/basic/en_Specification.json",
+          "specification_sha256": "4978ff97bdfe57b2d545c0d083651475dc53ffbb3701b1e96519faac337b2599",
+          "first_pdf_page": 1,
+          "pages": 6,
+          "question_ids": [
+            "BC01",
+            "BC02",
+            "BC03",
+            "BC04",
+            "BC05",
+            "BC06",
+            "BC07",
+            "BC08"
+          ]
+        },
         {
           "topic": "signed",
           "specification": "samples/signed/en_Specification.json",
           "specification_sha256": "fabf00dee1c93c9e1cd9c7c220d6340cff017269d1fc3615a4683a29cd851728",
-          "first_pdf_page": 1,
+          "first_pdf_page": 7,
           "pages": 4,
           "question_ids": [
             "SN01",
@@ -95,7 +129,7 @@
           "topic": "expressions",
           "specification": "samples/expressions/en_Specification.json",
           "specification_sha256": "6f13d1ca256197fd3012d130c54d4eae07b23db46f19e3336c87fb833fe68734",
-          "first_pdf_page": 5,
+          "first_pdf_page": 11,
           "pages": 5,
           "question_ids": [
             "EX01",
@@ -110,7 +144,7 @@
           "topic": "equations",
           "specification": "samples/equations/en_Specification.json",
           "specification_sha256": "0c15627c5f7da0f7752e47dc6cbac4a751b6c1d9cf196a6fae2e4324fcfaccf2",
-          "first_pdf_page": 10,
+          "first_pdf_page": 16,
           "pages": 6,
           "question_ids": [
             "EQ01",
@@ -125,7 +159,7 @@
           "topic": "angles",
           "specification": "samples/angles/en_Specification.json",
           "specification_sha256": "4d6c744ce6fa0f7602949a719a8f04ecc2f53a846a480c139ffbf8a30d56b327",
-          "first_pdf_page": 16,
+          "first_pdf_page": 22,
           "pages": 6,
           "question_ids": [
             "GE01",
@@ -143,13 +177,30 @@
       "file": "zh_Student.html",
       "lang": "zh",
       "kind": "Student",
-      "pages": 21,
+      "pages": 27,
       "sections": [
+        {
+          "topic": "basic",
+          "specification": "samples/basic/zh_Specification.json",
+          "specification_sha256": "738def21054ee85106164143b1c510aa3cd8824b9b9b4e8207e04eec12270622",
+          "first_pdf_page": 1,
+          "pages": 6,
+          "question_ids": [
+            "BC01",
+            "BC02",
+            "BC03",
+            "BC04",
+            "BC05",
+            "BC06",
+            "BC07",
+            "BC08"
+          ]
+        },
         {
           "topic": "signed",
           "specification": "samples/signed/zh_Specification.json",
           "specification_sha256": "ace7efa0a26b8f6532b20b3292db8745cac347e7d2fa490af28f7868bcef3590",
-          "first_pdf_page": 1,
+          "first_pdf_page": 7,
           "pages": 4,
           "question_ids": [
             "SN01",
@@ -164,7 +215,7 @@
           "topic": "expressions",
           "specification": "samples/expressions/zh_Specification.json",
           "specification_sha256": "b83cf82e9bdc2f98aaa3a50b1e78bbbaa4f577cc358b358b7c3e6d6ad027e632",
-          "first_pdf_page": 5,
+          "first_pdf_page": 11,
           "pages": 5,
           "question_ids": [
             "EX01",
@@ -179,7 +230,7 @@
           "topic": "equations",
           "specification": "samples/equations/zh_Specification.json",
           "specification_sha256": "4f3a1b0af3b780087bc47a90873d9bb02762142fc237ca44635255c1580af965",
-          "first_pdf_page": 10,
+          "first_pdf_page": 16,
           "pages": 6,
           "question_ids": [
             "EQ01",
@@ -194,7 +245,7 @@
           "topic": "angles",
           "specification": "samples/angles/zh_Specification.json",
           "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
-          "first_pdf_page": 16,
+          "first_pdf_page": 22,
           "pages": 6,
           "question_ids": [
             "GE01",
@@ -212,13 +263,30 @@
       "file": "zh_Solutions.html",
       "lang": "zh",
       "kind": "Solutions",
-      "pages": 21,
+      "pages": 27,
       "sections": [
+        {
+          "topic": "basic",
+          "specification": "samples/basic/zh_Specification.json",
+          "specification_sha256": "738def21054ee85106164143b1c510aa3cd8824b9b9b4e8207e04eec12270622",
+          "first_pdf_page": 1,
+          "pages": 6,
+          "question_ids": [
+            "BC01",
+            "BC02",
+            "BC03",
+            "BC04",
+            "BC05",
+            "BC06",
+            "BC07",
+            "BC08"
+          ]
+        },
         {
           "topic": "signed",
           "specification": "samples/signed/zh_Specification.json",
           "specification_sha256": "ace7efa0a26b8f6532b20b3292db8745cac347e7d2fa490af28f7868bcef3590",
-          "first_pdf_page": 1,
+          "first_pdf_page": 7,
           "pages": 4,
           "question_ids": [
             "SN01",
@@ -233,7 +301,7 @@
           "topic": "expressions",
           "specification": "samples/expressions/zh_Specification.json",
           "specification_sha256": "b83cf82e9bdc2f98aaa3a50b1e78bbbaa4f577cc358b358b7c3e6d6ad027e632",
-          "first_pdf_page": 5,
+          "first_pdf_page": 11,
           "pages": 5,
           "question_ids": [
             "EX01",
@@ -248,7 +316,7 @@
           "topic": "equations",
           "specification": "samples/equations/zh_Specification.json",
           "specification_sha256": "4f3a1b0af3b780087bc47a90873d9bb02762142fc237ca44635255c1580af965",
-          "first_pdf_page": 10,
+          "first_pdf_page": 16,
           "pages": 6,
           "question_ids": [
             "EQ01",
@@ -263,7 +331,7 @@
           "topic": "angles",
           "specification": "samples/angles/zh_Specification.json",
           "specification_sha256": "4e7749745ac7cf48e92176f046d18d7ee71061256317ccd77d12d1a377a75290",
-          "first_pdf_page": 16,
+          "first_pdf_page": 22,
           "pages": 6,
           "question_ids": [
             "GE01",

@@ -1,0 +1,430 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Basic computation - pilot draft",
+  "seed": "basic-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "BC01",
+        "seed": "basic-print-v1:0",
+        "version": 1,
+        "objective": "JS-1-1",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "divisibility",
+          "n": 8797,
+          "divisor": 4
+        },
+        "answer": "no",
+        "math": "8797",
+        "options": [
+          {
+            "id": "yes",
+            "label": {
+              "en": "Yes, divisible",
+              "zh": "可以整除"
+            }
+          },
+          {
+            "id": "no",
+            "label": {
+              "en": "No, not divisible",
+              "zh": "不能整除"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Is 8797 divisible by 4? State the digit test you used. You do not need to prove why the test works.",
+          "zh": "8797 能否被 4 整除？說明所用的判別方法；不須證明該方法為何成立。"
+        },
+        "hint": {
+          "en": "For 4 use the last two digits; for 8 use the last three; for 9 use the digit sum; for 6 check both 2 and 3.",
+          "zh": "4 看末兩位，8 看末三位，9 看各位數字之和；6 須同時通過 2 和 3 的判別。"
+        },
+        "solution": {
+          "en": "The number formed by the last two digits is 97; test whether it is divisible by 4. Therefore 8797 is not divisible by 4.",
+          "zh": "末兩位數組成的數是 97；檢查它能否被 4 整除。因此 8797不能被 4 整除。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Review the stated test and its application to this number. A proof of the general divisibility rule is not required.",
+          "zh": "評閱所述的判別方法及其在此數的應用；不要求證明一般的整除性規則。"
+        },
+        "diagram": {
+          "type": "basic-model",
+          "kind": "digits",
+          "n": 8797,
+          "divisor": 4
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "no"
+        },
+        "exposureKey": "BC01:{\"kind\":\"divisibility\",\"n\":8797,\"divisor\":4}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC02",
+        "seed": "basic-print-v1:1",
+        "version": 1,
+        "objective": "JS-1-2",
+        "marks": 1,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "power",
+          "mode": "value",
+          "base": 4,
+          "exponent": 3
+        },
+        "answer": "64",
+        "math": "4^3",
+        "prompt": {
+          "en": "Evaluate the given power. Enter its final numerical value.",
+          "zh": "計算這個乘方，輸入最終數值。"
+        },
+        "hint": {
+          "en": "The exponent counts equal factors; it does not mean multiply the base by the exponent.",
+          "zh": "指數表示相同因子的個數，並非把底數乘以指數。"
+        },
+        "solution": {
+          "en": "4^3 = 4 × 4 × 4 = 64. The base is 4; there are 3 equal factors.",
+          "zh": "4³ = 4 × 4 × 4 = 64。底數是 4，相同因子共有 3 個。"
+        },
+        "diagram": {
+          "type": "basic-model",
+          "kind": "power",
+          "base": 4,
+          "exponent": 3,
+          "value": null
+        },
+        "contract": {
+          "type": "number",
+          "answer": "64",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC02:{\"kind\":\"power\",\"mode\":\"value\",\"base\":4,\"exponent\":3}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC03",
+        "seed": "basic-print-v1:2",
+        "version": 1,
+        "objective": "JS-1-3",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "prime-factorisation",
+          "powers": [
+            2,
+            1,
+            1
+          ]
+        },
+        "math": "60",
+        "answer": "prime",
+        "options": [
+          {
+            "id": "composite",
+            "label": "4 × 3 × 5"
+          },
+          {
+            "id": "wrong-power",
+            "label": "2³ × 3 × 5"
+          },
+          {
+            "id": "prime",
+            "label": "2² × 3 × 5"
+          },
+          {
+            "id": "unit",
+            "label": "1 × 2² × 3 × 5"
+          }
+        ],
+        "prompt": {
+          "en": "Choose the prime factorisation of 60. Explain why the factors qualify and the product is correct.",
+          "zh": "選出 60 的質因數分解，並解釋因子為何符合要求及乘積為何正確。"
+        },
+        "hint": {
+          "en": "Every base must be prime. A product containing 1 or a composite factor is not a prime factorisation, even if its value matches.",
+          "zh": "每個底數都須是質數；即使乘積相同，含有 1 或合成因子的式子也不是質因數分解。"
+        },
+        "solution": {
+          "en": "60 = 2² × 3 × 5. Every base is prime and the product is 60. The factor 4 is composite; 1 is neither prime nor composite.",
+          "zh": "60 = 2² × 3 × 5。每個底數都是質數，乘積為 60。4 是合成數；1 既不是質數，也不是合成數。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Review that all bases are prime and multiplication reconstructs the original number. Accept prime factors in a different order.",
+          "zh": "檢查所有底數均為質數，且乘積等於原數；接受不同排列次序的質因數。"
+        },
+        "diagram": {
+          "type": "basic-model",
+          "kind": "split",
+          "n": 60,
+          "left": 2,
+          "right": 30
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "prime"
+        },
+        "exposureKey": "BC03:{\"kind\":\"prime-factorisation\",\"powers\":[2,1,1]}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC04",
+        "seed": "basic-print-v1:3",
+        "version": 1,
+        "objective": "JS-1-4",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "gcd",
+          "numbers": [
+            20,
+            72,
+            40
+          ]
+        },
+        "answer": "4",
+        "math": "20, 72, 40",
+        "prompt": {
+          "en": "Find the greatest common divisor (GCD, also HCF) of all 3 numbers. Use prime factorisation and explain your choice of factors.",
+          "zh": "求這 3 個數的最大公因數（GCD，亦稱 HCF）。用質因數分解，並解釋因子的選擇。"
+        },
+        "hint": {
+          "en": "A common divisor must divide every input: use the smallest exponent of each prime across all inputs, including zero when absent.",
+          "zh": "公因數須能整除每個數：每個質因數取所有輸入中的最小指數，缺少時指數為 0。"
+        },
+        "solution": {
+          "en": "20 = 2² × 5; 72 = 2³ × 3²; 40 = 2³ × 5. Use only factors shared by every input, at their smallest exponents. GCD = 4 = 2².",
+          "zh": "20 = 2² × 5; 72 = 2³ × 3²; 40 = 2³ × 5。只用每個數共有的質因數，各取最小指數。最大公因數 = 4 = 2²。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Review the factorisation and the exponent choice across every input, including a third input when present. The automatic final-value check does not verify the method.",
+          "zh": "評閱質因數分解及所有輸入的指數選擇；有第三個數時也須計入。自動核對最終數值不會核實方法。"
+        },
+        "diagram": {
+          "type": "basic-model",
+          "kind": "inputs",
+          "numbers": [
+            20,
+            72,
+            40
+          ],
+          "operation": "GCD"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "4",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC04:{\"kind\":\"gcd\",\"numbers\":[20,40,72]}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC05",
+        "seed": "basic-print-v1:4",
+        "version": 1,
+        "objective": "JS-1-4",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "lcm",
+          "numbers": [
+            120,
+            90,
+            40
+          ]
+        },
+        "answer": "360",
+        "math": "120, 90, 40",
+        "prompt": {
+          "en": "Find the least common multiple (LCM) of all 3 numbers. Use prime factorisation and explain your choice of factors.",
+          "zh": "求這 3 個數的最小公倍數（LCM）。用質因數分解，並解釋因子的選擇。"
+        },
+        "hint": {
+          "en": "A common multiple must contain each input: use the largest exponent needed for each prime across all inputs.",
+          "zh": "公倍數須包含每個輸入的全部質因數：每個質因數取所有輸入中所需的最大指數。"
+        },
+        "solution": {
+          "en": "120 = 2³ × 3 × 5; 90 = 2 × 3² × 5; 40 = 2³ × 5. Use every required prime, at its largest exponent. LCM = 360 = 2³ × 3² × 5.",
+          "zh": "120 = 2³ × 3 × 5; 90 = 2 × 3² × 5; 40 = 2³ × 5。用所有需要的質因數，各取最大指數。最小公倍數 = 360 = 2³ × 3² × 5。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Review the factorisation and the exponent choice across every input, including a third input when present. The automatic final-value check does not verify the method.",
+          "zh": "評閱質因數分解及所有輸入的指數選擇；有第三個數時也須計入。自動核對最終數值不會核實方法。"
+        },
+        "diagram": {
+          "type": "basic-model",
+          "kind": "inputs",
+          "numbers": [
+            120,
+            90,
+            40
+          ],
+          "operation": "LCM"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "360",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC05:{\"kind\":\"lcm\",\"numbers\":[40,90,120]}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC06",
+        "seed": "basic-print-v1:5",
+        "version": 1,
+        "objective": "JS-1-5",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "math": "[(12 - 2) - (4 + 2)] × 2",
+        "model": {
+          "kind": "nested",
+          "mode": "nested-product",
+          "a": 12,
+          "b": 2,
+          "c": 4,
+          "d": 2,
+          "e": 2
+        },
+        "answer": "8",
+        "prompt": {
+          "en": "Calculate the final value. Follow the nested grouping and show the key steps on paper.",
+          "zh": "計算最終數值，依多重括號的組合次序運算，並在紙上列出關鍵步驟。"
+        },
+        "hint": {
+          "en": "Work from the innermost brackets outwards. Multiplication/division share precedence and run left to right, as do addition/subtraction.",
+          "zh": "由最內層括號開始向外處理；乘除同級由左至右，加減同級也由左至右。"
+        },
+        "solution": {
+          "en": "12 - 2 = 10; 4 + 2 = 6; 10 - 6 = 4; 4 × 2 = 8.",
+          "zh": "12 - 2 = 10; 4 + 2 = 6; 10 - 6 = 4; 4 × 2 = 8。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "8",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC06:{\"kind\":\"nested\",\"mode\":\"nested-product\",\"a\":12,\"b\":2,\"c\":4,\"d\":2,\"e\":2}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC07",
+        "seed": "basic-print-v1:6",
+        "version": 1,
+        "objective": "JS-1-6",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "fractions",
+          "a": "3/4",
+          "b": "1/4",
+          "c": 2,
+          "d": "2/3",
+          "operation": "divide"
+        },
+        "answer": "3/4",
+        "math": "(3/4 + 1/4) ÷ (2 - 2/3)",
+        "prompt": {
+          "en": "Calculate exactly. Enter a final number or fraction; equivalent final fractions are accepted.",
+          "zh": "準確計算，輸入最終數值或分數；接受等值的最終分數。"
+        },
+        "hint": {
+          "en": "Use common denominators for addition/subtraction. For division, multiply by the reciprocal of the entire divisor.",
+          "zh": "加減先通分；除法須乘以整個除數的倒數。"
+        },
+        "solution": {
+          "en": "The brackets give 1 and 4/3. Then 1 ÷ (4/3) = 3/4.",
+          "zh": "兩組括號分別得 1 和 4/3，再算 1 ÷ (4/3) = 3/4。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "3/4",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC07:{\"kind\":\"fractions\",\"a\":\"3/4\",\"b\":\"1/4\",\"c\":2,\"d\":\"2/3\",\"operation\":\"divide\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "BC08",
+        "seed": "basic-print-v1:7",
+        "version": 1,
+        "objective": "JS-1-6",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "math": "3.6 + 4/4 × 0.4 - 0.2",
+        "model": {
+          "kind": "decimals",
+          "mode": "mixed",
+          "a": 36,
+          "b": 4,
+          "c": 4,
+          "d": 2
+        },
+        "answer": "19/5",
+        "prompt": {
+          "en": "Calculate exactly with the stated decimal/fraction values. Enter a final number or fraction, without rounding.",
+          "zh": "按所給小數／分數準確計算，輸入最終數值或分數，不作四捨五入。"
+        },
+        "hint": {
+          "en": "A terminating decimal is an exact fraction with denominator 10, 100, and so on. Convert forms when useful and preserve operation order.",
+          "zh": "有限小數可準確寫成以 10、100 等為分母的分數；可按需要轉換形式，並保留運算次序。"
+        },
+        "solution": {
+          "en": "Multiply 4/4 by 4/10 first. Then calculate 36/10 + 2/5 - 2/10 = 19/5.",
+          "zh": "先算 4/4 × 4/10，再算 36/10 + 2/5 - 2/10 = 19/5。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "19/5",
+          "form": "number-literal"
+        },
+        "exposureKey": "BC08:{\"kind\":\"decimals\",\"mode\":\"mixed\",\"a\":36,\"b\":4,\"c\":4,\"d\":2}"
+      },
+      "marks": 2,
+      "lines": 6
+    }
+  ]
+}

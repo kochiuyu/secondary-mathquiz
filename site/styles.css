@@ -15,3 +15,5 @@
 
 /* Text stays filled and legible when a diagram groups ticks in .ink. */
 .signed-numberline text{stroke:none}
+
+.basic-figure{margin:12px 0}.basic-cards{display:flex;flex-wrap:wrap;gap:8px}.basic-cards>span{border:1px solid #bdceca;border-radius:8px;padding:10px 14px;font-size:18px;max-width:100%;overflow-wrap:anywhere}.basic-figure figcaption{font-size:12px;margin-top:6px}.basic-lesson-tree svg{display:block;width:100%;max-height:210px}

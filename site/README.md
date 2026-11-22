@@ -1,6 +1,6 @@
-# Secondary MathQuiz — four-topic pilot v0.9.3
+# Secondary MathQuiz — five-topic pilot v0.10.0
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 65 Node checks pass. All 24 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects basic computation, directed numbers, expressions, equations and angles. There are 32 curriculum families and 15 bilingual author-draft lessons, plus six separately labelled development fixtures. All 71 Node checks pass. The 27 hosted workflows are pending for this new source; raw manual acceptance remains pending. See `planning/release-basic-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
@@ -12,20 +12,21 @@ Node 22 or later is sufficient, with no package installation:
 node tools/serve.mjs
 ```
 
-Open `http://127.0.0.1:5175/secondary-mathquiz/?lang=en#angles` (or `lang=zh`). The 24-case acceptance runner is `/secondary-mathquiz/qa/index.html`; it uses synthetic profiles and keeps manual observations separate. Opening the standalone HTML needs no server.
+Open `http://127.0.0.1:5175/secondary-mathquiz/?lang=en#angles` (or `lang=zh`). The 27-case acceptance runner is `/secondary-mathquiz/qa/index.html`; it uses synthetic profiles and keeps manual observations separate. Opening the standalone HTML needs no server.
 
 ```powershell
 node tools/build.mjs
 node --check tests/bundle-syntax.mjs
 node tools/verify.mjs
-node tools/make-angle-samples.mjs
+node tools/make-basic-samples.mjs
+node tools/make-pilot-print-review.mjs
 ```
 
 Rebuild after application-source changes. `qa/build.json` identifies the build, not a browser pass. `planning/release-identity.json` identifies this draft. Historical reports retain their original hashes.
 
 ## Saved versions and evidence
 
-P2 uses `secondary-mathquiz:p2:` local storage, preserving P1's namespace. Review/import an old P1 backup explicitly if wanted; selected-learner replacement requires its own confirmation. Legacy v1/v2 snapshots and paper schema 1 remain supported. Curriculum IDs SN01–SN06, EX01–EX06, EQ01–EQ06 and GE01–GE06 retain per-family generator version 1. Regeneration validates the complete retained snapshot.
+P2 uses `secondary-mathquiz:p2:` local storage, preserving P1's namespace. Review/import an old P1 backup explicitly if wanted; selected-learner replacement requires its own confirmation. Legacy v1/v2 snapshots and paper schema 1 remain supported. Curriculum IDs BC01–BC08, SN01–SN06, EX01–EX06, EQ01–EQ06 and GE01–GE06 retain per-family generator version 1. Regeneration validates the complete retained snapshot.
 
 Paper schema 1's `generatorVersion:2` is a compatibility marker; items retain their own generator version. Fingerprints identify complete specifications, not byte-identical output across renderer versions. Keep HTML, specifications and source together when preserving exact output.
 
@@ -33,15 +34,15 @@ Opening a lesson records exposure, including fixed and generated models. A bound
 
 Manual tasks remain distinct from automatic final-answer scores. Editing a response clears its self-review label. Self-review requires recording the current response and comparing its model. Reading, hints, retries and reasons do not constitute independent mastery evidence.
 
-Sample HTML and specifications are in `samples/angles`, `samples/equations`, `samples/expressions` and `samples/signed`. New samples contain all six angle families and six working lines per task. Generated page counts are separate from browser/PDF acceptance. Physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.
+Sample HTML and specifications are in `samples/basic`, `samples/angles`, `samples/equations`, `samples/expressions` and `samples/signed`. New samples contain all six angle families and six working lines per task. Generated page counts are separate from browser/PDF acceptance. Physical printing, native zoom, spoken assistive output and independent mathematics/language/classroom review remain pending.
 
 
 The default `index.html` and portable page are generated from `shell.html`; edit the shell or modules, then rebuild. The QA runner and its definition module use content-versioned URLs to prevent stale browser scripts.
 
 Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `planning/release-navigation-v1.md` for current evidence.
 
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. All four updated booklet HTML layouts (84 pages) pass; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
+Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 32 families in English/Traditional Chinese student/key formats. Four updated booklet HTML layouts (108 pages) await current-source review; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
 
-Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) starts with basic computation; it remains a proposal.
+Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) has implemented basic computation as an author draft; percentages are next.
 
-The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 65 Node checks.
+The standalone build preserves currency-template text. Exact historical bundled fee snapshots remain supported; the current HTML/module parity and legacy snapshot checks are part of the 71 Node checks.

@@ -1,3 +1,4 @@
+import {basicDiagram} from './basic-diagrams.mjs';
 import {angleDiagram} from './angles.mjs';
 import {signedNumberLine} from './number-line.mjs';
 import {equationDiagram} from './equation-diagrams.mjs';
@@ -9,7 +10,7 @@ export function math(text){
  const tokens=String(text).match(/\d+\/\d+|\d+(?:\.\d+)?|[A-Za-zαβγ]|[^\s]/g)||[],parts=[];
  for(let i=0;i<tokens.length;i++){
   const v=tokens[i];if(v==='²'&&parts.length){parts.push(`<msup>${parts.pop()}<mn>2</mn></msup>`);continue;}if(v==='ₙ'&&parts.length){parts.push(`<msub>${parts.pop()}<mi>n</mi></msub>`);continue;}
-  if(v==='^'&&parts.length&&/^[012]$/.test(tokens[i+1]||'')){parts.push(`<msup>${parts.pop()}<mn>${tokens[++i]}</mn></msup>`);continue;}
+  if(v==='^'&&parts.length&&/^[0-9?]$/.test(tokens[i+1]||'')){parts.push(`<msup>${parts.pop()}${tokens[i+1]==='?'?'<mo>?</mo>':'<mn>'+tokens[i+1]+'</mn>'}</msup>`);i++;continue;}
   parts.push(/^\d+\/\d+$/.test(v)?`<mfrac><mn>${v.split('/')[0]}</mn><mn>${v.split('/')[1]}</mn></mfrac>`:/^\d+(?:\.\d+)?$/.test(v)?`<mn>${v}</mn>`:/^[A-Za-zαβγ]$/.test(v)?`<mi>${v}</mi>`:`<mo>${escape(v)}</mo>`);
  }
  const body=parts.join('');
@@ -18,6 +19,7 @@ export function math(text){
 export function diagram(q,lang='en'){
  if(!q.diagram)return '';
  const d=q.diagram;
+ if(d.type==='basic-model')return basicDiagram(q,lang);
  if(d.type==='angle-geometry')return angleDiagram(q,lang);
  if(['equation-check','equation-steps','equation-balance','fee-table'].includes(d.type))return equationDiagram(q,lang);
  if(['area-formula','sequence-cards','term-table','input-output'].includes(d.type))return expressionDiagram(q,lang);

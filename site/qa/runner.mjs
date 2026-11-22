@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=9bfdc1ee7d01';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=5ac918b1081d';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -273,6 +273,43 @@ document.querySelector('#run').addEventListener('click',async()=>{
     assert((el('.question-card h1').textContent.match(/\$/g)||[]).length===3,'Rendered fee prompt lost currency markers.');
    }
    return 'Published HTML preserves all three currency markers in both languages; exact historical bundled fee papers import and reload without changing retained snapshots. Modular/bundled parity and tamper rejection also have Node regressions.';
+  });
+
+  await step('A25',async()=>{
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    await go('basic','[data-action="basic-check"]');assert(el('.lesson-grid').children.length===3,'Missing basic lessons.');
+    frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'basic mobile viewport');
+    for(const id of ['BC-L1','BC-L2','BC-L3']){
+     await go('lesson/'+id,'[data-action="basic-lesson-check"]');assert(el('.lesson-roadmap').querySelectorAll('a').length===3,'Missing basic roadmap.');assert(el('.lesson-explanation').textContent.length>60,'Brief basic explanation.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Basic lesson overflows at 390px.');
+     assert(currentProfile().studied.includes('lesson:'+id+':v1'),'Basic study exposure not retained.');
+    }
+   }
+   frame.width='1120';return 'Three lessons in both languages, study exposure, roadmap and 390px reflow passed.';
+  });
+  await step('A26',async()=>{
+   if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
+   await go('basic','[data-action="basic-check"]');click('[data-action="basic-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'eight-family basic check');
+   const s=latestSession();assert(s.items.length===8&&new Set(s.items.map(q=>q.id)).size===8,'Not all eight families present.');
+   input('#answer-input','yes');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'basic draft reload');assert(el('#answer-input').value==='yes'&&latestSession().id===s.id,'Basic draft changed on reload.');click('[data-action="language"]');
+   for(let i=0;i<8;i++){
+    const q=latestSession().items[i];checkAnswer(q.answer,q.manualReason?'Method and exponent choice need review.':'');assert(latestSession().responses[i].attempts.at(-1).status==='correct','Basic answer not accepted.');
+    if(q.manualReason){assert(latestSession().responses[i].manualReview===null,'Reason automatically verified.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Edited method');assert(latestSession().responses[i].manualReview===null,'Reason edit retained review.');}
+    click('[data-action="next"]');
+   }
+   assert(el('.result-grid').textContent.includes('8 / 8'),'Basic automatic denominator wrong.');return 'All eight families answered, bilingual draft reloaded, reasoning remained separate and edits invalidated review.';
+  });
+  await step('A27',async()=>{
+   await go('basic','[data-action="basic-paper"]');click('[data-action="basic-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'basic paper');
+   assert(currentProfile().paper.items.length===8,'Basic paper omitted a family.');const snapshot=JSON.stringify(currentProfile().paper);
+   await reloadApplication();await waitFor(()=>appDocument()?.querySelector('.paper-page'),'basic paper reopen');assert(JSON.stringify(currentProfile().paper)===snapshot,'Basic paper snapshots changed on reload.');
+   if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
+   for(const language of ['en','zh']){
+    change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'basic paper identity');
+    assert(el('#paper-pages').querySelectorAll('.paper-question').length===8,'Basic question numbering changed.');assert(el('#paper-pages').querySelectorAll('.solution').length===8,'Basic key incomplete.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Choice labels not translated.');assert(el('#paper-pages').querySelectorAll('msup').length>=1,'Power exponent not rendered as a superscript.');
+    const reason=el('#paper-pages .paper-question .solution').textContent;assert(reason.includes(language==='en'?'manual review':'人工'),'Basic reason lost manual status.');
+   }
+   return 'Eight snapshots survived reload; language-sensitive identities, MathML powers, choice labels and manual criteria passed.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

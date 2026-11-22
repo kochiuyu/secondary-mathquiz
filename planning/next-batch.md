@@ -2,7 +2,7 @@
 
 This is an implementation proposal based on the retained objective ledger in `site/curriculum/objectives.json`. It does not change any coverage status or add an official curriculum requirement. Detailed source boundaries and classifications must be checked against each retained record and explanatory-note reference before authoring a family. Independent review and current PDF/physical-print acceptance remain separate work.
 
-The four-topic pilot already connects directed numbers, expressions, equations and geometric reasoning. The next batch should supply the arithmetic preparation used by those topics, then develop percentage and proportional reasoning and estimation. Complete and publish one topic slice at a time.
+The earlier four-topic pilot already connects directed numbers, expressions, equations and geometric reasoning. The next batch should supply the arithmetic preparation used by those topics, then develop percentage and proportional reasoning and estimation. Complete and publish one topic slice at a time.
 
 | Order | Topic | Retained objectives | Reason for this order |
 | --- | --- | --- | --- |
@@ -13,7 +13,7 @@ The four-topic pilot already connects directed numbers, expressions, equations a
 
 ## First slice: basic computation
 
-Provisional family IDs are not selectable until implemented. Preserve the six existing development fixtures as development assets. The eight-family design below follows the six retained objective records rather than forcing every topic into the pilot's six-family size.
+BC01–BC08 are now implemented as author drafts in v0.10.0; see `topics/basic.md` and `site/planning/release-basic-v1.md` for actual bounds and evidence. The table below retains the original proposal. Preserve the six existing development fixtures as development assets. The eight-family design below follows the six retained objective records rather than forcing every topic into the pilot's six-family size.
 
 | Family | Objective | Proposed task and evidence | Required guard |
 | --- | --- | --- | --- |

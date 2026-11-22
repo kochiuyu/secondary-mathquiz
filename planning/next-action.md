@@ -1,11 +1,9 @@
-# Handoff - four-topic pilot v0.9.3 review consolidation
+# Handoff — basic-computation author draft v0.10.0
 
-The scoped marking review fixes shape-specific area explanations, removes zero-mark criteria, preserves manual review at one mark, and labels selection versus final-value marks correctly. All 65 Node checks pass. Question generator versions, snapshot validation and response contracts are unchanged. The pilot retains 24 families and 12 bilingual author-draft lessons.
+Basic computation adds BC01–BC08 and three bilingual lessons to the retained four-topic pilot: 32 curriculum families and 15 bilingual lessons in total. All 71 Node checks pass, including 2,400 independently checked basic variants. The six development fixtures remain separate, and all 237 objective coverage records remain planned.
 
-The revision is published: all 24 application workflows (A23 covers marking guidance; A24 covers currency templates and historical fee snapshots) and the four-booklet/84-page HTML layout/guidance run pass. Current release: `site/planning/release-review-v1.md` and `site/planning/release-identity.json`. Older print/navigation reports retain their original source hashes.
+The source brief is `planning/topics/basic.md`. Publish and verify 27 current-source hosted application workflows and four combined English/Traditional Chinese student/key booklets (108 HTML pages), preserving prior release reports. Current evidence is in `site/planning/release-identity.json` and `site/planning/release-basic-v1.md`.
 
-The next batch is proposed in `planning/next-batch.md`: basic computation (eight provisional families across JS-1-1 to JS-1-6), then percentages, rates/ratios/proportions and estimation. Next authoring action is the basic-computation source/scope brief, with exact objective classifications and explanatory-note boundaries. Implement one slice before broadening the bank.
+Next curriculum slice: percentages (JS-5-1/JS-5-2), beginning with a source/scope brief. Make the base quantity explicit, keep exact values, and exclude a zero recovery multiplier when a unique original value is requested. Then rates/ratios/proportions and approximation/estimation, as saved in `planning/next-batch.md`. Complete each slice before broadening the bank.
 
-Current PDF/physical-print, native zoom, spoken assistive output, independent mathematics/Traditional Chinese review and learner trials remain pending. These limitations do not prevent drafting the next batch's source-grounded plan. All 237 objective coverage records remain planned; six development fixtures remain separate.
-
-The first guidance run exposed a compiled currency-template mismatch. The bundler now uses literal replacement callbacks, and exact historical bundled fee snapshots are supported without relaxing model/answer validation. The failed run is retained in `site/planning/browser-review-first-run.json`; the successful current workflows are recorded for the corrected source hash in `site/planning/browser-hosted-review-run.json`.
+Actual current PDF/physical printing, native keyboard/zoom, spoken assistive output, independent mathematics/Traditional Chinese review and learner trials remain pending. Written reasons and methods remain manually reviewed; automatic values never certify them. Preserve existing generator versions and snapshots.

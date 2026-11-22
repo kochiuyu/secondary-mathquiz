@@ -26,7 +26,6 @@ async function waitForPaper(){
 }
 await import('../src/app/app.mjs');
 
-
 test('application routes, bilingual draft preservation, completion, catalogue and paper wiring',async()=>{
  assert.match(root.innerHTML,/A little clarity/);
  await click('menu');assert.match(root.innerHTML,/Close navigation/);await click('menu');
@@ -125,7 +124,7 @@ test('angle routes, manual proof, appearance exposure and five-answer score inte
   if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
   await click('next');
  }
- assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Four connected topics/);
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Five connected topics/);
 });
 
 test('skip navigation preserves the current route, content and answer draft',async()=>{
@@ -139,3 +138,19 @@ test('skip navigation preserves the current route, content and answer draft',asy
  assert.equal(location.hash,before.hash);assert.equal(root.innerHTML,before.html);assert.equal(JSON.stringify(profile()),before.profile);
  location.hash='home';
 });
+
+test('basic learning routes, eight-family checks, bilingual draft resume and matching paper integrate',async()=>{
+ const current=()=>JSON.parse(memory.get(PREFIX+JSON.parse(memory.get(PREFIX+'profiles')).active));
+ if(document.documentElement.lang!=='en')await click('language');
+ location.hash='basic';assert.match(root.innerHTML,/Practise all eight families/);
+ for(const id of ['BC-L1','BC-L2','BC-L3']){location.hash='lesson/'+id;assert.match(root.innerHTML,/basic-lesson-check/);assert.ok(current().studied.includes('lesson:'+id+':v1'));}
+ await click('basic-lesson-practice',{lesson:'BC-L3'});assert.match(location.hash,/#learn\//);assert.ok(current().sessions.at(-1).items.every(q=>['BC06','BC07','BC08'].includes(q.id)));
+ location.hash='basic';await click('basic-check');const sid=current().sessions.at(-1).id;assert.equal(current().sessions.at(-1).items.length,8);
+ input('answer-input','answer','1/3');await click('language');assert.equal(current().sessions.at(-1).responses[0].input,'1/3');await click('language');
+ for(let i=0;i<8;i++){const s=current().sessions.at(-1);submit('answer-form',{answer:s.items[i].answer,reason:s.items[i].manualReason?'Checked method':''});await click('next');}
+ assert.equal(current().sessions.at(-1).id,sid);assert.match(root.innerHTML,/8 \/ 8/);assert.ok(current().sessions.at(-1).responses.filter(r=>r.reason).every(r=>r.manualReview===null));
+ location.hash='basic';await click('basic-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.equal((node('#paper-pages').innerHTML.match(/class="paper-question"/g)||[]).length,8);
+ location.hash='home';
+});
+
+

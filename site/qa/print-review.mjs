@@ -20,7 +20,7 @@ function inspect(doc,entry){
    assert(footer.textContent.includes(section.specification_sha256.slice(0,12)),'Wrong paper fingerprint.');
    assert(footer.textContent.includes(`${i+1} / ${section.pages}`),'Wrong topic page numbering.');
    for(const question of page.querySelectorAll('.paper-question')){
-    const q=question.getBoundingClientRect(),n=question.querySelector('h2').textContent.match(/^([1-6])\./)?.[1];
+    const q=question.getBoundingClientRect(),n=question.querySelector('h2').textContent.match(/^(\d+)\./)?.[1];
     assert(q.bottom+8<foot.top,'Question overlaps the footer.');
     assert(q.left>=box.left&&q.right<=box.right,'Question exceeds page bounds.');questionNumbers.push(Number(n));
     assert(question.querySelectorAll('.paper-work').length===(entry.kind==='Student'?6:0),'Student working lines or key separation changed.');
@@ -42,7 +42,7 @@ function inspect(doc,entry){
    for(const svg of page.querySelectorAll('.signed-numberline'))assert(Math.abs(svg.getBoundingClientRect().height-130)<1,'Number-line print size changed.');
    rows.push({pdf_page:index+1,topic:section.topic,topic_page:i+1,questions:page.querySelectorAll('.paper-question').length,width_px:Math.round(box.width),height_px:Math.round(box.height),footer_clearance_px:Math.round(foot.top-Math.max(...[...page.querySelectorAll('.paper-question')].map(x=>x.getBoundingClientRect().bottom)))});
   }
-  assert(questionNumbers.join(',')==='1,2,3,4,5,6','Topic questions missing, duplicated or out of order.');
+  assert(questionNumbers.join(',')===section.question_ids.map((_,i)=>i+1).join(','),'Topic questions missing, duplicated or out of order.');
  }
  return rows;
 }
