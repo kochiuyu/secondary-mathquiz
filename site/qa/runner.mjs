@@ -161,7 +161,7 @@ document.querySelector('#run').addEventListener('click',async()=>{
    for(const language of ['en','zh-Hant']){
     if(appDocument().documentElement.lang!==language)click('[data-action="language"]');
     for(let i=0;i<3;i++){
-     await go('lesson/EQ-L'+(i+1),'.lesson-roadmap');assert(el('h1').textContent===names[language][i],'Equation lesson title mismatch.');assert(appDocument().querySelectorAll('.lesson-model').length===2,'Expected two equation models.');
+     await go('lesson/EQ-L'+(i+1),'.lesson-roadmap');await waitFor(()=>appDocument()?.querySelector('h1')?.textContent===names[language][i],'equation lesson title '+language+' '+i);assert(el('h1').textContent===names[language][i],'Equation lesson title mismatch.');assert(appDocument().querySelectorAll('.lesson-model').length===2,'Expected two equation models.');
      frame.width='390';await new Promise(resolve=>frame.contentWindow.requestAnimationFrame(()=>frame.contentWindow.requestAnimationFrame(resolve)));const doc=appDocument();assert(Math.max(doc.body.scrollWidth,doc.documentElement.scrollWidth)-doc.documentElement.clientWidth<=2,'Equation lesson horizontal overflow.');
     }
    }
