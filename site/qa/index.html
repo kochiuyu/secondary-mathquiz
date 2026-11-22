@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Signed pilot browser acceptance</title><link rel="stylesheet" href="review.css"><script type="module" src="runner.mjs"></script></head>
+<body><main>
+<h1>Signed pilot browser acceptance</h1>
+<p>Run the actual application with isolated test profiles. Production learner records are not used. Automated workflow measurements and human observations are recorded separately.</p>
+<p id="connection" role="status">Start the included server, then open <code>/qa/index.html</code>. No check is passed until it is executed.</p>
+<div class="controls"><button id="run">Run workflow checks</button><button id="export">Export evidence JSON</button><button id="clear">Clear this run’s test data</button></div>
+<p id="summary" role="status">Not run. Browser, accessibility and print acceptance remain pending.</p>
+<section aria-labelledby="measurements"><h2 id="measurements">Workflow measurements</h2><ol id="results"></ol></section>
+<section aria-labelledby="preview-title"><h2 id="preview-title">Inspect the application</h2>
+<div class="controls"><label>Frame width <select id="width"><option value="1120">Desktop · 1120px</option><option value="768">Tablet · 768px</option><option value="390">Mobile · 390px</option></select></label><button data-route="home">Overview</button><button data-route="catalogue">Curriculum</button><button data-route="paper">Paper</button><button id="language">Switch app language</button><button id="reload">Reload app</button></div>
+<p>The frame width changes its real layout viewport. Use the browser’s own zoom for the 200% check. Complete print/PDF inspection from the paper screen; this runner does not certify printing.</p>
+<div class="preview-scroll"><iframe id="application" title="Isolated acceptance application" width="1120" height="800"></iframe></div></section>
+<section aria-labelledby="manual-title"><h2 id="manual-title">Reviewer observations</h2><p>Leave unperformed checks pending. A recorded pass needs an observation note. These are your observations, not independent curriculum or language review.</p><div id="manual"></div></section>
+<p>No evidence is sent anywhere. Export contains test outcomes and browser metadata, without learner answers or a progress backup.</p>
+</main></body></html>

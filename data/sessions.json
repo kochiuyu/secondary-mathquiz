@@ -1,0 +1,415 @@
+{
+  "schema_version": 1,
+  "sessions": [
+    {
+      "id": "SN-L1",
+      "topic": "signed",
+      "title": {
+        "en": "Where is zero?",
+        "zh-Hant": "零在哪裏？"
+      },
+      "families": [
+        "SN01",
+        "SN02"
+      ],
+      "state": "design-draft",
+      "opening": "Read a temperature relative to zero; contrast −7 and −3.",
+      "goals": [
+        "Translate a reference point and direction into a signed value; state what zero represents.",
+        "Compare order on a number line rather than unsigned digit size."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Explain the reference and use left/right order; zero is neither positive nor negative.",
+      "separate_check": "Explain where the datum lies before selecting a signed value.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft",
+        "version": 1,
+        "source": "site/src/lessons/signed.mjs",
+        "review": "author checks pass; independent review pending"
+      }
+    },
+    {
+      "id": "SN-L2",
+      "topic": "signed",
+      "title": {
+        "en": "Moves, inverses and sign patterns",
+        "zh-Hant": "移動、逆運算與符號規律"
+      },
+      "families": [
+        "SN03",
+        "SN04"
+      ],
+      "state": "design-draft",
+      "opening": "Predict a negative subtraction and test the prediction on a number line.",
+      "goals": [
+        "Connect adding/subtracting a directed quantity with inverse movement, then calculate.",
+        "Use a multiplication pattern or inverse relation to justify product/quotient sign."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Subtracting a negative reverses its movement; multiplication/division signs agree with inverse products.",
+      "separate_check": "Calculate without a diagram after a worked model, then check by inverse operation.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft",
+        "version": 1,
+        "source": "site/src/lessons/signed.mjs",
+        "review": "author checks pass; independent review pending"
+      }
+    },
+    {
+      "id": "SN-L3",
+      "topic": "signed",
+      "title": {
+        "en": "A change is not a final value",
+        "zh-Hant": "變化不等於最後數值"
+      },
+      "families": [
+        "SN05",
+        "SN06"
+      ],
+      "state": "design-draft",
+      "opening": "Compare final temperature with the change from its initial value.",
+      "goals": [
+        "Plan operation order and bracket structure; compute an exact rational result.",
+        "Identify initial/final/reference quantities and distinguish final value from change."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Bracket structure controls operation order; initial + change = final.",
+      "separate_check": "Solve a new mixed calculation and a new contextual change before seeing solutions.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft",
+        "version": 1,
+        "source": "site/src/lessons/signed.mjs",
+        "review": "author checks pass; independent review pending"
+      }
+    },
+    {
+      "id": "EX-L1",
+      "topic": "expressions",
+      "title": {
+        "en": "Say it, group it, write it",
+        "zh-Hant": "說清、分組、寫成式"
+      },
+      "families": [
+        "EX01",
+        "EX02",
+        "EX03"
+      ],
+      "state": "design-draft",
+      "opening": "Compare three times a sum with the sum after multiplication; model a triangle formula.",
+      "goals": [
+        "Represent the order and grouping in a word phrase; distinguish subtraction order.",
+        "Interpret algebraic syntax in language; distinguish a product of a sum from a sum of products.",
+        "Define variables, coordinate a formula with a known measurement relation and explain its factors."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Brackets preserve meaning; ab means a×b; a fraction bar makes division grouping clear.",
+      "separate_check": "Translate a fresh phrase and explain a fresh formula; free two-variable work is manually reviewed.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; browser review pending",
+        "version": 1,
+        "source": "site/src/lessons/expressions.mjs",
+        "review": "46 Node checks pass; browser blocked; independent review pending"
+      }
+    },
+    {
+      "id": "EX-L2",
+      "topic": "expressions",
+      "title": {
+        "en": "A pattern is a proposal",
+        "zh-Hant": "規律是一個有理由的提議"
+      },
+      "families": [
+        "EX04",
+        "EX05"
+      ],
+      "state": "design-draft",
+      "opening": "Compare guessing a next term with evaluating a term from a stated general rule.",
+      "goals": [
+        "Infer and explain a possible pattern without asserting uniqueness from a finite prefix.",
+        "Distinguish the index from the term value and evaluate a supplied rule."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "A finite prefix permits different justified continuations; a supplied rule fixes the requested term.",
+      "separate_check": "Explain a continuation, then evaluate a fresh supplied odd/even/square/triangular rule.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; browser review pending",
+        "version": 1,
+        "source": "site/src/lessons/expressions.mjs",
+        "review": "46 Node checks pass; browser blocked; independent review pending"
+      }
+    },
+    {
+      "id": "EX-L3",
+      "topic": "expressions",
+      "title": {
+        "en": "Follow the processing rule",
+        "zh-Hant": "依規則處理輸入"
+      },
+      "families": [
+        "EX06",
+        "EX05"
+      ],
+      "state": "design-draft",
+      "opening": "Send the same input through two different explicitly stated machines.",
+      "goals": [
+        "Track an explicit processing rule from input to output; connect a rule/table/formula.",
+        "Distinguish the index from the term value and evaluate a supplied rule."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Input, processing and output have distinct roles; use the stated rule consistently.",
+      "separate_check": "Evaluate a new input without exposing the worked output; connect a table row to the rule.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; browser review pending",
+        "version": 1,
+        "source": "site/src/lessons/expressions.mjs",
+        "review": "46 Node checks pass; browser blocked; independent review pending"
+      }
+    },
+    {
+      "id": "EQ-L1",
+      "topic": "equations",
+      "title": {
+        "en": "What counts as a solution?",
+        "zh-Hant": "甚麼才是方程的解？"
+      },
+      "families": [
+        "EQ01",
+        "EQ02"
+      ],
+      "state": "design-draft",
+      "opening": "Test a candidate before learning an inverse-operation method.",
+      "goals": [
+        "Substitute a candidate into the original equality and compare both sides.",
+        "Choose inverse operations in reverse order and preserve equality; check a computed solution."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "A solution makes the original sides equal; apply the same valid operation to both sides.",
+      "separate_check": "Verify a fresh candidate and solve a new affine chain without a revealed model.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    },
+    {
+      "id": "EQ-L2",
+      "topic": "equations",
+      "title": {
+        "en": "Keep every step equal",
+        "zh-Hant": "每一步都保持相等"
+      },
+      "families": [
+        "EQ03",
+        "EQ04"
+      ],
+      "state": "design-draft",
+      "opening": "Repair a bracket error, then solve an equation with x on both sides.",
+      "goals": [
+        "Judge equality-preserving reasoning and explain a specific distribution error, rather than merely give a root.",
+        "Collect variable contributions across equality, handle brackets and compare two affine sides."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "A coefficient multiplies the whole bracket; collecting both sides must preserve equality.",
+      "separate_check": "Give a new final root and explain a different invalid step; reason evidence remains separate.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    },
+    {
+      "id": "EQ-L3",
+      "topic": "equations",
+      "title": {
+        "en": "Model, solve, interpret",
+        "zh-Hant": "建模、求解、解釋"
+      },
+      "families": [
+        "EQ05",
+        "EQ06"
+      ],
+      "state": "design-draft",
+      "opening": "Separate a rental fixed fee from a per-hour charge.",
+      "goals": [
+        "Define the unknown and encode a fixed charge plus a repeated rate as an equality.",
+        "Form a model, solve it and decide whether the value fits the stated real-world constraints."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Define the unknown and units, form the equality, solve, substitute, then check contextual feasibility.",
+      "separate_check": "Use a fresh situation; mark the final value separately from model and interpretation.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    },
+    {
+      "id": "GE-L1",
+      "topic": "angles",
+      "title": {
+        "en": "Name the relation before calculating",
+        "zh-Hant": "先辨關係，再求角度"
+      },
+      "families": [
+        "GE01",
+        "GE02"
+      ],
+      "state": "design-draft",
+      "opening": "Compare a vertical pair with a straight-line adjacent pair; identify pairs on nonparallel lines.",
+      "goals": [
+        "Identify the relevant local angle relation before calculating an unknown.",
+        "Recognise a transversal and corresponding/alternate-interior/same-side-interior pairs from position, even for nonparallel lines."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Local sums/equalities and angle-pair positions have different roles.",
+      "separate_check": "Find an angle with a written reason and classify a fresh rotated angle pair.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    },
+    {
+      "id": "GE-L2",
+      "topic": "angles",
+      "title": {
+        "en": "Given parallel or proving parallel?",
+        "zh-Hant": "已知平行，還是要證平行？"
+      },
+      "families": [
+        "GE03",
+        "GE04"
+      ],
+      "state": "design-draft",
+      "opening": "Put givens and desired conclusion side by side for a property and a test.",
+      "goals": [
+        "Use a given parallel premise and an identified angle pair to deduce a size with a reason.",
+        "Use angle data to establish or reject parallelism; distinguish a condition from a property with parallelism already given."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Known parallelism permits angle deductions; suitable angle data can establish parallelism.",
+      "separate_check": "Include valid, near-miss and insufficient-information claims; retain the stated angle relationships.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    },
+    {
+      "id": "GE-L3",
+      "topic": "angles",
+      "title": {
+        "en": "From a diagram to a deduction",
+        "zh-Hant": "由圖形建立推論"
+      },
+      "families": [
+        "GE05",
+        "GE06"
+      ],
+      "state": "design-draft",
+      "opening": "Draw a parallel through a triangle vertex and account for a straight angle.",
+      "goals": [
+        "Select triangle-sum or exterior-angle reasoning from the requested sector, and name valid reasons.",
+        "Build a short deductive chain from parallel-line and straight-angle facts, then derive the exterior-angle rule."
+      ],
+      "sequence": [
+        "Overview and why this matters",
+        "Readiness contrast; offer repair without locking access",
+        "Visual explanation and one worked model",
+        "Two guided contrasting tasks with support fading",
+        "Fresh check with no prior model exposure",
+        "Takeaway and a named next connection"
+      ],
+      "conclusion": "Triangle-sum and exterior-angle rules follow from prior facts; each step needs a reason.",
+      "separate_check": "Compute a fresh interior/exterior angle and write a proof outline; no numeric score certifies proof.",
+      "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
+      "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+    }
+  ]
+}

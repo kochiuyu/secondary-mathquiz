@@ -1,0 +1,301 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Expressions and patterns - pilot draft",
+  "seed": "expressions-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "EX01",
+        "seed": "expressions-print-v1:0",
+        "version": 1,
+        "objective": "JS-7-1",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "words",
+          "a": 6,
+          "b": 4,
+          "mode": "scale-sum"
+        },
+        "math": "x",
+        "answer": "6*(x+4)",
+        "prompt": {
+          "en": "Write an expression for 6 times the sum of x and 4.",
+          "zh": "以代數式表示「x 與 4 的和的 6 倍」。"
+        },
+        "solution": {
+          "en": "First form x + 4, then multiply the whole sum by 6: 6(x + 4). Equivalent expressions are accepted; expansion is not required.",
+          "zh": "先寫 x + 4，再把整個和乘以 6，得 6(x + 4)。可用等價代數式，不必展開。"
+        },
+        "contract": {
+          "type": "expression",
+          "answer": "6*(x+4)"
+        },
+        "hint": {
+          "en": "Identify what is being multiplied or subtracted as a whole. Preserve the order and grouping.",
+          "zh": "先找出整個被乘或被減的量，保留運算次序和分組。"
+        },
+        "exposureKey": "EX01:{\"kind\":\"words\",\"a\":6,\"b\":4,\"mode\":\"scale-sum\"}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EX02",
+        "seed": "expressions-print-v1:1",
+        "version": 1,
+        "objective": "JS-7-2",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "reading",
+          "mode": "two-variables"
+        },
+        "math": "bh",
+        "answer": "meaning",
+        "prompt": {
+          "en": "Choose the phrase that describes the expression.",
+          "zh": "選出能表達此代數式的文字片語。"
+        },
+        "options": [
+          {
+            "id": "sum",
+            "label": {
+              "en": "The sum of b and h",
+              "zh": "b 與 h 的和"
+            }
+          },
+          {
+            "id": "meaning",
+            "label": {
+              "en": "The product of b and h",
+              "zh": "b 與 h 的積"
+            }
+          },
+          {
+            "id": "quotient",
+            "label": {
+              "en": "b divided by h",
+              "zh": "b 除以 h"
+            }
+          }
+        ],
+        "contract": {
+          "type": "choice",
+          "answer": "meaning"
+        },
+        "hint": {
+          "en": "Read the operation and its grouping. Adjacent variable letters represent multiplication, not a two-digit number.",
+          "zh": "先讀運算及分組；相鄰的變量字母表示相乘，不是兩位數。"
+        },
+        "solution": {
+          "en": "bh means b × h, the product of b and h.",
+          "zh": "bh 即 b × h，是 b 與 h 的積。"
+        },
+        "exposureKey": "EX02:{\"kind\":\"reading\",\"mode\":\"two-variables\"}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EX03",
+        "seed": "expressions-print-v1:2",
+        "version": 1,
+        "objective": "JS-7-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "area-formula",
+          "shape": "rectangle"
+        },
+        "math": "A = ?",
+        "answer": "b*h",
+        "contract": {
+          "type": "manual"
+        },
+        "manualReason": true,
+        "prompt": {
+          "en": "A rectangle has length b and width h, both positive lengths. Complete its area formula A = __ and explain the roles of b and h.",
+          "zh": "長方形的長為 b、闊為 h，兩者均為正長度。完成面積公式 A = __，並解釋 b、h 的作用。"
+        },
+        "hint": {
+          "en": "Area combines the two perpendicular lengths by multiplication.",
+          "zh": "面積由兩條互相垂直的長度相乘而得。"
+        },
+        "solution": {
+          "en": "A = bh. Multiply length b by width h; the area has square units. hb is an equivalent formula.",
+          "zh": "A = bh，把長 b 乘以闊 h；面積使用平方單位。hb 是等價公式。"
+        },
+        "reasonRubric": {
+          "en": "Manual review of the whole response: variables have the stated meanings; the formula models area; the explanation justifies multiplication and, for a triangle, halving. Accept equivalent valid formulas.",
+          "zh": "整份作答需人工評閱：變量意思正確、公式能表示面積，並能解釋相乘及三角形面積的一半因數。接受合理的等價公式。"
+        },
+        "diagram": {
+          "type": "area-formula",
+          "shape": "rectangle"
+        },
+        "exposureKey": "EX03:{\"kind\":\"area-formula\",\"shape\":\"rectangle\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EX04",
+        "seed": "expressions-print-v1:3",
+        "version": 1,
+        "objective": "JS-7-3",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "open-sequence",
+          "rule": "even",
+          "start": 3,
+          "terms": [
+            6,
+            8,
+            10,
+            12
+          ]
+        },
+        "math": "6, 8, 10, 12, ?",
+        "answer": "14",
+        "contract": {
+          "type": "manual"
+        },
+        "manualReason": true,
+        "nonUnique": true,
+        "prompt": {
+          "en": "Suggest one possible next term. Explain a rule that fits all four given terms. Is that continuation forced by the four terms alone?",
+          "zh": "提出一個可能的下一項，並解釋符合所有四個已知項的規律。只憑這四項，延伸結果是否唯一？"
+        },
+        "hint": {
+          "en": "Look for a familiar number pattern or consecutive differences, but explain your chosen rule. A finite prefix does not force one continuation.",
+          "zh": "可觀察熟悉的數列或相鄰項的差，但要解釋所選規律。有限的已知項不能唯一確定延伸。"
+        },
+        "solution": {
+          "en": "One possible next term is 14, continuing consecutive even numbers. A different clearly explained rule fitting every given term may give a different continuation. The prefix alone does not force a unique next term.",
+          "zh": "一個可能的下一項是 14，按連續偶數延伸。若另一個清楚的規律符合所有已知項，也可以有不同的下一項；只憑有限項不能確定唯一延伸。"
+        },
+        "reasonRubric": {
+          "en": "Manual review: the rule must fit all four given terms and the proposed next term. Acknowledge non-uniqueness. A different consistent rule is not wrong merely because it differs from the model. No algebraic recurrence is required.",
+          "zh": "人工評閱：規律須符合所有四個已知項及所提下一項，並指出延伸並非唯一。其他一致的規律不會只因不同於參考例子而算錯；不要求代數遞推式。"
+        },
+        "diagram": {
+          "type": "sequence-cards",
+          "terms": [
+            6,
+            8,
+            10,
+            12
+          ]
+        },
+        "exposureKey": "EX04:{\"kind\":\"open-sequence\",\"rule\":\"even\",\"start\":3,\"terms\":[6,8,10,12]}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EX05",
+        "seed": "expressions-print-v1:4",
+        "version": 1,
+        "objective": "JS-7-3",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "general-term",
+          "rule": "triangular",
+          "n": 6
+        },
+        "answer": "21",
+        "math": "aₙ = n(n + 1)/2; n = 6",
+        "contract": {
+          "type": "number",
+          "answer": "21",
+          "form": "number-literal"
+        },
+        "prompt": {
+          "en": "The general term is supplied. Find a6, the term at position 6.",
+          "zh": "已給定數列通項。求第 6 項 a6。"
+        },
+        "hint": {
+          "en": "Replace every n in the supplied rule by the requested position. The index and the term value are different roles.",
+          "zh": "把規則中的每個 n 都換成指定項的位置；項的位置和項的值作用不同。"
+        },
+        "solution": {
+          "en": "Use n = 6 in n(n + 1)/2 to obtain 21. The explicit general term determines this value; it is not a guess from a prefix.",
+          "zh": "把 n = 6 代入 n(n + 1)/2，得 21。這個值由已知通項決定，不是僅憑前幾項猜測。"
+        },
+        "diagram": {
+          "type": "term-table",
+          "n": 6
+        },
+        "exposureKey": "EX05:{\"kind\":\"general-term\",\"rule\":\"triangular\",\"n\":6}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EX06",
+        "seed": "expressions-print-v1:5",
+        "version": 1,
+        "objective": "JS-7-4",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "machine",
+          "rule": "square-plus",
+          "b": -3,
+          "input": 3
+        },
+        "answer": "6",
+        "contract": {
+          "type": "number",
+          "answer": "6",
+          "form": "number-literal"
+        },
+        "math": "x² − 3; x = (3)",
+        "prompt": {
+          "en": "A machine follows this rule: square the whole input, then subtract 3. Find the output for input 3.",
+          "zh": "機器按規則處理：先把整個輸入值平方，再減去 3。輸入 3 時，求輸出。"
+        },
+        "hint": {
+          "en": "Follow the stated processing order. Put a negative input in brackets before squaring.",
+          "zh": "按指定次序處理；負的輸入值在平方前須放入括號。"
+        },
+        "solution": {
+          "en": "For input 3, the first operation gives 9; applying the remaining subtraction gives 6. The same input under the same rule gives the same output.",
+          "zh": "輸入 3，第一步得 9；再減去 3，得 6。相同輸入按同一規則會得到相同輸出。"
+        },
+        "diagram": {
+          "type": "input-output",
+          "input": 3,
+          "processing": {
+            "en": "square the whole input, then subtract 3",
+            "zh": "先把整個輸入值平方，再減去 3"
+          }
+        },
+        "exposureKey": "EX06:{\"kind\":\"machine\",\"rule\":\"square-plus\",\"b\":-3,\"input\":3}"
+      },
+      "marks": 1,
+      "lines": 6
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "runtime": "v24.22.1",
+  "exitCode": 0,
+  "testFiles": [
+    "tests/acceptance.test.mjs",
+    "tests/app.test.mjs",
+    "tests/expressions.test.mjs",
+    "tests/math.test.mjs",
+    "tests/signed.test.mjs",
+    "tests/state.test.mjs"
+  ],
+  "realBrowserReview": false,
+  "realPrintReview": false
+}

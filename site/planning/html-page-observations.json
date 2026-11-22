@@ -1,0 +1,110 @@
+{
+  "date": "2026-11-22",
+  "scope": "actual browser DOM geometry, not PDF or physical printing",
+  "documents": [
+    {
+      "document": "en_Student",
+      "pages": [
+        {
+          "page": 1,
+          "height": 1122.515625,
+          "last_question_bottom": 569.890625,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 2,
+          "height": 1122.515625,
+          "last_question_bottom": 631.34375,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 3,
+          "height": 1122.515625,
+          "last_question_bottom": 847.3046875,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 4,
+          "height": 1122.515625,
+          "last_question_bottom": 842.3046875,
+          "footer_top": 1075.78125
+        }
+      ]
+    },
+    {
+      "document": "en_Solutions",
+      "pages": [
+        {
+          "page": 1,
+          "height": 1122.515625,
+          "last_question_bottom": 909.328125,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 2,
+          "height": 1122.515625,
+          "last_question_bottom": 708.3046875,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 3,
+          "height": 1122.515625,
+          "last_question_bottom": 703.3046875,
+          "footer_top": 1075.78125
+        }
+      ]
+    },
+    {
+      "document": "zh_Student",
+      "pages": [
+        {
+          "page": 1,
+          "height": 1122.515625,
+          "last_question_bottom": 569.890625,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 2,
+          "height": 1122.515625,
+          "last_question_bottom": 631.34375,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 3,
+          "height": 1122.515625,
+          "last_question_bottom": 847.3046875,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 4,
+          "height": 1122.515625,
+          "last_question_bottom": 842.3046875,
+          "footer_top": 1075.78125
+        }
+      ]
+    },
+    {
+      "document": "zh_Solutions",
+      "pages": [
+        {
+          "page": 1,
+          "height": 1122.515625,
+          "last_question_bottom": 909.328125,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 2,
+          "height": 1122.515625,
+          "last_question_bottom": 708.3046875,
+          "footer_top": 1075.78125
+        },
+        {
+          "page": 3,
+          "height": 1122.515625,
+          "last_question_bottom": 703.3046875,
+          "footer_top": 1075.78125
+        }
+      ]
+    }
+  ]
+}

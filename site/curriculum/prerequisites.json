@@ -1,0 +1,3925 @@
+{
+  "status": "site proposal, mathematically self-checked; no enforced access gate",
+  "edges": [
+    {
+      "from": "JS-1-6",
+      "to": "JS-2-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Directed numbers: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-2-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Directed numbers: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-2-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Directed numbers: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-3-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Approximate values and numerical estimation: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-3-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Approximate values and numerical estimation: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-3-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Approximate values and numerical estimation: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-3-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Approximate values and numerical estimation: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "JS-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "JS-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "JS-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-4-2",
+      "to": "JS-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: recognise the concepts of rational and irrational numbers"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "JS-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-5-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Using percentages: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-5-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Using percentages: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-6-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rates, ratios and proportions: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-6-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rates, ratios and proportions: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-7-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Algebraic expressions: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-7-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Algebraic expressions: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-7-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Algebraic expressions: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-7-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Algebraic expressions: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-8-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-8-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-8-2",
+      "to": "JS-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in one unknown: formulate linear equations in one unknown from a problem situation"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-9-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "JS-9-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-9-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "JS-9-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-9-1",
+      "to": "JS-9-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: understand the concept of linear equations in two unknowns and their graphs"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-9-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "JS-9-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-9-1",
+      "to": "JS-9-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: understand the concept of linear equations in two unknowns and their graphs"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-9-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "JS-9-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "JS-9-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-9-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "JS-9-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-9-4",
+      "to": "JS-9-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear equations in two unknowns: formulate simultaneous linear equations in two unknowns from a problem situation"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-1",
+      "to": "JS-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the laws of positive integral indices"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-2",
+      "to": "JS-10-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the definitions of zero exponent and negative exponents"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "JS-10-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-10-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: understand the concept of power"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-10-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-10-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Laws of integral indices: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-11-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-1",
+      "to": "JS-11-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: understand the laws of positive integral indices"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-11-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-1",
+      "to": "JS-11-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: understand the laws of positive integral indices"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-10-1",
+      "to": "JS-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: understand the laws of positive integral indices"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "JS-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "JS-12-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-12-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: factorise polynomials"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "JS-12-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-12-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: factorise polynomials"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "JS-12-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-12-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Identities: factorise polynomials"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "JS-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "JS-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-13-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "JS-13-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "JS-13-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-13-2",
+      "to": "JS-13-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Formulae: use substitution to find the values of unknowns in the formulae"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-14-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-14-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-14-2",
+      "to": "JS-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: recognise the basic properties of inequalities"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "JS-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-2-2",
+      "to": "JS-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: perform mixed arithmetic operations of directed numbers"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "JS-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Linear inequalities in one unknown: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "JS-3-1",
+      "to": "JS-15-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: recognise the concept of approximate values"
+    },
+    {
+      "from": "JS-5-1",
+      "to": "JS-15-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: understand the concept of percentage changes"
+    },
+    {
+      "from": "JS-3-1",
+      "to": "JS-15-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: recognise the concept of approximate values"
+    },
+    {
+      "from": "JS-5-1",
+      "to": "JS-15-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: understand the concept of percentage changes"
+    },
+    {
+      "from": "JS-3-1",
+      "to": "JS-15-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: recognise the concept of approximate values"
+    },
+    {
+      "from": "JS-5-1",
+      "to": "JS-15-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: understand the concept of percentage changes"
+    },
+    {
+      "from": "JS-3-1",
+      "to": "JS-15-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: recognise the concept of approximate values"
+    },
+    {
+      "from": "JS-5-1",
+      "to": "JS-15-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Errors in measurement: understand the concept of percentage changes"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-16-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-16-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-16-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-16-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-16-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-16-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-16-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-16-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arc lengths and areas of sectors: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "JS-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-16-2",
+      "to": "JS-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: understand the formula for areas of sectors of circles"
+    },
+    {
+      "from": "JS-22-3",
+      "to": "JS-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concept of similar 2-D figures"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "JS-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-16-2",
+      "to": "JS-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: understand the formula for areas of sectors of circles"
+    },
+    {
+      "from": "JS-22-3",
+      "to": "JS-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concept of similar 2-D figures"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "JS-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-16-2",
+      "to": "JS-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: understand the formula for areas of sectors of circles"
+    },
+    {
+      "from": "JS-22-3",
+      "to": "JS-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concept of similar 2-D figures"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "JS-18-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-16-2",
+      "to": "JS-18-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: understand the formula for areas of sectors of circles"
+    },
+    {
+      "from": "JS-22-3",
+      "to": "JS-18-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concept of similar 2-D figures"
+    },
+    {
+      "from": "JS-18-1",
+      "to": "JS-18-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the formulae for volumes of prisms, circular cylinders, pyramids, circular cones and spheres"
+    },
+    {
+      "from": "JS-18-2",
+      "to": "JS-18-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: find the surface areas of right prisms, right circular cylinders, right pyramids, right circular cones and spheres"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "JS-18-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-16-2",
+      "to": "JS-18-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: understand the formula for areas of sectors of circles"
+    },
+    {
+      "from": "JS-22-3",
+      "to": "JS-18-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Mensuration: recognise the concept of similar 2-D figures"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-20-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Polygons: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-21-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Congruent triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-22-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-22-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-22-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-22-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-22-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-22-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-22-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-22-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Similar triangles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-23-3",
+      "to": "JS-23-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: understand the conditions for parallelograms"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "JS-23-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-23-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadrilaterals: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-24-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-21-1",
+      "to": "JS-24-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concept of congruent triangles"
+    },
+    {
+      "from": "JS-21-5",
+      "to": "JS-24-1",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: construct angle bisectors, perpendicular bisectors, perpendicular lines, parallel lines, special angles and squares with compasses and straightedge"
+    },
+    {
+      "from": "JS-23-5",
+      "to": "JS-24-1",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the mid-point theorem and the intercept theorem"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-24-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-21-1",
+      "to": "JS-24-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concept of congruent triangles"
+    },
+    {
+      "from": "JS-24-1",
+      "to": "JS-24-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the properties of angle bisectors and perpendicular bisectors"
+    },
+    {
+      "from": "JS-21-5",
+      "to": "JS-24-2",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: construct angle bisectors, perpendicular bisectors, perpendicular lines, parallel lines, special angles and squares with compasses and straightedge"
+    },
+    {
+      "from": "JS-23-5",
+      "to": "JS-24-2",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the mid-point theorem and the intercept theorem"
+    },
+    {
+      "from": "JS-19-1",
+      "to": "JS-24-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point"
+    },
+    {
+      "from": "JS-21-1",
+      "to": "JS-24-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the concept of congruent triangles"
+    },
+    {
+      "from": "JS-24-1",
+      "to": "JS-24-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the properties of angle bisectors and perpendicular bisectors"
+    },
+    {
+      "from": "JS-21-5",
+      "to": "JS-24-3",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: construct angle bisectors, perpendicular bisectors, perpendicular lines, parallel lines, special angles and squares with compasses and straightedge"
+    },
+    {
+      "from": "JS-23-5",
+      "to": "JS-24-3",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for Centres of triangles: understand the mid-point theorem and the intercept theorem"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-25-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the concept of power"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-25-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-25-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the concept of power"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-25-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-25-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the concept of power"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-25-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "JS-25-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the concept of power"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "JS-25-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Pythagoras' theorem: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-26-5",
+      "to": "JS-26-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the distance formula"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-26-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-7-1",
+      "to": "JS-26-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: represent word phrases by algebraic expressions"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-26-7",
+      "to": "JS-26-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the slope formula and solve related problems"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-26-5",
+      "to": "JS-26-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the distance formula"
+    },
+    {
+      "from": "JS-26-7",
+      "to": "JS-26-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the slope formula and solve related problems"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-2-1",
+      "to": "JS-26-10",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-26-10",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Rectangular coordinate system: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-27-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-27-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-27-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-27-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-27-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-27-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-27-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-27-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-27-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-27-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-27-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-27-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-22-2",
+      "to": "JS-27-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: recognise the conditions for similar triangles"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-27-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-27-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Trigonometry: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-29-1",
+      "to": "JS-29-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise stem-and-leaf diagrams and histograms"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-29-4",
+      "to": "JS-29-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-29-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-29-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Presentation of data: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-30-2",
+      "to": "JS-30-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: calculate mean, median and mode of ungrouped data"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-30-2",
+      "to": "JS-30-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: calculate mean, median and mode of ungrouped data"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-28-3",
+      "to": "JS-30-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise organisation of data in groups"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-30-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-30-6",
+      "to": "JS-30-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of central tendency: recognise the concept of weighted mean"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-31-2",
+      "to": "JS-31-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: recognise the concept of probability"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-31-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: perform mixed arithmetic operations of fractions and decimals"
+    },
+    {
+      "from": "JS-6-1",
+      "to": "JS-31-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: understand the concepts of rates, ratios and proportions"
+    },
+    {
+      "from": "JS-31-5",
+      "to": "JS-31-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Probability: recognise the concept of expectation"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "CP-1-1",
+      "to": "CP-1-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve quadratic equations by the factor method"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-1-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "CP-1-2",
+      "to": "CP-1-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: form quadratic equations from given roots"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "JS-8-1",
+      "to": "CP-1-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: solve linear equations in one unknown"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-1-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: factorise polynomials"
+    },
+    {
+      "from": "JS-12-3",
+      "to": "CP-1-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: use identities to factorise polynomials"
+    },
+    {
+      "from": "JS-26-1",
+      "to": "CP-1-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: recognise the rectangular coordinate system"
+    },
+    {
+      "from": "CP-1-8",
+      "to": "CP-1-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Quadratic equations in one unknown: appreciate the development of the number systems including the system of complex numbers"
+    },
+    {
+      "from": "JS-7-4",
+      "to": "CP-2-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: recognise the preliminary idea of functions"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-2-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "JS-7-4",
+      "to": "CP-2-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: recognise the preliminary idea of functions"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-2-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "JS-7-4",
+      "to": "CP-2-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: recognise the preliminary idea of functions"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-2-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-2-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-7-4",
+      "to": "CP-2-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: recognise the preliminary idea of functions"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-2-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-2-3",
+      "to": "CP-2-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Functions and graphs: understand the features of the graphs of quadratic functions"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "CP-3-2",
+      "to": "CP-3-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of rational indices"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "CP-3-3",
+      "to": "CP-3-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the definition and properties of logarithms (including the change of base)"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "CP-3-3",
+      "to": "CP-3-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the definition and properties of logarithms (including the change of base)"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-3-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: understand the laws of integral indices"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-3-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Exponential and logarithmic functions: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "CP-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: factorise polynomials"
+    },
+    {
+      "from": "JS-13-1",
+      "to": "CP-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform operations of algebraic fractions"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "CP-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: factorise polynomials"
+    },
+    {
+      "from": "JS-13-1",
+      "to": "CP-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform operations of algebraic fractions"
+    },
+    {
+      "from": "CP-4-1",
+      "to": "CP-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform division of polynomials"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "CP-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: factorise polynomials"
+    },
+    {
+      "from": "JS-13-1",
+      "to": "CP-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform operations of algebraic fractions"
+    },
+    {
+      "from": "CP-4-2",
+      "to": "CP-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: understand the remainder theorem"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "CP-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: factorise polynomials"
+    },
+    {
+      "from": "JS-13-1",
+      "to": "CP-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform operations of algebraic fractions"
+    },
+    {
+      "from": "JS-11-2",
+      "to": "CP-4-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform addition, subtraction, multiplication and their mixed operations of polynomials"
+    },
+    {
+      "from": "JS-11-3",
+      "to": "CP-4-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: factorise polynomials"
+    },
+    {
+      "from": "JS-13-1",
+      "to": "CP-4-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: perform operations of algebraic fractions"
+    },
+    {
+      "from": "CP-4-4",
+      "to": "CP-4-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about polynomials: understand the concepts of the greatest common divisor and the least common multiple of polynomials"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-5-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "CP-4-3",
+      "to": "CP-5-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: understand the factor theorem"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-5-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-5-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "CP-4-3",
+      "to": "CP-5-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: understand the factor theorem"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-5-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-5-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "CP-4-3",
+      "to": "CP-5-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: understand the factor theorem"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-5-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-5-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "CP-4-3",
+      "to": "CP-5-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: understand the factor theorem"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-5-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about equations: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "JS-6-2",
+      "to": "CP-6-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: solve problems involving rates, ratios and proportions"
+    },
+    {
+      "from": "JS-13-2",
+      "to": "CP-6-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: use substitution to find the values of unknowns in the formulae"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-6-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-6-2",
+      "to": "CP-6-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: solve problems involving rates, ratios and proportions"
+    },
+    {
+      "from": "JS-13-2",
+      "to": "CP-6-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: use substitution to find the values of unknowns in the formulae"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-6-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-6-2",
+      "to": "CP-6-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: solve problems involving rates, ratios and proportions"
+    },
+    {
+      "from": "JS-13-2",
+      "to": "CP-6-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: use substitution to find the values of unknowns in the formulae"
+    },
+    {
+      "from": "CP-2-2",
+      "to": "CP-6-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Variations: recognise the notation of functions and use tabular, algebraic and graphical methods to represent functions"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "CP-7-1",
+      "to": "CP-7-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the concept and the properties of arithmetic sequences"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "CP-7-3",
+      "to": "CP-7-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the concept and the properties of geometric sequences"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "CP-7-2",
+      "to": "CP-7-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the general term of an arithmetic sequence"
+    },
+    {
+      "from": "CP-7-4",
+      "to": "CP-7-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the general term of a geometric sequence"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "CP-7-5",
+      "to": "CP-7-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the general formulae of the sum to a finite number of terms of an arithmetic sequence and a geometric sequence and use the formulae to solve related problems"
+    },
+    {
+      "from": "JS-7-3",
+      "to": "CP-7-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: recognise the concept of sequences of numbers"
+    },
+    {
+      "from": "JS-10-3",
+      "to": "CP-7-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the laws of integral indices"
+    },
+    {
+      "from": "JS-13-3",
+      "to": "CP-7-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: change the subject of formulae not involving radical signs"
+    },
+    {
+      "from": "CP-7-5",
+      "to": "CP-7-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Arithmetic and geometric sequences and their summations: understand the general formulae of the sum to a finite number of terms of an arithmetic sequence and a geometric sequence and use the formulae to solve related problems"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "CP-1-1",
+      "to": "CP-8-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve quadratic equations by the factor method"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "CP-8-4",
+      "to": "CP-8-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: represent the graphs of linear inequalities in two unknowns in the rectangular coordinate plane"
+    },
+    {
+      "from": "JS-14-3",
+      "to": "CP-8-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve linear inequalities in one unknown"
+    },
+    {
+      "from": "CP-1-3",
+      "to": "CP-8-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve the equation ax² + bx + c = 0 by plotting the graph of the parabola y = ax² + bx + c and reading the x-intercepts"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-8-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: understand the equation of a straight line"
+    },
+    {
+      "from": "CP-8-5",
+      "to": "CP-8-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Inequalities and linear programming: solve systems of linear inequalities in two unknowns"
+    },
+    {
+      "from": "CP-2-3",
+      "to": "CP-9-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the features of the graphs of quadratic functions"
+    },
+    {
+      "from": "CP-14-1",
+      "to": "CP-9-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the functions sine, cosine and tangent, and their graphs and properties, including maximum and minimum values and periodicity"
+    },
+    {
+      "from": "CP-3-4",
+      "to": "CP-9-1",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the properties of exponential functions and logarithmic functions and recognise the features of their graphs"
+    },
+    {
+      "from": "CP-14-1",
+      "to": "CP-9-1",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the functions sine, cosine and tangent, and their graphs and properties, including maximum and minimum values and periodicity"
+    },
+    {
+      "from": "CP-2-3",
+      "to": "CP-9-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the features of the graphs of quadratic functions"
+    },
+    {
+      "from": "CP-2-3",
+      "to": "CP-9-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the features of the graphs of quadratic functions"
+    },
+    {
+      "from": "CP-2-3",
+      "to": "CP-9-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the features of the graphs of quadratic functions"
+    },
+    {
+      "from": "CP-3-4",
+      "to": "CP-9-4",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the properties of exponential functions and logarithmic functions and recognise the features of their graphs"
+    },
+    {
+      "from": "CP-14-1",
+      "to": "CP-9-4",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Preparation for More about graphs of functions: understand the functions sine, cosine and tangent, and their graphs and properties, including maximum and minimum values and periodicity"
+    },
+    {
+      "from": "JS-26-7",
+      "to": "CP-10-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of straight lines: understand the slope formula and solve related problems"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-10-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of straight lines: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "JS-26-7",
+      "to": "CP-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of straight lines: understand the slope formula and solve related problems"
+    },
+    {
+      "from": "JS-9-3",
+      "to": "CP-10-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of straight lines: solve simultaneous linear equations in two unknowns by the algebraic methods"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "JS-19-5",
+      "to": "CP-11-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of the interior and exterior angles of triangles"
+    },
+    {
+      "from": "JS-21-2",
+      "to": "CP-11-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: recognise the conditions for congruent triangles"
+    },
+    {
+      "from": "JS-23-1",
+      "to": "CP-11-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of parallelograms"
+    },
+    {
+      "from": "CP-11-4",
+      "to": "CP-11-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the tests for concyclic points and cyclic quadrilaterals"
+    },
+    {
+      "from": "CP-11-5",
+      "to": "CP-11-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Basic properties of circles: understand the properties of tangents to a circle and angles in the alternate segments"
+    },
+    {
+      "from": "JS-24-1",
+      "to": "CP-12-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the properties of angle bisectors and perpendicular bisectors"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-12-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-24-1",
+      "to": "CP-12-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the properties of angle bisectors and perpendicular bisectors"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-12-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-24-1",
+      "to": "CP-12-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the properties of angle bisectors and perpendicular bisectors"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-12-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Loci: understand the equation of a straight line"
+    },
+    {
+      "from": "JS-26-5",
+      "to": "CP-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: understand the distance formula"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: understand the equation of a straight line"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-13-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "JS-26-5",
+      "to": "CP-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: understand the distance formula"
+    },
+    {
+      "from": "CP-10-1",
+      "to": "CP-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: understand the equation of a straight line"
+    },
+    {
+      "from": "CP-1-4",
+      "to": "CP-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: solve quadratic equations by the quadratic formula"
+    },
+    {
+      "from": "CP-13-1",
+      "to": "CP-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: understand the equation of a circle"
+    },
+    {
+      "from": "CP-5-2",
+      "to": "CP-13-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Equations of circles: use the algebraic method to solve simultaneous equations in two unknowns, one linear and one quadratic"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "CP-14-1",
+      "to": "CP-14-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the functions sine, cosine and tangent, and their graphs and properties, including maximum and minimum values and periodicity"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "CP-14-3",
+      "to": "CP-14-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the formula ½ ab sin C for areas of triangles"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "CP-14-6",
+      "to": "CP-14-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the concept of projection"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "CP-14-7",
+      "to": "CP-14-8",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the angle between a line and a plane, and the angle between 2 planes"
+    },
+    {
+      "from": "JS-27-4",
+      "to": "CP-14-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: solve problems related to plane figures"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "CP-14-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the Pythagoras’ theorem"
+    },
+    {
+      "from": "JS-17-1",
+      "to": "CP-14-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: recognise the concepts of right prisms, right circular cylinders, right pyramids, right circular cones, regular prisms, regular pyramids, polyhedra and spheres"
+    },
+    {
+      "from": "CP-14-4",
+      "to": "CP-14-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the sine and cosine formulae"
+    },
+    {
+      "from": "CP-14-8",
+      "to": "CP-14-9",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about trigonometry: understand the theorem of three perpendiculars"
+    },
+    {
+      "from": "JS-31-3",
+      "to": "CP-15-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: calculate probabilities of events by listing the sample space and counting"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "CP-15-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept of power"
+    },
+    {
+      "from": "JS-31-3",
+      "to": "CP-15-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: calculate probabilities of events by listing the sample space and counting"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "CP-15-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept of power"
+    },
+    {
+      "from": "JS-31-3",
+      "to": "CP-15-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: calculate probabilities of events by listing the sample space and counting"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "CP-15-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept of power"
+    },
+    {
+      "from": "CP-15-2",
+      "to": "CP-15-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept and notation of permutation"
+    },
+    {
+      "from": "JS-31-3",
+      "to": "CP-15-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: calculate probabilities of events by listing the sample space and counting"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "CP-15-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept of power"
+    },
+    {
+      "from": "JS-31-3",
+      "to": "CP-15-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: calculate probabilities of events by listing the sample space and counting"
+    },
+    {
+      "from": "JS-1-2",
+      "to": "CP-15-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept of power"
+    },
+    {
+      "from": "CP-15-4",
+      "to": "CP-15-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Permutations and combinations: understand the concept and notation of combination"
+    },
+    {
+      "from": "JS-31-4",
+      "to": "CP-16-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems involving probability"
+    },
+    {
+      "from": "CP-15-5",
+      "to": "CP-16-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems on the combination of distinct objects without repetition"
+    },
+    {
+      "from": "JS-31-4",
+      "to": "CP-16-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems involving probability"
+    },
+    {
+      "from": "CP-15-5",
+      "to": "CP-16-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems on the combination of distinct objects without repetition"
+    },
+    {
+      "from": "CP-16-1",
+      "to": "CP-16-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: recognise the notation of set language including union, intersection and complement"
+    },
+    {
+      "from": "JS-31-4",
+      "to": "CP-16-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems involving probability"
+    },
+    {
+      "from": "CP-15-5",
+      "to": "CP-16-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems on the combination of distinct objects without repetition"
+    },
+    {
+      "from": "CP-16-2",
+      "to": "CP-16-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: understand the addition law of probability and the concepts of mutually exclusive events and complementary events"
+    },
+    {
+      "from": "JS-31-4",
+      "to": "CP-16-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems involving probability"
+    },
+    {
+      "from": "CP-15-5",
+      "to": "CP-16-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems on the combination of distinct objects without repetition"
+    },
+    {
+      "from": "CP-16-3",
+      "to": "CP-16-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: understand the multiplication law of probability and the concept of independent events"
+    },
+    {
+      "from": "JS-31-4",
+      "to": "CP-16-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems involving probability"
+    },
+    {
+      "from": "CP-15-5",
+      "to": "CP-16-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for More about probability: solve problems on the combination of distinct objects without repetition"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "CP-17-2",
+      "to": "CP-17-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: understand the concepts of range and inter- quartile range"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "CP-17-1",
+      "to": "CP-17-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: understand the concept of dispersion"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "CP-17-4",
+      "to": "CP-17-5",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: understand the concept of standard deviation for both grouped and ungrouped data sets"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "CP-17-4",
+      "to": "CP-17-6",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: understand the concept of standard deviation for both grouped and ungrouped data sets"
+    },
+    {
+      "from": "JS-29-5",
+      "to": "CP-17-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: interpret frequency polygons, frequency curves, cumulative frequency polygons and cumulative frequency curves"
+    },
+    {
+      "from": "JS-30-3",
+      "to": "CP-17-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: calculate mean, median and modal class of grouped data"
+    },
+    {
+      "from": "CP-17-4",
+      "to": "CP-17-7",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Measures of dispersion: understand the concept of standard deviation for both grouped and ungrouped data sets"
+    },
+    {
+      "from": "JS-29-7",
+      "to": "CP-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of statistical charts in daily life"
+    },
+    {
+      "from": "JS-30-4",
+      "to": "CP-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of mean, median and mode/modal class in daily life"
+    },
+    {
+      "from": "CP-17-5",
+      "to": "CP-18-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: compare the dispersions of different sets of data using appropriate measures"
+    },
+    {
+      "from": "JS-29-7",
+      "to": "CP-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of statistical charts in daily life"
+    },
+    {
+      "from": "JS-30-4",
+      "to": "CP-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of mean, median and mode/modal class in daily life"
+    },
+    {
+      "from": "CP-17-5",
+      "to": "CP-18-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: compare the dispersions of different sets of data using appropriate measures"
+    },
+    {
+      "from": "JS-29-7",
+      "to": "CP-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of statistical charts in daily life"
+    },
+    {
+      "from": "JS-30-4",
+      "to": "CP-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: recognise the uses and abuses of mean, median and mode/modal class in daily life"
+    },
+    {
+      "from": "CP-17-5",
+      "to": "CP-18-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Preparation for Uses and abuses of statistics: compare the dispersions of different sets of data using appropriate measures"
+    }
+  ]
+}

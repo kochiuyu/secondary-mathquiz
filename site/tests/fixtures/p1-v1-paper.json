@@ -1,0 +1,222 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 1,
+  "title": "Secondary Mathematics · Sample Practice",
+  "seed": "p1-review-sample",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "signed",
+        "seed": "p1-review-sample:0",
+        "version": 1,
+        "objective": "JS-2-2",
+        "marks": 2,
+        "lines": 3,
+        "math": "-6 + (-5)",
+        "answer": "-11",
+        "contract": {
+          "type": "number",
+          "answer": "-11"
+        },
+        "prompt": {
+          "en": "Calculate.",
+          "zh": "計算。"
+        },
+        "hint": {
+          "en": "Start at the first number; adding a negative number moves left.",
+          "zh": "從第一個數開始；加負數即向左移。"
+        },
+        "solution": {
+          "en": "-6 + (-5) = -11.",
+          "zh": "-6 + (-5) = -11。"
+        },
+        "diagram": {
+          "type": "line",
+          "a": -6,
+          "b": -5
+        }
+      },
+      "marks": 2,
+      "lines": 3
+    },
+    {
+      "question": {
+        "id": "expression",
+        "seed": "p1-review-sample:1",
+        "version": 1,
+        "objective": "JS-11-2",
+        "marks": 2,
+        "lines": 3,
+        "math": "6(x + 2) + 4",
+        "answer": "6x+16",
+        "contract": {
+          "type": "expression",
+          "answer": "6x+16",
+          "form": "expanded"
+        },
+        "prompt": {
+          "en": "Expand the brackets and simplify.",
+          "zh": "展開括號並化簡。"
+        },
+        "hint": {
+          "en": "Multiply every term inside the bracket by the number outside.",
+          "zh": "以括號外的數乘括號內的每一項。"
+        },
+        "solution": {
+          "en": "6(x + 2) + 4 = 6x + 12 + 4 = 6x+16.",
+          "zh": "6(x + 2) + 4 = 6x + 12 + 4 = 6x+16。"
+        }
+      },
+      "marks": 2,
+      "lines": 3
+    },
+    {
+      "question": {
+        "id": "equation",
+        "seed": "p1-review-sample:2",
+        "version": 1,
+        "objective": "JS-8-1",
+        "marks": 2,
+        "lines": 3,
+        "math": "3x + 4 = -2",
+        "answer": "-2",
+        "contract": {
+          "type": "number",
+          "answer": "-2"
+        },
+        "prompt": {
+          "en": "Find x.",
+          "zh": "求 x。"
+        },
+        "hint": {
+          "en": "Undo the constant term on both sides, then divide by the coefficient.",
+          "zh": "在等號兩邊消去常數項，再除以 x 的係數。"
+        },
+        "solution": {
+          "en": "3x = -6; x = -2. Check: 3 × (-2) + (4) = -2.",
+          "zh": "3x = -6；x = -2。驗算：3 × (-2) + (4) = -2。"
+        },
+        "diagram": {
+          "type": "balance",
+          "a": 3,
+          "b": 4,
+          "c": -2
+        }
+      },
+      "marks": 2,
+      "lines": 3
+    },
+    {
+      "question": {
+        "id": "angle",
+        "seed": "p1-review-sample:3",
+        "version": 1,
+        "objective": "JS-19-1",
+        "marks": 2,
+        "lines": 3,
+        "math": "100° + x = 180°",
+        "answer": "80",
+        "contract": {
+          "type": "number",
+          "answer": "80",
+          "unit": "degree"
+        },
+        "prompt": {
+          "en": "Find x. Then explain the angle relationship.",
+          "zh": "求 x，並解釋所用的角的關係。"
+        },
+        "hint": {
+          "en": "Adjacent angles on a straight line add to 180°.",
+          "zh": "直線上的鄰角之和為 180°。"
+        },
+        "solution": {
+          "en": "x = 180° − 100° = 80°. Adjacent angles on a straight line sum to 180°.",
+          "zh": "x = 180° − 100° = 80°。直線上的鄰角之和為 180°。"
+        },
+        "diagram": {
+          "type": "angle",
+          "a": 100
+        },
+        "manualReason": true
+      },
+      "marks": 2,
+      "lines": 3
+    },
+    {
+      "question": {
+        "id": "choice",
+        "seed": "p1-review-sample:4",
+        "version": 1,
+        "objective": "JS-2-1",
+        "marks": 2,
+        "lines": 3,
+        "math": "-2, 2",
+        "answer": "b",
+        "contract": {
+          "type": "choice",
+          "answer": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "label": "-2"
+          },
+          {
+            "id": "b",
+            "label": "2"
+          }
+        ],
+        "prompt": {
+          "en": "Choose the greater number.",
+          "zh": "選出較大的數。"
+        },
+        "hint": {
+          "en": "On a number line, the greater number is further to the right.",
+          "zh": "在數線上，較大的數在較右的位置。"
+        },
+        "solution": {
+          "en": "2 > -2.",
+          "zh": "2 > -2。"
+        }
+      },
+      "marks": 2,
+      "lines": 3
+    },
+    {
+      "question": {
+        "id": "fraction",
+        "seed": "p1-review-sample:5",
+        "version": 1,
+        "objective": "JS-1-6",
+        "marks": 2,
+        "lines": 3,
+        "math": "7/7 + 5",
+        "answer": "42/7",
+        "contract": {
+          "type": "number",
+          "answer": "42/7"
+        },
+        "prompt": {
+          "en": "Give an exact answer as a number or fraction.",
+          "zh": "以數或分數寫出準確答案。"
+        },
+        "hint": {
+          "en": "Write the integer with the same denominator as the fraction.",
+          "zh": "把整數改寫為同分母的分數。"
+        },
+        "solution": {
+          "en": "7/7 + 5 = (7 + 35)/7 = 42/7.",
+          "zh": "7/7 + 5 = (7 + 35)/7 = 42/7。"
+        }
+      },
+      "marks": 2,
+      "lines": 3
+    }
+  ]
+}

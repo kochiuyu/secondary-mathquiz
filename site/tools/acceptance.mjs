@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {acceptanceApp,acceptanceVersion,acceptanceFaultApp} from '../qa/core.mjs';
+const root=new URL('../',import.meta.url),source=fs.readFileSync(new URL('Secondary_MathQuiz_Prototype.html',root),'utf8');
+const app=acceptanceApp(source);
+fs.writeFileSync(new URL('qa/app.html',root),app);
+for(const mode of ['denied','quota'])fs.writeFileSync(new URL('qa/'+mode+'.html',root),acceptanceFaultApp(source,mode));
+const script=app.match(/<script type="module">([\s\S]*?)<\/script>/)?.[1];
+if(!script)throw new Error('Acceptance copy has no application module.');
+fs.writeFileSync(new URL('tests/acceptance-syntax.mjs',root),script);
+fs.writeFileSync(new URL('qa/build.json',root),JSON.stringify({prototypeVersion:acceptanceVersion,sourceHash:createHash('sha256').update(source).digest('hex'),changes:['isolated test-storage namespace','relative source-document links'],browserExecution:'not performed'},null,2)+'\n');
+console.log('Prepared /qa/index.html and its isolated application copy. Browser checks have not been run.');

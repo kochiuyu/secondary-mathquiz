@@ -1,0 +1,8 @@
+{
+  "state": "blocked-not-run",
+  "planned_workflows": 15,
+  "observed_pass": 0,
+  "source_sha256": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
+  "blocker": "Automatic approval review rejected outbound telemetry to dc.services.visualstudio.com; local preview was unreachable. File protocol also blocked by browser URL policy.",
+  "historical_evidence": "Signed-number 12/12 run applies only to v0.6.0; not current evidence."
+}

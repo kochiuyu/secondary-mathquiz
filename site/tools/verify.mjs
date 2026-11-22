@@ -1,0 +1,11 @@
+import {spawnSync} from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(fileURLToPath(new URL('..',import.meta.url)));
+const files=fs.readdirSync(path.join(root,'tests')).filter(f=>f.endsWith('.test.mjs')).map(f=>'tests/'+f);
+const result=spawnSync(process.execPath,['--test',...files],{cwd:root,encoding:'utf8'});
+const output=(result.stdout||'')+(result.stderr||'');
+fs.writeFileSync(path.join(root,'tests/results.txt'),output);
+fs.writeFileSync(path.join(root,'tests/results.json'),JSON.stringify({date:new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Hong_Kong',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),timezone:'Asia/Hong_Kong',runtime:process.version,exitCode:result.status,testFiles:files,realBrowserReview:false,realPrintReview:false},null,2));
+console.log(output);process.exitCode=result.status??1;

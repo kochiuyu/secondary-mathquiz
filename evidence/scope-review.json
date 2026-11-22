@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-22",
+  "type": "author source cross-check of retained baseline, not independent review or a new live-source/cohort check",
+  "sources": [
+    {
+      "file": "jsmc2017_e.pdf",
+      "sha256": "a8b473b4e49362268ba79880d1fc008c2c853d71a451cc2a2867f5c9ec5e4627",
+      "version": "2017 learning content"
+    },
+    {
+      "file": "jsmc2017_tc.pdf",
+      "sha256": "6b0e67afa0c05eefbde49ba157a8aaaae169d670684d32d416299fc71b1e29fd",
+      "version": "2017 learning content"
+    },
+    {
+      "file": "EN_KS3_e.pdf",
+      "sha256": "538fd24df0ea7d5d9bfc60cd616b1173f19b7ce9dbbff795ed23d8d7e54b6438",
+      "version": "2020 explanatory notes"
+    },
+    {
+      "file": "EN_KS3_tc.pdf",
+      "sha256": "1d2b0a884fb889cd50041602a82c7159cecfa1b071b3ad85039e79a39b735b74",
+      "version": "2020 explanatory notes"
+    }
+  ],
+  "content_pages_read": {
+    "jsmc2017_e.pdf": [
+      8,
+      9,
+      13,
+      14,
+      26,
+      27,
+      28
+    ],
+    "jsmc2017_tc.pdf": [
+      8,
+      11,
+      12,
+      13,
+      22,
+      23,
+      24
+    ],
+    "EN_KS3_e.pdf": [
+      9,
+      10,
+      21,
+      22,
+      23,
+      24,
+      49,
+      50,
+      51
+    ]
+  },
+  "critical_decisions": [
+    "Unit 7 includes sequences and preliminary functions; expansion/like terms belong to unit 11.",
+    "A finite sequence prefix does not force a unique next term; general-term evaluation is different.",
+    "Unit 8 is restricted to exactly one solution in the explanatory notes.",
+    "An angle pair may be defined without parallelism; its associated equality/supplement condition needs the correct premise.",
+    "Final values do not establish method/proof marks."
+  ],
+  "scope_limits": [
+    "Chinese objective wording was paired from the retained official learning-content file; independent language review remains pending.",
+    "Chinese explanatory-notes file retained by P0 but not newly read in full for this design.",
+    "No current examination profile, new modelling policy or calendar/cohort claim is introduced.",
+    "P1.8 is now accepted for bounded prototype authoring; this design remains an unimplemented author draft, not a public pilot."
+  ]
+}

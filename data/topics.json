@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "topics": [
+    {
+      "id": "signed",
+      "unit": 2,
+      "title": {
+        "en": "Directed numbers",
+        "zh-Hant": "有向數"
+      },
+      "why": {
+        "en": "Describe quantities relative to a reference and calculate changes reliably.",
+        "zh-Hant": "以基準描述數量，並準確計算有向變化。"
+      },
+      "before": [
+        "Compare whole numbers; add/subtract fractions and decimals; read equal number-line ticks."
+      ],
+      "scope": "Full unit target JS2.1–2.3, including number-line representation, comparison, mixed operations and contextual problems. Planned families are not completed coverage.",
+      "boundary": "No absolute-value notation or advanced index laws are required by this pilot; optional enrichment must be labelled. Avoid excessively complicated arithmetic.",
+      "takeaway": {
+        "en": "Use a clear reference, keep direction and magnitude separate, and check operations through inverse relationships.",
+        "zh-Hant": "先定清楚基準，分清方向與大小，並用逆運算檢驗結果。"
+      },
+      "next": "Use directed values when interpreting algebraic expressions and solving equations."
+    },
+    {
+      "id": "expressions",
+      "unit": 7,
+      "title": {
+        "en": "Algebraic expressions",
+        "zh-Hant": "代數式"
+      },
+      "why": {
+        "en": "Use symbols to describe a rule without losing its meaning.",
+        "zh-Hant": "用符號表達規律，並保留原來的意思。"
+      },
+      "before": [
+        "Directed arithmetic; letters representing quantities; primary area formulae."
+      ],
+      "scope": "JS7.1–7.4: both directions of words/symbols, formulae including multiple variables, odd/even/square/triangular sequences, supplied general terms and preliminary input–processing–output.",
+      "boundary": "Like terms and polynomial expansion are unit 11 work, not the definition of completing unit 7. The P1 expansion fixture is not promoted to a unit-7 lesson. Multivariable formulas and open pattern reasoning require manual support; formal function definitions are deferred.",
+      "takeaway": {
+        "en": "Symbols express relationships: read them both ways, preserve grouping and distinguish an inferred pattern from a stated rule.",
+        "zh-Hant": "符號表達關係：要能雙向理解、保留運算分組，並分清推測的規律與已知規則。"
+      },
+      "next": "Use a defined quantity and an expression on each side to formulate an equation."
+    },
+    {
+      "id": "equations",
+      "unit": 8,
+      "title": {
+        "en": "Linear equations in one unknown",
+        "zh-Hant": "一元一次方程"
+      },
+      "why": {
+        "en": "Find an unknown by preserving an equality, then interpret what the value means.",
+        "zh-Hant": "在保持等式成立的過程中求未知數，並解釋所得數值。"
+      },
+      "before": [
+        "Directed arithmetic; interpreting expressions; the primary balance principle."
+      ],
+      "scope": "JS8.1–8.3: meaning of a solution, solving a general one-unknown linear equation with one solution, formulating and solving contextual problems.",
+      "boundary": "The explanatory notes restrict this unit to exactly one solution. No-solution/infinitely-many cases are deferred, not silently included as challenge examples. Variable denominators, quadratic equations and unrestricted equation parsing are outside the pilot.",
+      "takeaway": {
+        "en": "Define the unknown, preserve equality, check the original relation and interpret the value in the situation.",
+        "zh-Hant": "先定義未知數，保持等式成立，代回原式檢驗，再按情境解釋數值。"
+      },
+      "next": "Connect to linear equations in two unknowns; identities and exceptional cases need their own later objectives."
+    },
+    {
+      "id": "angles",
+      "unit": 19,
+      "title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "why": {
+        "en": "Use stated geometric facts to justify conclusions rather than trusting the appearance of a sketch.",
+        "zh-Hant": "根據已知幾何條件推論，並為結論提供理由。"
+      },
+      "before": [
+        "Degree measure, straight/round/right angles; identify lines, vertices and rays; simple subtraction."
+      ],
+      "scope": "JS19.1–19.5: basic angles including complementary/supplementary; transversals/pairs; parallel tests and properties; triangle interior/exterior deductions and reasons.",
+      "boundary": "An angle-pair name does not require parallel lines. Equality properties do. Keep the given premise distinct from the desired conclusion; no unmarked parallel/right/equal assumptions. Triangle proof needs manual evidence.",
+      "takeaway": {
+        "en": "Name the angles, list what is given, choose a justified rule and state a reason for every new relationship.",
+        "zh-Hant": "先辨認角、列出已知條件，再選用有根據的性質，為每個新關係說明理由。"
+      },
+      "next": "Use these deductions in polygons and triangle congruence/similarity after their own scope review."
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "version": "0.7.0",
+  "date": "2026-11-22",
+  "timezone": "Asia/Hong_Kong",
+  "milestone": "P2.2b",
+  "state": "implemented-author-draft; browser verification blocked",
+  "families": [
+    "EX01",
+    "EX02",
+    "EX03",
+    "EX04",
+    "EX05",
+    "EX06"
+  ],
+  "lessons": [
+    "EX-L1",
+    "EX-L2",
+    "EX-L3"
+  ],
+  "mapped_objectives": [
+    "JS-7-1",
+    "JS-7-2",
+    "JS-7-3",
+    "JS-7-4"
+  ],
+  "portable_source_sha256": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
+  "automated": {
+    "tests": 46,
+    "pass": 46,
+    "fail": 0,
+    "new_expression_seed_cases": 1800
+  },
+  "browser": {
+    "state": "blocked-not-run",
+    "planned_workflows": 15,
+    "observed_pass": 0,
+    "source_sha256": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
+    "blocker": "Automatic approval review rejected outbound telemetry to dc.services.visualstudio.com; local preview was unreachable. File protocol also blocked by browser URL policy.",
+    "historical_evidence": "Signed-number 12/12 run applies only to v0.6.0; not current evidence."
+  },
+  "samples": {
+    "state": "generated HTML, not browser/PDF acceptance evidence",
+    "results": [
+      {
+        "lang": "en",
+        "document": "Student",
+        "pages": 5,
+        "specification_sha256": "6f13d1ca256197fd3012d130c54d4eae07b23db46f19e3336c87fb833fe68734",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "en",
+        "document": "Solutions",
+        "pages": 5,
+        "specification_sha256": "6f13d1ca256197fd3012d130c54d4eae07b23db46f19e3336c87fb833fe68734",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "zh",
+        "document": "Student",
+        "pages": 5,
+        "specification_sha256": "b83cf82e9bdc2f98aaa3a50b1e78bbbaa4f577cc358b358b7c3e6d6ad027e632",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      },
+      {
+        "lang": "zh",
+        "document": "Solutions",
+        "pages": 5,
+        "specification_sha256": "b83cf82e9bdc2f98aaa3a50b1e78bbbaa4f577cc358b358b7c3e6d6ad027e632",
+        "actual_browser_layout": "pending",
+        "actual_pdf": "pending"
+      }
+    ]
+  },
+  "review_limits": [
+    "Current browser workflows and visual page bounds not verified.",
+    "Actual PDF/physical print review pending.",
+    "Independent mathematics, bilingual and classroom review pending.",
+    "Native zoom and spoken assistive output pending.",
+    "Bounded retained-model freshness; no semantic novelty guarantee.",
+    "All curriculum coverage remains planned; no public release."
+  ]
+}

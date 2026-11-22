@@ -1,0 +1,138 @@
+{
+  "date": "2026-11-22",
+  "design_version": "0.1.0",
+  "result": "passed for stated design/sample scope",
+  "families": 24,
+  "topics": 4,
+  "session_outlines": 12,
+  "mapped_objectives": 15,
+  "review_status": "author self-check; independent mathematics/language and classroom review pending",
+  "limits": [
+    "No curriculum generator has been implemented or validated by this report.",
+    "No browser, visual, screen-reader, print or full-lesson test is performed.",
+    "Manual/open reasoning cases are explicitly limited below.",
+    "P1.8 is accepted for bounded prototype authoring; all curriculum resources remain planned."
+  ],
+  "samples": [
+    {
+      "family": "SN01",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "SN02",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "SN03",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "SN04",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "SN05",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "SN06",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EX01",
+      "result": "passed for stated scope",
+      "scope": "exact polynomial coefficient identities and deliberately different expressions; not a sampling proof"
+    },
+    {
+      "family": "EX02",
+      "result": "passed for stated scope",
+      "scope": "choice identities and differing algebra meanings checked; bilingual phrase quality needs independent review"
+    },
+    {
+      "family": "EX03",
+      "result": "passed for stated scope",
+      "scope": "formula algebra and one numeric substitution; geometric explanation/manual rubric still needs review"
+    },
+    {
+      "family": "EX04",
+      "result": "passed for stated scope",
+      "scope": "preferred continuation checked and a different consistent continuation demonstrated; student reasoning remains manual"
+    },
+    {
+      "family": "EX05",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EX06",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EQ01",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EQ02",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EQ03",
+      "result": "passed for stated scope",
+      "scope": "corrected-line algebra checked; written explanation/manual mark not auto-certified"
+    },
+    {
+      "family": "EQ04",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EQ05",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "EQ06",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "GE01",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "GE02",
+      "result": "passed for stated scope",
+      "scope": "choice identities/position-description draft only; angle-pair topology and diagram still require mathematical/rendered review"
+    },
+    {
+      "family": "GE03",
+      "result": "passed for stated scope",
+      "scope": "stated parallel/corresponding numerical model checked; no diagram rendered or proof mark verified"
+    },
+    {
+      "family": "GE04",
+      "result": "passed for stated scope",
+      "scope": "named same-side angle sum and near-miss checked; topology/drawing and written reason remain manual"
+    },
+    {
+      "family": "GE05",
+      "result": "passed for stated scope",
+      "scope": "closed sample model; not generated variants or rendered output"
+    },
+    {
+      "family": "GE06",
+      "result": "passed for stated scope",
+      "scope": "manual proof rubric structure only; no automatic proof validity or rendered correspondence claim"
+    }
+  ]
+}

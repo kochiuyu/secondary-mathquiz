@@ -1,0 +1,155 @@
+{
+  "kind": "secondary-mathquiz-acceptance",
+  "schema": 1,
+  "prototypeVersion": "0.6.0",
+  "run": "e25518f2-c33b-4a44-b115-54813ff78f71",
+  "at": "2026-11-22T00:19:41.559Z",
+  "sourceHash": "940e71e3ab7de29c9d180b01755c048640b8a2aa2740f311a0c1ccef9e79f738",
+  "status": "pending",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+    "language": "en-US",
+    "runnerViewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "applicationViewport": {
+      "width": 1120,
+      "height": 800
+    },
+    "basePath": "/secondary-mathquiz/qa/"
+  },
+  "automatic": [
+    {
+      "id": "A01",
+      "title": "Load the application",
+      "status": "pass",
+      "notes": "Application overview rendered in the isolated test frame.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A02",
+      "title": "Catalogue and cleared URL filters",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A03",
+      "title": "Draft, language switch and reload",
+      "status": "pass",
+      "notes": "English/Chinese draft, reload, requested answer form and feedback focus checked.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A04",
+      "title": "Reason review after editing",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A05",
+      "title": "Learner isolation",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A06",
+      "title": "Paper identity and reopen",
+      "status": "pass",
+      "notes": "Order, edited preview identity and specification reopen checked; PDF output remains manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A07",
+      "title": "Import cancellation and failed review",
+      "status": "pass",
+      "notes": "Observed expected application behaviour.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A08",
+      "title": "390px page overflow",
+      "status": "pass",
+      "notes": "home: 0px; catalogue: 0px; setup/practice: 0px; paper: 0px. Visual inspection and 200% zoom remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A09",
+      "title": "Rendered fraction geometry",
+      "status": "pass",
+      "notes": "Native fraction stacking measured on screen; print and assistive output remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A10",
+      "title": "Three bilingual signed-number lessons and mobile reflow",
+      "status": "pass",
+      "notes": "All three lesson titles/models/routes checked in both languages; 390px overflow ≤2px; study exposure retained. Spoken accessibility and content review remain manual.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A11",
+      "title": "Six curriculum families, resume and separate reason evidence",
+      "status": "pass",
+      "notes": "All six version-1 curriculum families checked; bilingual draft/reload and independent/manual reason labels exercised.",
+      "evidence": "browser-runner"
+    },
+    {
+      "id": "A12",
+      "title": "Curriculum paper identity and bilingual key",
+      "status": "pass",
+      "notes": "Six curriculum snapshots, Chinese paper hash, number line and contextual solution key rendered. Actual PDF pagination remains a manual observation.",
+      "evidence": "browser-runner"
+    }
+  ],
+  "manual": [
+    {
+      "id": "M01",
+      "title": "Desktop and mobile appearance in both languages",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M02",
+      "title": "Keyboard, focus and screen-reader feedback",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M03",
+      "title": "200% browser zoom",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M04",
+      "title": "English and Chinese student/key PDFs, including six working lines",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M05",
+      "title": "Two real tabs and denied/full browser storage",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    },
+    {
+      "id": "M06",
+      "title": "Repository subdirectory and direct-link reload",
+      "status": "pending",
+      "notes": "",
+      "evidence": "reviewer-recorded"
+    }
+  ],
+  "independentCurriculumReview": false,
+  "classroomReview": false,
+  "scope": "Browser workflow measurements plus reviewer-recorded observations. A saved report does not independently certify curriculum, translation or classroom readiness."
+}

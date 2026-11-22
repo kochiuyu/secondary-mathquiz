@@ -1,0 +1,749 @@
+{
+  "baseline": "P0 reviewed 2026-11-21",
+  "scope": "15 junior objectives; all remain planned",
+  "records": [
+    {
+      "id": "JS-2-1",
+      "unit": 2,
+      "unit_title": {
+        "en": "Directed numbers",
+        "zh-Hant": "有向數"
+      },
+      "official_reference": "2.1",
+      "description": {
+        "en": "understand the concept of directed numbers",
+        "zh-Hant": "理解有向數的概念"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            8,
+            9
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            8
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "Students are required to represent the directed numbers on the number line. Students are required to compare the magnitude of directed numbers.",
+          "zh-Hant": "學生須在數線上表示有向數。 學生須比較有向數的大小 。"
+        },
+        "site_unit_boundary_summary": "Include ordering, number-line representation, mixed operations and contextual signed quantities.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            4,
+            5
+          ],
+          "pdf_pages": [
+            9,
+            10
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-2-2",
+      "unit": 2,
+      "unit_title": {
+        "en": "Directed numbers",
+        "zh-Hant": "有向數"
+      },
+      "official_reference": "2.2",
+      "description": {
+        "en": "perform mixed arithmetic operations of directed numbers",
+        "zh-Hant": "進行有向數的四則混合運算"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            9
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            8
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": ""
+        },
+        "site_unit_boundary_summary": "Include ordering, number-line representation, mixed operations and contextual signed quantities.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            4,
+            5
+          ],
+          "pdf_pages": [
+            9,
+            10
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-2-3",
+      "unit": 2,
+      "unit_title": {
+        "en": "Directed numbers",
+        "zh-Hant": "有向數"
+      },
+      "official_reference": "2.3",
+      "description": {
+        "en": "solve problems involving directed numbers",
+        "zh-Hant": "解涉及有向數的應用題"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            9
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            8
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": ""
+        },
+        "site_unit_boundary_summary": "Include ordering, number-line representation, mixed operations and contextual signed quantities.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            4,
+            5
+          ],
+          "pdf_pages": [
+            9,
+            10
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-7-1",
+      "unit": 7,
+      "unit_title": {
+        "en": "Algebraic expressions",
+        "zh-Hant": "代數式"
+      },
+      "official_reference": "7.1",
+      "description": {
+        "en": "represent word phrases by algebraic expressions",
+        "zh-Hant": "以代數式表達文字片語"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            13
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            11,
+            12
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "Notations such as ab representing a  b, a b representing a ÷ b, are required. Students are required to use algebraic expressions to represent formulae, for example, the formula of the area of a triangle A  b 2 h that was learnt at Key Stage 2.",
+          "zh-Hant": "須包括諸如 ab 即 a  b 、 a b 即 a ÷ b 等記法 。 學生須以代數式表達公式 ， 例如第二學習階段所學的三角形面積公式 bh A  。 2"
+        },
+        "site_unit_boundary_summary": "Translate both ways between words and expressions; include specified familiar sequences, general-term substitution and intuitive input-processing-output. Formal senior function definitions are deferred.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            16,
+            18
+          ],
+          "pdf_pages": [
+            21,
+            23
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-7-2",
+      "unit": 7,
+      "unit_title": {
+        "en": "Algebraic expressions",
+        "zh-Hant": "代數式"
+      },
+      "official_reference": "7.2",
+      "description": {
+        "en": "represent algebraic expressions by word phrases",
+        "zh-Hant": "以文字片語表達代數式"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            13
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            12
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": ""
+        },
+        "site_unit_boundary_summary": "Translate both ways between words and expressions; include specified familiar sequences, general-term substitution and intuitive input-processing-output. Formal senior function definitions are deferred.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            16,
+            18
+          ],
+          "pdf_pages": [
+            21,
+            23
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-7-3",
+      "unit": 7,
+      "unit_title": {
+        "en": "Algebraic expressions",
+        "zh-Hant": "代數式"
+      },
+      "official_reference": "7.3",
+      "description": {
+        "en": "recognise the concept of sequences of numbers",
+        "zh-Hant": "認識數列的概念"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            13,
+            14
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            12
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "Students are required to guess the next term of a sequence and give explanations. Students are required to find a particular term from the general term of a sequence. Sequences of odd numbers, even numbers, square numbers, and triangular numbers are required.",
+          "zh-Hant": "學生須猜測數列的下一項 ， 並作出解釋 。 學生須從數列的通項求數列的特定項。 須包括奇數數列 、 偶數數列 、 正方形數列和三角形數列。"
+        },
+        "site_unit_boundary_summary": "Translate both ways between words and expressions; include specified familiar sequences, general-term substitution and intuitive input-processing-output. Formal senior function definitions are deferred.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            16,
+            18
+          ],
+          "pdf_pages": [
+            21,
+            23
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-7-4",
+      "unit": 7,
+      "unit_title": {
+        "en": "Algebraic expressions",
+        "zh-Hant": "代數式"
+      },
+      "official_reference": "7.4",
+      "description": {
+        "en": "recognise the preliminary idea of functions",
+        "zh-Hant": "認識函數的初步概念"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            14
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            12
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "The concept of input-processing-output is required. Note: The algebraic expressions discussed in this Learning Unit are confined to expressions involving addition, subtraction, multiplication, division and powers of numbers or variables.",
+          "zh-Hant": "須包括輸入 － 處理 －輸出的概念 。 注 ： 本學習單位所討論的代數式只限於涉及數或變數的加 、 減 、 乘 、 除或乘方運算 。"
+        },
+        "site_unit_boundary_summary": "Translate both ways between words and expressions; include specified familiar sequences, general-term substitution and intuitive input-processing-output. Formal senior function definitions are deferred.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            16,
+            18
+          ],
+          "pdf_pages": [
+            21,
+            23
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-8-1",
+      "unit": 8,
+      "unit_title": {
+        "en": "Linear equations in one unknown",
+        "zh-Hant": "一元一次方程"
+      },
+      "official_reference": "8.1",
+      "description": {
+        "en": "solve linear equations in one unknown",
+        "zh-Hant": "解一元一次方程"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            14
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            12
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": "一元一次方程亦可稱為 「 一元線性方程 」。"
+        },
+        "site_unit_boundary_summary": "Separate solving, formulating and contextual interpretation. Check solutions in the original equation.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            19,
+            19
+          ],
+          "pdf_pages": [
+            24,
+            24
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-8-2",
+      "unit": 8,
+      "unit_title": {
+        "en": "Linear equations in one unknown",
+        "zh-Hant": "一元一次方程"
+      },
+      "official_reference": "8.2",
+      "description": {
+        "en": "formulate linear equations in one unknown from a problem situation",
+        "zh-Hant": "由文字情境建立一元一次方程"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            14
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            12,
+            13
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": ""
+        },
+        "site_unit_boundary_summary": "Separate solving, formulating and contextual interpretation. Check solutions in the original equation.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            19,
+            19
+          ],
+          "pdf_pages": [
+            24,
+            24
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-8-3",
+      "unit": 8,
+      "unit_title": {
+        "en": "Linear equations in one unknown",
+        "zh-Hant": "一元一次方程"
+      },
+      "official_reference": "8.3",
+      "description": {
+        "en": "solve problems involving linear equations in one unknown",
+        "zh-Hant": "解涉及一元一次方程的應用題"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            14
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            13
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "",
+          "zh-Hant": ""
+        },
+        "site_unit_boundary_summary": "Separate solving, formulating and contextual interpretation. Check solutions in the original equation.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            19,
+            19
+          ],
+          "pdf_pages": [
+            24,
+            24
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-19-1",
+      "unit": 19,
+      "unit_title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "official_reference": "19.1",
+      "description": {
+        "en": "understand the concepts and properties of adjacent angles on a straight line, vertically opposite angles and angles at a point",
+        "zh-Hant": "理解直線上的鄰角、對頂角和同頂角的概念及其性質"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            26,
+            27
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            22,
+            23
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "The properties include:  the sum of adjacent angles on a straight line is equal to a straight angle  vertically opposite angles are equal  the sum of angles at a point is equal to a round angle Students are required to recognise the concepts of complementary angles and supplementary angles.",
+          "zh-Hant": "性質包括：  直線上的鄰角的和等於一平角  對頂角相等  同頂角的和等於一周角學生須認識餘角和補角的概念 。"
+        },
+        "site_unit_boundary_summary": "Include straight-line, point, vertically opposite, complementary/supplementary, transversal, parallel-line tests/properties, triangle interior/exterior angles; require valid reasons where deductions are assessed.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            44,
+            46
+          ],
+          "pdf_pages": [
+            49,
+            51
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-19-2",
+      "unit": 19,
+      "unit_title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "official_reference": "19.2",
+      "description": {
+        "en": "understand the concepts of corresponding angles, alternate interior angles and interior angles",
+        "zh-Hant": "理解同位角、內錯角和同旁內角的概念"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            27
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            23
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "Students are required to recognise transversals.",
+          "zh-Hant": "學生須認識截線。"
+        },
+        "site_unit_boundary_summary": "Include straight-line, point, vertically opposite, complementary/supplementary, transversal, parallel-line tests/properties, triangle interior/exterior angles; require valid reasons where deductions are assessed.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            44,
+            46
+          ],
+          "pdf_pages": [
+            49,
+            51
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-19-3",
+      "unit": 19,
+      "unit_title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "official_reference": "19.3",
+      "description": {
+        "en": "recognise the conditions for two straight lines being parallel",
+        "zh-Hant": "認識判別兩直線平行的條件"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            27
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            23
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "The conditions include:  alternate interior angles are equal  corresponding angles are equal  interior angles are supplementary",
+          "zh-Hant": "條件包括：  內錯角相等  同位角相等  同旁內角互補"
+        },
+        "site_unit_boundary_summary": "Include straight-line, point, vertically opposite, complementary/supplementary, transversal, parallel-line tests/properties, triangle interior/exterior angles; require valid reasons where deductions are assessed.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            44,
+            46
+          ],
+          "pdf_pages": [
+            49,
+            51
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-19-4",
+      "unit": 19,
+      "unit_title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "official_reference": "19.4",
+      "description": {
+        "en": "recognise the angle properties associated with parallel lines",
+        "zh-Hant": "認識與平行線相關的角的性質"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            27
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            23
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "The properties include:  alternate interior angles of parallel lines are equal  corresponding angles of parallel lines are equal  interior angles of parallel lines are supplementary",
+          "zh-Hant": "性質包括：  平行線的內錯角相等  平行線的同位角相等  平行線的同旁內角互補"
+        },
+        "site_unit_boundary_summary": "Include straight-line, point, vertically opposite, complementary/supplementary, transversal, parallel-line tests/properties, triangle interior/exterior angles; require valid reasons where deductions are assessed.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            44,
+            46
+          ],
+          "pdf_pages": [
+            49,
+            51
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    },
+    {
+      "id": "JS-19-5",
+      "unit": 19,
+      "unit_title": {
+        "en": "Angles and parallel lines",
+        "zh-Hant": "角和平行線"
+      },
+      "official_reference": "19.5",
+      "description": {
+        "en": "understand the properties of the interior and exterior angles of triangles",
+        "zh-Hant": "理解三角形的內角和外角的性質"
+      },
+      "official_classification": "foundation",
+      "source": {
+        "en": {
+          "id": "JS-2017-EN",
+          "pdf": "jsmc2017_e.pdf",
+          "pdf_pages": [
+            27,
+            28
+          ]
+        },
+        "zh-Hant": {
+          "id": "JS-2017-ZH",
+          "pdf": "jsmc2017_tc.pdf",
+          "pdf_pages": [
+            23,
+            24
+          ]
+        }
+      },
+      "scope": {
+        "source_remarks": {
+          "en": "The properties include:  the angle sum of a triangle is equal to a straight angle  the exterior angle of a triangle is equal to the sum of the interior opposite angles of the triangle Students are required to recognise the concepts of acute-angled triangles and obtuse-angled triangles.",
+          "zh-Hant": "性質包括﹕  三角形的內角和等於一平角  三角形的外角等於內對角的和學生須認識銳角三角形和鈍角三角形的概念。"
+        },
+        "site_unit_boundary_summary": "Include straight-line, point, vertically opposite, complementary/supplementary, transversal, parallel-line tests/properties, triangle interior/exterior angles; require valid reasons where deductions are assessed.",
+        "notes_section": {
+          "source": "JS-NOTES-2020-EN",
+          "printed_pages": [
+            44,
+            46
+          ],
+          "pdf_pages": [
+            49,
+            51
+          ]
+        },
+        "authoring_rule": "Check the objective row, unit-wide notes and original PDF before writing a task; equations in extracted text are not a marking specification."
+      }
+    }
+  ]
+}

@@ -1,0 +1,321 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Directed numbers — pilot draft",
+  "seed": "signed-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "SN01",
+        "seed": "signed-print-v1:0",
+        "version": 1,
+        "objective": "JS-2-1",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "reference",
+          "magnitude": 18,
+          "direction": 1
+        },
+        "math": "0 °C; ↑ 18 °C",
+        "prompt": {
+          "en": "The temperature is 18 °C above 0 °C. Write its directed number in °C.",
+          "zh": "氣溫比 0 °C 高 18 °C。以有向數表示氣溫（單位：°C）。"
+        },
+        "hint": {
+          "en": "Zero is the reference. Below is negative; above is positive. Zero itself is neither.",
+          "zh": "以零為基準，低於零用負數，高於零用正數；零本身既不是正數，也不是負數。"
+        },
+        "solution": {
+          "en": "Above zero means a positive value. The temperature is 18 °C.",
+          "zh": "高於零，所以用正數表示。氣溫是 18 °C。"
+        },
+        "answerUnit": {
+          "en": "°C",
+          "zh": "°C"
+        },
+        "diagram": {
+          "type": "signed-line",
+          "values": [
+            "0"
+          ],
+          "minimum": -22,
+          "maximum": 22,
+          "tick": 5,
+          "description": {
+            "en": "Reference zero on an equally spaced scale; use the temperature description to find the value.",
+            "zh": "等距數線上標示基準零；請按氣溫描述找出數值。"
+          }
+        },
+        "answer": "18",
+        "contract": {
+          "type": "number",
+          "answer": "18",
+          "form": "number-literal"
+        },
+        "exposureKey": "SN01:{\"kind\":\"reference\",\"magnitude\":18,\"direction\":1}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "SN02",
+        "seed": "signed-print-v1:1",
+        "version": 1,
+        "objective": "JS-2-1",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "comparison",
+          "a": "-21/2",
+          "b": "-12"
+        },
+        "math": "-21/2, -12",
+        "options": [
+          {
+            "id": "right",
+            "label": "-12"
+          },
+          {
+            "id": "left",
+            "label": "-21/2"
+          }
+        ],
+        "prompt": {
+          "en": "Choose the greater number.",
+          "zh": "選出較大的數。"
+        },
+        "hint": {
+          "en": "On a number line, the number further right is greater. Compare values, not just their unsigned digits.",
+          "zh": "在數線上，越右的數越大；不要只比較不帶正負號的數字。"
+        },
+        "solution": {
+          "en": "-21/2 > -12. The greater value lies further right on a number line.",
+          "zh": "-21/2 > -12。較大的數在數線上位於較右方。"
+        },
+        "diagram": {
+          "type": "signed-line",
+          "values": [
+            "-21/2",
+            "-12"
+          ],
+          "description": {
+            "en": "Both numbers are plotted on the same equally spaced number line.",
+            "zh": "兩個數標示在同一條等距數線上。"
+          }
+        },
+        "answer": "left",
+        "contract": {
+          "type": "choice",
+          "answer": "left"
+        },
+        "exposureKey": "SN02:{\"kind\":\"comparison\",\"a\":\"-21/2\",\"b\":\"-12\"}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "SN03",
+        "seed": "signed-print-v1:2",
+        "version": 1,
+        "objective": "JS-2-2",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "movement",
+          "a": 0,
+          "b": 4,
+          "operation": "add"
+        },
+        "math": "0 + (4)",
+        "prompt": {
+          "en": "Calculate the final value.",
+          "zh": "計算最終數值。"
+        },
+        "hint": {
+          "en": "Adding moves by the signed operand. Subtracting adds its opposite; subtracting a negative moves right.",
+          "zh": "加法按有向數移動；減去一個數即加上其相反數，減去負數會向右移。"
+        },
+        "solution": {
+          "en": "0 + (4) = 0 + (4) = 4. Move 4 units right from 0.",
+          "zh": "0 + (4) = 0 + (4) = 4。由 0 向右移 4 個單位。"
+        },
+        "diagram": {
+          "type": "signed-line",
+          "values": [
+            "0"
+          ],
+          "bounds": [
+            0,
+            4
+          ],
+          "movement": {
+            "start": 0,
+            "delta": 4
+          },
+          "description": {
+            "en": "Start at 0; add 4. Tick spacing is uniform; the endpoint value is unlabelled.",
+            "zh": "由 0 出發，加上 4；刻度等距，終點數值未標示。"
+          }
+        },
+        "answer": "4",
+        "contract": {
+          "type": "number",
+          "answer": "4",
+          "form": "number-literal"
+        },
+        "exposureKey": "SN03:{\"kind\":\"movement\",\"a\":0,\"b\":4,\"operation\":\"add\"}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "SN04",
+        "seed": "signed-print-v1:3",
+        "version": 1,
+        "objective": "JS-2-2",
+        "marks": 1,
+        "lines": 3,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "product",
+          "a": -5,
+          "b": 1,
+          "operation": "divide"
+        },
+        "math": "(-5) ÷ (1)",
+        "prompt": {
+          "en": "Calculate. Use an inverse or sign pattern to check.",
+          "zh": "計算，並用逆運算或符號規律檢驗。"
+        },
+        "hint": {
+          "en": "For nonzero values, equal signs give a positive product/quotient and different signs give a negative one. A zero factor/dividend gives zero; never divide by zero.",
+          "zh": "非零數相乘或相除，同號得正、異號得負。因數或被除數為零時，結果為零；不能除以零。"
+        },
+        "solution": {
+          "en": "(-5) ÷ (1) = -5. Check: (1) × (-5) = -5.",
+          "zh": "(-5) ÷ (1) = -5。檢驗：（1）×（-5）= -5。"
+        },
+        "answer": "-5",
+        "contract": {
+          "type": "number",
+          "answer": "-5",
+          "form": "number-literal"
+        },
+        "exposureKey": "SN04:{\"kind\":\"product\",\"a\":-5,\"b\":1,\"operation\":\"divide\"}"
+      },
+      "marks": 1,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "SN05",
+        "seed": "signed-print-v1:4",
+        "version": 1,
+        "objective": "JS-2-2",
+        "marks": 2,
+        "lines": 4,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "mixed",
+          "a": 7,
+          "b": -8,
+          "c": 5,
+          "d": 4
+        },
+        "math": "[7 + (-8) × (5)] ÷ (4)",
+        "prompt": {
+          "en": "Calculate. Give an exact final value.",
+          "zh": "計算，寫出準確的最終數值。"
+        },
+        "hint": {
+          "en": "Multiply inside the brackets first, then add, then divide the whole bracket result.",
+          "zh": "先計算括號內的乘法，再相加，最後把整個括號的結果相除。"
+        },
+        "solution": {
+          "en": "(-8) × (5) = -40; 7 + (-40) = -33; (-33) ÷ (4) = -33/4.",
+          "zh": "（-8）×（5）= -40；7 +（-40）= -33；（-33）÷（4）= -33/4。"
+        },
+        "answer": "-33/4",
+        "contract": {
+          "type": "number",
+          "answer": "-33/4",
+          "form": "number-literal"
+        },
+        "exposureKey": "SN05:{\"kind\":\"mixed\",\"a\":7,\"b\":-8,\"c\":5,\"d\":4}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "SN06",
+        "seed": "signed-print-v1:5",
+        "version": 1,
+        "objective": "JS-2-3",
+        "marks": 2,
+        "lines": 4,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "change",
+          "initial": 4,
+          "final": -14
+        },
+        "math": "4 °C → -14 °C",
+        "prompt": {
+          "en": "The temperature changes from 4 °C to -14 °C. Find the directed change in °C.",
+          "zh": "氣溫由 4 °C 變為 -14 °C。求氣溫的有向變化（單位：°C）。"
+        },
+        "hint": {
+          "en": "Change = final − initial. Check that initial + change = final.",
+          "zh": "變化 = 最後數值 − 最初數值；可用「最初數值 + 變化 = 最後數值」檢驗。"
+        },
+        "solution": {
+          "en": "Change = -14 − (4) = -18 °C: a fall of 18 °C. Check: 4 + (-18) = -14.",
+          "zh": "變化 = -14 −（4）= -18 °C，即下降 18 °C。檢驗：4 +（-18）= -14。"
+        },
+        "answerUnit": {
+          "en": "°C change",
+          "zh": "°C（變化）"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "State final minus initial and interpret the sign as rise/fall. The automatic result check does not verify your explanation.",
+          "zh": "說明「最後減最初」，並按正負號解釋上升或下降。自動核對數值並不會核實解釋。"
+        },
+        "diagram": {
+          "type": "signed-line",
+          "values": [
+            "4",
+            "-14"
+          ],
+          "description": {
+            "en": "Initial temperature 4 °C; final temperature -14 °C. Find their directed difference.",
+            "zh": "最初氣溫 4 °C，最後氣溫 -14 °C；求兩者的有向差。"
+          }
+        },
+        "answer": "-18",
+        "contract": {
+          "type": "number",
+          "answer": "-18",
+          "form": "number-literal"
+        },
+        "exposureKey": "SN06:{\"kind\":\"change\",\"initial\":4,\"final\":-14}"
+      },
+      "marks": 2,
+      "lines": 6
+    }
+  ]
+}

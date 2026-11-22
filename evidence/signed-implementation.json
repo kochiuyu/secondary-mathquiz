@@ -1,0 +1,50 @@
+{
+  "version": "0.6.0",
+  "date": "2026-11-22",
+  "milestone": "P2.2a",
+  "state": "implemented-author-draft; further review pending",
+  "families": [
+    "SN01",
+    "SN02",
+    "SN03",
+    "SN04",
+    "SN05",
+    "SN06"
+  ],
+  "lessons": [
+    "SN-L1",
+    "SN-L2",
+    "SN-L3"
+  ],
+  "mapped_objectives": [
+    "JS-2-1",
+    "JS-2-2",
+    "JS-2-3"
+  ],
+  "automated": {
+    "tests": 39,
+    "pass": 39,
+    "fail": 0,
+    "generated_curriculum_seed_cases": 1800,
+    "number_line_cases": 320,
+    "legacy_fixture_seed_cases": 1200
+  },
+  "browser": {
+    "run": "a44289c8-dcd4-436f-b127-dc4571367b04",
+    "source_sha256": "dd9f9435e47b1a16c054beb945ca2ac7f4b40a051beea3f4fec8e283ba4ab464",
+    "pass": 12,
+    "fail": 0,
+    "blocked": 0,
+    "raw_manual_state": "pending",
+    "base_path": "/secondary-mathquiz/qa/",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36"
+  },
+  "review_limits": [
+    "Author self-checks only; independent mathematics/language/classroom review pending.",
+    "New actual PDF and physical-print review not performed.",
+    "P2 200% native browser zoom and spoken screen-reader output not performed.",
+    "Freshness compares bounded retained model signatures, not every mathematically equivalent reformulation.",
+    "Curriculum coverage remains planned; no public site is published."
+  ],
+  "next": "Check actual bilingual signed-number PDFs and review the slice; then implement EX01–EX06 and three expressions lessons."
+}

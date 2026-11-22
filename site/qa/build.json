@@ -1,0 +1,9 @@
+{
+  "prototypeVersion": "0.7.0",
+  "sourceHash": "f0fe877671d553d2fe6583406ab93ecb84f32a32b196e5d5a80b75bb51ac11c2",
+  "changes": [
+    "isolated test-storage namespace",
+    "relative source-document links"
+  ],
+  "browserExecution": "not performed"
+}
