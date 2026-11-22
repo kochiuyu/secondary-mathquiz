@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=6a1d394bfdf5';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=b125ba479e23';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -393,6 +393,42 @@ document.querySelector('#run').addEventListener('click',async()=>{
     const reason=el('#paper-pages .paper-question .solution').textContent;assert(reason.includes(language==='en'?'manual review':'人工'),'Rate/ratio reason lost manual status.');
    }
    return 'Eight snapshots survived reload; language-sensitive identities, MathML reference diagrams, values and manual criteria passed.';
+  });
+  await step('A34',async()=>{
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    await go('estimation','[data-action="estimation-check"]');assert(el('.lesson-grid').children.length===4,'Missing estimation lessons.');
+    frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'estimation mobile viewport');
+    for(const id of ['AP-L1','AP-L2','AP-L3','AP-L4']){
+     await go('lesson/'+id,'[data-action="estimation-lesson-check"]');await waitFor(()=>appDocument()?.querySelector('.lesson-roadmap [aria-current="step"]')?.getAttribute('href')==='#lesson/'+id,'current estimation lesson '+id);assert(el('.lesson-roadmap').querySelectorAll('a').length===4,'Missing estimation roadmap.');assert(el('.lesson-explanation').textContent.length>60,'Brief estimation explanation.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Estimation lesson overflows at 390px.');
+     assert(currentProfile().studied.includes('lesson:'+id+':v1'),'Estimation study exposure not retained.');
+    }
+   }
+   frame.width='1120';return 'Four lessons in both languages, study exposure, roadmap and 390px reflow passed.';
+  });
+
+  await step('A35',async()=>{
+   if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
+   await go('estimation','[data-action="estimation-check"]');click('[data-action="estimation-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'seven core estimation questions');
+   const core=latestSession();assert(core.items.length===7&&core.items.every(q=>q.id!=='AP08'),'Optional enrichment forced into core check.');
+   assert(core.responses[0].priorExposure,'Studied report type became fresh after number renaming.');
+   checkAnswer(core.items[0].answer,'The report type determines exactness.');click('[data-action="next"]');
+   const q=latestSession().items[1],draft=q.answer;input('#answer-input',draft);click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'rounding draft reload');assert(el('#answer-input').value===draft&&latestSession().id===core.id,'Precision zeros lost in draft reload.');click('[data-action="language"]');
+   const extraZero=draft.includes('.')?draft+'0':draft+'.0';checkAnswer(extraZero,'Report precision');assert(latestSession().responses[1].attempts.at(-1).status==='wrong-form','Extra decimal place was accepted.');assert(el('.feedback').textContent.includes('precision'),'Precision feedback missing.');
+   for(let i=1;i<7;i++){const item=latestSession().items[i];checkAnswer(item.answer,'Rounding direction, purpose and units');assert(latestSession().responses[i].attempts.at(-1).status==='correct','Core estimate rejected.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Edited interpretation');assert(latestSession().responses[i].manualReview===null,'Edited explanation stayed reviewed.');click('[data-action="next"]');}
+   assert(el('.result-grid').textContent.includes('7 / 7'),'Core score denominator wrong.');
+   await go('lesson/AP-L4','[data-action="estimation-lesson-check"]');click('[data-action="estimation-lesson-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'manual optional investigation');assert(latestSession().items.length===1&&latestSession().items[0].contract.type==='manual','Optional task is not one manual investigation.');
+   checkAnswer('I choose a justified planning estimate.','State purpose, assumptions, alternative range and limitations.');assert(latestSession().responses[0].attempts.at(-1).status==='manual','Open strategy automatically judged.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','A revised limitation');assert(latestSession().responses[0].manualReview===null,'Edited investigation stayed reviewed.');click('[data-action="next"]');
+   assert(el('.result-grid').textContent.includes('excluded')||el('#main').textContent.includes('excluded from'),'Manual-score exclusion missing.');
+   return 'Seven core answers, precision-specific wrong form, trailing-zero draft reload, edited reasons and wholly manual optional investigation passed.';
+  });
+  await step('A36',async()=>{
+   await go('estimation','[data-action="estimation-paper"]');click('[data-action="estimation-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'core estimation paper');assert(currentProfile().paper.items.length===7&&currentProfile().paper.items.every(i=>i.question.id!=='AP08'),'Optional task forced into core paper.');
+   const snapshot=JSON.stringify(currentProfile().paper);await reloadApplication();await waitFor(()=>appDocument()?.querySelector('.paper-page'),'estimation paper reload');assert(JSON.stringify(currentProfile().paper)===snapshot,'Rounding snapshots changed on reload.');
+   const mixed=structuredClone(currentProfile().paper);mixed.title='Core and optional estimation review';mixed.items.push({question:latestSession().items[0],marks:4,lines:6});
+   input('#paper-import',JSON.stringify(mixed));click('[data-action="import-paper"]');await waitFor(()=>currentProfile().paper.items.length===8,'explicit optional paper import');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
+   for(const language of ['en','zh']){change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'estimation bilingual identity');assert(el('#paper-pages').querySelectorAll('.solution').length===8,'Estimation key incomplete.');assert(el('#paper-pages').textContent.includes(language==='en'?'All 4 marks require manual review':'全題 4 分需人工評閱'),'Optional key lost wholly manual marking.');assert(el('#paper-pages').querySelector('.estimation-model'),'Rounding model missing.');}
+   return 'Seven-question core paper survived reload; optional investigation added explicitly; both languages kept all eight keys and wholly manual marking.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

@@ -75,6 +75,10 @@ export function mark(contract,input){
       text=text.replace(/^x\s*=\s*/,'');if(contract.unit==='degree')text=text.replace(/°$/,'');
       if(!scalar(text).eq(scalar(contract.answer)))return {status:'incorrect'};
       if(contract.form==='number-literal'&&!/^(?:[+-]?(?:\d+(?:\.\d*)?|\.\d+)|[+-]?\d+\s*\/\s*[+-]?\d+)$/.test(text.trim()))return {status:'wrong-form'};
+      if(Number.isInteger(contract.decimalPlaces)){
+        const literal=text.match(/^[+-]?(?:\d+)(?:\.(\d+))?$/);
+        if(!literal||(literal[1]?.length||0)!==contract.decimalPlaces)return {status:'wrong-form'};
+      }
       return {status:'correct'};
     }
     if(contract.type==='expression'){

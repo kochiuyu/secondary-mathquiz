@@ -1,3 +1,4 @@
+import {estimationDiagram} from './estimation-diagrams.mjs';
 import {ratioDiagram} from './ratio-diagrams.mjs';
 import {percentageDiagram} from './percentage-diagrams.mjs';
 import {basicDiagram} from './basic-diagrams.mjs';
@@ -21,6 +22,7 @@ export function math(text){
 export function diagram(q,lang='en'){
  if(!q.diagram)return '';
  const d=q.diagram;
+ if(d.type==='estimation-model')return estimationDiagram(d,lang);
  if(d.type==='ratio-model')return ratioDiagram(d,lang);
  if(d.type==='percentage-model')return percentageDiagram(d,lang);
  if(d.type==='basic-model')return basicDiagram(q,lang);

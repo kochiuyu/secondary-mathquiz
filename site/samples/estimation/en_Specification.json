@@ -1,0 +1,385 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Approximation and estimation - core and optional review",
+  "seed": "estimation-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "AP01",
+        "seed": "estimation-print-v1:0",
+        "version": 1,
+        "objective": "JS-3-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "report",
+          "report": "defined",
+          "n": 80
+        },
+        "math": "",
+        "answer": "exact",
+        "prompt": {
+          "en": "By the definition of the units, 1 metre equals 100 centimetres. Is the report stated to be exact or approximate? Explain why.",
+          "zh": "按照單位的定義，1 米等於 100 厘米。 這份報告所述的是準確值還是近似值？請說明理由。"
+        },
+        "options": [
+          {
+            "id": "exact",
+            "label": {
+              "en": "Exact",
+              "zh": "準確值"
+            }
+          },
+          {
+            "id": "approximate",
+            "label": {
+              "en": "Approximate",
+              "zh": "近似值"
+            }
+          }
+        ],
+        "hint": {
+          "en": "Read how the number was obtained and reported. A decimal is not automatically approximate; an integer is not automatically exact.",
+          "zh": "留意數值如何得出及報告。小數未必是近似值，整數也未必是準確值。"
+        },
+        "solution": {
+          "en": "The given complete tally or unit definition is exact under the stated assumptions. Its notation alone is not the deciding factor.",
+          "zh": "題設明言完整點算或按定義換算，因此在所列假設下是準確值；不能只憑記法判斷。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "exact"
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP01:{\"kind\":\"report\",\"report\":\"defined\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP02",
+        "seed": "estimation-print-v1:1",
+        "version": 1,
+        "objective": "JS-3-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "decimal-places",
+          "n": 860127,
+          "scale": 4,
+          "dp": 3
+        },
+        "math": "86.0127",
+        "prompt": {
+          "en": "Round the displayed exact decimal to 3 decimal places. For these nonnegative values, a halfway value rounds upwards. Write all 3 digits after the decimal point (none if 3=0).",
+          "zh": "把所示準確小數以四捨五入法取至 3 位小數。本組非負數恰在中點時向上取。須保留小數點後 3 位（3=0 時不寫小數點）。"
+        },
+        "hint": {
+          "en": "Keep the requested decimal places, inspect the next digit, and round once from the original value. Keep required trailing zeros.",
+          "zh": "保留指定位數的小數，查看下一位，直接由原值捨入一次；保留所需末尾零。"
+        },
+        "solution": {
+          "en": "86.0127 ≈ 86.013 to 3 decimal places. The result reports a precision; extra or missing decimal places change that report.",
+          "zh": "86.0127 ≈ 86.013（3 位小數）。答案亦表達所需準確程度，多寫或少寫小數位都會改變報告方式。"
+        },
+        "answer": "86.013",
+        "contract": {
+          "type": "number",
+          "answer": "86.013",
+          "form": "number-literal",
+          "decimalPlaces": 3
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP02:{\"kind\":\"decimal-places\",\"n\":860127,\"scale\":4,\"dp\":3}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP03",
+        "seed": "estimation-print-v1:2",
+        "version": 1,
+        "objective": "JS-3-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "significant",
+          "n": 60417,
+          "scale": 7,
+          "figures": 3
+        },
+        "math": "0.0060417",
+        "prompt": {
+          "en": "Round the displayed positive decimal to 3 significant figures using nearest rounding, halfway upwards. Write a decimal with its required trailing zeros; do not use a fraction or scientific notation.",
+          "zh": "把所示正小數以四捨五入法取至 3 位有效數字，中點向上取。請用小數並保留所需末尾零，不用分數或科學記數法。"
+        },
+        "hint": {
+          "en": "Start counting at the first nonzero digit. Leading zeros locate the decimal; zeros after the first nonzero digit can be significant. Recheck the place after a carry.",
+          "zh": "由第一個非零數字開始數。前導零只表示位值；第一個非零數字後的零可以是有效數字。進位後須重新檢查位值。"
+        },
+        "solution": {
+          "en": "0.0060417 ≈ 0.00604 to 3 significant figures. Leading zeros do not count. The displayed trailing zeros retain the requested precision.",
+          "zh": "0.0060417 ≈ 0.00604（3 位有效數字）。前導零不計算，所寫末尾零保留指定的準確程度。"
+        },
+        "answer": "0.00604",
+        "contract": {
+          "type": "number",
+          "answer": "0.00604",
+          "form": "number-literal",
+          "decimalPlaces": 5
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP03:{\"kind\":\"significant\",\"n\":60417,\"scale\":7,\"figures\":3}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP04",
+        "seed": "estimation-print-v1:3",
+        "version": 1,
+        "objective": "JS-3-1",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "place",
+          "n": 77055,
+          "step": 10
+        },
+        "math": "77055",
+        "prompt": {
+          "en": "Round this whole number to the nearest 10, halfway upwards.",
+          "zh": "把這個整數以四捨五入法取至最接近的 10，中點向上取。"
+        },
+        "hint": {
+          "en": "Locate the two neighbouring multiples of the stated place. Compare distances and keep the nearer one; a halfway value uses the higher one.",
+          "zh": "找出該位值兩個相鄰倍數，比較距離，取較接近的一個；恰在中點則取較大者。"
+        },
+        "solution": {
+          "en": "77055 ≈ 77060 to the nearest 10. This is rounding to a place, not counting significant figures.",
+          "zh": "77055 ≈ 77060（取至最接近的 10）。這是取至指定的位，並非數有效數字。"
+        },
+        "answer": "77060",
+        "contract": {
+          "type": "number",
+          "answer": "77060",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP04:{\"kind\":\"place\",\"n\":77055,\"step\":10}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP05",
+        "seed": "estimation-print-v1:4",
+        "version": 1,
+        "objective": "JS-3-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "strategy",
+          "n": 4296,
+          "step": 10,
+          "mode": "down"
+        },
+        "math": "4296",
+        "prompt": {
+          "en": "Apply this strategy to a multiple of 10: round down. An exact multiple stays unchanged.",
+          "zh": "以 10 的倍數作下捨入。原值若已是該倍數，則保持不變。"
+        },
+        "hint": {
+          "en": "Rounding up gives the least allowed multiple not below the value; rounding down gives the greatest allowed multiple not above it. Nearest can go either way.",
+          "zh": "上捨入取不小於原值的最小指定倍數，下捨入取不大於原值的最大指定倍數；捨入則可能向上或向下。"
+        },
+        "solution": {
+          "en": "The requested round down result is 4290. Nearby multiples are 4290 and 4300; an exact multiple need not move.",
+          "zh": "下捨入的結果為 4290；兩邊倍數為 4290 及 4300。若原值已是倍數，便不移動。"
+        },
+        "diagram": {
+          "type": "estimation-model",
+          "kind": "line",
+          "n": 4296,
+          "step": 10
+        },
+        "answer": "4290",
+        "contract": {
+          "type": "number",
+          "answer": "4290",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP05:{\"kind\":\"strategy\",\"n\":4296,\"step\":10,\"mode\":\"down\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP06",
+        "seed": "estimation-print-v1:5",
+        "version": 1,
+        "objective": "JS-3-2",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "prescribed",
+          "a": 46,
+          "b": 22,
+          "op": "multiply"
+        },
+        "math": "46 × 22",
+        "prompt": {
+          "en": "Use exactly this estimation strategy: round EACH input to the nearest ten, halfway upwards; then apply the displayed operation to the rounded inputs. Enter the exact value of that estimate, as a number or fraction, without units. Do not round the final result again. Explain your replacements.",
+          "zh": "只用指定估算策略：先把每個原數取至最接近的十位，中點向上取，再以捨入後兩數作所示運算。輸入這個估算結果的準確數值或分數，不加單位，不把最終結果再捨入，並說明替代的數值。"
+        },
+        "hint": {
+          "en": "An estimate follows the stated replacements; it is not the exact calculation rounded at the end. The positive divisor cannot round to zero here.",
+          "zh": "按所列規則替代原數，不是先精確運算再把答案捨入。本題的正除數不會被捨入為零。"
+        },
+        "solution": {
+          "en": "Replace 46 by 50 and 22 by 20. The prescribed estimate is 1000. Other strategies can give other estimates; this check only verifies this specified procedure.",
+          "zh": "以 50 代替 46、以 20 代替 22，指定估算結果為 1000。其他策略可能有其他估算值；本自動檢查只核對題設步驟。"
+        },
+        "answer": "1000",
+        "contract": {
+          "type": "number",
+          "answer": "1000",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP06:{\"kind\":\"prescribed\",\"a\":46,\"b\":22,\"op\":\"multiply\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP07",
+        "seed": "estimation-print-v1:6",
+        "version": 1,
+        "objective": "JS-3-3",
+        "marks": 3,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "context",
+          "mode": "budget",
+          "budget": 141,
+          "price": 28
+        },
+        "math": "141 ÷ 28",
+        "prompt": {
+          "en": "A fictional ticket costs exactly HK$28. With HK$141 and no other fees, find the maximum whole number of tickets affordable without exceeding the budget. Explain the rounding direction.",
+          "zh": "假設每張票準確售 HK$28，預算 HK$141，沒有其他費用。求不超過預算最多可買多少整數張票，並解釋取整方向。"
+        },
+        "hint": {
+          "en": "Enough seats require rounding a non-integer quotient up; affordable complete tickets require rounding it down. If the quotient is already an integer, keep it.",
+          "zh": "座位足夠時非整數商須向上取整；只買付得起的整數張票時須向下取整；商若已是整數則不變。"
+        },
+        "solution": {
+          "en": "5 tickets cost HK$140; one more would cost HK$168, beyond HK$141. This is a maximum affordable whole count.",
+          "zh": "5 張共售 HK$140，多一張便要 HK$168，超過 HK$141。這是付得起的最多整數張數。"
+        },
+        "answer": "5",
+        "contract": {
+          "type": "number",
+          "answer": "5",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the interpretation of precision, rounding direction, replacement steps and contextual meaning as appropriate. Automatic value/choice checking does not verify the written explanation.",
+          "zh": "按題意檢視準確程度、捨入方向、替代步驟及情境意思；自動核對數值或選項不會核實書面解釋。"
+        },
+        "exposureKey": "AP07:{\"kind\":\"context\",\"mode\":\"budget\",\"budget\":141,\"price\":28}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "AP08",
+        "seed": "estimation-print-v1:7",
+        "version": 1,
+        "objective": "JS-3-4",
+        "marks": 4,
+        "lines": 6,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "investigation",
+          "scenario": "travel",
+          "n": 14
+        },
+        "answer": "A proposed strategy with assumptions, an estimate and a reasonableness check.",
+        "math": "14; 20–30",
+        "prompt": {
+          "en": "Optional enrichment (JS-3-4), entirely manually reviewed. A trip is approximately 14 km, with an expected moving speed around 20–30 km/h. There may also be stops. Propose a useful estimate for the decision, choose your own justified precision/strategy, state assumptions and check reasonableness. Give an alternative or range and a limitation. Put a short proposal in the answer and details in the reason. Several responses can be valid.",
+          "zh": "選修增潤（JS-3-4），全題人工評閱。路程約 14 公里，預期行駛速率約 20–30 公里／小時，中途也可能停留。 請按決策需要提出估算，自選並解釋合適的準確程度及策略，列出假設、檢查合理性，並給另一估算或範圍及一項限制。答案欄寫簡短建議，理由欄詳述。可有多個合理答案。"
+        },
+        "hint": {
+          "en": "Decide what the estimate is for before choosing precision. A planning allowance, a central estimate and a rough range answer different needs; state which you chose.",
+          "zh": "先決定估算用途，再選準確程度。留有餘量的計劃數、中央估計及粗略範圍服務不同需要，須說清所選方法。"
+        },
+        "solution": {
+          "en": "Using 25 km/h gives about 14/25 h moving time. Using 20–30 km/h gives roughly 7/15–7/10 h before stops. Route uncertainty and stops can change the total; add and justify any allowance rather than calling it exact. Accept other useful justified precision choices.",
+          "zh": "暫用每小時 25 公里，行駛時間約 14/25 小時；按每小時 20–30 公里，未計停留約 7/15–7/10 小時。路線及停留會改變總時間；額外時間須有理由，不能當作準確值。接受其他適用且有解釋的準確程度。"
+        },
+        "contract": {
+          "type": "manual"
+        },
+        "optional": true,
+        "reasonRubric": {
+          "en": "Review the decision, assumptions, strategy, precision, plausible alternatives/range and limitations. Evaluate the whole proposal manually; the worked example is not a unique answer.",
+          "zh": "人工檢視決策需要、假設、策略、準確程度、其他合理估算／範圍及限制；示例並非唯一答案。"
+        },
+        "exposureKey": "AP08:{\"kind\":\"investigation\",\"scenario\":\"travel\"}"
+      },
+      "marks": 4,
+      "lines": 6
+    }
+  ]
+}

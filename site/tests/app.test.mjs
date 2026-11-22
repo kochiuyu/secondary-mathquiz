@@ -124,7 +124,7 @@ test('angle routes, manual proof, appearance exposure and five-answer score inte
   if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
   await click('next');
  }
- assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Seven connected topics/);
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
 });
 
 test('skip navigation preserves the current route, content and answer draft',async()=>{
@@ -165,7 +165,7 @@ test('percentage lessons, exact eight-family check, reviewed reasons, bilingual 
  for(let i=0;i<8;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Reference quantity and model'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reference');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');}
  assert.equal(current().sessions.at(-1).id,id);assert.match(root.innerHTML,/8 \/ 8/);assert.match(root.innerHTML,/Name the base and track/);
  location.hash='percentages';await click('percentages-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('PC')));
- assert.match(node('#paper-pages').innerHTML,/percentage-model/);location.hash='home';assert.match(root.innerHTML,/Seven connected topics/);
+ assert.match(node('#paper-pages').innerHTML,/percentage-model/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
 });
 
 
@@ -182,7 +182,27 @@ test('rate/ratio lessons, exact eight-family check, reviewed reasons, bilingual 
  for(let i=0;i<8;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Reference quantity and model'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reference');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');}
  assert.equal(current().sessions.at(-1).id,id);assert.match(root.innerHTML,/8 \/ 8/);assert.match(root.innerHTML,/Keep the units and the fixed condition/);
  location.hash='ratios';await click('ratios-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('RP')));
- assert.match(node('#paper-pages').innerHTML,/ratio-model/);location.hash='home';assert.match(root.innerHTML,/Seven connected topics/);
+ assert.match(node('#paper-pages').innerHTML,/ratio-model/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
+});
+
+test('estimation core keeps optional investigation separate, enforces report precision and retains manual evidence',async()=>{
+ const current=()=>JSON.parse(memory.get(PREFIX+JSON.parse(memory.get(PREFIX+'profiles')).active));
+ if(document.documentElement.lang!=='en')await click('language');
+ location.hash='setup/check';assert.match(root.innerHTML,/value="AP08" (?!checked)/);
+ location.hash='topic/js-3';assert.match(root.innerHTML,/Learn approximation and estimation/);
+ location.hash='estimation';assert.match(root.innerHTML,/Practise seven core families/);
+ for(const id of ['AP-L1','AP-L2','AP-L3','AP-L4']){location.hash='lesson/'+id;assert.match(root.innerHTML,/estimation-lesson-check/);assert.ok(current().studied.includes('lesson:'+id+':v1'));}
+ location.hash='estimation';await click('estimation-check');assert.equal(current().sessions.at(-1).items.length,7);assert.ok(current().sessions.at(-1).items.every(q=>q.id!=='AP08'));
+ const first=current().sessions.at(-1).items[0];submit('answer-form',{answer:first.answer,reason:'The stated report type decides.'});await click('next');
+ input('answer-input','answer','1.20');await click('language');assert.ok(root.innerHTML.includes('value="1.20"'));await click('language');
+ const q=current().sessions.at(-1).items[1],extra=q.answer.includes('.')?q.answer+'0':q.answer+'.0';submit('answer-form',{answer:extra,reason:'Rounding precision'});assert.equal(current().sessions.at(-1).responses[1].attempts.at(-1).status,'wrong-form');assert.match(root.innerHTML,/requested precision/);
+ for(let i=1;i<7;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Purpose, precision and rounding direction'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('next');}
+ assert.match(root.innerHTML,/7 \/ 7/);assert.match(root.innerHTML,/Match the precision to the purpose/);
+ location.hash='estimation';await click('estimation-paper');await waitForPaper();assert.equal(current().paper.items.length,7);assert.ok(current().paper.items.every(i=>i.question.id!=='AP08'));
+ location.hash='lesson/AP-L4';await click('estimation-lesson-check',{lesson:'AP-L4'});assert.equal(current().sessions.at(-1).items.length,1);assert.equal(current().sessions.at(-1).items[0].contract.type,'manual');
+ submit('answer-form',{answer:'My justified planning estimate',reason:'I state assumptions, a rough range and a limitation.'});assert.equal(current().sessions.at(-1).responses[0].attempts.at(-1).status,'manual');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[0].manualReview,'self');input('reason-input','reason','An updated limitation');assert.equal(current().sessions.at(-1).responses[0].manualReview,null);await click('next');assert.match(root.innerHTML,/excluded from the automatic-score denominator/);
+ location.hash='paper';submit('paper-setup',{family:['AP01','AP02','AP03','AP04','AP05','AP06','AP07','AP08'],count:'8'});await waitForPaper();assert.equal(current().paper.items.length,8);await click('toggle-key');await waitForPaper();assert.match(node('#paper-pages').innerHTML,/All 4 marks require manual review/);
+ location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
 });
 
 

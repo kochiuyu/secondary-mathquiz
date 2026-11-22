@@ -1,6 +1,6 @@
 {
-  "prototypeVersion": "0.12.0",
-  "sourceHash": "613ccb4c48d4176f562bf6b8c6b29f3f4a5f46cfc0efdef8ff3d6332a7c091a7",
+  "prototypeVersion": "0.13.0",
+  "sourceHash": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5",
   "changes": [
     "isolated test-storage namespace",
     "relative source-document links"

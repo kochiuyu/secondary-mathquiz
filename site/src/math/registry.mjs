@@ -1,3 +1,4 @@
+import {estimationFamilies,generateEstimation} from './estimation.mjs';
 import {ratioFamilies,generateRatio} from './ratios.mjs';
 import {percentageFamilies,generatePercentage} from './percentages.mjs';
 import {families as fixtureFamilies,generate as generateFixture,FIXTURE_VERSION} from './fixtures.mjs';
@@ -7,9 +8,9 @@ import {equationFamilies,generateEquation} from './equations.mjs';
 import {angleFamilies,generateAngle} from './angles.mjs';
 import {basicFamilies,generateBasic} from './basic.mjs';
 export {FIXTURE_VERSION};
-export const families=[...ratioFamilies,...percentageFamilies,...basicFamilies,...curriculumFamilies,...expressionFamilies,...equationFamilies,...angleFamilies,...fixtureFamilies.map(f=>({...f,development:true}))];
+export const families=[...estimationFamilies,...ratioFamilies,...percentageFamilies,...basicFamilies,...curriculumFamilies,...expressionFamilies,...equationFamilies,...angleFamilies,...fixtureFamilies.map(f=>({...f,development:true}))];
 export function generate(id,seed,version){
- return ratioFamilies.some(f=>f.id===id)?generateRatio(id,seed,version??1):percentageFamilies.some(f=>f.id===id)?generatePercentage(id,seed,version??1):basicFamilies.some(f=>f.id===id)?generateBasic(id,seed,version??1):angleFamilies.some(f=>f.id===id)?generateAngle(id,seed,version??1):equationFamilies.some(f=>f.id===id)?generateEquation(id,seed,version??1):expressionFamilies.some(f=>f.id===id)?generateExpression(id,seed,version??1):curriculumFamilies.some(f=>f.id===id)?generateCurriculum(id,seed,version??1):generateFixture(id,seed,version??FIXTURE_VERSION);
+ return estimationFamilies.some(f=>f.id===id)?generateEstimation(id,seed,version??1):ratioFamilies.some(f=>f.id===id)?generateRatio(id,seed,version??1):percentageFamilies.some(f=>f.id===id)?generatePercentage(id,seed,version??1):basicFamilies.some(f=>f.id===id)?generateBasic(id,seed,version??1):angleFamilies.some(f=>f.id===id)?generateAngle(id,seed,version??1):equationFamilies.some(f=>f.id===id)?generateEquation(id,seed,version??1):expressionFamilies.some(f=>f.id===id)?generateExpression(id,seed,version??1):curriculumFamilies.some(f=>f.id===id)?generateCurriculum(id,seed,version??1):generateFixture(id,seed,version??FIXTURE_VERSION);
 }
 export function makeItems(ids,seed,count=6){
  if(!Array.isArray(ids)||!ids.length||ids.some(id=>!families.some(f=>f.id===id))||!Number.isInteger(count)||count<1||count>12)throw Error('Choose 1–12 questions and at least one available set.');

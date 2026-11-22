@@ -10,6 +10,7 @@
     "tests/basic.test.mjs",
     "tests/bundle-parity.test.mjs",
     "tests/equations.test.mjs",
+    "tests/estimation.test.mjs",
     "tests/expressions.test.mjs",
     "tests/math.test.mjs",
     "tests/percentages.test.mjs",

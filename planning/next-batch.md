@@ -60,3 +60,7 @@ PC01–PC08 and four bilingual lessons are implemented as author drafts in v0.11
 ## Rates, ratios and proportions implementation
 
 RP01–RP08 and four bilingual lessons are implemented as author drafts in v0.12.0. The fresh Unit 6 source check confirmed inverse proportion and scale plans, and assigned formal variation/proportion graphs to later study. See topics/ratios.md and ../site/planning/release-ratios-v1.md. Approximation/estimation is next after this slice’s browser acceptance.
+
+## Approximation and estimation implementation
+
+AP01–AP08 and four bilingual lessons (three core plus one optional enrichment) are implemented as author drafts in v0.13.0. This completes implementation of the four-topic number-route batch, subject to recorded acceptance/review limits. See topics/estimation.md and ../site/planning/release-estimation-v1.md. Next proposed scope: a fresh Unit 4 rational/irrational-numbers brief, with exact root representation and separate optional enrichment.
