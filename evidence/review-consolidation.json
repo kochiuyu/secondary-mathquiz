@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.3c",
-  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
   "portable_source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
   "automated": {
     "tests": 65,
@@ -11,17 +11,22 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 24,
-    "observed_pass": 0,
+    "observed_pass": 24,
+    "fail": 0,
+    "blocked": 0,
     "source_sha256": "299ac4b3ba8f748c543540bd82cef84301e97b9096f4bd5f3013675a4674101d",
+    "run": "2e5d1b95-63b5-4602-89f3-da7273bb9d04",
     "raw_report": "site/planning/browser-hosted-review-run.json",
-    "first_report": "site/planning/browser-review-first-run.json"
+    "first_report": "site/planning/browser-review-first-run.json",
+    "overall_acceptance_record": "pending",
+    "manual_rows": "pending"
   },
   "print_layout": {
-    "state": "pending",
+    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
     "documents": 4,
-    "expected_pages": 84,
+    "pages_measured": 84,
     "raw_report": "site/planning/review-print-layout.json",
     "actual_current_pdf": "pending"
   },
@@ -47,8 +52,11 @@
     "The next curriculum batch is a proposal from the retained ledger, with detailed source-scope checks required before authoring."
   ],
   "publication": {
-    "state": "authorized; deployment pending",
+    "state": "published; deployment succeeded",
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
     "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "branch": "main"
+    "tested_source_commit": "4d8df752b2e28c756fd0994ea11c9dcee2fd3a7b",
+    "tested_deployment_run": 44993758079,
+    "deployment_result": "success"
   }
 }

@@ -4,7 +4,7 @@ The author review identified two concrete issues: one-mark questions displayed z
 
 The correction is presentation guidance in `src/renderers/review.mjs`. Mathematical generators, answer contracts, seeds, question versions and retained snapshots are unchanged. Old papers and learner sessions continue to validate. A specification fingerprint does not promise byte-identical output across renderer revisions.
 
-All 65 Node checks pass, including shape-specific bilingual review, 24 families at four mark allocations in both languages, edited one-mark choices, whole-proof review, and retained-paper snapshot validation. The new A23 browser workflow covers lesson/practice criteria, the retained bilingual rectangle key and a one-mark choice edit. Current 24-workflow browser and 84-page HTML layout runs are pending until recorded. The layout runner and booklet URLs are content-versioned so older browser caches do not supply stale guidance.
+All 65 Node checks pass, including shape-specific bilingual review, 24 families at four mark allocations in both languages, edited one-mark choices, whole-proof review, and retained-paper snapshot validation. The new A23 browser workflow covers lesson/practice criteria, the retained bilingual rectangle key and a one-mark choice edit. All 24 current hosted workflows and all four booklet HTML layout/guidance checks (84 pages) pass for the corrected source hash. The layout runner and booklet URLs are content-versioned so older browser caches do not supply stale guidance.
 
 This is a scoped author correction, not independent acceptance of all mathematics or translation. PDF/physical-print, native zoom, spoken assistive output and learner trials remain pending. The next number-route batch is proposed in `../../planning/next-batch.md`: basic computation first, then percentages, rates/ratios/proportions and estimation. Detailed source scope and classifications must be checked before implementing each family.
 
@@ -18,3 +18,12 @@ The new parity test executes the module prefix extracted from the actual generat
 A captured two-question/worked-example fixture records the pre-fix published bundle's exact output. Paper/session/worked-example validation accepts that exact known version-1 fee-prompt variant without rewriting it. Answers, semantic models, diagrams, contracts, other wording and worked-example seed binding remain checked; altered variants are rejected. The mathematical generator files remain byte-identical. Older retained text is preserved; newly generated fee prompts contain their currency markers.
 
 Current source hash and browser results are recorded separately from the first failed report. PDF/physical-print and independent review remain pending.
+
+
+## Published verification
+
+The corrected source deployed successfully in GitHub Pages run `44993758079`, tested commit `4d8df752b2e28c756fd0994ea11c9dcee2fd3a7b`. All 24 hosted workflows pass with zero failures or blocked rows. A23 covers shape-specific lesson/practice/key review and an edited one-mark selection. A24 imports and reloads exact historical fee snapshots without rewriting them and checks all three currency markers in newly generated English/Chinese fee prompts. The first failed report remains retained for its original source hash.
+
+The separate print-layout report passes all four booklets and 84 HTML pages, including zero-mark/area-guidance checks in answer keys. The raw reports are `browser-hosted-review-run.json` and `review-print-layout.json`; both match `release-identity.json`. These are workflow and retained-sample layout checks. Raw manual acceptance rows, actual current PDF/physical printing, independent review and classroom trials remain pending.
+
+The next curriculum batch proposal is saved in `../../planning/next-batch.md`, starting with a source/scope brief for eight basic-computation families before percentages, rates/ratios/proportions and estimation. No new family is selectable and no objective coverage state is promoted by this plan.

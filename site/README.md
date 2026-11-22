@@ -1,6 +1,6 @@
 # Secondary MathQuiz — four-topic pilot v0.9.3
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 65 Node checks pass. The current 24-workflow hosted run is pending; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 65 Node checks pass. All 24 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
@@ -40,7 +40,7 @@ The default `index.html` and portable page are generated from `shell.html`; edit
 
 Keyboard consolidation: skip navigation now focuses the current content without changing its route or answer draft. The mobile menu contains keyboard focus, makes the background inactive, and returns focus on Escape. See `planning/release-navigation-v1.md` for current evidence.
 
-Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. The updated four-booklet HTML layout check (84 pages) is pending; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
+Print readability review: number-line labels are larger and no longer outlined. The [four-booklet layout review](qa/print.html) covers all 24 families in English/Traditional Chinese student/key formats. All four updated booklet HTML layouts (84 pages) pass; actual current PDF acceptance remains pending; see `planning/release-print-v1.md`.
 
 Marking guidance now follows the actual area shape and edited mark allocation. See `planning/release-review-v1.md`. [Next curriculum batch](../planning/next-batch.md) starts with basic computation; it remains a proposal.
 
