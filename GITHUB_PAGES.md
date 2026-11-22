@@ -17,4 +17,4 @@ For later updates, rebuild with `node site/tools/build.mjs`, run `node site/tool
 
 All four pilot topics are implemented as author drafts. The default site is a complete bundled HTML artifact generated from `site/shell.html`; the runner and its definition module use content-versioned URLs. For immediate review after deployment, add the recorded build prefix as the `build` query parameter to the site/runner URL.
 
-The current v0.9.1 navigation consolidation passes 60 Node checks; its hosted run must be recorded separately from v0.9.0. See `site/planning/release-navigation-v1.md`.
+The current v0.9.1 navigation consolidation passes 60 Node checks and 22 hosted browser workflows; its evidence is separate from v0.9.0. See `site/planning/release-navigation-v1.md`.

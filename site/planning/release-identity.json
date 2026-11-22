@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.3a",
-  "state": "implemented-author-draft; hosted workflows pending; independent review pending",
+  "state": "implemented-author-draft; hosted browser workflows passed; independent review pending",
   "portable_source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
   "automated": {
     "tests": 60,
@@ -11,11 +11,17 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending; local HTTP preview unreachable",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 22,
-    "observed_pass": 0,
+    "observed_pass": 22,
+    "fail": 0,
+    "blocked": 0,
     "source_sha256": "c67aa22c4f0f9acb24bedf7390f2684097c02310f5fa6b037b8c4ad353687333",
-    "raw_report": "site/planning/browser-hosted-navigation-run.json"
+    "run": "56df7c16-c860-4016-9ece-b24e58dede3e",
+    "raw_report": "site/planning/browser-hosted-navigation-run.json",
+    "first_report": "site/planning/browser-navigation-first-run.json",
+    "overall_acceptance_record": "pending",
+    "manual_rows": "pending"
   },
   "scope": {
     "curriculum_families": 24,
@@ -29,8 +35,12 @@
     "Manual proof and reasoning remain separate from automatic final-answer scores."
   ],
   "publication": {
-    "state": "publication authorized; deployment pending",
+    "state": "published; deployment succeeded",
+    "site": "https://kochiuyu.github.io/secondary-mathquiz/site/",
     "repository": "https://github.com/kochiuyu/secondary-mathquiz",
-    "branch": "main"
+    "branch": "main",
+    "tested_source_commit": "3cc519c456add95510ee2fe8be9e7bd1622bc336",
+    "tested_deployment_run": 44979430932,
+    "deployment_result": "success"
   }
 }

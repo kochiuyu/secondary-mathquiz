@@ -1,6 +1,6 @@
 # Secondary MathQuiz — four-topic pilot v0.9.1
 
-Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 60 Node checks pass. The previous 21-workflow hosted report belongs to v0.9.0; the current 22-workflow run is pending; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
+Open `Secondary_MathQuiz_Prototype.html` directly, or use the [live learning site](https://kochiuyu.github.io/secondary-mathquiz/). The homepage connects directed numbers, expressions, equations and angles. There are 24 curriculum families and 12 bilingual author-draft lessons, plus six separately labelled development fixtures. All 60 Node checks pass. All 22 current hosted workflows pass; raw manual acceptance remains pending. See `planning/release-angles-v1.md` for scope and review limits.
 
 Geometry uses model-derived rays, sectors and triangle coordinates. Angle-pair names do not imply parallelism. Givens and parallel tests are distinct; the general proof is entirely manual and excluded from automatic scores. Rotations/reflections do not create fresh evidence. All 237 curriculum records retain planned status. Actual PDF/physical printing and independent content review remain pending.
 
