@@ -10,7 +10,7 @@ English/Traditional Chinese mathematics lessons, practice and printable workshee
 
 The v0.11.0 six-topic pilot contains 40 curriculum question families and 19 bilingual author-draft lessons: basic computation, percentages, directed numbers, expressions, linear equations and angles/parallel lines. Six development fixtures remain separately labelled. All 237 mapped objective records retain planned status.
 
-All 77 Node checks pass, including 2,400 independently checked percentage variants. Thirty hosted workflows are defined; execution against this release is pending. Four generated bilingual student/key booklets total 127 HTML pages; current browser layout and actual PDF/physical-print acceptance are pending. Prior release evidence is preserved with its original source identity. Independent mathematics/Traditional Chinese review and learner trials remain pending.
+All 77 Node checks pass, including 2,400 independently checked percentage variants. All 30 current-source hosted workflows pass. All four bilingual student/key booklets pass browser layout checks (127 HTML pages); actual PDF/physical-print acceptance is pending. Prior release evidence is preserved with its original source identity. Independent mathematics/Traditional Chinese review and learner trials remain pending.
 
 Written methods and reasons require manual review. Percentage tasks state the reference quantity and require exact values. Recovery excludes a zero multiplier. Tax questions supply a dated fictional classroom schedule rather than current law.
 

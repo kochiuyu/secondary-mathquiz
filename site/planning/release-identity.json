@@ -3,7 +3,7 @@
   "date": "2026-11-22",
   "timezone": "Asia/Hong_Kong",
   "milestone": "P2.4b",
-  "state": "implemented-author-draft; current browser verification pending",
+  "state": "published author draft; hosted workflows and HTML layout checks passed; independent review pending",
   "portable_source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
   "automated": {
     "tests": 77,
@@ -11,17 +11,25 @@
     "fail": 0
   },
   "browser": {
-    "state": "pending; local browser access timed out",
+    "state": "workflows-passed; manual acceptance pending",
     "planned_workflows": 30,
-    "observed_pass": 0,
-    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca"
+    "observed_pass": 30,
+    "fail": 0,
+    "blocked": 0,
+    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
+    "run": "ce0dbafa-37f6-474e-9cb2-f1a50e7ff7ed",
+    "raw_report": "site/planning/browser-percentages-run.json",
+    "manual_rows": "pending",
+    "overall_acceptance_record": "pending"
   },
   "print_layout": {
-    "state": "generated HTML; current geometry/PDF acceptance pending",
+    "state": "HTML geometry and key-guidance checks passed; actual current PDF pending",
     "documents": 4,
     "expected_pages": 127,
-    "actual_current_pdf": "pending",
-    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca"
+    "pages_measured": 127,
+    "raw_report": "site/planning/percentages-print-layout.json",
+    "source_sha256": "6d60e3abb3028803ce11fd78ca8682f1c9fa37cc4a79283d20865718fb0d68ca",
+    "actual_current_pdf": "pending"
   },
   "scope": {
     "curriculum_families": 40,
@@ -33,8 +41,11 @@
     "Independent mathematics/Traditional Chinese/classroom review, native keyboard/zoom, spoken output and actual current PDF/physical printing remain pending."
   ],
   "publication": {
-    "state": "pending",
+    "state": "published; deployment succeeded",
     "site": "https://kochiuyu.github.io/secondary-mathquiz/site/#percentages",
-    "repository": "https://github.com/kochiuyu/secondary-mathquiz"
+    "repository": "https://github.com/kochiuyu/secondary-mathquiz",
+    "tested_source_commit": "df8afcf29ea10759173ccd1c60c86ff807951dbf",
+    "tested_deployment_run": 45025125112,
+    "deployment_result": "success"
   }
 }

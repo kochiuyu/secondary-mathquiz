@@ -12,7 +12,7 @@ Development commands:
     node tools/make-percentage-samples.mjs
     node tools/make-pilot-print-review.mjs
 
-Edit shell.html or modules and rebuild the default, portable and QA copies together. The runner at qa/index.html has 30 workflows; qa/print.html inspects combined booklet geometry. See planning/release-percentages-v1.md for actual evidence and limits. All 77 Node checks pass; current-source browser/layout execution is pending.
+Edit shell.html or modules and rebuild the default, portable and QA copies together. The runner at qa/index.html has 30 workflows; qa/print.html inspects combined booklet geometry. See planning/release-percentages-v1.md for actual evidence and limits. All 77 Node checks, 30 hosted workflows and 127 booklet HTML pages pass. Raw evidence is retained with its source hash.
 
 P2 retains the secondary-mathquiz:p2: storage namespace, version-1 curriculum generators, historical bundled fee snapshots, paper schema 1 and validated backup imports. Percentage IDs PC01–PC08 use generator version 1. Language, title, order, marks, working lines and snapshots contribute to paper identity. Preserve specifications and HTML with source for exact historical output.
 
