@@ -245,11 +245,18 @@ document.querySelector('#run').addEventListener('click',async()=>{
    const rectangle=el('.lesson-model:last-child h3').textContent.includes('rectangle');
    const lessonText=el('.lesson-model:last-child details').textContent;
    assert(lessonText.includes('Manual review of the whole response'),'Lesson review criteria missing.');
-   assert(lessonText.includes('1/2')===!rectangle,'Lesson review criteria do not match the area shape.');
+   const halfFactor=text=>/bh\s*\/\s*2/.test(text);
+   assert(halfFactor(lessonText)===!rectangle,'Lesson review criteria do not match the area shape.');
    await startSession(['EX03'],'check',4);
-   const q=latestSession().items[0];
-   assert(el('#answer-form').textContent.includes('1/2')===(q.model.shape==='triangle'),'Practice rubric does not match the retained area model.');
-   click('[data-action="language"]');assert(el('#answer-form').textContent.includes('1/2')===(q.model.shape==='triangle'),'Chinese practice rubric does not match the retained shape.');
+   for(let i=0;i<4;i++){
+    const q=latestSession().items[i],triangle=q.model.shape==='triangle';
+    for(const language of ['en','zh']){
+     if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+     assert(halfFactor(el('#answer-form').textContent)===triangle,'Practice rubric does not match the retained area model in '+language+'.');
+    }
+    checkAnswer(triangle?'A = bh/2':'A = bh',triangle?'Two congruent triangles make a parallelogram; use square units.':'Multiply the perpendicular lengths; use square units.');
+    assert(latestSession().responses[i].attempts.at(-1).status==='manual','Area formula was automatically graded.');click('[data-action="next"]');
+   }
    const spec=await (await fetch('../samples/expressions/en_Specification.json',{cache:'no-store'})).json();
    assert(spec.items[2].question.model.shape==='rectangle','Expected retained rectangle sample.');
    await go('paper','#paper-import');input('#paper-import',JSON.stringify(spec));click('[data-action="import-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'imported marking paper');
