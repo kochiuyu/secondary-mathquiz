@@ -1,6 +1,6 @@
 {
-  "name": "secondary-mathquiz-expressions-pilot",
-  "version": "0.7.0",
+  "name": "secondary-mathquiz-equations-pilot",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {

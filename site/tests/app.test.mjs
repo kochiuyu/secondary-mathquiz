@@ -96,3 +96,16 @@ test('expression routes, bilingual manual drafts, review invalidation and automa
  assert.match(root.innerHTML,/4 \/ 4/);assert.match(root.innerHTML,/excluded from the automatic-score denominator/);assert.match(root.innerHTML,/Keep the meaning/);
  location.hash='expressions';await click('expressions-paper');await new Promise(resolve=>setImmediate(resolve));assert.equal(current().paper.items.length,6);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EX')));assert.ok(!node('#paper-pages').innerHTML.includes('[object Object]'));
 });
+
+test('equation lesson routes, six-family checks, reviewed reasoning and paper integrate with retained app',async()=>{
+ location.hash='equations';assert.match(root.innerHTML,/Preserve equality/);location.hash='lesson/EQ-L1';assert.match(root.innerHTML,/What counts as a solution/);
+ const reg=()=>JSON.parse(memory.get(PREFIX+'profiles')),current=()=>JSON.parse(memory.get(PREFIX+reg().active));assert.ok(current().studied.includes('lesson:EQ-L1:v1'));
+ await click('equations-check');assert.deepEqual(current().sessions.at(-1).items.map(q=>q.id),['EQ01','EQ02','EQ03','EQ04','EQ05','EQ06']);
+ for(let i=0;i<6;i++){
+  const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:q.manualReason?'I check the original equality and interpret the units.':''});
+  if(q.manualReason){assert.match(root.innerHTML,/still needs review/);await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reasoning');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);}
+  await click('next');
+ }
+ assert.match(root.innerHTML,/6 \/ 6/);assert.match(root.innerHTML,/Preserve equality and interpret/);
+ location.hash='equations';await click('equations-paper');await new Promise(resolve=>setImmediate(resolve));assert.ok(current().paper.items.every(i=>i.question.id.startsWith('EQ')));assert.match(node('#paper-pages').innerHTML,/equation-panels/);
+});

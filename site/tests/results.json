@@ -6,6 +6,7 @@
   "testFiles": [
     "tests/acceptance.test.mjs",
     "tests/app.test.mjs",
+    "tests/equations.test.mjs",
     "tests/expressions.test.mjs",
     "tests/math.test.mjs",
     "tests/signed.test.mjs",

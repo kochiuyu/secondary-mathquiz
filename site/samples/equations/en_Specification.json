@@ -1,0 +1,371 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "Linear equations - pilot draft",
+  "seed": "equations-print-v1",
+  "lang": "en",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "EQ01",
+        "seed": "equations-print-v1:0",
+        "version": 1,
+        "objective": "JS-8-1",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "math": "(-4)x + 10 = 16",
+        "model": {
+          "kind": "candidate",
+          "a": -4,
+          "b": 10,
+          "c": "16",
+          "candidate": "-1/2"
+        },
+        "answer": "no",
+        "options": [
+          {
+            "id": "yes",
+            "label": {
+              "en": "Yes, it is a solution",
+              "zh": "是，它是方程的解"
+            }
+          },
+          {
+            "id": "no",
+            "label": {
+              "en": "No, it is not a solution",
+              "zh": "不是，它不是方程的解"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Does x = -1/2 solve this original equation? Compare both sides and explain.",
+          "zh": "x = -1/2 是否為這個原方程的解？比較兩邊並解釋。"
+        },
+        "hint": {
+          "en": "Substitute the proposed value into the original left side, then compare with the original right side.",
+          "zh": "把所提的數值代入原方程左邊，再與原方程右邊比較。"
+        },
+        "solution": {
+          "en": "At x = -1/2, the left side is (-4)×(-1/2)+(10) = 12; the right side is 16. They are not equal, so this is not a solution.",
+          "zh": "當 x = -1/2，左邊為 (-4)×(-1/2)+(10) = 12；右邊為 16。兩邊不相等，所以這不是方程的解。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Manually review substitution into the original equation and an explicit comparison of both side values. A correct selection alone does not verify this explanation.",
+          "zh": "人工評閱：須代入原方程，並明確比較兩邊的值。選項正確不代表解釋已獲核實。"
+        },
+        "diagram": {
+          "type": "equation-check",
+          "candidate": "-1/2",
+          "left": "(-4)×(-1/2)+(10)",
+          "right": "16"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "no"
+        },
+        "exposureKey": "EQ01:{\"kind\":\"candidate\",\"a\":-4,\"b\":10,\"c\":\"16\",\"candidate\":\"-1/2\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EQ02",
+        "seed": "equations-print-v1:1",
+        "version": 1,
+        "objective": "JS-8-1",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "math": "(3)x + 8 = -11/2",
+        "model": {
+          "kind": "affine",
+          "a": 3,
+          "b": 8,
+          "c": "-11/2"
+        },
+        "answer": "-9/2",
+        "prompt": {
+          "en": "Solve the equation. Enter the value of x.",
+          "zh": "解方程，輸入 x 的值。"
+        },
+        "hint": {
+          "en": "Subtract the constant from both sides, then divide both sides by the nonzero coefficient.",
+          "zh": "兩邊同減常數項，再同除以非零的系數。"
+        },
+        "solution": {
+          "en": "Subtract 8 from both sides: (3)x = -27/2. Divide both sides by 3: x = -9/2. Check in the original: (3)×(-9/2)+(8) = -11/2.",
+          "zh": "兩邊同減 8，得 (3)x = -27/2；再同除以 3，得 x = -9/2。代回原式檢驗：(3)×(-9/2)+(8) = -11/2。"
+        },
+        "diagram": {
+          "type": "equation-steps",
+          "lines": [
+            {
+              "en": "Original: (3)x + 8 = -11/2",
+              "zh": "原式：(3)x + 8 = -11/2"
+            },
+            {
+              "en": "Apply the same subtraction (−8) to both sides.",
+              "zh": "兩邊進行相同的減法（減 8）。"
+            },
+            {
+              "en": "Then divide both sides by 3.",
+              "zh": "再把兩邊同除以 3。"
+            }
+          ]
+        },
+        "contract": {
+          "type": "number",
+          "answer": "-9/2",
+          "form": "number-literal"
+        },
+        "exposureKey": "EQ02:{\"kind\":\"affine\",\"a\":3,\"b\":8,\"c\":\"-11/2\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EQ03",
+        "seed": "equations-print-v1:2",
+        "version": 1,
+        "objective": "JS-8-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "repair",
+          "a": 2,
+          "b": 4,
+          "c": 10
+        },
+        "math": "2(x − 4) = 10",
+        "answer": "distributed",
+        "options": [
+          {
+            "id": "distributed",
+            "label": "2x − 8 = 10"
+          },
+          {
+            "id": "wrong-sign",
+            "label": "2x + 8 = 10"
+          },
+          {
+            "id": "unchanged",
+            "label": "2x − 4 = 10"
+          }
+        ],
+        "prompt": {
+          "en": "A learner replaces the original equation by 2x − 4 = 10. Choose a correct replacement for that line and explain the error.",
+          "zh": "某同學把原方程改寫為 2x − 4 = 10。選出可正確取代該行的式子，並解釋錯誤。"
+        },
+        "hint": {
+          "en": "The factor outside the brackets multiplies every term inside, including the signed constant.",
+          "zh": "括號外的因數須乘以括號內每一項，包括帶正負號的常數項。"
+        },
+        "solution": {
+          "en": "Use 2x − 8 = 10. The factor 2 multiplies both x and −4; the proposed line multiplied only x. The original equation has exactly one solution, x = 9.",
+          "zh": "應為 2x − 8 = 10。因數 2 須同時乘以 x 和 −4；所提的步驟只乘了 x。原方程只有一個解，x = 9。"
+        },
+        "manualReason": true,
+        "reasonRubric": {
+          "en": "Manually review an explanation that the factor multiplies every term, including the negative constant. The selected line is checked separately.",
+          "zh": "人工評閱解釋：因數須乘以每一項，包括負的常數項。所選式子與解釋分開核對。"
+        },
+        "diagram": {
+          "type": "equation-steps",
+          "lines": [
+            {
+              "en": "Original: 2(x − 4) = 10",
+              "zh": "原式：2(x − 4) = 10"
+            },
+            {
+              "en": "Proposed line (not valid): 2x − 4 = 10",
+              "zh": "所提步驟（不成立）：2x − 4 = 10"
+            }
+          ]
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "distributed"
+        },
+        "exposureKey": "EQ03:{\"kind\":\"repair\",\"a\":2,\"b\":4,\"c\":10}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EQ04",
+        "seed": "equations-print-v1:3",
+        "version": 1,
+        "objective": "JS-8-1",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "both-sides",
+          "a": 4,
+          "b": -2,
+          "c": -8,
+          "d": -2,
+          "e": "-48"
+        },
+        "math": "4(x + (-2)) + (-8) = (-2)x + (-48)",
+        "answer": "-16/3",
+        "prompt": {
+          "en": "Solve the equation. Keep both original sides available for checking.",
+          "zh": "解方程，並保留原方程兩邊以供檢驗。"
+        },
+        "hint": {
+          "en": "Expand the bracket, subtract the same variable term on both sides, then isolate x. The collected coefficient is nonzero.",
+          "zh": "先展開括號，再把兩邊同減相同的未知數項，然後求 x。合併後的系數不為零。"
+        },
+        "solution": {
+          "en": "Expand to (4)x+(-16) = (-2)x+(-48). Subtract (-2)x and -16 from both sides: (6)x = -32. Thus x = -16/3. In the original equation both sides equal -112/3.",
+          "zh": "展開得 (4)x+(-16) = (-2)x+(-48)。兩邊同減 (-2)x 和 -16，得 (6)x = -32，所以 x = -16/3。代回原方程，兩邊均等於 -112/3。"
+        },
+        "diagram": {
+          "type": "equation-balance",
+          "left": "4(x+(-2))+(-8)",
+          "right": "(-2)x+(-48)"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "-16/3",
+          "form": "number-literal"
+        },
+        "exposureKey": "EQ04:{\"kind\":\"both-sides\",\"a\":4,\"b\":-2,\"c\":-8,\"d\":-2,\"e\":\"-48\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EQ05",
+        "seed": "equations-print-v1:4",
+        "version": 1,
+        "objective": "JS-8-2",
+        "marks": 2,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "model-choice",
+          "fixed": 2,
+          "rate": 4,
+          "total": "18"
+        },
+        "math": "x = ?",
+        "diagram": {
+          "type": "fee-table",
+          "fixed": 2,
+          "rate": 4,
+          "total": "18",
+          "unit": "game"
+        },
+        "answer": "fixed-plus-rate",
+        "options": [
+          {
+            "id": "swapped",
+            "label": "2x + 4 = 18"
+          },
+          {
+            "id": "fixed-repeated",
+            "label": "(4 + 2)x = 18"
+          },
+          {
+            "id": "fixed-plus-rate",
+            "label": "4x + 2 = 18"
+          }
+        ],
+        "prompt": {
+          "en": "Entry costs $2 once and each game costs $4. The total is $18. Let x be the number of games. Choose an equation and explain the two costs.",
+          "zh": "入場費一次 $2，每局遊戲 $4，總費用 $18。設遊戲局數為 x。選出方程，並解釋兩種費用。"
+        },
+        "hint": {
+          "en": "The fixed fee is paid once. The per-game charge is paid x times.",
+          "zh": "固定費用只付一次；每局費用須付 x 次。"
+        },
+        "solution": {
+          "en": "The repeated cost is 4x and the one-time cost is 2, so 4x+2=18. The fixed fee is not repeated.",
+          "zh": "重複費用為 4x，加上一次的固定費用 2，得 4x+2=18。固定費用不會按局數重複。"
+        },
+        "reasonRubric": {
+          "en": "Manually review the definition of x, the rate multiplied by x, the fixed fee paid once, and the total on the other side.",
+          "zh": "人工評閱：說清 x 的定義、每局費用乘以 x、固定費用只付一次，以及另一邊的總費用。"
+        },
+        "manualReason": true,
+        "contract": {
+          "type": "choice",
+          "answer": "fixed-plus-rate"
+        },
+        "exposureKey": "EQ05:{\"kind\":\"model-choice\",\"fixed\":2,\"rate\":4,\"total\":\"18\"}"
+      },
+      "marks": 2,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "EQ06",
+        "seed": "equations-print-v1:5",
+        "version": 1,
+        "objective": "JS-8-3",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "model": {
+          "kind": "rental",
+          "fixed": 7,
+          "rate": 6,
+          "total": "70"
+        },
+        "math": "x = ?",
+        "diagram": {
+          "type": "fee-table",
+          "fixed": 7,
+          "rate": 6,
+          "total": "70",
+          "unit": "hour"
+        },
+        "answer": "21/2",
+        "answerUnit": {
+          "en": "hours",
+          "zh": "小時"
+        },
+        "prompt": {
+          "en": "A rental costs $7 once plus $6 per hour. Half-hours are allowed and charged proportionally. The total is $70. Let x be the rental time in hours. Find x; write your equation and explain why the time is allowed.",
+          "zh": "租用費為一次 $7，另加每小時 $6。可按半小時租用，費用按比例計算。總費用 $70。設租用時間為 x 小時。求 x，寫出方程並解釋時間是否符合規定。"
+        },
+        "hint": {
+          "en": "Remove the one-time charge before dividing by the hourly rate. Check the half-hour condition and original total.",
+          "zh": "先扣去一次費用，再除以每小時費用；檢查半小時的規定和原來總費用。"
+        },
+        "solution": {
+          "en": "Let x be hours: 7+6x=70. Then 6x=63, so x=21/2 hours. This is a positive multiple of half an hour. Check: 7+6×(21/2)=70.",
+          "zh": "設時間為 x 小時：7+6x=70，得 6x=63，所以 x=21/2 小時。這是半小時的正整數倍，符合規定。檢驗：7+6×(21/2)=70。"
+        },
+        "reasonRubric": {
+          "en": "Manually review a defined unknown in hours, an equivalent fixed-plus-rate equation, substitution into the total, and the positive half-hour interpretation. Automatic final-value correctness does not verify these parts.",
+          "zh": "人工評閱：以小時定義未知數、等價的固定費用加按時費用方程、代回總費用，以及正的半小時倍數之解釋。最終數值自動核對正確，不代表這些部分已獲核實。"
+        },
+        "manualReason": true,
+        "contract": {
+          "type": "number",
+          "answer": "21/2",
+          "form": "number-literal"
+        },
+        "exposureKey": "EQ06:{\"kind\":\"rental\",\"fixed\":7,\"rate\":6,\"total\":\"70\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    }
+  ]
+}

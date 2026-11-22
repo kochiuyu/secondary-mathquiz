@@ -833,7 +833,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ02",
@@ -889,7 +895,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ03",
@@ -966,7 +978,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ04",
@@ -1024,7 +1042,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ05",
@@ -1103,7 +1127,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ06",
@@ -1161,7 +1191,13 @@
         "language": "author bilingual draft; independent review pending",
         "classroom": "not reviewed"
       },
-      "publication": "not implemented or published"
+      "publication": "not implemented or published",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/math/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE01",

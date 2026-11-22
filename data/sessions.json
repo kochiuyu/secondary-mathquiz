@@ -254,7 +254,13 @@
       "separate_check": "Verify a fresh candidate and solve a new affine chain without a revealed model.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ-L2",
@@ -285,7 +291,13 @@
       "separate_check": "Give a new final root and explain a different invalid step; reason evidence remains separate.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "EQ-L3",
@@ -316,7 +328,13 @@
       "separate_check": "Use a fresh situation; mark the final value separately from model and interpretation.",
       "timing": "8–15 minutes is a planning target; proof/formula discussions may need longer. Test with learners.",
       "evidence": "Study, guided practice, first-independent answers and manual reasoning remain separate. Only unrevealed first submissions with retained-history novelty qualify under the existing local evidence rule.",
-      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson."
+      "bilingual_authoring": "Title and family samples are bilingual. Full session narration, visuals and hints must be authored and reviewed in both languages in P2.2; this outline is not a completed lesson.",
+      "implementation": {
+        "state": "implemented-author-draft; hosted review pending",
+        "version": 1,
+        "source": "site/src/lessons/equations.mjs",
+        "review": "52 Node checks pass; independent review pending"
+      }
     },
     {
       "id": "GE-L1",

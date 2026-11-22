@@ -1,14 +1,13 @@
-# Secondary MathQuiz on GitHub Pages
+# Secondary MathQuiz
 
-English/Traditional Chinese secondary mathematics learning site. Twelve implemented draft question families and six lessons cover signed numbers and expressions; equations and angles remain in design.
+English/Traditional Chinese mathematics lessons, practice and printable worksheets for Hong Kong secondary schools.
 
-- Learning site: https://kochiuyu.github.io/secondary-mathquiz/site/
-- Browser acceptance runner: https://kochiuyu.github.io/secondary-mathquiz/site/qa/index.html
-- [Deployment instructions](GITHUB_PAGES.md)
-- [Implementation and verification limits](site/planning/release-expressions-v1.md)
+- [Live learning site](https://kochiuyu.github.io/secondary-mathquiz/)
+- [Hosted browser checks](https://kochiuyu.github.io/secondary-mathquiz/site/qa/index.html)
 - [Development instructions](site/README.md)
+- [Equation release and limits](site/planning/release-equations-v1.md)
 - [Next actions](planning/next-action.md)
 
-The site is live. All 15 hosted browser workflows pass and 46 Node checks passed. See [hosted review evidence](site/planning/github-pages-release.md). This is a public review draft; actual PDF and independent content review remain pending. No learner records or backups are included. The application saves progress locally in each browser. Its ordinary data namespace is shared with other pages on the same browser origin, so export a backup before moving between hosted copies.
+The v0.8.0 author draft has 18 curriculum question families and nine bilingual lessons across directed numbers, expressions and linear equations. Angles remain in design. All 52 Node checks pass; the 18 current hosted browser workflows await a recorded run. Previous 15/15 results belong to v0.7.0, not the changed build.
 
-The P2 design retains 24 family briefs, 12 lesson outlines and 15 mapped objectives. All 237 curriculum records remain planned; publication does not promote coverage status. The six retained development fixtures are separately labelled and unselected by default. This repository contains original authored resources and curriculum metadata, not the source PDF archive.
+All 237 mapped objectives retain planned coverage. A published draft is not curriculum-completion certification. The six retained development examples remain separately labelled. Actual PDF/physical printing and independent content review remain pending. Learner records stay in each browser; export a backup before moving devices. Ordinary profile storage is shared by pages on the same browser origin. No learner backups or source PDF archive are published here.

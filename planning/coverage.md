@@ -1,3 +1,5 @@
+> Equation draft availability: JS8.1 EQ01–EQ04; JS8.2 EQ05/EQ06; JS8.3 EQ06. Three bilingual equation lessons are implemented as author drafts; no coverage status is promoted. Angles remain designs.
+
 > Expressions draft availability: JS7.1 EX01/EX03; JS7.2 EX02; JS7.3 EX04/EX05; JS7.4 EX06. Three bilingual lessons are implemented. Current browser/PDF review is pending; no coverage status is promoted. Equations and angles remain designs.
 
 > Implemented-draft availability: JS2.1 → SN01/SN02; JS2.2 → SN03/SN04/SN05; JS2.3 → SN06. Three bilingual lessons support those objectives. These author drafts do not change the official ledger’s planned coverage state or certify complete coverage. Other topic resources below remain designs.

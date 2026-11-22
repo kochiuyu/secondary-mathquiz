@@ -155,6 +155,36 @@ document.querySelector('#run').addEventListener('click',async()=>{
    change('#paper-lang','zh');const spec=currentProfile().paper,hash=await identity(spec);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese expression paper ID');click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'expression key');assert(el('#paper-pages').textContent.includes('人工評閱'),'Manual rubric missing.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated choice object printed.');assert(appDocument().querySelector('msub'),'Sequence subscript not rendered.');
    return 'Six expression snapshots, translated choices, sequence subscript and Chinese manual rubrics rendered; actual PDF remains a separate observation.';
   });
+
+  await step('A16',async()=>{
+   const names={en:['What counts as a solution?','Keep every step equal','Model, solve, interpret'],'zh-Hant':['怎樣才算是方程的解？','每一步都保持相等','建模、求解、解釋']};
+   for(const language of ['en','zh-Hant']){
+    if(appDocument().documentElement.lang!==language)click('[data-action="language"]');
+    for(let i=0;i<3;i++){
+     await go('lesson/EQ-L'+(i+1),'.lesson-roadmap');assert(el('h1').textContent===names[language][i],'Equation lesson title mismatch.');assert(appDocument().querySelectorAll('.lesson-model').length===2,'Expected two equation models.');
+     frame.width='390';await new Promise(resolve=>frame.contentWindow.requestAnimationFrame(()=>frame.contentWindow.requestAnimationFrame(resolve)));const doc=appDocument();assert(Math.max(doc.body.scrollWidth,doc.documentElement.scrollWidth)-doc.documentElement.clientWidth<=2,'Equation lesson horizontal overflow.');
+    }
+   }
+   assert(['EQ-L1','EQ-L2','EQ-L3'].every(id=>currentProfile().studied.includes('lesson:'+id+':v1')),'Equation study exposure missing.');
+   click('[data-action="language"]');frame.width='1120';return 'Three equation lessons, two models each, English/Traditional Chinese titles and 390px reflow checked; study exposure retained.';
+  });
+  await step('A17',async()=>{
+   const ids=['EQ01','EQ02','EQ03','EQ04','EQ05','EQ06'];await startSession(ids,'check',6);
+   for(let i=0;i<6;i++){
+    const q=latestSession().items[i];assert(q.id===ids[i]&&q.version===1,'Wrong equation identity/version.');
+    if(i===1){input('#answer-input','-3/2');click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'equation numeric draft reload');assert(el('#answer-input').value==='-3/2','Equation draft lost.');click('[data-action="language"]');}
+    const reason='Substitute in the original, preserve equality and interpret the given units.';
+    if(q.options){el('input[name="answer"][value="'+q.answer+'"]').click();if(q.manualReason)input('#reason-input',reason);el('#answer-form').requestSubmit();}else checkAnswer(q.answer,q.manualReason?reason:'');
+    assert(latestSession().responses[i].attempts.at(-1)?.status==='correct','Equation answer did not check.');
+    if(q.manualReason){assert(el('#reason-review-status').textContent.includes('needs review'),'Equation reasoning was automatically verified.');click('[data-action="solution"]');click('[data-action="self-review"]');assert(latestSession().responses[i].manualReview==='self','Equation self-review not retained.');input('#reason-input','Revised reasoning');assert(latestSession().responses[i].manualReview===null,'Edited equation reason retained self-review.');}
+    click('[data-action="next"]');
+   }
+   assert(latestSession().completedAt,'Equation session not completed.');assert(el('.result-grid .metric strong').textContent==='6 / 6','Equation automatic score mismatch.');assert(el('#main').textContent.includes('Correct final answers do not verify written reasoning'),'Equation takeaway missing.');return 'Six equation families checked; bilingual numeric draft/reload, manual-reason labels and edit invalidation exercised; automatic answer score 6/6.';
+  });
+  await step('A18',async()=>{
+   await go('equations','[data-action="equations-paper"]');click('[data-action="equations-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'equations paper');assert(currentProfile().paper.items.every(i=>i.question.id.startsWith('EQ')),'Non-equation family in paper.');
+   change('#paper-lang','zh');const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'Chinese equation paper identity');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');await waitFor(()=>appDocument()?.querySelector('.solution'),'equation key');assert(el('#paper-pages').textContent.includes('人工評閱'),'Equation reasoning rubric missing.');assert(appDocument().querySelector('.equation-panels'),'Equation panels absent.');assert(appDocument().querySelector('.expression-table'),'Context cost table absent.');assert(!el('#paper-pages').textContent.includes('[object Object]'),'Untranslated equation choice object.');return 'Six retained equation snapshots, Chinese paper/key hash, substitution panels, fee tables and separate reasoning rubrics rendered; actual PDF remains pending.';
+  });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}
 });

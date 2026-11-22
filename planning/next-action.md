@@ -1,11 +1,9 @@
-# Handoff — hosted pilot, 22 November 2026
+# Handoff — equations pilot v0.8.0
 
-The public review draft is live at https://kochiuyu.github.io/secondary-mathquiz/ . Repository: https://github.com/kochiuyu/secondary-mathquiz . Use its `site/qa/index.html` runner for browser checks; localhost is no longer required for review. Current local source mirror: `github-secondary-mathquiz` in the project workspace. Previous release ZIPs remain historical snapshots.
+Use https://kochiuyu.github.io/secondary-mathquiz/ for review, with the hosted `site/qa/index.html` runner. Current local source mirror: `github-secondary-mathquiz` in the project workspace. Previous ZIPs and browser JSON are historical snapshots tied to their source hashes.
 
-P1.8 remains accepted for bounded technical prototyping. P2.2b now has twelve implemented author-draft curriculum families and six bilingual lessons across signed numbers and expressions. All 46 Node checks and 15 hosted browser workflows pass. See `site/planning/github-pages-release.md` and its raw JSON for source hash and limits.
+P2.2c now implements EQ01–EQ06 and EQ-L1–EQ-L3 alongside signed numbers and expressions: eighteen curriculum families and nine bilingual lessons. All 52 Node checks pass, including 1,800 equation seed cases. Publish the current source and record all 18 browser workflows before reporting a browser pass. Check English/Chinese equation lesson layout, scalar/choice drafts, written-reason guards and student/key HTML page bounds.
 
-1. Save and inspect actual English/Chinese student/key PDFs for signed numbers and expressions. Expressions HTML page bounds pass for all four sample documents, but this is not PDF/physical-print evidence.
-2. Record mathematics and bilingual review, separating author self-check from independent review. Native zoom, spoken assistive output and classroom review remain pending. Raw runner manual rows are pending.
-3. Implement EQ01–EQ06 and three equation lessons from the retained design. Preserve generator versions, snapshots, exact marking, exposure history and manual-reason distinctions. Use the hosted runner after publishing each change.
+Then inspect actual English/Chinese student/key PDFs for all three topics. Keep PDF/physical-print claims separate from HTML bounds. Record mathematics/language review without calling author self-check independent review; native zoom, spoken assistive output and classroom review remain pending.
 
-Equations and angles remain twelve family briefs and six lesson outlines. All 237 objective records retain planned coverage. A published draft is not complete coverage. Keep development fixtures distinct from curriculum resources.
+Next implementation slice: GE01–GE06 and three angles lessons from the retained design. Preserve identities, exact marking, snapshots, exposure history and separate numeric/manual reasoning. All 237 objective records retain planned status. Do not promote resource-complete coverage without later review evidence.

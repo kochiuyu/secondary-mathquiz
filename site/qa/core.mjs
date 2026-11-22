@@ -1,10 +1,10 @@
-export const acceptanceVersion='0.7.0';
+export const acceptanceVersion='0.8.0';
 export const automaticChecks=[
  ['A01','Load the application'],['A02','Catalogue and cleared URL filters'],
  ['A03','Draft, language switch and reload'],['A04','Reason review after editing'],
  ['A05','Learner isolation'],['A06','Paper identity and reopen'],
  ['A07','Import cancellation and failed review'],['A08','390px page overflow'],
- ['A09','Rendered fraction geometry'],['A10','Three bilingual signed-number lessons and mobile reflow'],['A11','Six curriculum families, resume and separate reason evidence'],['A12','Curriculum paper identity and bilingual key'],['A13','Three bilingual expressions lessons and mobile reflow'],['A14','Manual expressions, draft review and scoring separation'],['A15','Expressions paper and bilingual manual rubrics']
+ ['A09','Rendered fraction geometry'],['A10','Three bilingual signed-number lessons and mobile reflow'],['A11','Six curriculum families, resume and separate reason evidence'],['A12','Curriculum paper identity and bilingual key'],['A13','Three bilingual expressions lessons and mobile reflow'],['A14','Manual expressions, draft review and scoring separation'],['A15','Expressions paper and bilingual manual rubrics'],['A16','Three bilingual equation lessons and mobile reflow'],['A17','Six equation families, draft resume and separate reasoning'],['A18','Equation paper snapshots and bilingual key']
 ];
 export const manualChecks=[
  ['M01','Desktop and mobile appearance in both languages'],

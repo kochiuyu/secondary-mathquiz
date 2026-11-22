@@ -1,3 +1,5 @@
+> Implemented in `site` v0.8.0: EQ01–EQ06 and EQ-L1–EQ-L3. The design below is historical; see `../../site/planning/release-equations-v1.md` for current scope, mark allocation and review limits.
+
 # Linear equations in one unknown / 一元一次方程
 
 22 November 2026 · P2.1 preparatory design · not an implemented lesson

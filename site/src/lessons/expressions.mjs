@@ -32,7 +32,7 @@ export const expressionLessons=[
    {title:{en:'Use the whole signed input',zh:'使用整個有向輸入值'},text:{en:'For x²+1 with input −2, write (−2)²+1=5. Squaring the whole negative input gives a positive square. The same input through another rule can give a different output; the same input through the same stated rule gives the same output.',zh:'對 x²+1，輸入 −2 時寫成（−2）²+1=5。把整個負數平方會得正的平方值。相同輸入經不同規則可得不同輸出；同一規則對同一輸入則有相同輸出。'}},
    {title:{en:'Connect the table back to the rule',zh:'把表格連回規則'},text:{en:'A sequence general term also processes an input: its positive integer position n. For n², position 3 gives term 9. A square’s area x² can use a positive length that is not an integer, so its allowed inputs differ from a sequence’s positions. We use these rules informally here; formal definitions of functions belong to later study.',zh:'數列通項也會處理輸入，即正整數位置 n。對 n²，位置 3 的項值為 9。但正方形面積 x² 可使用非整數的正長度，與數列位置的容許輸入不同。此處先直觀理解規則，正式函數定義留待之後學習。'}}],
   takeaway:{en:'Identify the input, follow the exact rule and report the output. Use brackets for negative substitutions and distinguish allowed inputs in context.',zh:'先辨輸入，依照規則，再報輸出；代入負數要用括號，並按情境分清容許的輸入。'},
-  next:{en:'Next, these expressions can be used to form equations. The equation and angle pilot lessons remain in design.',zh:'之後可用代數式建立方程；方程和角的試點課節目前仍在設計階段。'}}
+  next:{en:'Next, these expressions can be used to form equations. Continue with the equations learning path; angles remain in design.',zh:'之後可用代數式建立方程；接著可使用方程學習路線；角的課節仍在設計階段。'}}
 ];
 export function expressionLessonExamples(lesson){return lesson.families.map((id,i)=>generateExpression(id,lesson.id+':model-'+i));}
 const expressionStaticModels={

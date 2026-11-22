@@ -1,4 +1,5 @@
 import {signedNumberLine} from './number-line.mjs';
+import {equationDiagram} from './equation-diagrams.mjs';
 import {expressionDiagram} from './expression-diagrams.mjs';
 export const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const optionLabel=(o,lang='en')=>typeof o.label==='string'?o.label:o.label?.[lang]||'';
@@ -16,6 +17,7 @@ export function math(text){
 export function diagram(q,lang='en'){
  if(!q.diagram)return '';
  const d=q.diagram;
+ if(['equation-check','equation-steps','equation-balance','fee-table'].includes(d.type))return equationDiagram(q,lang);
  if(['area-formula','sequence-cards','term-table','input-output'].includes(d.type))return expressionDiagram(q,lang);
  if(d.type==='signed-line')return signedNumberLine(q,lang);
  if(d.type==='line'){
