@@ -21,3 +21,5 @@ The estimation hub selects seven core families. AP08 is optional, unchecked by d
 Lesson exposure includes fixed/generated models; changing an AP01 count or AP08 scenario number does not make a fresh concept. Exhausted variants stay prior exposure/practice, not mastery. Review samples in samples/estimation explicitly include the optional investigation; ordinary core paper creation does not.
 
 Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending. Learner work stays in the browser; export a backup before moving devices.
+
+Standalone Unit 4 development: src/math/quadratic-surds.mjs implements exact quadratic-surd contract version 1 and canonical snapshots. Run node --test tests/quadratic-surds.test.mjs for its 14 tests; all 103 current Node checks pass. See planning/exact-surds-v1.md and planning/surd-core-checks.json. The module is not yet wired into learner marking or the bundled application, and the released browser/print evidence remains unchanged.

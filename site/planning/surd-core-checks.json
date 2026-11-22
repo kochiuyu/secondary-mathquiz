@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-23",
+  "timezone": "Asia/Hong_Kong",
+  "milestone": "Unit 4 standalone exact-surd checker",
+  "runtime": "v24.22.1",
+  "exitCode": 0,
+  "tests": 103,
+  "pass": 103,
+  "fail": 0,
+  "testFiles": [
+    "tests/acceptance.test.mjs",
+    "tests/angles.test.mjs",
+    "tests/app.test.mjs",
+    "tests/basic.test.mjs",
+    "tests/bundle-parity.test.mjs",
+    "tests/equations.test.mjs",
+    "tests/estimation.test.mjs",
+    "tests/expressions.test.mjs",
+    "tests/math.test.mjs",
+    "tests/percentages.test.mjs",
+    "tests/quadratic-surds.test.mjs",
+    "tests/ratios.test.mjs",
+    "tests/review.test.mjs",
+    "tests/signed.test.mjs",
+    "tests/state.test.mjs"
+  ],
+  "hashes": {
+    "src/math/quadratic-surds.mjs": "5e87cb5c3e9652566dd046d99bfe3d5fe4dedb7601fa7a6b826c0be1fd5593a0",
+    "tests/quadratic-surds.test.mjs": "28776766ab1017947f20a3086d50f83bd21e2ed2097947ccf72522d315f66c5e",
+    "src/math/exact.mjs": "fa642a1ec854405d565c45d9243e4f5b359aadc4aa2751d49924a36b4e2c1c1e",
+    "index.html": "d2f4f3c6a789ba47ec54d80ce6c8f1fad2eac9887b5b43405f8b15020809c7a5"
+  },
+  "newLearnerFamilies": 0,
+  "learnerApplicationVersion": "0.13.0",
+  "browserReview": false,
+  "printReview": false,
+  "independentReview": false
+}
