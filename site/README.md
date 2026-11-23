@@ -1,25 +1,21 @@
-# Secondary MathQuiz — eight-topic pilot v0.13.0
+# Secondary MathQuiz — foundation candidate v0.14.0
 
-56 curriculum families and 27 bilingual author-draft lessons. Estimation adds three core lessons and one optional, wholly manual enrichment lesson. Six development fixtures remain separate; all 237 curriculum records remain planned.
+60 curriculum families and 29 bilingual author-draft lessons across nine topics. RI01–RI04 and RI-L1/RI-L2 cover the foundation roots/number-types route. Six development fixtures remain separate; all 237 curriculum records remain planned. Non-foundation and optional Unit 4 work is not yet implemented.
 
-Run node tools/serve.mjs from this directory and open http://127.0.0.1:5175/secondary-mathquiz/. The portable HTML also opens directly.
+Run node tools/serve.mjs from this directory and open http://127.0.0.1:5175/secondary-mathquiz/#rational. The portable HTML also opens directly.
 
 Development commands:
 
     node tools/build.mjs
     node --check tests/bundle-syntax.mjs
-    node tools/verify.mjs
-    node tools/make-estimation-samples.mjs
-    node tools/make-pilot-print-review.mjs
+    node --check tests/acceptance-syntax.mjs
+    node --test tests/*.test.mjs
+    node tools/make-rational-samples.mjs
 
-Build default/portable/QA copies after editing shell.html or modules. All 89 Node checks pass. The runner at qa/index.html defines 36 workflows; qa/print.html reviews four combined booklets (166 HTML pages). All 36 current-source hosted workflows and all 166 booklet HTML pages pass; source-matched raw reports are saved in planning. See planning/release-estimation-v1.md for scope and actual evidence.
+Build default/portable/QA copies together after editing modules or shell.html. All 110 Node tests and both syntax checks pass. qa/index.html defines 39 browser workflows. Current-source execution and booklet geometry remain pending because browser connection attempts timed out; no new visual or print acceptance is claimed. See planning/release-rational-foundation-v1.md and planning/rational-foundation-checks.json.
 
-AP01–AP08 use generator version 1. Fixed decimal precision is an opt-in property on the number contract; old numeric contracts retain equivalent-fraction acceptance. All prior generators, historical bundled fee snapshots and paper schema 1 remain supported. Paper identity includes language, title, order, marks, working lines and stored question snapshots.
+Legacy numeric, expression, choice, manual and set contracts are unchanged. Foundation irrational examples use exact stable choices and bound comparisons; they do not use decimal tolerances. The standalone quadratic-surd checker remains unconnected pending the non-foundation route. Existing generator versions, historical fee snapshots and paper schema 1 remain supported.
 
-The estimation hub selects seven core families. AP08 is optional, unchecked by default in generic builders, and offered as one investigation. It is excluded from automatic-score denominators; all its marks are manual. Core reasons also require manual review. Drafts preserve trailing zeros. Editing answers/reasons invalidates self-review.
+Core estimation tasks retain their fixed-decimal precision rules; optional AP08 remains wholly manual and excluded from automatic-score denominators. No optional or non-foundation Unit 4 work is forced into foundation defaults. Edited answers/reasons invalidate self-review. Exhausted semantic variants remain prior exposure/practice, not mastery.
 
-Lesson exposure includes fixed/generated models; changing an AP01 count or AP08 scenario number does not make a fresh concept. Exhausted variants stay prior exposure/practice, not mastery. Review samples in samples/estimation explicitly include the optional investigation; ordinary core paper creation does not.
-
-Actual current PDF/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending. Learner work stays in the browser; export a backup before moving devices.
-
-Standalone Unit 4 development: src/math/quadratic-surds.mjs implements exact quadratic-surd contract version 1 and canonical snapshots. Run node --test tests/quadratic-surds.test.mjs for its 14 tests; all 103 current Node checks pass. See planning/exact-surds-v1.md and planning/surd-core-checks.json. The module is not yet wired into learner marking or the bundled application, and the released browser/print evidence remains unchanged.
+Actual PDFs/physical printing, native keyboard/zoom, spoken output and independent mathematics/Traditional Chinese/classroom review remain pending. Learner work stays in the browser; export backups before moving devices.

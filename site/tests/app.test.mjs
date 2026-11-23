@@ -124,7 +124,7 @@ test('angle routes, manual proof, appearance exposure and five-answer score inte
   if(q.id==='GE06'){assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'manual');assert.equal(current().sessions.at(-1).responses[i].priorExposure,true);assert.match(root.innerHTML,/whole proof requires manual review/);}
   await click('next');
  }
- assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
+ assert.match(root.innerHTML,/5 \/ 5/);assert.match(root.innerHTML,/A conclusion needs its givens/);location.hash='angles';await click('angles-paper');await waitForPaper();assert.ok(current().paper.items.every(i=>i.question.id.startsWith('GE')));assert.match(node('#paper-pages').innerHTML,/angle-geometry/);location.hash='home';assert.match(root.innerHTML,/Nine connected topics/);
 });
 
 test('skip navigation preserves the current route, content and answer draft',async()=>{
@@ -165,7 +165,7 @@ test('percentage lessons, exact eight-family check, reviewed reasons, bilingual 
  for(let i=0;i<8;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Reference quantity and model'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reference');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');}
  assert.equal(current().sessions.at(-1).id,id);assert.match(root.innerHTML,/8 \/ 8/);assert.match(root.innerHTML,/Name the base and track/);
  location.hash='percentages';await click('percentages-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('PC')));
- assert.match(node('#paper-pages').innerHTML,/percentage-model/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
+ assert.match(node('#paper-pages').innerHTML,/percentage-model/);location.hash='home';assert.match(root.innerHTML,/Nine connected topics/);
 });
 
 
@@ -182,7 +182,7 @@ test('rate/ratio lessons, exact eight-family check, reviewed reasons, bilingual 
  for(let i=0;i<8;i++){const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Reference quantity and model'});assert.equal(current().sessions.at(-1).responses[i].attempts.at(-1).status,'correct');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');input('reason-input','reason','Revised reference');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');}
  assert.equal(current().sessions.at(-1).id,id);assert.match(root.innerHTML,/8 \/ 8/);assert.match(root.innerHTML,/Keep the units and the fixed condition/);
  location.hash='ratios';await click('ratios-paper');await waitForPaper();assert.equal(current().paper.items.length,8);assert.ok(current().paper.items.every(i=>i.question.id.startsWith('RP')));
- assert.match(node('#paper-pages').innerHTML,/ratio-model/);location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
+ assert.match(node('#paper-pages').innerHTML,/ratio-model/);location.hash='home';assert.match(root.innerHTML,/Nine connected topics/);
 });
 
 test('estimation core keeps optional investigation separate, enforces report precision and retains manual evidence',async()=>{
@@ -202,7 +202,28 @@ test('estimation core keeps optional investigation separate, enforces report pre
  location.hash='lesson/AP-L4';await click('estimation-lesson-check',{lesson:'AP-L4'});assert.equal(current().sessions.at(-1).items.length,1);assert.equal(current().sessions.at(-1).items[0].contract.type,'manual');
  submit('answer-form',{answer:'My justified planning estimate',reason:'I state assumptions, a rough range and a limitation.'});assert.equal(current().sessions.at(-1).responses[0].attempts.at(-1).status,'manual');await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[0].manualReview,'self');input('reason-input','reason','An updated limitation');assert.equal(current().sessions.at(-1).responses[0].manualReview,null);await click('next');assert.match(root.innerHTML,/excluded from the automatic-score denominator/);
  location.hash='paper';submit('paper-setup',{family:['AP01','AP02','AP03','AP04','AP05','AP06','AP07','AP08'],count:'8'});await waitForPaper();assert.equal(current().paper.items.length,8);await click('toggle-key');await waitForPaper();assert.match(node('#paper-pages').innerHTML,/All 4 marks require manual review/);
- location.hash='home';assert.match(root.innerHTML,/Eight connected topics/);
+ location.hash='home';assert.match(root.innerHTML,/Nine connected topics/);
 });
 
 
+
+test('root foundation lessons, bilingual drafts, manual review and matching paper integrate',async()=>{
+ if(document.documentElement.lang==='zh-Hant')await click('language');
+ location.hash='rational';assert.match(root.innerHTML,/From powers to the number line/);
+ location.hash='lesson/RI-L1';assert.match(root.innerHTML,/Powers backwards/);assert.match(root.innerHTML,/<m(?:s?q)?root|<msqrt/);
+ const current=()=>{const r=JSON.parse(memory.get(PREFIX+'profiles'));return JSON.parse(memory.get(PREFIX+r.active));};
+ assert.ok(current().studied.includes('lesson:RI-L1:v1'));
+ await click('rational-lesson-check',{lesson:'RI-L1'});assert.deepEqual(current().sessions.at(-1).items.map(q=>q.id),['RI01','RI02','RI01','RI02']);
+ input('answer-input','answer','-2');await click('language');assert.ok(root.innerHTML.includes('value="-2"'));await click('language');
+ location.hash='rational';await click('rational-check');
+ assert.deepEqual(current().sessions.at(-1).items.map(q=>q.id),['RI01','RI02','RI03','RI04']);
+ for(let i=0;i<4;i++){
+  const q=current().sessions.at(-1).items[i];submit('answer-form',{answer:q.answer,reason:'Check the exact powers or integer-fraction definition.'});
+  await click('solution');await click('self-review');assert.equal(current().sessions.at(-1).responses[i].manualReview,'self');
+  input('reason-input','reason','Changed explanation');assert.equal(current().sessions.at(-1).responses[i].manualReview,null);await click('next');
+ }
+ assert.ok(current().sessions.at(-1).completedAt);assert.match(root.innerHTML,/4 \/ 4/);
+ location.hash='rational';await click('rational-paper');await waitForPaper();assert.deepEqual(current().paper.items.map(i=>i.question.id),['RI01','RI02','RI03','RI04']);
+ assert.match(node('#paper-pages').innerHTML,/<m(?:s?q)?root|<msqrt/);
+ location.hash='home';
+});

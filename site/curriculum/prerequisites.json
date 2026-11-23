@@ -51,67 +51,123 @@
       "reason": "Preparation for Approximate values and numerical estimation: perform mixed arithmetic operations of fractions and decimals"
     },
     {
+      "from": "JS-1-2",
+      "to": "JS-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: understand the concept of power"
+    },
+    {
+      "from": "JS-1-3",
+      "to": "JS-4-1",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: perform prime factorisation of positive integers"
+    },
+    {
       "from": "JS-2-2",
       "to": "JS-4-1",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+      "reason": "Unit 4 readiness: perform mixed arithmetic operations of directed numbers"
     },
     {
-      "from": "JS-10-3",
+      "from": "JS-1-6",
       "to": "JS-4-1",
-      "type": "required",
+      "type": "helpful",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+      "reason": "Unit 4 readiness: perform mixed arithmetic operations of fractions and decimals"
     },
     {
-      "from": "JS-2-2",
+      "from": "JS-1-6",
       "to": "JS-4-2",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+      "reason": "Unit 4 readiness: perform mixed arithmetic operations of fractions and decimals"
     },
     {
-      "from": "JS-10-3",
+      "from": "JS-2-1",
       "to": "JS-4-2",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+      "reason": "Unit 4 readiness: understand the concept of directed numbers"
+    },
+    {
+      "from": "JS-4-1",
+      "to": "JS-4-2",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: recognise the concept of nth root"
+    },
+    {
+      "from": "JS-3-1",
+      "to": "JS-4-2",
+      "type": "helpful",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: recognise the concept of approximate values"
+    },
+    {
+      "from": "JS-1-3",
+      "to": "JS-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: perform prime factorisation of positive integers"
+    },
+    {
+      "from": "JS-1-6",
+      "to": "JS-4-3",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: perform mixed arithmetic operations of fractions and decimals"
     },
     {
       "from": "JS-2-2",
       "to": "JS-4-3",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+      "reason": "Unit 4 readiness: perform mixed arithmetic operations of directed numbers"
     },
     {
-      "from": "JS-10-3",
+      "from": "JS-4-1",
       "to": "JS-4-3",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+      "reason": "Unit 4 readiness: recognise the concept of nth root"
     },
     {
       "from": "JS-4-2",
       "to": "JS-4-3",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: recognise the concepts of rational and irrational numbers"
+      "reason": "Unit 4 readiness: recognise the concepts of rational and irrational numbers"
     },
     {
-      "from": "JS-2-2",
+      "from": "JS-4-1",
       "to": "JS-4-4",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: perform mixed arithmetic operations of directed numbers"
+      "reason": "Unit 4 readiness: recognise the concept of nth root"
     },
     {
-      "from": "JS-10-3",
+      "from": "JS-4-2",
       "to": "JS-4-4",
       "type": "required",
       "basis": "site-authored",
-      "reason": "Preparation for Rational and irrational numbers: understand the laws of integral indices"
+      "reason": "Unit 4 readiness: recognise the concepts of rational and irrational numbers"
+    },
+    {
+      "from": "JS-20-5",
+      "to": "JS-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: construct equilateral triangles and regular hexagons with compasses and straightedge"
+    },
+    {
+      "from": "JS-25-1",
+      "to": "JS-4-4",
+      "type": "required",
+      "basis": "site-authored",
+      "reason": "Unit 4 readiness: understand the Pythagoras’ theorem"
     },
     {
       "from": "JS-1-6",

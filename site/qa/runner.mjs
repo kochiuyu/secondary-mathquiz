@@ -1,4 +1,4 @@
-import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=b125ba479e23';
+import {automaticChecks,manualChecks,acceptancePrefix,acceptanceReport} from './core.mjs?v=d35156df1672';
 import {identity} from '../src/papers/paper.mjs';
 
 const frame=document.querySelector('#application'),results=document.querySelector('#results'),manual=document.querySelector('#manual');
@@ -429,6 +429,31 @@ document.querySelector('#run').addEventListener('click',async()=>{
    input('#paper-import',JSON.stringify(mixed));click('[data-action="import-paper"]');await waitFor(()=>currentProfile().paper.items.length===8,'explicit optional paper import');if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
    for(const language of ['en','zh']){change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'estimation bilingual identity');assert(el('#paper-pages').querySelectorAll('.solution').length===8,'Estimation key incomplete.');assert(el('#paper-pages').textContent.includes(language==='en'?'All 4 marks require manual review':'全題 4 分需人工評閱'),'Optional key lost wholly manual marking.');assert(el('#paper-pages').querySelector('.estimation-model'),'Rounding model missing.');}
    return 'Seven-question core paper survived reload; optional investigation added explicitly; both languages kept all eight keys and wholly manual marking.';
+  });
+
+  await step('A37',async()=>{
+   for(const language of ['en','zh']){
+    if(appDocument().documentElement.lang!==(language==='zh'?'zh-Hant':'en'))click('[data-action="language"]');
+    await go('rational','[data-action="rational-check"]');assert(el('.lesson-grid').children.length===2,'Missing foundation lessons.');
+    frame.width='390';await waitFor(()=>frame.contentWindow.innerWidth===390,'roots mobile viewport');
+    for(const id of ['RI-L1','RI-L2']){await go('lesson/'+id,'[data-action="rational-lesson-check"]');await waitFor(()=>appDocument()?.querySelector('.lesson-roadmap [aria-current="step"]')?.getAttribute('href')==='#lesson/'+id,'current root lesson');assert(el('.lesson-roadmap').querySelectorAll('a').length===2,'Root roadmap incomplete.');assert(appDocument().documentElement.scrollWidth<=frame.contentWindow.innerWidth+1,'Root lesson overflow.');assert(currentProfile().studied.includes('lesson:'+id+':v1'),'Root exposure lost.');}
+   }
+   frame.width='1120';return 'Both foundation lessons in both languages retained exposure and reflowed at 390px.';
+  });
+  await step('A38',async()=>{
+   if(appDocument().documentElement.lang!=='en')click('[data-action="language"]');
+   await go('rational','[data-action="rational-check"]');click('[data-action="rational-check"]');await waitFor(()=>appDocument()?.querySelector('#answer-form'),'four-family root check');
+   const s=latestSession();assert(s.items.map(q=>q.id).join(',')==='RI01,RI02,RI03,RI04','Foundation check scope wrong.');assert(s.responses[2].priorExposure,'Read classification was relabelled fresh.');
+   const draft=s.items[0].answer;input('#answer-input',draft);click('[data-action="language"]');await reloadApplication();await waitFor(()=>appDocument()?.querySelector('#answer-input'),'root draft reload');assert(el('#answer-input').value===draft&&latestSession().id===s.id,'Root draft changed.');click('[data-action="language"]');
+   for(let i=0;i<4;i++){const q=latestSession().items[i];checkAnswer(q.answer,'Exact power, definition or square bounds.');assert(latestSession().responses[i].attempts.at(-1).status==='correct','Root answer rejected.');assert(latestSession().responses[i].manualReview===null,'Reason automatically reviewed.');click('[data-action="solution"]');click('[data-action="self-review"]');input('#reason-input','Edited justification');assert(latestSession().responses[i].manualReview===null,'Edited reason retained review.');click('[data-action="next"]');}
+   assert(el('.result-grid').textContent.includes('4 / 4'),'Root denominator wrong.');return 'Four families answered with exact contracts; draft reload, prior exposure and manual review separation passed.';
+  });
+  await step('A39',async()=>{
+   await go('rational','[data-action="rational-paper"]');click('[data-action="rational-paper"]');await waitFor(()=>appDocument()?.querySelector('.paper-page'),'root paper');
+   const snapshot=JSON.stringify(currentProfile().paper);await reloadApplication();await waitFor(()=>appDocument()?.querySelector('.paper-page'),'root paper reload');assert(JSON.stringify(currentProfile().paper)===snapshot,'Root snapshots changed.');
+   if(!appDocument().querySelector('.solution'))click('[data-action="toggle-key"]');
+   for(const language of ['en','zh']){change('#paper-lang',language);const hash=await identity(currentProfile().paper);await waitFor(()=>appDocument()?.querySelector('#paper-id')?.textContent===hash.slice(0,12),'root paper identity');assert(el('#paper-pages').querySelectorAll('.solution').length===4,'Root key incomplete.');assert(el('#paper-pages').querySelector('msqrt,mroot'),'Native radical notation missing.');assert(el('#paper-pages').textContent.includes(language==='en'?'manual review':'自動核對'),'Root reason review missing.');}
+   return 'Four snapshots reopened unchanged; both language identities, native roots and manual review keys passed.';
   });
  }catch(error){document.querySelector('#summary').textContent='Runner could not finish: '+error.message;}
  finally{setBusy(false);drawResults();summary();}

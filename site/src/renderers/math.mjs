@@ -1,3 +1,4 @@
+import {rationalMath,rationalDiagram} from './rational-diagrams.mjs';
 import {estimationDiagram} from './estimation-diagrams.mjs';
 import {ratioDiagram} from './ratio-diagrams.mjs';
 import {percentageDiagram} from './percentage-diagrams.mjs';
@@ -9,6 +10,7 @@ import {expressionDiagram} from './expression-diagrams.mjs';
 export const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const optionLabel=(o,lang='en')=>typeof o.label==='string'?o.label:o.label?.[lang]||'';
 export function math(text){
+ const rootNotation=rationalMath(text);if(rootNotation)return rootNotation;
  // Render our authored, bounded fixture notation with native MathML; text fallback is its aria-label.
  const tokens=String(text).match(/\d+\/\d+|\d+(?:\.\d+)?|[A-Za-zαβγ]|[^\s]/g)||[],parts=[];
  for(let i=0;i<tokens.length;i++){
@@ -22,6 +24,7 @@ export function math(text){
 export function diagram(q,lang='en'){
  if(!q.diagram)return '';
  const d=q.diagram;
+ if(d.type==='rational-model')return rationalDiagram(d,lang);
  if(d.type==='estimation-model')return estimationDiagram(d,lang);
  if(d.type==='ratio-model')return ratioDiagram(d,lang);
  if(d.type==='percentage-model')return percentageDiagram(d,lang);
