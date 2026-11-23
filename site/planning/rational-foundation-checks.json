@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-23",
+  "timezone": "Asia/Hong_Kong",
+  "version": "0.14.0",
+  "state": "foundation implementation candidate; not published",
+  "tests": {
+    "tests": 110,
+    "pass": 110,
+    "fail": 0,
+    "log": "rational-foundation-tests.txt"
+  },
+  "source_sha256": "1735172367a8cf439789ff2f52674849d8aebbb37fa49cdc436af0275dc769fc",
+  "syntax": {
+    "bundle": "passed",
+    "acceptance": "passed"
+  },
+  "browser": {
+    "defined_workflows": 39,
+    "observed_current_source": 0,
+    "state": "pending; browser connection timed out"
+  },
+  "print_layout": {
+    "documents": 4,
+    "generated_pages": 24,
+    "measured_pages": 0,
+    "state": "pending"
+  },
+  "scope": {
+    "curriculum_families": 60,
+    "bilingual_lessons": 29,
+    "new_foundation_families": [
+      "RI01",
+      "RI02",
+      "RI03",
+      "RI04"
+    ],
+    "new_lessons": [
+      "RI-L1",
+      "RI-L2"
+    ],
+    "new_nonfoundation_families": 0,
+    "new_optional_families": 0,
+    "coverage_records": 237,
+    "coverage_state": "planned"
+  },
+  "independent_review": false,
+  "actual_pdf": false,
+  "physical_print": false
+}

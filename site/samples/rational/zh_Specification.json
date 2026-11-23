@@ -1,0 +1,524 @@
+{
+  "kind": "secondary-mathquiz-paper",
+  "schema": 1,
+  "generatorVersion": 2,
+  "title": "方根與數的分類 — 基礎練習",
+  "seed": "rational-print-v1",
+  "lang": "zh",
+  "layout": {
+    "format": "A4",
+    "perPage": 3
+  },
+  "items": [
+    {
+      "question": {
+        "id": "RI01",
+        "seed": "rational-print-v1:0",
+        "version": 1,
+        "objective": "JS-4-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "integer-root",
+          "n": 4,
+          "base": 0,
+          "radicand": 0
+        },
+        "math": "root(4,0)",
+        "answer": "0",
+        "prompt": {
+          "en": "Find the exact value of this real nth root. Give one number and explain by checking the corresponding power. An even root means the nonnegative root.",
+          "zh": "求這個實數 n 次方根的準確值，填寫一個數，並用相應的乘方核對答案。偶數次方根取非負的值。"
+        },
+        "hint": {
+          "en": "Which number, multiplied by itself the stated number of times, gives the radicand? Odd powers can be negative; the principal even root is nonnegative.",
+          "zh": "哪一個數自乘指定的次數後，會得到被開方數？奇數次乘方可以是負數；偶數次方根則取非負值。"
+        },
+        "solution": {
+          "en": "The value is 0, because (0)^4 = 0. The radical denotes the nonnegative even root, not a pair of solutions.",
+          "zh": "答案是 0，因為 (0)^4 = 0。這個根號取非負的偶數次方根，答案不是一對數。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "0",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI01:{\"kind\":\"integer-root\",\"n\":4,\"base\":0,\"radicand\":0}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI02",
+        "seed": "rational-print-v1:1",
+        "version": 1,
+        "objective": "JS-4-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "square",
+          "base": 2
+        },
+        "math": "(-2)^2",
+        "answer": "value:4",
+        "options": [
+          {
+            "id": "value:4",
+            "label": {
+              "en": "4",
+              "zh": "4"
+            }
+          },
+          {
+            "id": "value:-3",
+            "label": {
+              "en": "-3",
+              "zh": "-3"
+            }
+          },
+          {
+            "id": "value:3",
+            "label": {
+              "en": "3",
+              "zh": "3"
+            }
+          },
+          {
+            "id": "value:-4",
+            "label": {
+              "en": "-4",
+              "zh": "-4"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Choose the value of the displayed expression. Explain the effect of the root sign, any minus sign and any brackets.",
+          "zh": "選出算式的值，並說明根號、負號及括號各自的作用。"
+        },
+        "hint": {
+          "en": "Read the operation first: taking a square root, negating that root, and squaring a negative number are different operations.",
+          "zh": "先看清楚運算：求平方根、取平方根的相反數，以及把負數平方，是不同的運算。"
+        },
+        "solution": {
+          "en": "(-2)^2 = 4. The brackets make the whole nonpositive number the base of the square.",
+          "zh": "(-2)^2 = 4。括號表示整個非正數都是平方的底數。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "value:4"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI02:{\"kind\":\"square\",\"case\":\"positive\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI03",
+        "seed": "rational-print-v1:2",
+        "version": 1,
+        "objective": "JS-4-2",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "terminating",
+          "n": 7,
+          "d": 2,
+          "negative": false,
+          "radicand": 15
+        },
+        "math": "0.72",
+        "answer": "rational",
+        "options": [
+          {
+            "id": "irrational",
+            "label": {
+              "en": "Irrational",
+              "zh": "無理數"
+            }
+          },
+          {
+            "id": "rational",
+            "label": {
+              "en": "Rational",
+              "zh": "有理數"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "This expression denotes its exact value. Is this number rational or irrational? Choose and give a mathematical reason.",
+          "zh": "這個算式表示其準確值。這個數是有理數還是無理數？請選擇並說明數學理由。"
+        },
+        "hint": {
+          "en": "A rational number can be written as p/q with integers p, q and q ≠ 0. A root sign does not automatically mean irrational.",
+          "zh": "有理數可寫成 p/q，其中 p、q 是整數，而且 q ≠ 0。有根號不一定就是無理數。"
+        },
+        "solution": {
+          "en": "An integer, a fraction of integers with nonzero denominator, or an exact terminating decimal can be written as a fraction of integers. It is rational.",
+          "zh": "整數、分母非零的整數分數，以及準確的有限小數，都可寫成整數之比，所以是有理數。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "rational"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI03:{\"kind\":\"terminating\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI04",
+        "seed": "rational-print-v1:3",
+        "version": 1,
+        "objective": "JS-4-2",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "interval",
+          "radicand": 57,
+          "negative": true,
+          "k": 7,
+          "lower": -8
+        },
+        "math": "-root(2,57)",
+        "answer": "interval:-8",
+        "options": [
+          {
+            "id": "interval:-6",
+            "label": {
+              "en": "Between -6 and -5 (endpoints excluded)",
+              "zh": "介乎 -6 與 -5 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:-7",
+            "label": {
+              "en": "Between -7 and -6 (endpoints excluded)",
+              "zh": "介乎 -7 與 -6 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:-8",
+            "label": {
+              "en": "Between -8 and -7 (endpoints excluded)",
+              "zh": "介乎 -8 與 -7 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:-9",
+            "label": {
+              "en": "Between -9 and -8 (endpoints excluded)",
+              "zh": "介乎 -9 與 -8 之間（不包括端點）"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Between which consecutive integers does this exact number lie? Choose an interval and justify the bounds by comparing squares. Sketch its approximate position in your working.",
+          "zh": "這個數的準確值介乎哪兩個相鄰整數之間？請選出區間，用平方比較說明上下界，並在解題空間畫出它的大約位置。"
+        },
+        "hint": {
+          "en": "First bound the positive square root using neighbouring integer squares. For its negative, reflect the interval across zero and reverse the order.",
+          "zh": "先用相鄰整數的平方，找出非負平方根的上下界。如果原數帶負號，便把區間關於零反射，並注意大小次序。"
+        },
+        "solution": {
+          "en": "7² = 49 < 57 < 64 = 8². The positive square root is between 7 and 8. Negating reverses the bounds, giving -8 < the number < -7. A sketch only needs a sensible approximate location; the bounds are exact.",
+          "zh": "7² = 49 < 57 < 64 = 8²，所以非負平方根介乎 7 與 8 之間。取相反數後，大小次序倒轉，故原數介乎 -8 與 -7 之間。圖上只需標示合理的大約位置，但上下界是準確的。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "interval:-8"
+        },
+        "diagram": {
+          "type": "rational-model",
+          "kind": "line",
+          "min": -9,
+          "max": -5
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI04:{\"kind\":\"interval\",\"radicand\":57,\"negative\":true,\"k\":7,\"lower\":-8}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI01",
+        "seed": "rational-print-v1:4",
+        "version": 1,
+        "objective": "JS-4-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "integer-root",
+          "n": 3,
+          "base": 5,
+          "radicand": 125
+        },
+        "math": "root(3,125)",
+        "answer": "5",
+        "prompt": {
+          "en": "Find the exact value of this real nth root. Give one number and explain by checking the corresponding power. An even root means the nonnegative root.",
+          "zh": "求這個實數 n 次方根的準確值，填寫一個數，並用相應的乘方核對答案。偶數次方根取非負的值。"
+        },
+        "hint": {
+          "en": "Which number, multiplied by itself the stated number of times, gives the radicand? Odd powers can be negative; the principal even root is nonnegative.",
+          "zh": "哪一個數自乘指定的次數後，會得到被開方數？奇數次乘方可以是負數；偶數次方根則取非負值。"
+        },
+        "solution": {
+          "en": "The value is 5, because (5)^3 = 125. An odd real root has the same sign as its radicand.",
+          "zh": "答案是 5，因為 (5)^3 = 125。奇數次實方根與被開方數的正負號相同。"
+        },
+        "contract": {
+          "type": "number",
+          "answer": "5",
+          "form": "number-literal"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI01:{\"kind\":\"integer-root\",\"n\":3,\"base\":5,\"radicand\":125}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI02",
+        "seed": "rational-print-v1:5",
+        "version": 1,
+        "objective": "JS-4-1",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "negative-root",
+          "base": 5
+        },
+        "math": "-root(2,25)",
+        "answer": "value:-5",
+        "options": [
+          {
+            "id": "value:-5",
+            "label": {
+              "en": "-5",
+              "zh": "-5"
+            }
+          },
+          {
+            "id": "value:-6",
+            "label": {
+              "en": "-6",
+              "zh": "-6"
+            }
+          },
+          {
+            "id": "value:6",
+            "label": {
+              "en": "6",
+              "zh": "6"
+            }
+          },
+          {
+            "id": "value:5",
+            "label": {
+              "en": "5",
+              "zh": "5"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Choose the value of the displayed expression. Explain the effect of the root sign, any minus sign and any brackets.",
+          "zh": "選出算式的值，並說明根號、負號及括號各自的作用。"
+        },
+        "hint": {
+          "en": "Read the operation first: taking a square root, negating that root, and squaring a negative number are different operations.",
+          "zh": "先看清楚運算：求平方根、取平方根的相反數，以及把負數平方，是不同的運算。"
+        },
+        "solution": {
+          "en": "The principal square root of 25 is 5. The outside minus sign then gives -5.",
+          "zh": "25 的非負平方根是 5。根號外的負號把答案變成 -5。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "value:-5"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI02:{\"kind\":\"negative-root\",\"case\":\"positive\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI03",
+        "seed": "rational-print-v1:6",
+        "version": 1,
+        "objective": "JS-4-2",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "integer",
+          "n": 3,
+          "d": 6,
+          "negative": true,
+          "radicand": 8
+        },
+        "math": "-3",
+        "answer": "rational",
+        "options": [
+          {
+            "id": "irrational",
+            "label": {
+              "en": "Irrational",
+              "zh": "無理數"
+            }
+          },
+          {
+            "id": "rational",
+            "label": {
+              "en": "Rational",
+              "zh": "有理數"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "This expression denotes its exact value. Is this number rational or irrational? Choose and give a mathematical reason.",
+          "zh": "這個算式表示其準確值。這個數是有理數還是無理數？請選擇並說明數學理由。"
+        },
+        "hint": {
+          "en": "A rational number can be written as p/q with integers p, q and q ≠ 0. A root sign does not automatically mean irrational.",
+          "zh": "有理數可寫成 p/q，其中 p、q 是整數，而且 q ≠ 0。有根號不一定就是無理數。"
+        },
+        "solution": {
+          "en": "An integer, a fraction of integers with nonzero denominator, or an exact terminating decimal can be written as a fraction of integers. It is rational.",
+          "zh": "整數、分母非零的整數分數，以及準確的有限小數，都可寫成整數之比，所以是有理數。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "rational"
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI03:{\"kind\":\"integer\"}"
+      },
+      "marks": 3,
+      "lines": 6
+    },
+    {
+      "question": {
+        "id": "RI04",
+        "seed": "rational-print-v1:7",
+        "version": 1,
+        "objective": "JS-4-2",
+        "marks": 3,
+        "lines": 5,
+        "resourceState": "author-draft",
+        "manualReason": true,
+        "model": {
+          "kind": "interval",
+          "radicand": 47,
+          "negative": false,
+          "k": 6,
+          "lower": 6
+        },
+        "math": "root(2,47)",
+        "answer": "interval:6",
+        "options": [
+          {
+            "id": "interval:7",
+            "label": {
+              "en": "Between 7 and 8 (endpoints excluded)",
+              "zh": "介乎 7 與 8 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:6",
+            "label": {
+              "en": "Between 6 and 7 (endpoints excluded)",
+              "zh": "介乎 6 與 7 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:5",
+            "label": {
+              "en": "Between 5 and 6 (endpoints excluded)",
+              "zh": "介乎 5 與 6 之間（不包括端點）"
+            }
+          },
+          {
+            "id": "interval:8",
+            "label": {
+              "en": "Between 8 and 9 (endpoints excluded)",
+              "zh": "介乎 8 與 9 之間（不包括端點）"
+            }
+          }
+        ],
+        "prompt": {
+          "en": "Between which consecutive integers does this exact number lie? Choose an interval and justify the bounds by comparing squares. Sketch its approximate position in your working.",
+          "zh": "這個數的準確值介乎哪兩個相鄰整數之間？請選出區間，用平方比較說明上下界，並在解題空間畫出它的大約位置。"
+        },
+        "hint": {
+          "en": "First bound the positive square root using neighbouring integer squares. For its negative, reflect the interval across zero and reverse the order.",
+          "zh": "先用相鄰整數的平方，找出非負平方根的上下界。如果原數帶負號，便把區間關於零反射，並注意大小次序。"
+        },
+        "solution": {
+          "en": "6² = 36 < 47 < 49 = 7². The positive square root is between 6 and 7. Therefore 6 < the number < 7. A sketch only needs a sensible approximate location; the bounds are exact.",
+          "zh": "6² = 36 < 47 < 49 = 7²，所以非負平方根介乎 6 與 7 之間。故原數介乎 6 與 7 之間。圖上只需標示合理的大約位置，但上下界是準確的。"
+        },
+        "contract": {
+          "type": "choice",
+          "answer": "interval:6"
+        },
+        "diagram": {
+          "type": "rational-model",
+          "kind": "line",
+          "min": 5,
+          "max": 9
+        },
+        "reasonRubric": {
+          "en": "Review the power check, exact-number definition or bounds as appropriate. The automatic result does not verify the written explanation or the sketch.",
+          "zh": "按題意檢視乘方核對、有理數定義或上下界的理由。自動核對結果不代表文字解釋或數線草圖已獲核實。"
+        },
+        "exposureKey": "RI04:{\"kind\":\"interval\",\"radicand\":47,\"negative\":false,\"k\":6,\"lower\":6}"
+      },
+      "marks": 3,
+      "lines": 6
+    }
+  ]
+}
